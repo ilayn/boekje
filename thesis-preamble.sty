@@ -8,54 +8,43 @@
   \let\jobname\thesisjobname
 }
 
-\newcommand\referpaper[1]{\textit{#1}}
-
-\g@addto@macro\quote{\itshape}
-
 %%% PACKAGES
-\usepackage[american,german,dutch]{babel}
-\RequirePackage[T1]{fontenc} % sane font encoding
-%\RequirePackage{textcomp} % provide lots of new symbols
-\RequirePackage{lmodern} % for sensible sans and tt font
-\RequirePackage[sc,osf]{mathpazo}% for math
+\usepackage[american,dutch]{babel}
+\RequirePackage[T1]{fontenc}         % sane font encoding
+\RequirePackage{lmodern}             % for sensible sans and tt font
+\RequirePackage[sc,osf]{mathpazo}    % for math
 \RequirePackage{microtype}
-%\RequirePackage{pifont}
-%\newcommand\diameter{\Pisymbol{psy}{'306}}
-\linespread{1.1} % Palatino needs more leading
+\linespread{1.1}                     % Palatino needs more leading
 \frenchspacing
 \normalfont
 
 
-\newcommand\pregen[1]{#1}
-
-\RequirePackage[utf8]{inputenc}% sane input encoding
+\RequirePackage[utf8]{inputenc}      % sane input encoding
 %\DeclareUnicodeCharacter{2014}{\dash}
 %\DeclareUnicodeCharacter{2022}{\item}
 
-\RequirePackage{siunitx}
-%\protected\def\sipi{\mbox{\ensuremath{\pi}}}
-%\sisetup{numaddn=\sipi}
 
+		
 \RequirePackage{
-  calc,
-  %colortbl,
-  graphicx,
-  %etex,
-  %import,
-  %flafter,
-  %minibox,
-  %multicol,
-  %refstyle,
-  %soul,
-  %suffix,
-  %varioref,
-  %xcolor,
-  %zref,
-	kantlipsum
+  graphicx, %
+	siunitx,  %
+	kantlipsum,
+	amsmath,  %
+  amssymb,  %
+	tikz,     % Requires at least v2.10 !!
+	bm,       %
+	pgfplots, % Requires at least v1.5.1 !!
+	%subfigure %
 }
 
-\RequirePackage[font={sf,small}]{caption}
-\captionsetup[table]{position=top}
+
+
+\let\subcaption\undefined
+\let\subfloat\undefined
+\let\subfigure\undefined
+\RequirePackage{subcaption}
+%\RequirePackage[font={sf,small}]{caption}
+%\captionsetup[table]{position=top}
 
 
 
@@ -100,51 +89,26 @@
 %%%%%%%%%%%%%%%%%%%%
 
 %% MATHS
-\RequirePackage{amsmath,amssymb,bm,cool,mathtools}%,fngp
-%\RequirePackage{mlist}
-%\RequirePackage{thesis-maths}
+%\RequirePackage{amsmath,amssymb,bm,cool,mathtools}%,fngp
 \@ifpackageloaded{mathpazo}{\PassOptionsToPackage{mathpazo}{flexisym}}{}
-\RequirePackage{breqn}
-\setkeys{breqn}{labelprefix=eq:}
-
-%%%%%%%%%%%
-
-%\EndPreamble
-%
-%\RequirePackage[process=auto]{asyfig}
-%\RequirePackage[inline]{asymptote}
-%\renewcommand\asydir{asy}
-%
-%%% HUH?!?!
-%
-%\def\asy@input@graphic{%
-    %\IfFileExists{"\AsyFile.tex"}{%
-      %\catcode`:=12\relax
-      %\let\TMPII\jobname
-      %\let\jobname\Jobname
-      %\@@input"\AsyFile.tex"\relax
-      %\let\jobname\TMPII
-    %}{%
-      %\PackageWarning{asymptote}{file `\AsyFile.tex' not found}%
-    %}%
-%}
+%\RequirePackage{breqn}
+%\setkeys{breqn}{labelprefix=eq:}
 
 %%%%%%%%%%%%%%%%%
 %%% FIGURES
 
-\RequirePackage{pgfplots}
 
-\let\subfloat\subbottom
+%\let\subfloat\subbottom
 
 \def\impath{images/}
 %\def\coilpath{\phdpath Coil/fig/}
 
-\newcommand\grf[2][]{\includegraphics[#1]{\impath #2}}
+%\newcommand\grf[2][]{\includegraphics[#1]{\impath #2}}
 
-\newcommand\ImportIfFileExists[4]{%
-  \IfFileExists{#1#2}
-    {\import{#1}{#2}#3}
-    {#4}}
+%\newcommand\ImportIfFileExists[4]{%
+  %\IfFileExists{#1#2}
+    %{\import{#1}{#2}#3}
+    %{#4}}
 
 % Symmetric ragged commands
 \newcommand\IfOddPage{%
@@ -153,16 +117,16 @@
   \else\expandafter\@secondoftwo\fi}
 \newcommand\raggedout{\IfOddPage\raggedright\raggedleft}
 \newcommand\raggedin{\IfOddPage\raggedleft\raggedright}
-
-% Subfigures
-\newsubfloat{figure}
-\newenvironment{subfigure}[1][0.4]{%
-  \begin{minipage}[t]{#1\linewidth}
-    \centering
-    \let\caption\subcaption
-}{%
-  \end{minipage}%
-}
+%
+%% Subfigures
+%\newsubfloat{figure}
+%\newenvironment{subfigure}[1][0.4]{%
+  %\begin{minipage}[t]{#1\linewidth}
+    %\centering
+    %\let\caption\subcaption
+%}{%
+  %\end{minipage}%
+%}
 \newenvironment{sidefigure}[1][0.4]{%
   \begin{minipage}[t]{#1\linewidth}
     \centering
@@ -208,26 +172,26 @@
 
 %%%%%%%%%%%%%
 %! FLOATS
-\renewcommand{\topfraction}{.8}
-\renewcommand{\bottomfraction}{.3}
-\renewcommand{\textfraction}{.15}
-\renewcommand{\floatpagefraction}{.66}
-\renewcommand{\dbltopfraction}{.66}
-\renewcommand{\dblfloatpagefraction}{.66}
-\setcounter{topnumber}{9}
-\setcounter{bottomnumber}{9}
-\setcounter{totalnumber}{20}
-\setcounter{dbltopnumber}{9}
-
-\renewenvironment{figure}[1][\fps@figure]
-                 {\edef\@tempa{\noexpand\@float{figure}[#1]}
-                  \@tempa\capstart\centering}
-                 {\end@float}
-\renewenvironment{table}[1][\fps@table]
-                 {\edef\@tempa{\noexpand\@float{table}[#1]}
-                  \@tempa\capstart\centering}
-                 {\end@float}
-
+%\renewcommand{\topfraction}{.8}
+%\renewcommand{\bottomfraction}{.3}
+%\renewcommand{\textfraction}{.15}
+%\renewcommand{\floatpagefraction}{.66}
+%\renewcommand{\dbltopfraction}{.66}
+%\renewcommand{\dblfloatpagefraction}{.66}
+%\setcounter{topnumber}{9}
+%\setcounter{bottomnumber}{9}
+%\setcounter{totalnumber}{20}
+%\setcounter{dbltopnumber}{9}
+%
+%\renewenvironment{figure}[1][\fps@figure]
+                 %{\edef\@tempa{\noexpand\@float{figure}[#1]}
+                  %\@tempa\capstart\centering}
+                 %{\end@float}
+%\renewenvironment{table}[1][\fps@table]
+                 %{\edef\@tempa{\noexpand\@float{table}[#1]}
+                  %\@tempa\capstart\centering}
+                 %{\end@float}
+%
 
 %% Floats & captions
 \captionnamefont{\scshape}
@@ -354,6 +318,74 @@
 
 
 
+
+\usetikzlibrary{calc,%
+								matrix,%
+								positioning,%
+								decorations.markings,%
+								patterns%
+								}
+								
+\usepgfplotslibrary{units}
+%======== Thm style declaration
+\newtheorem{thm}{Theorem}
+\newtheorem{coroll}{Corollary}
+\newtheorem{define}{Definition}
+\newtheorem{lem}{Lemma}
+\newtheorem{rem}{Remark}
+
+%======== Referrals 
+\newcommand{\thmref}[1]{Theorem~\ref{#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{#1}}
+\newcommand{\corref}[1]{Corollary~\ref{#1}}
+\newcommand{\remref}[1]{Remark~\ref{#1}}
+\newcommand{\proref}[1]{Proposition~\ref{#1}}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+%======== Shorthand notation
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Realext}{\mathbb{R}_e}
+\newcommand{\Complex}{\mathbb{C}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\iw}{i\omega}
+\newcommand{\eiw}{e^{i\omega}}
+\newcommand{\eiwt}{e^{i2\pi\omega t}}
+\newcommand{\eniw}{e^{-i\omega}}
+\newcommand{\eniwt}{e^{-i2\pi\omega t}}
+\newcommand{\infint}[1]{\ensuremath{\int_{-\infty}^\infty{#1}}}
+\newcommand{\fourier}[1]{\infint{#1\eniwt dt}}
+\newcommand{\ifourier}[1]{\infint{#1\eiwt dt}}
+\newcommand{\bmatr}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\pmatr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\smallbmatr}[1]{\ensuremath{\left[\begin{smallmatrix}#1\end{smallmatrix}\right]}}
+\newcommand{\smallpmatr}[1]{\ensuremath{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}}
+\newcommand{\statespace}[4]{\ensuremath{\left[\begin{array}{c|c}#1 &#2\\\hline #3 &#4\end{array}\right]}}
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\quaQ}{\mathcal{Q}}
+\providecommand{\abs}[1]{\displaystyle \left|#1\right|}
+\providecommand{\norm}[1]{\displaystyle \left\| #1 \right\|}
+\renewcommand{\Re}[1]{\operatorname{Re}\left\{ #1 \right\}}
+\renewcommand{\Im}[1]{\operatorname{Im}\left\{ #1 \right\}}
+
+%==================================================
+% ==== A style definition used in some Tikz-picture
+%==================================================
+\tikzset{ssmatrix/.style={matrix of math nodes,
+													left delimiter={[},
+													right delimiter={]},
+													ampersand replacement=\&,
+													nodes={
+																outer sep=0,
+																inner sep=0.2ex,
+																font=\footnotesize
+																},
+													inner sep=0,
+													outer sep=0,
+													every left delimiter/.style={xshift=0.1ex},
+													every right delimiter/.style={xshift=-0.1ex}}
+}
 
 
 
