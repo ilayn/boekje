@@ -786,22 +786,22 @@ for all bounded $\mathcal{D}:\Real\to (0,\infty)$. Then the overall multiplier f
 \geq 0
 \]
 for all $\omega\in\Real$.
-
-Thus, we can easily construct a $2\textsuperscript{nd}$ order transfer function $W_d$ such that $\tilde{\Delta}$ is an element of the set of all $W_d\bar{\Delta}$ with some $\hat \Delta\in \mathcal{H}_\infty$ satisfying $\|\bar{\Delta}\|_\infty\leq 1$. The weight $W_d$ is merged with the nominal system (see \figref{fig:uncicpasdelay}) and we arrive at an interconnection with the dynamic uncertainty $\bar{\Delta}$ whose $H_\infty$-norm is bounded by one. This is classical captured by $D$-scalings since we have
-
-
-
-\begin{figure}
-\begin{center}
-\begin{tikzpicture}[>=stealth]
-	\node[draw,inner sep=3mm] (plant) at (0,0) {$W_d\tilde{G}$};
-\node[draw,inner sep=3mm] (delay) at (0,1.5) {$\hat{\Delta}$};
-\draw[->] (plant.west) -| ++(-0.4,0.5) |- (delay.west);
-\draw[<-] (plant.east) -| ++(0.4,0.5) |- (delay.east);
-\end{tikzpicture}	\caption{The uncertain interconnection for the delay robustness test.}
-	\label{fig:uncicpasdelay}
-\end{center}
-\end{figure}
+%
+%Thus, we can easily construct a $2\textsuperscript{nd}$ order transfer function $W_d$ such that $\tilde{\Delta}$ is an element of the set of all $W_d\bar{\Delta}$ with some $\hat \Delta\in \mathcal{H}_\infty$ satisfying $\|\bar{\Delta}\|_\infty\leq 1$. The weight $W_d$ is merged with the nominal system (see \figref{fig:uncicpasdelay}) and we arrive at an interconnection with the dynamic uncertainty $\bar{\Delta}$ whose $H_\infty$-norm is bounded by one. This is classical captured by $D$-scalings since we have
+%
+%
+%
+%\begin{figure}
+%\begin{center}
+%\begin{tikzpicture}[>=stealth]
+	%\node[draw,inner sep=3mm] (plant) at (0,0) {$W_d\tilde{G}$};
+%\node[draw,inner sep=3mm] (delay) at (0,1.5) {$\hat{\Delta}$};
+%\draw[->] (plant.west) -| ++(-0.4,0.5) |- (delay.west);
+%\draw[<-] (plant.east) -| ++(0.4,0.5) |- (delay.east);
+%\end{tikzpicture}	\caption{The uncertain interconnection for the delay robustness test.}
+	%\label{fig:uncicpasdelay}
+%\end{center}
+%\end{figure}
 
 %%===================================================================================
 %%===================================================================================
@@ -892,7 +892,7 @@ Additionally, a particular PD type of a position-force controller scheme, denote
 \[
 \tau_s = K_p(\mu x_m-x_s)-K_v \dot{x}_s ,\quad \tau_m = -K_f F_e.
 \]
-The overall teleoperation system is {then described}, with $Y_m(s) = \inv{(M_ms+B_m)}$ and $Y_s(s) = \frac{\mu K_p}{M_s s^2+(B_s+K_v)s+K_p}$, in terms of the following admittance matrix:
+The overall teleoperation system is then described, with $Y_m(s) = \frac{1}{M_m s+B_m}$ and $Y_s(s) = \frac{\mu K_p}{M_s s^2+(B_s+K_v)s+K_p}$, in terms of the following admittance matrix:
 \begin{equation}
  Y = \pmatr{Y_m &- {K_f}Y_m\\ -Y_mY_s&\frac{M_m s^2+B_m s+\mu K_f K_p}{(M_s s^2+(B_s+K_v)s+K_p)}Y_m}.
 \label{eq:admitsys}

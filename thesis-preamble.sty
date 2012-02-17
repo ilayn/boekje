@@ -1,12 +1,12 @@
 %!TEX root = thesis.tex
 \ProvidesPackage{thesis-preamble}
 
-\edef\thesisjobname{\jobname}
-\newcommand\chapterinclude[1]{%
-  \def\jobname{#1}
-  \include{#1}
-  \let\jobname\thesisjobname
-}
+%\edef\thesisjobname{\jobname}
+%\newcommand\chapterinclude[1]{%
+  %\def\jobname{#1}
+  %\include{#1}
+  %\let\jobname\thesisjobname
+%}
 
 %%% PACKAGES
 \usepackage[american,dutch]{babel}
@@ -52,16 +52,22 @@
 \MakeOuterQuote{"}
 
 %% Hyperref
-\RequirePackage[ocgcolorlinks,breaklinks,
-            plainpages=false,pdfpagelabels,linktocpage]{hyperref}
+\RequirePackage[ocgcolorlinks,%
+								breaklinks,%
+								plainpages=false,%
+								pdfpagelabels,%
+								linktocpage]{hyperref}
 
 \definecolor{darkred}{rgb}{0.4,0,0}
 \definecolor{darkgreen}{rgb}{0,0.4,0}
 \definecolor{darkblue}{rgb}{0,0,0.4}
 \hypersetup{
-  linkcolor=darkred, citecolor=darkblue, filecolor=black, urlcolor=black
+  linkcolor=darkred,%
+	citecolor=darkblue,%
+	filecolor=black,%
+	urlcolor=black%
 }
-%\hypersetup{linkcolor=black,citecolor=black,filecolor=black,urlcolor=black}
+
 \AtBeginDocument{\hypersetup{pdfauthor={\@author},pdftitle={\@title}}}
 
 \RequirePackage[open,openlevel=4]{bookmark}
@@ -69,20 +75,33 @@
 
 %% biblatex
 \RequirePackage[
-    hyperref,backref,
-    sortcites,
-    date=short,
-    bibencoding=inputenc,
-    maxnames=3,
-    minnames=2,
-    firstinits=true,
-    sorting=nyt,
-    bibstyle=numeric,
-    citestyle=numeric-comp,
+    %backend=biber,
+    hyperref,%
+		backref,%
+    sortcites,%
+    date=short,%
+    bibencoding=inputenc,%
+    maxnames=3,%
+    minnames=2,%
+    firstinits=true,%
+    sorting=nyt,%
+    bibstyle=numeric,%
+    citestyle=numeric-comp,%
   ]{biblatex}
+
 \def\bibfont{\small}
 \bibliography{phdthesis}
-\renewcommand\bibname{References}
+\AtEveryBibitem{%
+  \clearfield{month}%
+}
+%
+%\ExecuteBibliographyOptions{doi=false}
+%\newbibmacro{string+doi}[1]{%
+  %\iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+%\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+%\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
+
+%\renewcommand\bibname{References}
 
 %\usepackage{docmute}
 
@@ -323,7 +342,8 @@
 								matrix,%
 								positioning,%
 								decorations.markings,%
-								patterns%
+								patterns,
+								matrix%
 								}
 								
 \usepgfplotslibrary{units}
@@ -418,20 +438,13 @@
 \newcommand\price[2][\$]{#1#2}
 \newcommand\usdollar{\textsc{u.s.}\$}
 
-\newmacro \ANSYS {ANSYS}
+
 \newmacro \Matlab {Matlab}
-\newmacro \maglev {maglev}
 \newmacro \dof {degree of freedom}
 \newmacro \Hinf {\ensuremath{H^\infty}}
-\newmacro \backemf {back--\emf/}
-
 \newmacro \sic {[\textit{sic}]}
 
-\newmacro \KJMagnetics {%
-  \href{http://www.kjmagnetics.com/}
-       {K\,\&\,J~Magnetics}%
-  \cite{kjmagnetics}%
-}
+
 
 \newmacro \threeD {\textsc{3d}}
 \newmacro \twoD {\textsc{2d}}
