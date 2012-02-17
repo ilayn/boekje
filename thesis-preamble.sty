@@ -1,15 +1,16 @@
 %!TEX root = thesis.tex
 \ProvidesPackage{thesis-preamble}
 
-%\edef\thesisjobname{\jobname}
-%\newcommand\chapterinclude[1]{%
-  %\def\jobname{#1}
-  %\include{#1}
-  %\let\jobname\thesisjobname
-%}
+\edef\thesisjobname{\jobname}
+\newcommand\chapterinclude[1]{%
+  \def\jobname{#1}
+  \include{#1}
+  \let\jobname\thesisjobname
+}
 
 %%% PACKAGES
 \usepackage[american,dutch]{babel}
+\usepackage{xcolor}
 \RequirePackage[T1]{fontenc}         % sane font encoding
 \RequirePackage{lmodern}             % for sensible sans and tt font
 \RequirePackage[sc,osf]{mathpazo}    % for math
@@ -17,40 +18,10 @@
 \linespread{1.1}                     % Palatino needs more leading
 \frenchspacing
 \normalfont
-
-
-\RequirePackage[utf8]{inputenc}      % sane input encoding
-%\DeclareUnicodeCharacter{2014}{\dash}
-%\DeclareUnicodeCharacter{2022}{\item}
-
-
-		
-\RequirePackage{
-  graphicx, %
-	siunitx,  %
-	kantlipsum,
-	amsmath,  %
-  amssymb,  %
-	tikz,     % Requires at least v2.10 !!
-	bm,       %
-	pgfplots, % Requires at least v1.5.1 !!
-	%subfigure %
-}
-
-
-
 \let\subcaption\undefined
 \let\subfloat\undefined
 \let\subfigure\undefined
 \RequirePackage{subcaption}
-%\RequirePackage[font={sf,small}]{caption}
-%\captionsetup[table]{position=top}
-
-
-
-\RequirePackage{csquotes}
-\MakeOuterQuote{"}
-
 %% Hyperref
 \RequirePackage[ocgcolorlinks,%
 								breaklinks,%
@@ -70,10 +41,48 @@
 
 \AtBeginDocument{\hypersetup{pdfauthor={\@author},pdftitle={\@title}}}
 
-\RequirePackage[open,openlevel=4]{bookmark}
-\RequirePackage{hypcap}
+\RequirePackage[utf8]{inputenc}      % sane input encoding
+%\DeclareUnicodeCharacter{2014}{\dash}
+%\DeclareUnicodeCharacter{2022}{\item}
 
-%% biblatex
+
+\RequirePackage{siunitx}		
+\RequirePackage{
+  graphicx, %
+	%kantlipsum,
+	amsmath,  %
+  amssymb,  %
+	amsthm,
+	tikz,     % Requires at least v2.10 !!
+	bm,       %
+	pgfplots, % Requires at least v1.5.1 !!
+}
+\usetikzlibrary{calc,%
+								matrix,%
+								positioning,%
+								decorations.markings,%
+								patterns,
+								matrix%
+								}
+								
+\usepgfplotslibrary{units}
+\RequirePackage{csquotes}
+\MakeOuterQuote{"}
+
+
+
+%\RequirePackage[font={sf,small}]{caption}
+%\captionsetup[table]{position=top}
+
+
+
+
+
+
+%\RequirePackage[open,openlevel=4]{bookmark}
+%\RequirePackage{hypcap}
+%
+%%% biblatex
 \RequirePackage[
     %backend=biber,
     hyperref,%
@@ -94,7 +103,7 @@
 \AtEveryBibitem{%
   \clearfield{month}%
 }
-%
+
 %\ExecuteBibliographyOptions{doi=false}
 %\newbibmacro{string+doi}[1]{%
   %\iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
@@ -109,7 +118,7 @@
 
 %% MATHS
 %\RequirePackage{amsmath,amssymb,bm,cool,mathtools}%,fngp
-\@ifpackageloaded{mathpazo}{\PassOptionsToPackage{mathpazo}{flexisym}}{}
+%\@ifpackageloaded{mathpazo}{\PassOptionsToPackage{mathpazo}{flexisym}}{}
 %\RequirePackage{breqn}
 %\setkeys{breqn}{labelprefix=eq:}
 
@@ -136,7 +145,7 @@
   \else\expandafter\@secondoftwo\fi}
 \newcommand\raggedout{\IfOddPage\raggedright\raggedleft}
 \newcommand\raggedin{\IfOddPage\raggedleft\raggedright}
-%
+
 %% Subfigures
 %\newsubfloat{figure}
 %\newenvironment{subfigure}[1][0.4]{%
@@ -146,20 +155,20 @@
 %}{%
   %\end{minipage}%
 %}
-\newenvironment{sidefigure}[1][0.4]{%
-  \begin{minipage}[t]{#1\linewidth}
-    \centering
-}{%
-  \end{minipage}%
-}
-
-% wide:
-\newenvironment{wide}{%
-  \begin{adjustwidth*}{0pt}{-\marginparsep-\marginparwidth}
-    \raggedout
-}{%
-  \end{adjustwidth*}%
-}
+%\newenvironment{sidefigure}[1][0.4]{%
+  %\begin{minipage}[t]{#1\linewidth}
+    %\centering
+%}{%
+  %\end{minipage}%
+%}
+%
+%% wide:
+%\newenvironment{wide}{%
+  %\begin{adjustwidth*}{0pt}{-\marginparsep-\marginparwidth}
+    %\raggedout
+%}{%
+  %\end{adjustwidth*}%
+%}
 
 %% Force font sizes in MathPSfrag & matlabfrag:
 %\def\PFGstyle{\footnotesize}
@@ -289,7 +298,7 @@
 
 %%%%%
 
-\renewcommand\contentsname{Table of Contents}
+\renewcommand\contentsname{Table in Contents}
 \nouppercaseheads
 
 \def\printtoctitle#1{\section*{#1}}
@@ -298,9 +307,32 @@
 
 %%%%%
 
+%%The first step to creating a new page header and footer is to create a new 
+% page style using the \makepagestyle{name} command. So if we want to create 
+% a new page style where the header contains the page number and the chapter
+% -section number (if any) and title, we would start out with the following:
+%%
+%%\makepagestyle{mypagestyle}
+%%
+% To create a nice separation between the page number and the title—rather 
+% than typesetting them at opposite ends of the header—we will separate them 
+% with a vertical rule. Now the commands to modify the headers and footers 
+% of a page style are: 
+%%\makeevenhead{style}{left}{center}{right}, 
+%%\makeoddhead 
+%%\makeevenfoot
+%%\makeoddfoot
+% All with the same number of arguments. So, this means we can extend our 
+% page style as follows:
+%%\makeevenhead{mypagestyle}{\thepage\hskip.5cm\vrule\hskip.5cm\leftmark}{}{}
+%%\makeoddhead{mypagestyle}{}{}{\rightmark\hskip.5cm\vrule\hskip.5cm\thepage}
+
+
+
+
 %% Page headers
-\setlength{\headheight}{\baselineskip}
-\setlength{\headwidth}{\textwidth+\marginparsep+0.5\marginparwidth}
+%\setlength{\headheight}{\baselineskip}
+%\setlength{\headwidth}{\textwidth+\marginparsep+0.5\marginparwidth}
 \makepagestyle{phdstayla}
 \makepsmarks{phdstayla}{%
   \let\@mkboth\markboth%
@@ -338,15 +370,7 @@
 
 
 
-\usetikzlibrary{calc,%
-								matrix,%
-								positioning,%
-								decorations.markings,%
-								patterns,
-								matrix%
-								}
-								
-\usepgfplotslibrary{units}
+
 %======== Thm style declaration
 \newtheorem{thm}{Theorem}
 \newtheorem{coroll}{Corollary}
