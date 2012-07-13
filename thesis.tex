@@ -4,13 +4,13 @@
 
 \begin{document}
 
-\chapterinclude{title}
+\include{title}
 
 \frontmatter
-%\pagestyle{plain}
+\pagestyle{plain}
 %\chapterinclude{abstract}
 %\chapterinclude{acknowledgements}
-%\cleardoublepage
+\cleardoublepage
 
 
 \pagestyle{phdstayla}
@@ -26,14 +26,15 @@
 \flushbottom
 
 \mainmatter
-\chapterinclude{intro}
-\chapterinclude{analysis}
-\chapterinclude{synthesis}
+\include{intro}
+\include{literature}
+\include{analysis}
+\include{synthesis}
 
 \backmatter
 \clearpage
 
-\chapterinclude{references}
+\include{references}
 
 \clearpage
 

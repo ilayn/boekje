@@ -3,11 +3,10 @@
 
 The success of the technological advances often can be associated with an unprecedented convenience that they bring in. At the heart of this convenience lies the ability to relax the limitations of the human body to a certain extent. From this point of view, it is not a surprise that the three most prominent technological wonders of the last century, namely the \emph{Television}, the \emph{Telephone} and the \emph{radio} (which was originally called ``radiotelegraphy"), bears the same Greek prefix \emph{tele-} which corresponds to ``\emph{at a distance}" in our context. This shows that there is something of extreme importance about our drive to extend our capabilities beyond the constraints that our bodies impose.
 
-% We can even think of slightly utopian cases such as teleportation which is something we are not sure if it is possible at all. 
 
 It is quite remarkable, in retrospect, that these ``gadgets" did not perish but rather kept on evolving since initially they were far from perfect. Quite the contrary, they were hardly operational. Even the commercialized version of the early TVs had a narrow bandwidth and minimum image quality. Similarly radio and telephone was barely transmitting sensible information as far as the signal-to-noise ratio is concerned. Nevertheless, they have provided the ways of communication which were unimaginable before their time. Therefore the added value dominated the shortcomings and even though they were quite imperfect, we kept using them. The important lesson to be learned was that a technology should not be judged by its imperfections but rather should be weighed by its contribution in this context or the convenience that is brought in by using it.  
 
-The success is also related to the fact that these technologies mainly relied on the human brain itself at their early stages. For example, the human brain did most of the noise filtering and data recovery by just guessing the missing pieces and identifying patterns from the signal brought by the respective medium. Today, with our smart mobile phones and 3D LED TVs, we can assume that the computational load on the human brain is drastically reduced. In other words, we are still identifying patterns and utilizing the relevant parts of our brain to make sense out of a TV broadcast\footnote{Pun intended.}. However, we don't need to use a higher level of concentration to reconstruct the words that we hear or to identify the image on the display due to the high quality output.
+The success is also related to the fact that these technologies mainly relied on the human brain itself at their early stages. For example, the human brain did most of the noise filtering and data recovery by just guessing the missing pieces and identifying patterns from the signal brought by the respective medium. Today, with our smart mobile phones and 3D LED TVs, we can assume that the computational load on the human brain is drastically reduced. In other words, we are still identifying patterns and utilizing the relevant parts of our brain to make sense out of a TV broadcast\footnote{Pun intended.}. However, we don't need to use a higher level of concentration to reconstruct the words that we hear or to identify the image on the display thanks to the high quality output. Note that we are still perfectly aware of the situation that 
 
 It seems that we are on the same track with the technological developments involving our touch sense. Considering the importance of our touch sense in any given situation, the added value of extending of our perception in this modality needs no motivation. Take the most familiar example: the vibrating mobile phone in the silent mode in our pocket. This is a very important example since every individual learns what that vibration might mean, either an SMS or a call, depending on the vibrational pattern. This means that the touch sense can be used to convey messages and more importantly we can process those messages for inference. 
 
@@ -15,21 +14,47 @@ It seems that we are on the same track with the technological developments invol
 This type of information said to be received via the haptic channel (or the collaborative use of tactile and proprioceptive modalities). Note that, we use the term ``touch sense'' pretty vaguely as a shortcut and we leave it to the experts of the field to define the sophisthicated mechanisms (pertaining to the somatosensory system) that we utilize when we manipulate objects, say with our bare hands. 
 
 
-Since our skin and muscles form one of most sophisticated and complex sensory systems, the somatosensory system, the brain can easily interpret the slightest changes and this extra signal processing power gives us a chance to hack into this system by providing artificial inputs. Still, it is rather conspicuous that this is impossible to achieve with today's technology. The essential complication is twofold; the high sensitivity of the very same sensory system makes it difficult to fake or mimic a natural phenomenon by artificial means and on the other hand we don't have a well-defined mapping from the to-be-created sensation to the required excitation signals. Moreover, even if we have such mappings available, the related hardware must execute the computed haptic signal profiles perfectly which is generally not the case. 
+Since our skin and muscles form one of most sophisticated and complex sensory systems, the somatosensory system, the brain can easily interpret the slightest changes and this extra signal processing power gives us a chance to hack into this system by providing artificial inputs. Still, it is rather conspicuous that this is impossible to achieve with today's technology. The essential complication is twofold; the high sensitivity of the very same sensory system makes it difficult to fake or mimic a natural phenomenon by artificial means and on the other hand we don't have a well-defined mapping from the to-be-created sensation to the required excitation signals. Moreover, even if we have such mappings available, the related hardware must execute the computed haptic signal profiles perfectly which is generally not the case.
 
 Then, we could simply ask \emph{Why bother?} 
 
 
 \section{The Objectives}
 
-We first give an opiniated view about the objectives of the technology and later on, define our microscopic focus of this thesis in this vast generality. This would hopefully give some perspective to what follows in the analysis and synthesis sections.  
+We first give an opiniated view about the objectives of the technology (as we foresee from a narrow ``today's'' perspective) and later on, define our microscopic focus of this thesis in this vast generality. This would hopefully give some perspective to what follows in the later sections.  
 
-\subsection{Bilateral Teleoperation}
-The touch related applications are diverse. The diversity is not only in terms of sensation they are related to (texture, shape etc.) but also how they encode the information and transmit via various modalities (e.g. vibrational patterns in mobile electronics, variable resistance to motion in game consoles and steering wheels etc.). 
+
+The touch related applications are diverse. The diversity is not only in terms of sensation they are related to (texture, shape etc.) but also how they encode the information and transmit via various modalities (e.g. vibrational patterns in mobile electronics, variable resistance to motion in game consoles and steering wheels etc.). There is no particular reason to limit ourselves with the daily needs or even luxurious demands regarding our touch sense as mobile phones taught us that a vibration in our pocket means a contact request from someone which is hardly ever related to the touch sense. This should be pretty awkward to experience if someone actually would come and shake our pockets to draw our attention (unless it is socially accepted). Therefore, we have devised a way to translate one particular message into another by simply teaching ourselves and getting used to it. Note that, we still don't have any idea about the distant person on the line however, once the call is accepted we suddenly require a higher level of detail. Hence, it does not seem improbable that other types of physical units in terms temperature, light intensity etc. being converted into pressure or tactile patterns in time domain.
+
+Hence, it is our belief that the crux of this technology is establishing a interpretable protocol between our brain and the machine but not exactly reflecting the particular state of some distant or virtual physical medium. 
+This would be the main argument of this thesis when we distinguish our approach with its comparable counterparts. For this reason, we would like to narrow down our focus further by defining different types of touch related concepts.
+
+\subsection{A Terminological Classification}
+
+As we mentioned above, the somatosensory system is quite complex and there are different layers of sensory mechanisms connected to the overall perception. The main two branches of technology relating to the touch perception is the tactile and haptic feedback. The terminology is yet to reach a steady state standard however what follows below is plausible considering the variations and nuances found in the literature. Since there is no fixed definition for such perception we would use the classification with respect to the amplitude of the motion. 
+\subsubsection{Tactile Feedback}
+Roughly, the tactile perception can be associated with the low-stroke high-frequency motion applied relative to the skin. The most striking example is probably the Braille system used by visually impaired or disabled individuals. The average reading speed with Braille system is about 125-150 words per minute \cite{americanblind} in contrast with 200-250 words per minute by eyesight. 
+
+\begin{figure}%
+\centering
+\includegraphics[width=\columnwidth]{\impath/intro/braille.jpg}%
+\caption{The comparison of the same content written according to Braille and regular publication standards}%
+\label{fig:braille}%
+\end{figure}
+
+Most of today's technological devices utilize this channel to send and receive information. Many mobile phone applications and a few gaming consoles such as Wii\raisebox{0.5ex}{\scriptsize\texttrademark} utilize short vibrational patterns to alert the user that some action has been performed e.g. the user hovers over a hot spot on the screen or some moving object hits an obstacle etc. 
+
+
+
+
+
+
+
+it's not just transferring one particular quantity from one physical medium to another but  haptic (or tactile, pressure or others) pattern produced by a technological device from here on we would simply refer to as ``haptic device''
 
 \subsection{Objective of This Thesis}
 
-
+Transparency TV den istense renkler super olsun falan komple sacma. 
 
 
 %
