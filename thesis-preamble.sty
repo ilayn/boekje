@@ -9,8 +9,8 @@
 %}
 
 %%% PACKAGES
-\usepackage[american,dutch]{babel}
-\usepackage{xcolor}
+%\usepackage[american,dutch]{babel}
+%\usepackage{xcolor}
 \RequirePackage[T1]{fontenc}         % sane font encoding
 \RequirePackage{lmodern}             % for sensible sans and tt font
 \RequirePackage[sc,osf]{mathpazo}    % for math
@@ -28,19 +28,9 @@
 								plainpages=false,%
 								pdfpagelabels,%
 								linktocpage]{hyperref}
-
-\definecolor{darkred}{rgb}{0.4,0,0}
-\definecolor{darkgreen}{rgb}{0,0.4,0}
-\definecolor{darkblue}{rgb}{0,0,0.4}
-\hypersetup{
-  linkcolor=darkred,%
-	citecolor=darkblue,%
-	filecolor=black,%
-	urlcolor=black%
-}
-
 \AtBeginDocument{\hypersetup{pdfauthor={\@author},pdftitle={\@title}}}
 
+%\RequirePackage[framemethod=1]{mdframed}
 \RequirePackage[utf8]{inputenc}      % sane input encoding
 %\DeclareUnicodeCharacter{2014}{\dash}
 %\DeclareUnicodeCharacter{2022}{\item}
@@ -51,19 +41,31 @@
   graphicx, %
 	%kantlipsum,
 	amsmath,  %
-  amssymb,  %
+    amssymb,  %
 	amsthm,
 	tikz,     % Requires at least v2.10 !!
 	bm,       %
 	pgfplots, % Requires at least v1.5.1 !!
 }
-\usetikzlibrary{calc,%
-								matrix,%
-								positioning,%
-								decorations.markings,%
-								patterns,
-								matrix%
-								}
+\definecolor{darkred}{rgb}{0.4,0,0}
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+\definecolor{darkblue}{rgb}{0,0,0.4}
+\hypersetup{
+  linkcolor=darkred,%
+	citecolor=darkblue,%
+	filecolor=black,%
+	urlcolor=black%
+}
+
+
+\usetikzlibrary{arrows,
+                calc,%
+				matrix,%
+				positioning,%
+				decorations.markings,%
+				patterns,
+				matrix%
+				}
 								
 \usepgfplotslibrary{units}
 \RequirePackage{csquotes}
@@ -80,13 +82,18 @@
 
 
 %\RequirePackage[open,openlevel=4]{bookmark}
-%\RequirePackage{hypcap}
+\RequirePackage{cleveref}
+
+
+\crefname{secinapp}{appendix}{appendices}
+\Crefname{secinapp}{Appendix}{Appendices}
+
 %
 %%% biblatex
 \RequirePackage[
-    %backend=biber,
+    backend=biber,
     hyperref,%
-		backref,%
+    backref,%
     sortcites,%
     date=short,%
     bibencoding=inputenc,%
@@ -98,10 +105,12 @@
     citestyle=numeric-comp,%
   ]{biblatex}
 
-\def\bibfont{\small}
+%\def\bibfont{\small}
 \bibliography{phdthesis}
 \AtEveryBibitem{%
-  \clearfield{month}%
+  \clearfield{isbn}
+  \clearfield{issn}
+  \clearfield{month}
 }
 
 %\ExecuteBibliographyOptions{doi=false}
@@ -169,12 +178,6 @@
 %}{%
   %\end{adjustwidth*}%
 %}
-
-%% Force font sizes in MathPSfrag & matlabfrag:
-%\def\PFGstyle{\footnotesize}
-%\def\matlabtextA{\footnotesize}
-%\def\matlabtextB{\footnotesize}
-%\def\matlabtextC{\footnotesize}
 
 %%
 %\newcommand\gridIV[5][1em]{%
@@ -349,9 +352,9 @@
       \fi
       ##1}}}
 \makerunningwidth{phdstayla}{\headwidth}
-\makeheadposition{phdstayla}{flushright}{flushleft}{}{}
-\makeevenhead{phdstayla}{\thesispage} {} {\small\leftmark}
-\makeoddhead{phdstayla} {\small\rightmark} {} {\thesispage}
+%\makeheadposition{phdstayla}{flushright}{flushleft}{}{}
+%\makeevenhead{phdstayla}{\thesispage} {} {\small\leftmark}
+%\makeoddhead{phdstayla} {\small\rightmark} {} {\thesispage}
 \pagestyle{phdstayla}
 
 \makeheadrule{phdstayla}{\dimexpr\textwidth+0.5\marginparwidth+\marginparsep\relax}{0.4pt}
@@ -430,51 +433,3 @@
 													every left delimiter/.style={xshift=0.1ex},
 													every right delimiter/.style={xshift=-0.1ex}}
 }
-
-
-
-
-
-
-
-%%% SHORTCUTS
-
-%\RequirePackage[english]{shortwrite}
-
-\newcommand\code[1]{\texttt{#1}}
-\newcommand\note[1]{\unskip\footnote{#1}}
-
-\DeclareRobustCommand\dash{%
-  \unskip\nobreak\thinspace\textemdash\allowbreak\thinspace\ignorespaces}
-\pdfstringdefDisableCommands{\def\dash{ - }}
-
-\newcommand\acro[1]{\textsc{\MakeLowercase{#1}}}
-\newcommand\newacro[1]{\@namedef{#1}{\acro{#1}}}
-
-\newacro{FFT}
-\newacro{PID}
-\newacro{PI}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand\newmacro[2]{\def#1/{#2}}
-
-\newcommand\price[2][\$]{#1#2}
-\newcommand\usdollar{\textsc{u.s.}\$}
-
-
-\newmacro \Matlab {Matlab}
-\newmacro \dof {degree of freedom}
-\newmacro \Hinf {\ensuremath{H^\infty}}
-\newmacro \sic {[\textit{sic}]}
-
-
-
-\newmacro \threeD {\textsc{3d}}
-\newmacro \twoD {\textsc{2d}}
-
-\newmacro \AC {time varying}
-\newmacro \PhD {Ph.\,D\sw@ensuresingleperiod}
-
-% COMPOUND WORDS
-\newcommand \compound [2] {#1\-#2}

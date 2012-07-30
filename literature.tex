@@ -1,40 +1,201 @@
-\chapter{State-of-the-art and Brief Literature}
-\label{chap:thatchapter}
+\chapter{A Brief Literature Survey}\label{chap:litsurvey}
 
-The teleoperation systems are structurally very interesting and equally challenging systems also from a system theoretical view. As an example, if we isolate the local and the remote devices that would be used to manipulate a distant object or explore a distant environment, we see that they are, whether linear or nonlinear, simple motion-control systems with well-studied properties. Hence, one can view the open-loop teleoperation system as a system with block diagonal structure. 
+The teleoperation systems are structurally interesting and equally challenging 
+systems. This is especially true from a system theoretical point of view. As an example, 
+if we just focus on the local and the remote devices that would be used for manipulation, 
+we see that they are, whether linear or nonlinear, motion-control systems with well-studied 
+properties. Hence, one can view the open-loop teleoperation system as a system with a block 
+diagonal structure. However, unlike the typical motion-control systems, these two disjoint systems must be stabilized 
+simultaneously by the same controller (delayed/undelayed local control loops can be seen as a structured central
+controller) that is performing sufficiently in order to ``fool" the user such that the user feels 
+a force feedback as if s/he is actually operating at the remote medium. Hence, outputs of each system become
+exogenous inputs of the other and these are regulated by the to-be-designed controller. Therefore, it's this controller 
+that makes a teleoperation system perform adequately or, as in many situations, drive to instability.
 
-However, unlike the usual motion-control systems, their exogenous inputs and outputs are coupled with the to-be-designed controller and it is this controller that makes a teleoperation system perform adequately or drive to instability. Moreover, in case of free-air motion, the human force input to the local device should be tracked by the remote device but in case of a hard-contact of remote device with the environment, its effect should be attenuated unilaterally and once again should also be tracked if the local device position reference is pointing away from the obstacle. 
+
+For example, in the case of free-air motion (i.e. the remote device is free to roam in the remote site), the human force input 
+to the local device and/or the position of the local device should be tracked by the remote device. In the case of a 
+hard-contact of remote device with the environment, however, these inputs should be counteracted  if the force vector points into 
+the obstacle. Hence, the force signal is simultaneously tracked for mimicking the user motion but at the same time 
+is defied in case of a resisting force at the remote site. If this is not enough, if the user suddenly decides to release the 
+local device this resistance should die out as soon as possible without any kickback since when a user leans to a wall at position
+$x_0$ applying a horizontal force and then stops, it is not expected that the wall continues to push the user even after the user 
+has the position $x<x_0$. There are a few other scenarios that would further complicate the requirements. In short, the user 
+and the environment properties are time-varying and make it difficult to design a control law such that these and many other 
+details are handled properly simultaneously.
+
+With this short motivation, we can safely claim that looking at the overall system as a motion control 
+system is not sufficient in terms of complexity (though necessary). In general, motion tracking specifications 
+are a subset of the general performance requirements of the bilateral teleoperation systems.
+
+Many parts of the bilateral teleoperation problem can be scrutinized under different frameworks, for example, the variation of human 
+and environment properties give naturally rise to a robust or an adaptive control approach, the hard-contact problem 
+can be analyzed under switched control systems, jump control systems or constrained linear systems etc. Before we go into the details of 
+the proposed methods of this thesis, let us sample a few important and successful approaches reported so far
+together with their shortcomings.
 
 
 
-=========== Not good! Better wording!
+\section{Modeling of Bilateral Teleoperation Systems}
 
-\section{A Brief Historical Overview}
+The dominating modeling paradigm of bilateral teleoperation systems is the two-port network approach. Consider the quote taken from
+\cite{hannaford89} published in 1989:
+%\begin{mdframed}[style={userdefinedwidth={0.8\textwidth},align=center,outerlinewidth=3pt,innerlinewidth=0pt,outerlinecolor=black!10,roundcorner=3pt}]
+\begin{quote}
+%In this paper, development of the analytical framework is complemented by modeling of an actual teleoperator system.
+[...] The modeling approach is to transform the teleoperation system model into an electrical circuit and simulate it using
+SPICE, the electronic circuit simulation program developed at UC Berkeley.[...]
+\end{quote}
+%\end{mdframed}
 
-The inception of the bilateral teleoperation technology is commonly attributed to the work 
-of Raymond Goertz in Argonne National Laboratories \cite{goertz} (In \cite{basanezsuarez}, 
-it's even traced back to Nikola Tesla). The main motivation of Goertz' work (similarly later in Europe 
-by Vertut \cite{vertutcoiffet}) was handling and manipulating nuclear material, hence the very 
-first teleoperators are purely mechanical to cope with the hostile environment. Though not much 
-happened in terms of realization of devices, the concept of telemanipulation kept its appeal 
-and a large body of research was reported until the 1980s. In that decade, with the help of the 
-ever-increasing computational power and the popularity of Virtual Reality (VR), teleoperation 
-technology received more attention for a possible use in the space-,underwater-,medical-related tasks. We refer 
-the reader to \cite{burdea} for a detailed account of these developments 
 
-There is a plethora of choices when it comes to modeling a teleoperation system. 
+As seen from Hannaford's motivation, the computer-based simulation tools are used extensively since then. Arguably
+this is one of the main reasons why network based electrical circuit based modeling dominated the teleoperation literature. 
+Reinforced with the circuit simulation tools, experts of the field started to construct analogies that goes beyond just
+a mechanical-electrical system analogy. Arguably, the most prominent concept borrowed from these analogies is the two-port network 
+view of the bilateral teleoperation systems. The reader is referred to \cref{chap:apdxnetwork} for a short recap of network theory.
+Today, the aforementioned motivation also applies to almost all physical systems i.e. one can simulate arbitrary models via many 
+computational packages. Yet, it's a de facto standard to use the circuit modeling while the teleoperation devices are mostly 
+mechanical. The author needs to place a disclaimer at this point that he cannot see the benefit of such an artificial step once the 
+system is represented by a model, as it is demonstrated in later sections that the mechanical/electrical analogy is, roughly, an equivalence
+based on the resulting models and works in the electrical$\to$mechanical direction too. Hence, to the best of our knowledge the 
+circuit based modeling is merely a convention rather than a requirement.
+
+\subsection{Two-port Modeling of Teleoperation Systems}
+In the teleoperation context, if one uses the ``load-source" analogy for the manipulated environment 
+and the human, then the system models all the bilateral interaction between the load and the source 
+ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via their input/output properties i.e.
+effort variable/flow variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/linearity
+of the components are not relevant at the outset if we are only interested in energy exchange which is the basis
+of so-called Time-Domain Passivity Methods \cite{hannafordryu} which we will mention later in this chapter. Thus, 
+the user, the control system, the environment, the remote and local devices and communication delays are seen as 
+$1-$ and $2-$ports exchanging energy in time. Since the external behavior of the ports can be characterized completely by the 
+current and the voltage drop across the terminals, it is indeed very convenient to model these components as 
+interacting ``black boxes'' (See \Cref{fig:portrep}).
+
+
+\begin{figure}
+\begin{subfigure}[b]{0.5\textwidth}
+\centering
+\begin{tikzpicture}[>=stealth,baseline=15mm,
+every node/.style={draw,minimum size=1cm}]
+\node (deltas) at (0,0) {$\Delta_s$};
+\node[left=of deltas] (g) {$G$};
+\node[left=of g] (deltal) {$\Delta_l$};
+\tikzset{every node/.style={draw,circle,inner sep=1pt,fill=white}}
+\foreach \y in {s,l}{
+    \node at ({$(g)!0.5!(delta\y)$} |- {g.40}) (circ1\y){};
+    \node at ({$(g)!0.5!(delta\y)$} |- {g.-40})(circ2\y){};
+};
+\draw (circ1l) -- (deltal.40) (circ2l) -- (deltal.-40)
+(circ1s) -- (deltas.140) (circ2s) -- (deltas.-140);
+\draw[->] (circ2s) -- (g.-40) (circ1s) -- (g.40);
+\draw[->] (circ2l) -- (g.-140) (circ1l) -- (g.140);
+\end{tikzpicture}
+\caption{}
+\label{fig:portrep}
+\end{subfigure}%
+\begin{subfigure}[b]{0.5\textwidth}
+\centering
+\begin{tikzpicture}[>=stealth,scale=0.5, transform shape]
+\matrix (G) [draw,matrix of math nodes,inner sep=1mm,row sep=1mm,ampersand replacement=\&]{ G_{11} \& G_{12}\\ G_{21} \& G_{22}\\};
+\matrix (delta) at (0,3) [outer sep=0,draw,matrix of math nodes,inner sep=0.5mm,ampersand replacement=\&]{\Delta_s \& \\ \& \Delta_l\\};
+\draw[->] (G.160) -| ++ (-0.4,0.8) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.160);
+\draw[->] (G.200) -| ++ (-0.7,0.6) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.200);
+\draw[<-] (G.20) -| ++ (0.4,0.5) |- (delta.20);
+\draw[<-] (G.-20) -| ++ (0.7,0.5) |- (delta.-20);
+\end{tikzpicture}
+\caption{}
+\label{fig:nom_net}
+\end{subfigure}
+\caption{Two representations of a 2-port network.}
+\end{figure}
+
+
+For our purposes, we consider only the immitance matrices that describe $G$ as an input-output mapping (as opposed to transmission or ABCD parameters) as {follows}:
+\begin{equation}
+\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u} \ , \ \pmatr{p\\u}=\pmatr{\Delta_s &0\\0&\Delta_l} \pmatr{q\\y}.
+%\label{eq:pasgdel}
+\end{equation}
+Therefore, the overall interconnection can be {depicted} by the block diagram given in \Cref{fig:portrep}. 
+In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to the human and the unknown environment. 
+
+
+Especially, network theory based modeling offered a 
+great opportunity for simulating/designing the teleoperation systems via the celebrated hypothesis that
+human and the environment can be assumed to be passive mathematical operators.
+
+
+
+  
+We refer the reader to \cite{burdea} for a detailed account of these developments 
+
+There is a plethora of choices when it comes to modeling a teleoperation system.
 
 
 \begin{figure}%
 %http://chat.stackexchange.com/transcript/message/4857161#4857161
 \centering
 \begin{tikzpicture}[scale=1,manstyle/.style={line width=4pt,line cap=round,line join=round}]
+\node[rectangle,draw,minimum height=3cm,minimum width=3.8cm] at (0.5cm,0)     (a) {};
+\node[rectangle,draw,minimum height=3cm,minimum width=3.8cm] at (1.5cm,1cm) (b) {};
+\foreach \x in {north east,north west,south east,south west} \draw (a.\x) -- (b.\x);
+\node[rectangle,draw,minimum height=3cm,minimum width=3.8cm] at (5.5cm,0)     (a) {};
+\node[rectangle,draw,minimum height=3cm,minimum width=3.8cm] at (6.5cm,1cm) (b) {};
+\foreach \x in {north east,north west,south east,south west} \draw (a.\x) -- (b.\x);
 \node[fill,circle,inner sep=2.5pt,outer sep=1pt] at (-0.2mm,7.1mm) {};
-\draw[manstyle] (0,0.5) -- ++(0,-1.2cm);
+\draw[manstyle] (0,0.5cm) -- ++(0,-1.2cm);
 \draw[manstyle] (-1.5pt,0) -- ++(0,0.5cm) (1.2pt,1pt) --(0,5mm)--++(-45:4mm);
+\draw[line width=1mm,fast cap-fast cap] (0.5cm,0.2cm) -- ++(0.5cm,0);
+\begin{scope}[xshift=1.3cm,-stealth,black!20]
+\draw (0,0,0) -- (0,0,1); \draw (0,0,0) -- (0,1,0);\draw (0,0,0) -- (1,0,0);
+\end{scope}
+\begin{scope}[xshift=4.7cm,-stealth,black!20]
+\draw (0,0,0) -- (0,0,1); \draw (0,0,0) -- (0,1,0);\draw (0,0,0) -- (1,0,0);
+\end{scope}
+\begin{scope}[shift={(1.4cm,-0.2cm)}]
+\draw (0,0) -- (0.9cm,0) (0.45,0) circle (1.5mm);
+\path [postaction={pattern=north west lines},fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);
+\draw[line width=1.5mm,round cap-round cap] (0.475cm,0.05cm) -- ++(110:7mm);
+\draw[line width=1mm,round cap-round cap] (0.475cm,0.05cm) ++(110:6.3mm) --++ (220:5mm);
+\end{scope}
+\begin{scope}[shift={(5.4cm,-0.2cm)},cm={-1,0,0,1,(0,0)},transform shape]
+\draw (0,0) -- (0.9cm,0) (0.45cm,0) circle (1.5mm);
+\path [postaction={pattern=north west lines},fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);
+\draw[line width=1.5mm,round cap-round cap] (0.475cm,0.05cm) -- ++(110:7mm);
+\draw[line width=1mm,round cap-round cap] (0.475cm,0.05cm) ++(110:6.3mm) --++ (220:5mm);
+\end{scope}
+\draw[line width=1mm,fast cap-fast cap] (5.8cm,0.2cm) -- ++(0.5cm,0);
+\begin{scope}[shift={(6.6cm,0.4cm)}]
+\draw[thick]
+\foreach \i in {1,2,...,10} {%
+  [rotate=(\i-1)*36]  (0:2mm)  arc (0:12:2mm) -- (18:2.4mm)  arc (18:30:2.4mm) --  (36:2mm)
+};
+\node[circle,draw,inner sep=2pt,fill] (merkez) at (0,0) {};
+\end{scope}
+\begin{scope}[shift={(6.85cm,0cm)},scale=1.2]
+\draw[thick]
+\foreach \i in {1,2,...,10} {%
+  [rotate=(\i-1)*36]  (0:2mm)  arc (0:12:2mm) -- (18:2.4mm)  arc (18:30:2.4mm) --  (36:2mm)
+};
+\node[circle,draw,inner sep=2pt,fill] (merkez) at (0,0) {};
+\end{scope}
+\begin{scope}[shift={(6.8cm,0.5cm)},scale=0.8]
+\draw[fill] (0.5mm,0.5cm) rectangle (0.49cm,0.6cm);
+\draw[fill,postaction={pattern=north west lines,pattern color=white}] (0.2cm,0.5cm) -- ++ (0,-0.4cm) -- ++ (-45:1mm) --++(45:1mm) --++ (0,0.4cm) --cycle;
+\end{scope}
+
 \end{tikzpicture}
+
 \caption{General Teleoperation System}%
 \label{fig:teleop}%
 \end{figure}
 
-The main tool that one has is the physical-interaction-based approach. Hence the view of the designer is tuned to see the energy interaction between two distant media. This approach treats the human and the environment as sources pumping energy to the system and the controller is viewed as the energy regulator preventing excess energy causing the system go unstable. 
+The main tool that one has is the physical-interaction-based approach. Hence the view of the designer is 
+tuned to see the energy interaction between two distant media. This approach treats the human and the 
+environment as sources pumping energy to the system and the controller is viewed as the energy regulator 
+preventing excess energy causing the system go unstable. 
+
+\section{Analysis}
+
+\section{Synthesis}

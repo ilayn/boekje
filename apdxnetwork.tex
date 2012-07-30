@@ -1,0 +1,94 @@
+\chapter{Basic Network Theory}\label{chap:apdxnetwork}
+
+
+Let us give a short introduction about the related terminology at this point for 
+the sake of completeness. We would like to follow Jan C. Willems' formulation for a systematic definition of ports appeared 
+in \cite{willemsCSM}. 
+
+\section{A Recap of Network Theory Preliminaries}
+
+In network theory and also in its application {to bilateral teleoperation}, the ``system" refers 
+to the network model that is hypothetically disconnected (thus admitting virtual terminals) from 
+its ``surroundings" such as the ``load" and the ``source" of a circuit. This system is allowed to 
+interact with its surroundings via ``ports" or, more generally, circuit terminal pairings that 
+satisfy some technical assumptions. 
+
+
+\tikz \draw[->,ultra thick] (0,0) -- ++(4cm,0) node[right,fill=yellow] {(More info on behaviors below!)};
+
+
+In modeling language and block diagrams, the terminals denote the information carriage
+of certain properties of the system. Hence, the reader is warned about the ambiguity of this hidden 
+switch from a purely electrical view of the networks to a more general and symbolic nature of these
+logical terminals. For example a spring can be modeled as a black box with two terminals, for which each terminal 
+having two variables attached to it, namely the force being exerted ``to'' or ``by'' and the position of 
+that terminal. Hence, when interconnected with other terminals, these variables are shared by both connected terminals.
+This is the basic reformulation of the port condition from network theory, namely a pair of terminals form a port 
+if the magnitude of current flowing in from one is equal to the magnitude of the current flowing out from the other.
+
+Consider a network with N terminals. Let $\mathcal{B}\subseteq (\Real^N\times\Real^N)^\Real$ denote the behavior set 
+that is defined as the set of all admissible potential and current (counted positive when into the circuit) 
+trajectories compatible with the network architecture at each terminal. Here $(\Real^N\times\Real^N)^\Real$ denotes 
+the set of all maps $f: \Real\to\Real^N\times\Real^N$ e.g. each terminal voltage and current evolution through time 
+and $\mathcal{B}$ is the restriction to the maps that are compatible with the network structure.
+
+A subset of terminals such that potential/current behavior of the circuit implies that the sum of the currents into the 
+circuit along the terminals of the subset is zero and such that the behavior is invariant under the addition of a constant 
+to the potentials of the terminals of the subset, is a port. As an example, the terminals of an electrical circuit that stores no electrical 
+charge should satisfy the Kirchoff laws: 
+\[
+(V,I) \in \mathcal{B}\,\text{and}\, \alpha\in\Real \implies (V+\alpha e,I) \in \mathcal{B}\,\text{and}\, e^T I = 0
+\]
+where $e=\bmatr{1&1&\cdots&1}^T$, all ones vector of length $N$. Thus, in the mechanical analogy, the behavior of the 
+port should only depend on the net force acting on the port (not the absolute values) and also the directed sum of 
+velocities should add up to zero. Note that a port can have arbitrary number of terminals such as a op-amps, transistors, 
+$Y-\Delta$ resistance networks etc. as long as the terminals satisfy the port condition given above. 
+
+Given a port with $n-$terminals with $V,I$ denoting the effort and the flow variables, the instantaneous power is given by 
+\[
+P = \sum_{k=1}^n{V_k(t)I_k(t)}
+\]
+and the energy transfered in the time interval is given by the total power delivered
+to/from that port in the time interval $[t_1,t_2]$: 
+\[
+E = \int^{t_{2}}_{t_{1}}\sum_{k=1}^n{V_k(t)I_k(t)}dt
+\]
+
+As almost always stability is related to one way or the other to a finite-energy notion, the energy transfer through ports
+is the main focus of network theory based modeling paradigm.
+
+This becomes crucial when modeling multi-local multi-remote teleoperation devices
+as one needs to keep track of the energy distribution between different users or different remote devices in order to 
+keep the network modeling paradigm consistent with the physical system (see e.g. \cite{panzirsch}).
+
+Without going into the philosophical roots, by far and large the most common ports among the practically relevant are the 
+$2-$terminal ports that are strongly related to the second order systems (one can invoke the analogies between mechanical/%
+electrical/thermal etc. systems quite early however serves no purpose for our discussion).  Since every $2-terminal$ port
+can be characterized by two variables (flow and the effort variable) it is customary to characterize the interconnected
+n-port networks by differential equation systems. This is done by imposing an artificial causality scheme, 
+two of these time=dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
+(\cite{behavbook}). This is the simplest input/output modeling of physical systems via treating one port variable as the 
+\emph{cause} and the other one as the \emph{effect} to this cause e.g. the current is due to the voltage drop across the terminals or 
+vice versa. 
+
+
+
+
+Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance 
+and hybrid parameters for 2-port networks and their combinations for general $n$-port network interconnections. 
+With a slight abuse of notation, we will use the term ``immitance" matrix to refer to any of these representations. 
+Suppose that a 2-port immitance matrix is partitioned as
+\[
+\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u}
+\]
+where $q,y,p,u$ represent the flow (current, velocity etc.) and the effort(potential difference, force etc.) signals. Then, 
+obtaining one representation from another is possible by a combination of the following elementary ``permutation" and 
+``{partial} inversion" operations:
+\begin{align*}
+\pmatr{q\\y}&=\pmatr{G_2 &G_1\\G_4 &G_3}\pmatr{u\\p}, \ \ \ \tag{Permutation}\\
+\pmatr{p\\y}&=\pmatr{\inv{G_1} &-\inv{G_1}G_2\\G_3\inv{G_1} &G_4-G_3\inv{G_1}G_2}\pmatr{q\\u}. \ \ \ \tag{Partial Inversion}
+\end{align*}
+In the latter operation it is assumed that the inverse exists. The existence of inverses are limiting the realizability
+of networks as impedance or admittance matrices. Moreover, in \cite{andersonHmat}, it has been shown that a hybrid matrix
+realization is always possible regardless of the zero diagonals. However, since we are interested in asymptotical stability
+properties of networks, a simple open-circuit argument reveals that the inverses must exist.

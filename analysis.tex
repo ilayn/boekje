@@ -37,66 +37,8 @@ $G=\tikz[baseline={([yshift=-3pt]current bounding box.center)},scale=0.8,transfo
 
 
 \section{Preliminaries}\label{sec:prel}
-In this section, we will briefly give a technical overview of the multiplier methods
-to base our discussion on and to relate to the passivity based results. Let us first consider the system representations that we will employ throughout the paper.
+In this section, we will briefly give a technical overview of the multiplier methods to base our discussion on and to relate to the passivity based results. Let us first consider the system representations that we will employ throughout the paper.
 
-\subsection{System Representations}\label{sec:sysrep}
-In network theory and also in its application {to bilateral teleoperation}, the ``system" refers to the network model that is hypothetically disconnected (thus admitting virtual terminals) from its ``surroundings" such as the ``load" and the ``source" of a circuit. This system is allowed to interact with its surroundings via ``ports" or, more generally, circuit terminal pairings that satisfy some technical assumptions. In the teleoperation context, if one uses the ``load-source" analogy for the manipulated environment and the human, then the system models all the bilateral interaction between the load and the source ports (as in \figref{fig:nom_net}).
-\begin{figure}
-\begin{subfigure}[b]{0.5\linewidth}
-\centering
-
-
-\begin{tikzpicture}[>=stealth,baseline=15mm]
-\foreach \x/\y/\z  in {0.75/\Delta_s/deltas,2.75/G/net,4.75/\Delta_l/deltal}{\node[draw,minimum size=1cm,fill=white] (\z) at (\x,2.75) {$\y$};}
-\foreach[count=\xi] \x/\y/\z in {40/l/+,-40/l/,140/s/+,-140/s/}{
-\draw (net.\x) -- (delta\y.180-\x);\node[draw,fill=white,circle,inner sep=0.5mm,label=above:{{\tiny$\z$}}] (cir\xi) at ($(net.\x)!0.5!(delta\y.180-\x)$) {};
-}
-\draw[->] (cir1) -- (net.40);
-\draw[->] (cir3) -- (net.140);
-\end{tikzpicture}
-
-\caption{}
-\label{fig:nom_net}
-
-
-\end{subfigure}%
-\begin{subfigure}[b]{0.5\linewidth}
-\centering
-
-
-
-\begin{tikzpicture}[>=stealth,scale=0.5, transform shape]
-\matrix (G) [draw,matrix of math nodes,inner sep=1mm,row sep=1mm,ampersand replacement=\&]{ G_{11} \& G_{12}\\ G_{21} \& G_{22}\\};
-\matrix (delta) at (0,3) [outer sep=0,draw,matrix of math nodes,inner sep=0.5mm,ampersand replacement=\&]{\Delta_s \& \\ \& \Delta_l\\};
-\draw[->] (G.160) -| ++ (-0.4,0.8) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.160);
-\draw[->] (G.200) -| ++ (-0.7,0.6) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.200);
-\draw[<-] (G.20) -| ++ (0.4,0.5) |- (delta.20);
-\draw[<-] (G.-20) -| ++ (0.7,0.5) |- (delta.-20);
-\end{tikzpicture}
-
-\caption{}
-\label{fig:portrep}
-
-\end{subfigure}
-\caption{Two representations of a 2-port network.}
-\end{figure}
-Furthermore, by imposing an artificial causality scheme, two of these signals can be selected as free variables and the remaining ones become dependent variables (\cite{behavbook}). Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance and hybrid parameters for 2-port networks and their combinations for general $n$-port network interconnections. With a slight abuse of notation, we will use the term ``immitance" matrix to refer to any of these representations. Suppose that a 2-port immitance matrix is partitioned as
-\[
-\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u}
-\]
-where $q,y,p,u$ represent the flow and the effort signals. Then, obtaining one representation from another is possible by a combination of the following elementary ``permutation" and ``{partial} inversion" operations:
-\begin{align*}
-\pmatr{q\\y}&=\pmatr{G_2 &G_1\\G_4 &G_3}\pmatr{u\\p}, \ \ \ \tag{Permutation}\\
-\pmatr{p\\y}&=\pmatr{\inv{G_1} &-\inv{G_1}G_2\\G_3\inv{G_1} &G_4-G_3\inv{G_1}G_2}\pmatr{q\\u}. \ \ \ \tag{Partial Inversion}
-\end{align*}
-(In the latter operation it is assumed that the inverse exists.)
-For our purposes, we consider only the immitance matrices that describe $G$ as an input-output mapping (as opposed to transmission or ABCD parameters) as {follows}:
-\begin{equation}
-\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u} \ , \ \pmatr{p\\u}=\pmatr{\Delta_s &0\\0&\Delta_l} \pmatr{q\\y}.
-%\label{eq:pasgdel}
-\end{equation}
-Therefore, the overall interconnection can be {depicted} by the block diagram given in \figref{fig:portrep}. In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to the human and the unknown environment. Throughout the paper, we will not distinguish the system $G$ from its transfer matrix $G(s)$ unless specifically stated otherwise.
 
 \begin{rem}\label{rem:negsign}
 When a port representation is replaced with an input/output representation, the flow variable, such as e.g. the electric current, requires a sign change relative to the ``from" and ``to" ports in order to indicate the travel direction. This ambiguity is typically resolved by interconnecting systems with a negative sign in the loop, which causes the difference between \figref{fig:nom_net} and \figref{fig:portrep}.
@@ -479,7 +421,7 @@ To make the connection to the classical auxiliary conditions, observe that evalu
 1-\abs{S_{11}}^2 > \abs{S_{12}S_{21}} \quad \text{or} \quad 1- \abs{S_{22}}^2 > \abs{S_{12}S_{21}}.
 \label{eq:rollettaux}
 \end{equation}
-{In the literature, the quantity $\lambda_0$ is called the ``maximum stable power gain".} Finally, after explicitly including the condition $b>0$, one can take the square root of \eqref{eq:prerollett1} and obtain
+In the literature, the quantity $\lambda_0$ is called the ``maximum stable power gain". Finally, after explicitly including the condition $b>0$, one can take the square root of \eqref{eq:prerollett1} and obtain
 \[
 1+\abs{\nabla}^2 - \abs{S_{22}}^2 - \abs{S_{11}}^2 > 2\abs{S_{12}S_{21}},
 %\label{eq:rollett1}
@@ -593,9 +535,9 @@ In the previous section, we have shown how classical frequency domain techniques
 
 
 \subsection{Parametrized Passivity}\label{sec:osppass}
-Another well-known version of the passivity theorem, {which we will denote as} theorem of parameterized passivity (see e.g. \cite[Thm. VI.5.10]{desvid}), allows to consider cases in which the ''non-passivity'' of some block is compensated by an excess of passivity in other blocks without endangering stability. This can even be utilized to determine the lowest tolerable level of passivity of the uncertainties for which a given interconnection remains stable. For output strictly passive uncertainties, stability can be characterized as in the next result, which is a direct consequence of the general IQC theorem.
+Another well-known version of the passivity theorem, which we will denote as theorem of parameterized passivity (see e.g. \cite[Thm. VI.5.10]{desvid}), allows to consider cases in which the ''non-passivity'' of some block is compensated by an excess of passivity in other blocks without endangering stability. This can even be utilized to determine the lowest tolerable level of passivity of the uncertainties for which a given interconnection remains stable. For output strictly passive uncertainties, stability can be characterized as in the next result, which is a direct consequence of the general IQC theorem.
 
-\begin{coroll}\label{thm:desvidpass} {Then interconnection of $G_p,\Delta\in \mathcal{RH}^{\bullet \times \bullet}_\infty$ as in \figref{fig:uncicpas} is stable}
+\begin{coroll}\label{thm:desvidpass} Then interconnection of $G_p,\Delta\in \mathcal{RH}^{\bullet \times \bullet}_\infty$ as in \figref{fig:uncicpas} is stable
 if there exist a ${p\geq 0}$ such that
 \begin{align}
 \pmatr{\Delta(\iw)\\I}^*\pmatr{-pI &I\\I &0}\pmatr{\Delta(\iw)\\ I} &\succeq 0 \label{eq:parampas1}\\
@@ -609,8 +551,6 @@ if there exist a ${p\geq 0}$ such that
 	G_p(\iw) + G_p^*(\iw) &\succ -pI.\label{parpas2}
 \end{align}
 The case $p=0$ recovers the classical passivity theorem. Moreover, the larger the value of $p>0$, the smaller is the set of uncertainties described by \eqref{parpas1}, as illustrated in \figref{fig:pregions} for different values of $p$. In fact, this result is used in Colgate's condition thanks to the damping term $b$ and closely related to the impedance bounds of Bounded Impedance Absolute Stability \cite{haddadizaad} using ``impedance circles".
-%I did not understand the next sentence.
-%After introducing dynamics to the multiplier, it is straightforward to utilize the test for the class of uncertainties that satisfy the conditions above.
 \end{rem}
 
 \begin{figure}%
@@ -657,18 +597,16 @@ maps $v\in \mathcal{L}_2^n$ into $w\in\mathcal{L}_2^n$ with $w(t)=\delta(t)v(t)$
 
 \begin{lem}[Swapping Lemma]\label{lem:swap}
 Consider the bounded and differentiable function $\delta:[0,\infty)\to\Real$ whose derivative is bounded as $|\dot{\delta}(t)| \leq d$ for all $t\geq 0$. Moreover, let $T(s) = C(sI-A)^{-1}B+D$ be a transfer function with a stable state-space realization and define
-\begin{equation*}
+\[
 T_c(s) :=  C(sI-A)^{-1}, \quad T_b(s) :=  (sI-A)^{-1}B.
-%\label{eq:swapfunc}
-\end{equation*}
+\]
 If viewing $T$, $T_c$, $T_b$ and $\delta$ (by point-wise multiplication) as operators
 $\mathcal{L}_2\to \mathcal{L}_2$, one has $\delta T = T\delta  + T_c \dot{\delta} T_b $ and thus
-\begin{equation*}
+\[
 \underbrace{\pmatr{T &T_c\\0 &I}}_{T_{ left}}\underbrace{
 \pmatr{\delta\\ \dot{\delta}T_b}}_{\Delta_s} = \underbrace{\pmatr{\delta &0\\0 & \dot{\delta}I}}_{\Delta_x} \underbrace{\pmatr{T\\T_b}}_{T_{ right}}
-%\label{eq:swapmeq}
-\end{equation*}
-where $x$, $s$ stand for ``eXtended'' and ``Stacked" respectively.
+\]
+where $x$, $s$ stand for ``eXtended'' and ``Stacked'' respectively.
 \end{lem}
 We now claim that
 \[
