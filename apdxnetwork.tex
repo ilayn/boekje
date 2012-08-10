@@ -1,11 +1,8 @@
-\chapter{Basic Network Theory}\label{chap:apdxnetwork}
+\chapter{Network Theory Primer}\label{chap:apdxnetwork}
 
+We would like to follow Jan C. Willems' formulation for a systematic definition of terminals and ports which 
+appeared in \cite{willemsCSM}. 
 
-Let us give a short introduction about the related terminology at this point for 
-the sake of completeness. We would like to follow Jan C. Willems' formulation for a systematic definition of ports appeared 
-in \cite{willemsCSM}. 
-
-\section{A Recap of Network Theory Preliminaries}
 
 In network theory and also in its application {to bilateral teleoperation}, the ``system" refers 
 to the network model that is hypothetically disconnected (thus admitting virtual terminals) from 
@@ -61,6 +58,20 @@ This becomes crucial when modeling multi-local multi-remote teleoperation device
 as one needs to keep track of the energy distribution between different users or different remote devices in order to 
 keep the network modeling paradigm consistent with the physical system (see e.g. \cite{panzirsch}).
 
+A $n-$port with effort $F_i$ and flow $V_i$ variables (positive if into the system) associated 
+with the $i$\textsuperscript{th} port is passive if 
+
+\[
+\int^t_0 F^T(\tau)V(\tau)d\tau \geq 0 \quad \forall t\geq 0.
+\]
+\begin{rem}There is no consensus in the literature on whether the above definition or the following is assumed for passivity
+\[
+\int^\infty_0 F^T(\tau)V(\tau)d\tau \geq 0
+\]
+However, it's an important difference as the former does not allow for temporary activity while the latter does. One can also extend
+this definition to incremental passivity such that instead of the integrated versions, the power condition is evaluated at each time 
+instance $t>0$.
+\end{rem}
 Without going into the philosophical roots, by far and large the most common ports among the practically relevant are the 
 $2-$terminal ports that are strongly related to the second order systems (one can invoke the analogies between mechanical/%
 electrical/thermal etc. systems quite early however serves no purpose for our discussion).  Since every $2-terminal$ port

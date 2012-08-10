@@ -16,121 +16,61 @@ that makes a teleoperation system perform adequately or, as in many situations, 
 For example, in the case of free-air motion (i.e. the remote device is free to roam in the remote site), the human force input 
 to the local device and/or the position of the local device should be tracked by the remote device. In the case of a 
 hard-contact of remote device with the environment, however, these inputs should be counteracted  if the force vector points into 
-the obstacle. Hence, the force signal is simultaneously tracked for mimicking the user motion but at the same time 
-is defied in case of a resisting force at the remote site. If this is not enough, if the user suddenly decides to release the 
-local device this resistance should die out as soon as possible without any kickback since when a user leans to a wall at position
-$x_0$ applying a horizontal force and then stops, it is not expected that the wall continues to push the user even after the user 
-has the position $x<x_0$. There are a few other scenarios that would further complicate the requirements. In short, the user 
-and the environment properties are time-varying and make it difficult to design a control law such that these and many other 
-details are handled properly simultaneously.
+the obstacle. Hence, the force signal is simultaneously tracked for mimicking the user motion and  
+is defied in case of a resisting force at the remote site. If this is not enough, when the user suddenly decides to release the 
+local device, this resistance should die out as soon as possible, preventing a kickback. As an example, when a user leans to a wall located at 
+position $x_0\!\!\uparrow$, applying a horizontal force and then stops, it is not expected that the wall continues to 
+push the user even after the user has the position $x<x_0$. There are a few other scenarios that would further complicate 
+the requirements. In short, the user and the environment properties are time-varying and make it difficult to design a control 
+law such that these and many other details are handled properly simultaneously. 
+
 
 With this short motivation, we can safely claim that looking at the overall system as a motion control 
 system is not sufficient in terms of complexity (though necessary). In general, motion tracking specifications 
-are a subset of the general performance requirements of the bilateral teleoperation systems.
+are a subset of the general performance requirements of the bilateral teleoperation systems. 
 
-Many parts of the bilateral teleoperation problem can be scrutinized under different frameworks, for example, the variation of human 
-and environment properties give naturally rise to a robust or an adaptive control approach, the hard-contact problem 
-can be analyzed under switched control systems, jump control systems or constrained linear systems etc. Before we go into the details of 
-the proposed methods of this thesis, let us sample a few important and successful approaches reported so far
-together with their shortcomings.
-
-
-
-\section{Modeling of Bilateral Teleoperation Systems}
-
-The dominating modeling paradigm of bilateral teleoperation systems is the two-port network approach. Consider the quote taken from
-\cite{hannaford89} published in 1989:
-%\begin{mdframed}[style={userdefinedwidth={0.8\textwidth},align=center,outerlinewidth=3pt,innerlinewidth=0pt,outerlinecolor=black!10,roundcorner=3pt}]
-\begin{quote}
-%In this paper, development of the analytical framework is complemented by modeling of an actual teleoperator system.
-[...] The modeling approach is to transform the teleoperation system model into an electrical circuit and simulate it using
-SPICE, the electronic circuit simulation program developed at UC Berkeley.[...]
-\end{quote}
-%\end{mdframed}
+\begin{rem}
+A similar line of reasoning has been given in \cite{buergerhogan1}. But for reasons that are 
+not known to us,  the authors chose to see the classical loop shaping as the sole servo control method. Moreover, modern 
+control theory offers a few options to avoid the obstacles that are given as impossibilities in their paper. Therefore, 
+we emphasize that the difference here is merely about the problem formulation and is not about the 
+limits of performance\footnote{We refer to the elegant book \cite{boydbarratt} for a detailed investigation of the 
+limits of performance.}. 
+\end{rem}
 
 
-As seen from Hannaford's motivation, the computer-based simulation tools are used extensively since then. Arguably
-this is one of the main reasons why network based electrical circuit based modeling dominated the teleoperation literature. 
-Reinforced with the circuit simulation tools, experts of the field started to construct analogies that goes beyond just
-a mechanical-electrical system analogy. Arguably, the most prominent concept borrowed from these analogies is the two-port network 
-view of the bilateral teleoperation systems. The reader is referred to \cref{chap:apdxnetwork} for a short recap of network theory.
-Today, the aforementioned motivation also applies to almost all physical systems i.e. one can simulate arbitrary models via many 
-computational packages. Yet, it's a de facto standard to use the circuit modeling while the teleoperation devices are mostly 
-mechanical. The author needs to place a disclaimer at this point that he cannot see the benefit of such an artificial step once the 
-system is represented by a model, as it is demonstrated in later sections that the mechanical/electrical analogy is, roughly, an equivalence
-based on the resulting models and works in the electrical$\to$mechanical direction too. Hence, to the best of our knowledge the 
-circuit based modeling is merely a convention rather than a requirement.
-
-\subsection{Two-port Modeling of Teleoperation Systems}
-In the teleoperation context, if one uses the ``load-source" analogy for the manipulated environment 
-and the human, then the system models all the bilateral interaction between the load and the source 
-ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via their input/output properties i.e.
-effort variable/flow variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/linearity
-of the components are not relevant at the outset if we are only interested in energy exchange which is the basis
-of so-called Time-Domain Passivity Methods \cite{hannafordryu} which we will mention later in this chapter. Thus, 
-the user, the control system, the environment, the remote and local devices and communication delays are seen as 
-$1-$ and $2-$ports exchanging energy in time. Since the external behavior of the ports can be characterized completely by the 
-current and the voltage drop across the terminals, it is indeed very convenient to model these components as 
-interacting ``black boxes'' (See \Cref{fig:portrep}).
-
-
-\begin{figure}
-\begin{subfigure}[b]{0.5\textwidth}
-\centering
-\begin{tikzpicture}[>=stealth,baseline=15mm,
-every node/.style={draw,minimum size=1cm}]
-\node (deltas) at (0,0) {$\Delta_s$};
-\node[left=of deltas] (g) {$G$};
-\node[left=of g] (deltal) {$\Delta_l$};
-\tikzset{every node/.style={draw,circle,inner sep=1pt,fill=white}}
-\foreach \y in {s,l}{
-    \node at ({$(g)!0.5!(delta\y)$} |- {g.40}) (circ1\y){};
-    \node at ({$(g)!0.5!(delta\y)$} |- {g.-40})(circ2\y){};
-};
-\draw (circ1l) -- (deltal.40) (circ2l) -- (deltal.-40)
-(circ1s) -- (deltas.140) (circ2s) -- (deltas.-140);
-\draw[->] (circ2s) -- (g.-40) (circ1s) -- (g.40);
-\draw[->] (circ2l) -- (g.-140) (circ1l) -- (g.140);
-\end{tikzpicture}
-\caption{}
-\label{fig:portrep}
-\end{subfigure}%
-\begin{subfigure}[b]{0.5\textwidth}
-\centering
-\begin{tikzpicture}[>=stealth,scale=0.5, transform shape]
-\matrix (G) [draw,matrix of math nodes,inner sep=1mm,row sep=1mm,ampersand replacement=\&]{ G_{11} \& G_{12}\\ G_{21} \& G_{22}\\};
-\matrix (delta) at (0,3) [outer sep=0,draw,matrix of math nodes,inner sep=0.5mm,ampersand replacement=\&]{\Delta_s \& \\ \& \Delta_l\\};
-\draw[->] (G.160) -| ++ (-0.4,0.8) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.160);
-\draw[->] (G.200) -| ++ (-0.7,0.6) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.200);
-\draw[<-] (G.20) -| ++ (0.4,0.5) |- (delta.20);
-\draw[<-] (G.-20) -| ++ (0.7,0.5) |- (delta.-20);
-\end{tikzpicture}
-\caption{}
-\label{fig:nom_net}
-\end{subfigure}
-\caption{Two representations of a 2-port network.}
-\end{figure}
+The inception of the bilateral teleoperation technology is often attributed to the work 
+of Raymond Goertz in Argonne National Laboratories, \cite{goertz}. (In \cite{basanezsuarez}, 
+it's traced back to Nikola Tesla and in \cite{sheridan89}, even some 16th century tools are accepted as precursors 
+of the modern teleoperation). The main motivation of Goertz' work (similarly later in Europe 
+by Vertut \cite{vertutcoiffet}) was handling and manipulating nuclear material, thus the very 
+first teleoperators were purely mechanical to cope with the hostile environment conditions. Though not much 
+happened in terms of commercial product realizations, the concept of telemanipulation kept its appeal 
+and a large body of research was reported until the 1980s. In that decade, with the help of the 
+ever-increasing computational power and the popularity of Virtual Reality (VR), teleoperation 
+technology received more attention for a possible use in the space-, underwater-, medical-related 
+tasks. Together with the advances in control theory and network theory (e.g. \cite{miyazaki,furuta}), 
+a more systematic control methodology is adopted. Especially, stability analysis results that can be 
+related to design guidelines (physical parameter bounds, bandwidth limitations etc.) are utilized
+and limits of performance were explored. A particular phenomenon, namely the destabilizing effect 
+of the delays in the teleoperation, lead the experts of the field to delve more into the systematic 
+analysis tools and qualitative aspects of teleoperation. Especially, the use of the concepts; passivity, 
+scattering transformations, and wave variables have become the standard methods of analysis and synthesis
+(see, e.g., \cite{hannaford89,andersonspong,nieslotine}). We will start to summarize the advances from this 
+point as this thesis is precisely built on top these systematic analysis and synthesis results gathered in 
+the last two decades. However, the reader is refered to \cite{hokayemspong,burdea}, 
+and \cite{sheridan89} for a more detailed overview including other practical aspects of teleoperation analysis and 
+the hardware developments with a more historical perspective which we will omit here. 
 
 
-For our purposes, we consider only the immitance matrices that describe $G$ as an input-output mapping (as opposed to transmission or ABCD parameters) as {follows}:
-\begin{equation}
-\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u} \ , \ \pmatr{p\\u}=\pmatr{\Delta_s &0\\0&\Delta_l} \pmatr{q\\y}.
-%\label{eq:pasgdel}
-\end{equation}
-Therefore, the overall interconnection can be {depicted} by the block diagram given in \Cref{fig:portrep}. 
-In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to the human and the unknown environment. 
-
-
-Especially, network theory based modeling offered a 
-great opportunity for simulating/designing the teleoperation systems via the celebrated hypothesis that
-human and the environment can be assumed to be passive mathematical operators.
-
-
-
-  
-We refer the reader to \cite{burdea} for a detailed account of these developments 
-
-There is a plethora of choices when it comes to modeling a teleoperation system.
+As we keep on narrowing down our focus to control theoretical parts of this challenging problem, we have to 
+note that many parts of the bilateral teleoperation problem can be scrutinized under different frameworks. 
+Hence, there is no shortage of different frameworks for which bilateral teleoperation problem is an ideal 
+test case. Among the plethora of methods, for example, the variation of human and environment properties give 
+naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed under 
+switched control systems, jump control systems or constrained linear systems etc. Before we go into the 
+details of the proposed methods of this thesis, let us sample a few important and successful approaches 
+reported so far together with their shortcomings if any.
 
 
 \begin{figure}%
@@ -191,11 +131,280 @@ There is a plethora of choices when it comes to modeling a teleoperation system.
 \label{fig:teleop}%
 \end{figure}
 
-The main tool that one has is the physical-interaction-based approach. Hence the view of the designer is 
-tuned to see the energy interaction between two distant media. This approach treats the human and the 
-environment as sources pumping energy to the system and the controller is viewed as the energy regulator 
-preventing excess energy causing the system go unstable. 
+\section{Modeling of Bilateral Teleoperation Systems}
 
-\section{Analysis}
+The dominating modeling paradigm of bilateral teleoperation systems is the two-port network approach. Consider the quote taken from
+\cite{hannaford89} published in 1989:
+%\begin{mdframed}[style={userdefinedwidth={0.8\textwidth},align=center,outerlinewidth=3pt,innerlinewidth=0pt,outerlinecolor=black!10,roundcorner=3pt}]
+\begin{quote}
+%In this paper, development of the analytical framework is complemented by modeling of an actual teleoperator system.
+The modeling approach is to transform the teleoperation system model into an electrical circuit and simulate it using
+SPICE, the electronic circuit simulation program developed at UC Berkeley.
+\end{quote}
+%\end{mdframed}
+
+
+As seen from Hannaford's motivation, the computer-based simulation tools are used extensively since then. Arguably
+this is one of the main reasons why network based electrical circuit based modeling dominated the teleoperation literature. 
+Reinforced with the circuit simulation tools, experts of the field started to construct analogies that go beyond
+a mere mechanical-electrical system analogy. Arguably, the most prominent concept borrowed from these analogies is the two-port network 
+view of the bilateral teleoperation systems. The reader is referred to \Cref{chap:apdxnetwork} (Should be Appendix A!?!) for a short recap of network theory. %%% cref doesn't work!!!!!
+Today, the quoted convenience also applies to almost all physical systems i.e. one can simulate arbitrary models via many 
+computational packages. Yet, it's a de facto standard to use the circuit modeling while the teleoperation devices are mostly 
+mechanical. Hence, it's not clear whether the benefit of such an artificial step didn't vanish. Once the system is represented 
+by a mathematical model, as it is demonstrated in the later sections, the mechanical/electrical analogy is, roughly, an equivalence
+based on the resulting model and works in the electrical$\to$mechanical direction too. Therefore, to the best of our knowledge, the 
+circuit based modeling is merely a convention rather than a requirement.
+
+\subsection{Two-port Modeling of Teleoperation Systems}
+
+In the teleoperation context, if one uses the ``load-source" analogy for the manipulated environment 
+and the human, then the system models all the bilateral interaction between the load and the source 
+ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via their input/output 
+(or external) properties i.e. effort variable/flow variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/linearity
+properties of the components are not relevant at the outset if we are only interested in energy exchange which is the basis
+of the so-called Time-Domain Passivity Methods \cite{hannafordryu} which we will mention later in this chapter. Thus, 
+the user, the control system, the environment, the remote and local devices and communication delays are seen as 
+$1-$ and $2-$ports exchanging energy in time. Since the external behavior of the ports can be characterized completely by the 
+current and the voltage drop across the terminals, it is indeed very convenient to model these components as 
+interacting ``black boxes'' (See \Cref{fig:portrep}).
+
+
+\begin{figure}
+\begin{subfigure}[b]{0.5\textwidth}
+\centering
+\begin{tikzpicture}[>=stealth,baseline=15mm,
+every node/.style={draw,minimum size=1cm}]
+\node (deltas) at (0,0) {$\Delta_l$};
+\node[left=of deltas] (g) {$G$};
+\node[left=of g] (deltal) {$\Delta_s$};
+\tikzset{every node/.style={draw,circle,inner sep=1pt,fill=white}}
+\foreach \y in {s,l}{
+    \node at ({$(g)!0.5!(delta\y)$} |- {g.40}) (circ1\y){};
+    \node at ({$(g)!0.5!(delta\y)$} |- {g.-40})(circ2\y){};
+};
+\draw (circ1l) -- (deltal.40) (circ2l) -- (deltal.-40)
+(circ1s) -- (deltas.140) (circ2s) -- (deltas.-140);
+\draw[->] (circ2s) -- (g.-40) (circ1s) -- (g.40);
+\draw[->] (circ2l) -- (g.-140) (circ1l) -- (g.140);
+\end{tikzpicture}
+\caption{}
+\label{fig:portrep}
+\end{subfigure}%
+\begin{subfigure}[b]{0.5\textwidth}
+\centering
+\begin{tikzpicture}[>=stealth,scale=0.5, transform shape]
+\matrix (G) [draw,matrix of math nodes,inner sep=1mm,row sep=1mm,ampersand replacement=\&]{ G_{11} \& G_{12}\\ G_{21} \& G_{22}\\};
+\matrix (delta) at (0,3) [outer sep=0,draw,matrix of math nodes,inner sep=0.5mm,ampersand replacement=\&]{\Delta_s \& \\ \& \Delta_l\\};
+\draw[->] (G.160) -| ++ (-0.4,0.8) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.160);
+\draw[->] (G.200) -| ++ (-0.7,0.6) node[draw,circle,fill=white,inner sep=2,label={[inner sep=0]0:$\scriptstyle -$}] {} |- (delta.200);
+\draw[<-] (G.20) -| ++ (0.4,0.5) |- (delta.20);
+\draw[<-] (G.-20) -| ++ (0.7,0.5) |- (delta.-20);
+\end{tikzpicture}
+\caption{}
+\label{fig:nom_net}
+\end{subfigure}
+\caption{Two representations of a 2-port network.}
+\end{figure}
+
+Clearly, thanks to this modeling method, we don't even need to 
+know exactly what $\Delta_l,\Delta_s$ blocks are, except their class (e.g. linear/nonlinear, time invariant/time varying etc.) to analyze 
+the system via $G$.  Thus, the problem of modeling of the human arm or of the uncertain environment
+is circumvented. However, due to the same reasoning, passivity property does not distinguish particular systems as long as they are 
+passive. For this reason, some of the crucial information is lost about these specific ports. In other words, we discard
+any impedance or admittance relations shared by the port variables.
+
+We have mentioned the ports and energy transfer between them as the main modeling paradigm so far. Energy based modeling is 
+the natural basis for bond-graphs too. Bond-graphs, much like port representations, are graphical tools to model the dynamical 
+systems via energy balancing between subcomponents (See \cite{gawthrop} for an introduction). In other words, the bond-graphs are built on top of the notion 
+of bonds representing the instant energy or power exchange between nodes via edges drawn between them. Therefore, bond-graphs
+already presents a powerful framework for abstraction of the bilateral interaction between the local and the remote site. For a 
+classical use of bond-graphs in impedance control, the reader is referred to the Hogan's trilogy (\cite{hogan:1,hogan:2,hogan:3}) and 
+for a more specialized practical case, namely, using hydraulic systems for bilateral teleoperation, to \cite{krishnaswamy}. 
+
+
+
+\subsection{Assumptions on the Local and Remote ``Ports''}
+
+Up to this point, we have touched upon how network theory offered a great opportunity for modeling the 
+teleoperation systems. Still, to invoke the stability analysis and synthesis results of the network there is a need to further distinguish
+$\Delta_s,\Delta_l$ from the universum of $1-$ports. Otherwise there is not much we can conclude from such an 
+interconnection, put differently, they can be any arbitrary model with arbitrary behavior set as long as they respect the port 
+condition. This is obviously not sufficient to capture the real physical interaction that teleoperation systems embody. 
+
+In teleoperation and haptics literature, it is customary to assume that the load and the source terminations as ``passive''
+mathematical operators (see \Cref{chap:apdxnetwork}). By this hypothesis, the main tool that one has is the physical-interaction-based approach. 
+Hence the view of the designer is tuned to see the energy interaction between two distant media. This approach treats the human and the 
+environment as passive elements with additional effort sources modeling the intentional force input to the system and the 
+controller is viewed as the energy regulator preventing excess energy causing the system go unstable. Moreover, as we have
+briefly summarized in \Cref{chap:apdxnetwork} and in the analysis section below, one can use the network theory based conditions 
+to assess the stability and performance conditions thanks to this hypothesis.
+
+This brings us to the discussion of the justification of the validity of such an assumption as it is generally not given in full generality in the
+literature. If one scans through the literature about the passivity of human operators, it is Hogan's paper \cite{hogan89}
+that is almost universally cited. The striking detail is, however, that Hogan never claims that the human exhibits a passive
+behavior. Instead he clearly shows that under certain conditions, human behavior is indistinguishable than that of a 
+passive system: 
+\begin{quote}
+Thus, despite the fact that the
+limb is actively controlled by neuro-muscular feedback, its apparent
+stiffness is equivalent to that of a completely passive
+system. In the light of Colgate's recent proof [3]\footnote{Reference 
+\cite{colgatehogan88} of this thesis.} that an
+apparently passive impedance is the necessary and sufficient
+condition for a stable actively-controlled system to remain stable
+on contact with an arbitrary passive environment, this
+experimental result strongly suggests that neural feedback in the
+human arm is carefully tuned to preserve stability under the
+widest possible set of conditions.
+\end{quote}
+Moreover, the task that is given to human operators and analyzed afterwards is about making the human 
+be as passive as possible. The task is, roughly speaking, holding a handle which is perturbed by random disturbances and 
+trying to keep the handle still at a predefined position on the 2D plane. Hence, the task is simply to mimic a passive 
+component that is, again roughly, a mass-spring-damper system. Had it been the case that the human would exhibit non-symmetric 
+stiffness matrix, it would simply be a failure of the test subject (regardless of the physical limitations). Note that this 
+is a plausible assumption for the rehabilitation tasks. The other possibility would then be is that the test subject was unable to keep up 
+with the changes, or using the control theory jargon, the bandwidth of the subject was lower than the required agility to 
+perform the test adequately.  The well-known phenomenon of such behavior is the ``pilot induced oscillations'' in which the pilot
+of an aircraft, while trying to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many reasons (response time of the pilot 
+and thus the phase lag with response time of the aircraft contribute among many other reasons). We refer to the interesting 
+report \cite{mcruer} for a more detailed exposition. Moreover, if for some reason, the task at hand is to prevent the system 
+to reach a steady state at a certain position and the perturbations are applied accordingly i.e., to create a virtual potential, 
+the results obtained from the experiments would most probably different from that of \cite{mussa85}. Thus, it's worth mentioning 
+that the passivity of the human is closely linked to the passivity of the environment. 
+
+
+\begin{rem}
+A particular detail should be clarified about the measurements taken in \cite{hogan89}. It is stated that: 
+\begin{quote}
+While normal human subjects held the handle of the manipulandum at a stable position
+in the workspace, small perturbations were applied. Measurements
+of the human's restoring force were made after the system
+had returned to steady state following the perturbation but before
+the onset of voluntary intervention by the subjects.
+\end{quote}
+Therefore, it is emphasized that only the involuntary response is taken into account during the measurements in order to
+capture the natural properties human arm before the human correction intervenes. Note that, this does not imply that the
+measurements treat the human arm as a bulky cybernetic device which might only be possible in case of an improbable amputation.
+In fact, in this setting, the voluntary input of the human is not included to the analysis, since the human necessarily puts in
+energy, at the very least, to move the local device. 
+\end{rem}
+
+The question of how, then, a human can actually move anything while remaining passive is one that makes the whole 
+story more complicated. The voluntary input of the human is taken as an exogenous input to the system. This is due to the 
+fact that, in passivity based analysis, the closed loop stability is tested against square integrable functions of time 
+modeling the finite energy inputs by the human which will be covered in \Cref{sec:litchapanalysis} in this chapter.  
+
+A keen eyed observer would spot that this is not inline with the motivation of Hogan's statement since the human force input has 
+alredy been considered in the apparent stiffness measurements. In other words, without the human's active control, the passivity 
+argument does not hold as the stiffness matrix might be non-symmetric and hence would have a non-zero curl. Therefore, we have to further
+separate the human force into two parts, namely, the active neuromuscular feedback force and the voluntary and cognitive force 
+input applied to the system. How this is usually performed is not clear in the literature. 
+
+This ambiguity becomes much more important since the control oriented focus of this thesis necessitates that we concentrate on
+worst cases rather than the experiments performed within the cognitive range of human operators. In other words, we are interested in
+the cases where things go wrong due to many other various reasons, sampling distubances, mesurement noises, directionality etc. Therefore
+it cannot be a satisfactory argument if stability depends on the user's neuromuscular feedback or simply user's stabilization capabilities. 
+In order to use the bilateral teleoperation devices in real-life cases, stability should be addressed regardless of human actions. In 
+conclusion, Hogan's findings are not sufficient for supporting the passivity assumption often found in the literature. 
+
+
+In summary, the passivity of the human and the environment (virtual environment in haptics/virtual reality applications), is 
+only plausible in certain occasions which should be verified in order to assume that the corresponding mathematical models 
+are passive. Nevertheless, analysis and synthesis methods that invoke this assumption lead to many real-world implementations 
+with varying degree of realism. We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools
+and does not validate the passivity hypotheses on the respective models.
+
+A compact version of the argument above is given by Yokokohji and Yoshikawa in \cite{yokokohjiyoshikawa}: 
+\begin{quote}
+Passivity of the system can be a
+sufficient condition of stability only when the system interacts
+passive environments. In the case of master-slave systems, if
+we could assume that the operator and the environment are
+passive systems, then the sufficient condition of stability is
+that the master-slave system itself must be passive. Strictly
+speaking, however, the operator is not passive because he/she
+has muscles as the power source. Colgate et al. [21] mentioned
+that even if the system has an active term, the system stability
+is guaranteed unless the active term is in some way statedependent.
+Obviously, the operator is passive when $\tau_{op}= 0$.
+Therefore, we will give the following assumption about $\tau_{op}$:
+``The operators input $\tau_{op}$ independent to the state of the
+master-slave system. In other words, the operator does not
+generate $\tau_{op}$ that will cause the system to be unstable.''
+Dudragne et al. [3] gave a similar assumption in order to use
+the concept of passivity for stability distinction. The above
+assumption seems tricky in a sense, but it is necessary to ensure
+the system stability by the passivity.
+\end{quote}
+
+\noindent Finally, a supplementary remark is also given by Buerger and Hogan in \cite{buergerhogan1}: 
+\begin{quote}
+When passivity is used as a stability objective, the only assumption
+made about the environment is that it, too, is passive.
+This is likely sufficient to guarantee coupled stability with humans
+(though, to date, it has not been conclusively proven that
+human limbs are passive; see [29]\footnote{Reference \cite{hogan89} in this thesis} for an argument for treating
+them as such). However, given the properties of human arms
+described above, passivity is unnecessarily restrictive. Our experience
+has shown that some controllers that are known to be
+nonpassive are adequately stable in clinical rehabilitation tasks [26].
+\end{quote}
+
+
+We should mention here that Hogan's paper together with other identification experiments are extremely important for many
+fields and needs no motivation. However, the discussion above only points out that the inference that follows from the results, 
+is not inline with the results themselves. 
+
+The idea of modeling the teleoperation as a two-port network seems to be having multiple origins and we have no reference to 
+point out to a common source. However, in general the popularity of two-ports can be attributed to \cite{andersonspong,nieslotine,rajuphd,hannaford89,
+yokokohjiyoshikawa}. 
+
+\subsection{Uncertain Models of Bilateral Teleoperation for Robustness Tests}
+
+Another possibility of modeling the human arm and cognitive input is to define an input force signal ``filtered'' by the 
+human arm impedance\footnote{The term \emph{impedance} is used in a more general sense than its common usage to denote
+LTI transfer functions such that no distinction is made between linear and nonlinear or time-invariant and time-varying 
+operators.} 
+
+
+
+
+
+
+
+\section{Analysis}\label{sec:litchapanalysis}
+
+The common terminology
+is somewhat different than that of the contemporary control theory as \emph{nominal stability} is used for the stability 
+properties of isolated for two disjoint media and when the interaction is setup between these two media the closed-loop 
+stability problem is called \emph{coupled stability}. To the best of our knowledge, this terminology is introduced in 
+\cite{colgatehogan88} hence we refer the reader to this paper for a more detailed introduction. 
+
+==============Sentence drafts after this===============
+
+This is where the network theory stands out as a complete tool for 
+analysis and synthesis of bilateral teleoperation systems. 
+
+
+via the celebrated hypothesis that human and the environment can be assumed 
+to be passive mathematical operators.
+
+
+
+
+
+
+
+For our purposes, we consider only the immitance 
+matrices that describe $G$ as an input-output mapping (as opposed to transmission or ABCD parameters) as {follows}:
+\begin{equation}
+\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u} \ , \ \pmatr{p\\u}=\pmatr{\Delta_s &0\\0&\Delta_l} \pmatr{q\\y}.
+%\label{eq:pasgdel}
+\end{equation}
+Therefore, the overall interconnection can be {depicted} by the block diagram given in \Cref{fig:portrep}. 
+In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to the human and the unknown environment. 
+
+
 
 \section{Synthesis}
