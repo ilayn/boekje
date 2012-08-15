@@ -1,6 +1,6 @@
 \documentclass[a4paper,openright,twoside]{memoir}
 \usepackage{thesis-preamble}
-\bibliography{phdthesis}
+
 
 \begin{document}
 
@@ -11,6 +11,8 @@
 %\chapterinclude{abstract}
 %\chapterinclude{acknowledgements}
 \cleardoublepage
+
+
 \mainmatter
 \pagestyle{phdstayla}
 \raggedbottom
@@ -22,18 +24,19 @@
 \listoffigures
 
 \cleardoublepage
-\flushbottom
+%\flushbottom
 
 
-%\include{intro}
+\include{intro}
 \include{literature}
-%\include{analysis}
-%\include{synthesis}
+\include{analysis}
+\include{synthesis}
 
-\backmatter
+
 \clearpage
 \appendix
 \include{apdxnetwork}
+\backmatter
 \include{references}
 
 \clearpage

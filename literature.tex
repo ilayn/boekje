@@ -29,14 +29,14 @@ With this short motivation, we can safely claim that looking at the overall syst
 system is not sufficient in terms of complexity (though necessary). In general, motion tracking specifications 
 are a subset of the general performance requirements of the bilateral teleoperation systems. 
 
-\begin{rem}
-A similar line of reasoning has been given in \cite{buergerhogan1}. But for reasons that are 
-not known to us,  the authors chose to see the classical loop shaping as the sole servo control method. Moreover, modern 
-control theory offers a few options to avoid the obstacles that are given as impossibilities in their paper. Therefore, 
-we emphasize that the difference here is merely about the problem formulation and is not about the 
-limits of performance\footnote{We refer to the elegant book \cite{boydbarratt} for a detailed investigation of the 
-limits of performance.}. 
-\end{rem}
+%\begin{rem}
+%A similar line of reasoning has been given in \cite{buergerhogan1}. But for reasons that are 
+%not known to us,  the authors chose to see the classical loop shaping as the sole servo control method. Moreover, modern 
+%control theory offers a few options to avoid the obstacles that are given as impossibilities in their paper. Therefore, 
+%we emphasize that the difference here is merely about the problem formulation and is not about the 
+%limits of performance\footnote{We refer to the elegant book \cite{boydbarratt} for a detailed investigation of the 
+%limits of performance.}. 
+%\end{rem}
 
 
 The inception of the bilateral teleoperation technology is often attributed to the work 
@@ -131,7 +131,7 @@ reported so far together with their shortcomings if any.
 \label{fig:teleop}%
 \end{figure}
 
-\section{Modeling of Bilateral Teleoperation Systems}
+\section{Modeling of Bilateral Teleoperation Systems}\label{sec:litchapmodeling}
 
 The dominating modeling paradigm of bilateral teleoperation systems is the two-port network approach. Consider the quote taken from
 \cite{hannaford89} published in 1989:
@@ -148,7 +148,7 @@ As seen from Hannaford's motivation, the computer-based simulation tools are use
 this is one of the main reasons why network based electrical circuit based modeling dominated the teleoperation literature. 
 Reinforced with the circuit simulation tools, experts of the field started to construct analogies that go beyond
 a mere mechanical-electrical system analogy. Arguably, the most prominent concept borrowed from these analogies is the two-port network 
-view of the bilateral teleoperation systems. The reader is referred to \Cref{chap:apdxnetwork} (Should be Appendix A!?!) for a short recap of network theory. %%% cref doesn't work!!!!!
+view of the bilateral teleoperation systems. The reader is referred to \Cref{chap:apdxnetwork} for a short recap of network theory.
 Today, the quoted convenience also applies to almost all physical systems i.e. one can simulate arbitrary models via many 
 computational packages. Yet, it's a de facto standard to use the circuit modeling while the teleoperation devices are mostly 
 mechanical. Hence, it's not clear whether the benefit of such an artificial step didn't vanish. Once the system is represented 
@@ -295,18 +295,19 @@ story more complicated. The voluntary input of the human is taken as an exogenou
 fact that, in passivity based analysis, the closed loop stability is tested against square integrable functions of time 
 modeling the finite energy inputs by the human which will be covered in \Cref{sec:litchapanalysis} in this chapter.  
 
-A keen eyed observer would spot that this is not inline with the motivation of Hogan's statement since the human force input has 
+A keen eyed reader would spot that this is not inline with Hogan's remark since the human force input has 
 alredy been considered in the apparent stiffness measurements. In other words, without the human's active control, the passivity 
 argument does not hold as the stiffness matrix might be non-symmetric and hence would have a non-zero curl. Therefore, we have to further
 separate the human force into two parts, namely, the active neuromuscular feedback force and the voluntary and cognitive force 
-input applied to the system. How this is usually performed is not clear in the literature. 
+input applied to the system. How this is usually performed is not clear in the literature. To the best of our knowledge, this 
+issue is addressed explicitly (but still briefly) only in \cite[Sec. II.B]{kazeroonitsay} and references therein.
 
 This ambiguity becomes much more important since the control oriented focus of this thesis necessitates that we concentrate on
 worst cases rather than the experiments performed within the cognitive range of human operators. In other words, we are interested in
 the cases where things go wrong due to many other various reasons, sampling distubances, mesurement noises, directionality etc. Therefore
 it cannot be a satisfactory argument if stability depends on the user's neuromuscular feedback or simply user's stabilization capabilities. 
-In order to use the bilateral teleoperation devices in real-life cases, stability should be addressed regardless of human actions. In 
-conclusion, Hogan's findings are not sufficient for supporting the passivity assumption often found in the literature. 
+In order to use the bilateral teleoperation devices in real-life cases, stability should be addressed regardless of human actions. Hogan's 
+findings are not sufficient for supporting the passivity assumption often found in the literature. 
 
 
 In summary, the passivity of the human and the environment (virtual environment in haptics/virtual reality applications), is 
@@ -324,9 +325,10 @@ we could assume that the operator and the environment are
 passive systems, then the sufficient condition of stability is
 that the master-slave system itself must be passive. Strictly
 speaking, however, the operator is not passive because he/she
-has muscles as the power source. Colgate et al. [21] mentioned
+has muscles as the power source. Colgate et al. [21]\footnote{Reference 
+\cite{colgatehogan88} of this thesis} mentioned
 that even if the system has an active term, the system stability
-is guaranteed unless the active term is in some way statedependent.
+is guaranteed unless the active term is in some way state dependent.
 Obviously, the operator is passive when $\tau_{op}= 0$.
 Therefore, we will give the following assumption about $\tau_{op}$:
 ``The operators input $\tau_{op}$ independent to the state of the
@@ -353,42 +355,194 @@ nonpassive are adequately stable in clinical rehabilitation tasks [26].
 
 
 We should mention here that Hogan's paper together with other identification experiments are extremely important for many
-fields and needs no motivation. However, the discussion above only points out that the inference that follows from the results, 
+fields and needs no motivation. However, the discussion above only points out that the inference that follows from his results, 
 is not inline with the results themselves. 
 
-The idea of modeling the teleoperation as a two-port network seems to be having multiple origins and we have no reference to 
-point out to a common source. However, in general the popularity of two-ports can be attributed to \cite{andersonspong,nieslotine,rajuphd,hannaford89,
-yokokohjiyoshikawa}. 
+The idea of modeling the teleoperation as a two-port network seems to have multiple origins and we have no reference to 
+point out to a common source. However, in general the popularity of two-ports can be attributed to 
+\cite{andersonspong,nieslotine,rajuphd,hannaford89,yokokohjiyoshikawa}. 
 
 \subsection{Uncertain Models of Bilateral Teleoperation for Robustness Tests}
 
-Another possibility of modeling the human arm and cognitive input is to define an input force signal ``filtered'' by the 
+Another possibility of modeling the human arm and its cognitive input is to define an input force signal ``filtered'' by the 
 human arm impedance\footnote{The term \emph{impedance} is used in a more general sense than its common usage to denote
 LTI transfer functions such that no distinction is made between linear and nonlinear or time-invariant and time-varying 
 operators.} 
 
+Various studies pointed out that the identification experiments suggest a mass-spring-damper system pattern is evident
+in the frequency response data of the human arm recorded under various task performance similar to the one given in \cite{hogan89}.
+The general method is to instruct the human to perform a specific task and then perturb the hardware with certain predesigned
+disturbance signals such that the output can be evaluated to obtain a mathematical model. In the literature, the model structure
+is often set a priori to be a second order transfer function and the parameters are optimized to minimize the mismatch between
+the experimental and predicted response. It is also well-known that the human can change the inherent impedance of the arm during
+the task execution (see, e.g., \cite{tsujimorasso}). Therefore, the studies are performed in the ranges where it is safe to assume 
+that the human arm characteristics are constant or constant up to negligible changes. 
 
 
+The modeling is straightforward via uncertain mass-spring-damper system differential equation manupulations. Suppose the human arm
+assumes the second order model: 
+\[
+M(\Delta_1)\ddot{x} + B(\Delta_2)\dot{x} + K(\Delta_3)x = F_h -F_m
+\] 
+where $F_h,F_m$ denote the human force and the force feedback inputs, respectively. Then choosing a multiplicative or additive uncertainty 
+structure and via basic linear fractional transformations, the signal relations are converted to the interconnection shown in 
+\Cref{fig:lit:figunc}. The arrows are deliberately left out as it's up to the designer to get different immitance models.
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\matrix[draw,matrix of math nodes] (m) {\Delta_1 &&\\&\Delta_2 &\\&&\Delta_3\\};
+\node[below=1cm of m,draw,minimum size=2.0cm] (g) {$G_{nom}$};
+\draw (g.155) -| ++(-1cm,1cm) |- (m.west);
+\draw (g.25) -| ++(1cm,1cm) |- (m.east);
+\draw (g.-155) -- ++(-1cm,0cm) (g.-25) -- ++ (1cm,0cm);
+\end{tikzpicture}
+\caption{Uncertain model representation by taking out the uncertainty blocks}%
+\label{fig:lit:figunc}%
+\end{figure}
 
+
+Many studies have appeared in the literature regarding such modeling and the majority of these assume a 
+mechanical model of order from two to five. Note that this is an assumption made a priori and only applies 
+to the specific task performed by the human in the experiment from which the frequency response data is 
+collected. The commonly utilized models can be found in \cite{kazeroonitsay,tsujigoto,kosuge,colgate1,speich,
+fucavus,buergerhogan1,leungfa,husalculoewen,andrifour,laroche}. 
+Obtaining these measurements are time-consuming and difficult to parameterize. For this reason, although
+the results along this direction are scarce, they are, as in the passivity case, very valuable. 
+
+The disadvantage of such parametrization of the human arm is contrasted with the passivity approach methods
+invoking the argument of time-varying nature of the arm parameters. It is often rightfully argued that the 
+uncertainty ranges in which the stiffness and damping (and partially inertial) coefficients change, are too 
+large to be considered in the structured singular value based robustness tools. Moreover, many auxiliary 
+effects such as the visual feedback, cognitive lag of the brain etc. are not considered in the identification 
+experiments, but in the passivity approach all of these are lumped into a single port condition. 
+
+The paper \cite{leelee} offers an interesting alternative as it tries to incorporate many of the aforementioned 
+effects, however, the results are prospective and yet to be utilized. 
 
 
 
 \section{Analysis}\label{sec:litchapanalysis}
 
-The common terminology
-is somewhat different than that of the contemporary control theory as \emph{nominal stability} is used for the stability 
-properties of isolated for two disjoint media and when the interaction is setup between these two media the closed-loop 
-stability problem is called \emph{coupled stability}. To the best of our knowledge, this terminology is introduced in 
-\cite{colgatehogan88} hence we refer the reader to this paper for a more detailed introduction. 
+The stability analysis is one of the major problems in designing stable yet high-performance teleoperation 
+systems. It's often not feasible to manually tune some local controllers and make test subjects use it in order to verify the
+design specifications. Moreover, relying only on the experiments can miss an important destabilizing scenario if the field 
+experiments do not cover that particular case. Hence, an a priori certificate of stability is much sought after. The stability 
+analysis can also give some guidelines about the parameter selection in the hardware design phase and can lead to minimized 
+design iterations. Therefore, having a realistic stability test is essential in building these systems. 
 
+Similar to the modeling section, the analysis in the literature extensively relies on network theory based results. In fact 
+this is where the network theory stands out as a complete tool for analysis and synthesis of bilateral teleoperation systems
+via the celebrated hypothesis that human and the environment models are passive.  
+
+The common terminology for stability is somewhat different than that of the contemporary control theory as \emph{nominal stability} 
+is used for the stability properties of isolated two disjoint media and when the interaction is setup between these two media the closed-loop 
+stability problem is called \emph{coupled stability}. To the best of our knowledge, this terminology is introduced in 
+\cite{colgatehogan88} hence we refer to this paper (or Colgate's thesis \cite{colgatephd}) for a more detailed motivation. 
+
+
+It's also worth mentioning that the passivity and stability is used often interchangeably and also usually referred to 
+\cite{haykin,mitra69,chen91}. Hence, there is a little guesswork required to classify the stability definitions given in the
+literature. The important distinguishing point is that the marginal stability is accepted in the definition of stability results since
+it arises frequently in lossless (hence passive) models where energy conservation is assumed. However, the analysis results often 
+rely on such assumptions do not guarantee asymptotic interconnection stability but only lead to certain passivity 
+properties of the interconnection (see \cite[Thm. 6.1]{khalil} and \cite[Sec. V]{lawrence} for the discussion on strict passivity).  
+
+
+As given in \Cref{sec:litchapmodeling}, passivity property is crucial to many studies in the literature. The direct physical interpretation
+of the abstract concepts gives even more appeal to such energy book-keeping methods. Another advantage of passivity methods is that 
+the nonlinear counterparts of the results are also available in the literature. The major disadvantage of the passivity methods are that
+the procedure is focused almost only on the energy exchange and performance specifications are very difficult to formulate and also 
+difficult to integrate into the analysis and synthesis steps. As an example, the signals that are not port variables such as position errors,
+and nonlinear effects that are functions of these signals, can't be utilized easily in the performance specifications. 
+
+
+Another disadvantage is that the power or the energy based analysis, due to the inner-product structure, can not distinguish the individual 
+signal properties. Consider the ideal case where the human and the local device is pushing each other and cancelling each other's contribution. 
+In this case the energy exchange based on the port variables is zero (negligible) which can not be distinguished form the case of not touching at all
+(a small motion on the device). 
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[>=stealth]
+\node[draw,minimum size=1cm] (h2) {$H_2$};
+\node[draw,minimum size=1cm, above=1cm of h2] (h1) {$H_1$};
+\node[draw,circle,inner sep=1mm,right= 1cm of h2]   (a1) {};
+\node[draw,circle,inner sep=1mm,left= 1cm of h1,label={[inner sep=0]-60:$-$}] (a2) {};
+\draw[->] (h1) -| (a1) node[right,midway] {$y_1$};
+\draw[->] (h2) -| (a2) node[left,midway] {$y_2$};
+\draw[->] (a1) -- (h2) node[above,midway] {$e_2$};
+\draw[->] (a2) -- (h1) node[above,midway] {$e_1$};
+\draw[<-] (a1) -- +(1cm,0) node[right] {$u_2$};
+\draw[<-] (a2) -- +(-1cm,0) node[left] {$u_1$};
+\end{tikzpicture}
+\caption{Negative feedback interconnection}%
+\label{fig:lit:passint}%
+\end{figure}
+
+
+
+
+The reader is referred to \Cref{chap:apdxnetwork} for the terminology used from hereafter. Let us recall a few key stability results: 
+\begin{thm}[Passivity \cite{hillmoylan77}]
+The interconnection shown in \Cref{fig:lit:passint} is passive if both $H_1$ and $H_2$ are passive. Moreover, the interconnection is 
+asymptotically stable if any of the following conditions holds: 
+\begin{enumerate}
+	\item One of $H_1$ and $H_2$ is strictly passive. 
+    \item Both $H_1$ and $H_2$  is strictly output or input passive. 
+    \item The mapping $H_1\circ(-H_2)$ is zero-state detectable and, either $H_2$ is strictly input passive or $H_1$ is strictly output passive. 
+    \item The mapping $H_2\circ H_1$ is zero-state detectable and, either $H_2$ is strictly output passive or $H_1$ is strictly input passive. 
+\end{enumerate}
+\end{thm}
+
+\begin{coroll}[Passivity (LTI Case)]
+Consider again the interconnection shown in \Cref{fig:lit:passint} where $H_1(s),H_2(s)\in\RH_\infty$. The interconnection is said to be 
+asymptotically stable if $H_1$ ($H_2$) is positive real and $H_2$($H_1$) is strictly positive real.
+\end{coroll}
+
+When the network, human, and the environment models are assumed to be Linear Time Invariant (LTI), the frequency domain methods
+allow us the analyze the teleoperation systems for stability and performance. The most common stabiliy analysis tool for such 
+models is the Llewellyn's stability criteria (also often called absolute stability theorem or unconditional stability theorem). 
+For linear networks, the following definitions seem to be used quite widely (modified from \cite{chen91}): 
+
+\begin{define}[Potential Instability at $\iw_0$] A two-port network is said to be potentially unstable at $\iw_0$ on the real frequency, 
+if there exist two passive one-port immitances that, when terminated at the ports, produce a natural frequency at $\iw_0$ overall network.   
+\end{define}
+
+\begin{define}[Absolute Stability at $\iw_0$] A two-port network is said to be absolutely stable at $\iw_0$ on the real frequency, 
+if it is not potentially unstable at $\iw_0$.   
+\end{define}
+
+
+\subsection{Llewellyn Stability Criteria}\label{sec:llewellyn}
+The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
+\begin{thm}[Llewellyn's Criteria]\label{thm:llw}
+A two-port network $N$,  described by its transfer matrix
+\[
+N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
+\]
+and interconnected to passive termination immitances as in \Cref{fig:portrep}, is stable if and only if
+\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:llew2}\end{equation} and
+\begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:llew3}\end{equation} 
+or
+\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:llew3}$'$}\label{eq:llew3p}\end{equation}
+for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
+\end{thm}
+
+
+As shown in \cite{rollett}, the conditions stated in \thmref{thm:llw} are invariant under immitance substitution. 
+
+
+=====================Still draft================
+
+
+
+
+\vspace{3cm}
 ==============Sentence drafts after this===============
 
-This is where the network theory stands out as a complete tool for 
-analysis and synthesis of bilateral teleoperation systems. 
 
 
-via the celebrated hypothesis that human and the environment can be assumed 
-to be passive mathematical operators.
 
 
 
@@ -408,3 +562,4 @@ In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to th
 
 
 \section{Synthesis}
+

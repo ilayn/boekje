@@ -70,19 +70,120 @@ with the $i$\textsuperscript{th} port is passive if
 \]
 However, it's an important difference as the former does not allow for temporary activity while the latter does. One can also extend
 this definition to incremental passivity such that instead of the integrated versions, the power condition is evaluated at each time 
-instance $t>0$.
+instance $t>0$. The former condition often appears in the nonlinear context and the latter is generally used in the linear frequency 
+domain counterparts. In the IQC framework, this distinction is made via \emph{Hard IQCs} vs. \emph{Soft IQCs} however the details 
+are omitted.
 \end{rem}
-Without going into the philosophical roots, by far and large the most common ports among the practically relevant are the 
+Without delving into the philosophical reasons, by far and large the most common ports among the practically relevant are the 
 $2-$terminal ports that are strongly related to the second order systems (one can invoke the analogies between mechanical/%
 electrical/thermal etc. systems quite early however serves no purpose for our discussion).  Since every $2-terminal$ port
 can be characterized by two variables (flow and the effort variable) it is customary to characterize the interconnected
 n-port networks by differential equation systems. This is done by imposing an artificial causality scheme, 
-two of these time=dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
+two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
 (\cite{behavbook}). This is the simplest input/output modeling of physical systems via treating one port variable as the 
 \emph{cause} and the other one as the \emph{effect} to this cause e.g. the current is due to the voltage drop across the terminals or 
 vice versa. 
 
+\section{Passivity Theorem}
+In this section passivity related important concepts are defined. We have neither the intention nor the possibility to give a full 
+treatment of the subject. Nevertheless, the material given here is well-known and can be found in many classical sources such as
+\cite{hillmoylan77,desvid,vdschaftbook}. We chose to follow closely \cite{desvid} for the presentation style. 
 
+Let $V$ be a linear space equipped with a scalar product, $\mathcal{T}$ be the index set of time and $F$ be a class of functions 
+$x:\mathcal{T}\to V$.
+\begin{define} A linear truncation operator $P_T$ is defined on $F$ as 
+\begin{equation}
+P_T(x)(t) = \begin{cases} x(t) &\text{for } t\leq T\\ 0 &\text{for } t>T\end{cases}
+\label{eq:apdx:trunc}
+\end{equation}
+\end{define}
+
+In most of the cases, $\mathcal{T}$ is the closed positive real line and $V=\Real^n$, hence the scalar product becomes the inner product 
+defined on $\Real^n$. The subscript ${\cdot}_T$ will be used as a shorthand notation for $P_T(\cdot)$. We also define $\mathcal{H}$ 
+and its extension $\mathcal{H}_e$ as 
+\[
+\mathcal{H} := \left\{ x\in F\mid \norm{x}^2=\langle x_T,x_T \rangle<\infty \right\}
+\]
+and
+\[
+\mathcal{H}_e := \left\{ x\in F\mid \forall T\in\mathcal{T}, \norm{x_t}^2=\langle x_T,x_T \rangle<\infty \right\}
+\]
+
+
+
+\begin{define}Let $H:\mathcal{H}_e\to\mathcal{H}_e$. $H$ is said to be passive if and only if there exists a constant 
+$\beta$ such that
+\[
+\langle Hx,x \rangle_T \geq \beta\quad \forall x\in\mathcal{H}_e,\forall t\in\mathcal{T}
+\]
+If moreover, there exists positive real number $\delta$ such that
+\[
+\langle Hx,x \rangle_T \geq \delta\norm{x_T}^2+ \beta\quad \forall x\in\mathcal{H}_e,\forall t\in\mathcal{T}
+\]
+$H$ is said to be strictly passive. The scalar $\beta$ is to model the offset for nonlinear systems and 
+will be taken as zero since we would be focusing on linear systems exclusively. 
+\end{define}
+Suppose we are given with two dynamical systems $H_1,H_2: \mathcal{H}_e\to\mathcal{H}_e$ for which the system structure is given in time-domain with 
+\begin{align}
+\dot{x} &= f(x,e)\\
+y &= h(x,e)
+\end{align}
+for both systems where $f: \Real^n\times\Real^m\mapsto \Real^n$ is locally Lipschitz and $h: \Real^n\times\Real^m\mapsto \Real^p$
+is a continous function satisfying $f(0,0)=0$, $h(0,0)=0$. 
+
+\begin{define}[Well-posedness] Consider the system interconnection given in \Cref{fig:apdx:passint}. The interconnection is said to 
+be well-posed if there exist unique solutions $e_1,e_2$ to the equations
+\begin{align}\label{eq:apdx:passint1}
+e_1 &= u_1-h_2(x_2,e_2)\\\label{eq:apdx:passint2}
+e_2 &= u_1+h_1(x_1,e_1)
+\end{align}
+for all admissible $(x_1,x_2,u_1,u_2)$. In the LTI case, assume that the respective transfer functions $H_1,H_2\in\RH_\infty$. Then
+the interconnection is well posed if $\inv{(I-H_1H_2)}(s)$ is a proper transfer matrix.
+\end{define}
+
+Note that, in our context $u_1,u_2$ model the voluntary part of the human force input as mentioned in \Cref{chap:litsurvey}. 
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[>=stealth]
+\node[draw,minimum size=1cm] (h2) {$H_2$};
+\node[draw,minimum size=1cm, above=1cm of h2] (h1) {$H_1$};
+\node[draw,circle,inner sep=1mm,right= 1cm of h2]   (a1) {};
+\node[draw,circle,inner sep=1mm,left= 1cm of h1,label={[inner sep=0]-60:$-$}] (a2) {};
+\draw[->] (h1) -| (a1) node[right,midway] {$y_1$};
+\draw[->] (h2) -| (a2) node[left,midway] {$y_2$};
+\draw[->] (a1) -- (h2) node[above,midway] {$e_2$};
+\draw[->] (a2) -- (h1) node[above,midway] {$e_1$};
+\draw[<-] (a1) -- +(1cm,0) node[right] {$u_2$};
+\draw[<-] (a2) -- +(-1cm,0) node[left] {$u_1$};
+\end{tikzpicture}
+\caption{Negative feedback interconnection}%
+\label{fig:apdx:passint}%
+\end{figure}
+
+
+\begin{thm}Consider the well-posed feedback interconnection shown in \Cref{fig:apdx:passint} and 
+described by \Cref{eq:apdx:passint1,eq:apdx:passint2}. Assume that there exist constants $\gamma_1,\beta_1,
+\delta_1,\beta'_1,\epsilon_2,\beta'_2$ such that the following conditions hold
+\begin{align}
+\norm{H_1x}_T &\leq \gamma_1\norm{x_T}+\beta_1\\
+\langle x,H_1x\rangle_T &\geq \delta_1\norm{x_T}^2+\beta'_1\\
+\langle H_2x,x\rangle_T &\geq \epsilon_2\norm{x_T}^2+\beta'_2\\
+\end{align}
+for all $x\in\mathcal{H}_e$ and for all $T\in\mathcal{T}$. If 
+\begin{equation}
+\delta_1+\epsilon_2 >0
+\label{eq:apdx:actpas}
+\end{equation}
+then, $u_1,u_2 \in \mathcal{H}$ imply that $e_1,e_2,y_1,y_2\in\mathcal{H}$ 
+\end{thm}
+
+
+
+
+
+== === =======================================
 
 
 Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance 
