@@ -1,4 +1,4 @@
-\chapter{A Brief Literature Survey}\label{chap:litsurvey}
+\chapter{A Brief and Opiniated Literature Survey}\label{chap:litsurvey}
 
 The teleoperation systems are structurally interesting and equally challenging 
 systems. This is especially true from a system theoretical point of view. As an example, 
@@ -70,7 +70,10 @@ test case. Among the plethora of methods, for example, the variation of human an
 naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed under 
 switched control systems, jump control systems or constrained linear systems etc. Before we go into the 
 details of the proposed methods of this thesis, let us sample a few important and successful approaches 
-reported so far together with their shortcomings if any.
+reported so far together with their shortcomings if any. We emphasize that the literature covered here is 
+far from comprehensive and deliverately shaped with pragmatic intentions. Hence a large body of research is 
+left out. This is certainly not due to their lack of thoroughness or else, but simply due to the irrelevance 
+to the purpose of this chapter.
 
 
 \begin{figure}%
@@ -219,8 +222,8 @@ the natural basis for bond-graphs too. Bond-graphs, much like port representatio
 systems via energy balancing between subcomponents (See \cite{gawthrop} for an introduction). In other words, the bond-graphs are built on top of the notion 
 of bonds representing the instant energy or power exchange between nodes via edges drawn between them. Therefore, bond-graphs
 already presents a powerful framework for abstraction of the bilateral interaction between the local and the remote site. For a 
-classical use of bond-graphs in impedance control, the reader is referred to the Hogan's trilogy (\cite{hogan:1,hogan:2,hogan:3}) and 
-for a more specialized practical case, namely, using hydraulic systems for bilateral teleoperation, to \cite{krishnaswamy}. 
+classical use of bond-graphs in impedance control, the reader is referred to the Hogan's trilogy (\cite{hogan:1,hogan:2,hogan:3}).
+There are also many studies with application focus, e.g., \cite{krishnaswamy} using hydraulic systems for bilateral teleoperation. 
 
 
 
@@ -359,10 +362,10 @@ fields and needs no motivation. However, the discussion above only points out th
 is not inline with the results themselves. 
 
 The idea of modeling the teleoperation as a two-port network seems to have multiple origins and we have no reference to 
-point out to a common source. However, in general the popularity of two-ports can be attributed to 
+point out to a common source. However, in general, the popularity of two-ports can be attributed to 
 \cite{andersonspong,nieslotine,rajuphd,hannaford89,yokokohjiyoshikawa}. 
 
-\subsection{Uncertain Models of Bilateral Teleoperation for Robustness Tests}
+\subsection{Uncertain Models of Bilateral Teleoperation for Robustness Tests}\label{sec:lit:uncmodel}
 
 Another possibility of modeling the human arm and its cognitive input is to define an input force signal ``filtered'' by the 
 human arm impedance\footnote{The term \emph{impedance} is used in a more general sense than its common usage to denote
@@ -414,7 +417,9 @@ invoking the argument of time-varying nature of the arm parameters. It is often 
 uncertainty ranges in which the stiffness and damping (and partially inertial) coefficients change, are too 
 large to be considered in the structured singular value based robustness tools. Moreover, many auxiliary 
 effects such as the visual feedback, cognitive lag of the brain etc. are not considered in the identification 
-experiments, but in the passivity approach all of these are lumped into a single port condition. 
+experiments, but in the passivity approach all of these are lumped into a single port condition. Obviously, 
+the main difficulty is to get a model (out of hypothetical insights, identification experiments etc.) which is
+not required in the passivity approach.
 
 The paper \cite{leelee} offers an interesting alternative as it tries to incorporate many of the aforementioned 
 effects, however, the results are prospective and yet to be utilized. 
@@ -441,25 +446,74 @@ stability problem is called \emph{coupled stability}. To the best of our knowled
 
 
 It's also worth mentioning that the passivity and stability is used often interchangeably and also usually referred to 
-\cite{haykin,mitra69,chen91}. Hence, there is a little guesswork required to classify the stability definitions given in the
-literature. The important distinguishing point is that the marginal stability is accepted in the definition of stability results since
+\cite{haykin,mitra69,chen91} for the precise definitions. Hence, there is a little guesswork required to classify the stability definitions given in the
+literature. The important distinguishing point is that the marginal stability is often accepted in the definition of stability results since
 it arises frequently in lossless (hence passive) models where energy conservation is assumed. However, the analysis results often 
 rely on such assumptions do not guarantee asymptotic interconnection stability but only lead to certain passivity 
 properties of the interconnection (see \cite[Thm. 6.1]{khalil} and \cite[Sec. V]{lawrence} for the discussion on strict passivity).  
 
-
 As given in \Cref{sec:litchapmodeling}, passivity property is crucial to many studies in the literature. The direct physical interpretation
 of the abstract concepts gives even more appeal to such energy book-keeping methods. Another advantage of passivity methods is that 
-the nonlinear counterparts of the results are also available in the literature. The major disadvantage of the passivity methods are that
-the procedure is focused almost only on the energy exchange and performance specifications are very difficult to formulate and also 
-difficult to integrate into the analysis and synthesis steps. As an example, the signals that are not port variables such as position errors,
-and nonlinear effects that are functions of these signals, can't be utilized easily in the performance specifications. 
+the nonlinear counterparts of the results are also available in the literature and relatively easy to utilize. 
+
+\begin{thm} The negative feedback connection of two passive systems is passive. The negative feedback connection of a passive system with
+a strictly passive system is asymptotically stable.\end{thm}
+
+Note that, this result is valid for both nonlinear and linear systems. Invoking the theorem twice on the teleoperation system allows us to conclude that,
+under the passivity assumption of the human and the environment, if the two-port is  passive then the interconnection is passive. Moreover, if any of 
+the involved operators is strictly passive the teleoperation system is asymptotically stable. 
+
+\begin{figure}%
+\centering
+\includegraphics[width=0.6\columnwidth]{\impath/literature/train}%
+\caption{A transparent two-port network with passive terminations. (Source: Fred Dean Jr., \href{http://www.flickr.com/photos/be216cd1/5971825854/}{[Flickr:Fred Dean Jnr]})}%
+\label{fig:lit:train}%
+\end{figure}
 
 
-Another disadvantage is that the power or the energy based analysis, due to the inner-product structure, can not distinguish the individual 
-signal properties. Consider the ideal case where the human and the local device is pushing each other and cancelling each other's contribution. 
-In this case the energy exchange based on the port variables is zero (negligible) which can not be distinguished form the case of not touching at all
-(a small motion on the device). 
+The passivity assumptions are not necessary for stability but sufficient. There exist stable interconnections that involves nonpassive 
+subsystems. Therefore, the conservatism brought in by passivity theorem is quite high (especially in the nonlinear case). Facetious as it 
+may seem, the test also takes into account the port terminations shown in \Cref{fig:lit:train} for a table-top joystick. We have to emphasize that
+the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network. It's that conservative.
+
+When the network model is assumed to be Linear Time Invariant (LTI), the frequency domain methods
+allow us the analyze the teleoperation systems for stability and performance. The most common stabiliy analysis tool for such 
+models is the Llewellyn's stability criteria (also often called absolute stability theorem or unconditional stability theorem). 
+For linear networks, the following definitions seem to be used quite widely (modified from \cite{chen91}): 
+
+\begin{define}[Potential Instability at $\iw_0$] A two-port network is said to be potentially unstable at $\iw_0$ on the real frequency, 
+if there exist two passive one-port immitances that, when terminated at the ports, produce a natural frequency at $\iw_0$ overall network.   
+\end{define}
+
+\begin{define}[Absolute Stability at $\iw_0$] A two-port network is said to be absolutely stable at $\iw_0$ on the real frequency, 
+if it is not potentially unstable at $\iw_0$.   
+\end{define}
+
+If moreover,  human, and the environment models are LTI then absoulte stability theorem is an exact stability characterization. 
+
+\subsection{Llewellyn Stability Criteria}\label{sec:llewellyn}
+The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the 
+following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
+\begin{thm}[Llewellyn's Criteria]\label{thm:apdx:llw}
+A two-port network $N$,  described by its transfer matrix
+\[
+N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
+\]
+and interconnected to passive LTI termination immitances as in \Cref{fig:portrep}, is stable if and only if
+\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:lit:llew2}\end{equation} and
+\begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:lit:llew3}\end{equation} 
+or
+\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\label{eq:lit:llew3p}\end{equation}
+for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
+\end{thm}
+
+
+As shown in \cite{rollett}, the conditions stated in \Cref{thm:apdx:llw} are invariant under immitance substitution. This result forms the 
+basis for almost all passivity-based frequency domain bilateral teleoperation stability analysis approaches in the literature. 
+We would also derive this theorem from an IQC perspective and show that it is actually the passivity counterpart of the 
+of the $D$-scalings in the $\mu$-tools. Thanks to the frequency domain formulation, it also allows us to rewrite the condition 
+\eqref{eq:lit:llew3} as a fraction and see the problematic regions in which the fraction gets close to or crosses to the instability, 
+together with \eqref{eq:lit:llew2}. 
 
 
 \begin{figure}%
@@ -480,86 +534,122 @@ In this case the energy exchange based on the port variables is zero (negligible
 \label{fig:lit:passint}%
 \end{figure}
 
+\subsection{$\mu-$analysis}
+As given in \Cref{sec:lit:uncmodel}, stability in the face of uncertainties can also be analyzed in the generalized plant framework 
+of robust control. After rewriting the signal relations, the teleoperation system can be written as an uncertain interconnection as 
+shown in \Cref{fig:lit:uncincgeneral}. In this setting, $G$ is the model of the nominal bilateral teleoperation system and $\Delta$ 
+is a block diagonal collection of uncertainties, such as the human, the environment, delays, etc. Stability tests are based on structural 
+hypotheses on the diagonal blocks of the operator $\Delta$ such as gain bounds or passivity. These properties should allow us to develop 
+numerically verifiable conditions for the system $G$ that guarantee interconnection stability. This is intuitive because we have no access 
+to the actual $\Delta$ and we can only describe its components by means of indirect properties. 
+
+If the interconnection subsystems are represented in the scattering parameters, the $\mu$ test is precisely equivalent to the test of
+Llewellyn's theorem and often called as Rollett's stability parameter. This is due to the well-known equivalence between the small-gain 
+and passivity theorem \cite{desvid}. We have to note that the equivalence is stated in terms of the stability characterization. Otherwise, 
+small-gain theorem requires a normed space whereas passivity theorem requires an inner product space, hence the applicability is relatively limited. 
+
+As we will show in \Cref{chap:analysis}, one can reproduce the results of Llewellyn and also the passivity theorem using the IQC framework. 
 
 
 
-The reader is referred to \Cref{chap:apdxnetwork} for the terminology used from hereafter. Let us recall a few key stability results: 
-\begin{thm}[Passivity \cite{hillmoylan77}]
-The interconnection shown in \Cref{fig:lit:passint} is passive if both $H_1$ and $H_2$ are passive. Moreover, the interconnection is 
-asymptotically stable if any of the following conditions holds: 
-\begin{enumerate}
-	\item One of $H_1$ and $H_2$ is strictly passive. 
-    \item Both $H_1$ and $H_2$  is strictly output or input passive. 
-    \item The mapping $H_1\circ(-H_2)$ is zero-state detectable and, either $H_2$ is strictly input passive or $H_1$ is strictly output passive. 
-    \item The mapping $H_2\circ H_1$ is zero-state detectable and, either $H_2$ is strictly output passive or $H_1$ is strictly input passive. 
-\end{enumerate}
-\end{thm}
+\begin{figure}%
+\centering%
+\begin{tikzpicture}[>=stealth]
+\node[draw,minimum size=0.75cm] (plant) at (0,0) {$G$};
+\node[draw,minimum size=0.75cm] (unc) at (0,1.5) {$\Delta$};
+\draw[->] (plant.west) -| ++(-5mm,10mm) node[left] {$v$} |- (unc.west);
+\draw[->] (unc.east)   -| ++(5mm,-5mm) node[right] {$u$} |- (plant.east);
+\end{tikzpicture}
+\caption{Uncertain Interconnection}%
+\label{fig:lit:uncincgeneral}%
+\end{figure}
+\subsection{Modeling the Communication Delay}
 
-\begin{coroll}[Passivity (LTI Case)]
-Consider again the interconnection shown in \Cref{fig:lit:passint} where $H_1(s),H_2(s)\in\RH_\infty$. The interconnection is said to be 
-asymptotically stable if $H_1$ ($H_2$) is positive real and $H_2$($H_1$) is strictly positive real.
-\end{coroll}
-
-When the network, human, and the environment models are assumed to be Linear Time Invariant (LTI), the frequency domain methods
-allow us the analyze the teleoperation systems for stability and performance. The most common stabiliy analysis tool for such 
-models is the Llewellyn's stability criteria (also often called absolute stability theorem or unconditional stability theorem). 
-For linear networks, the following definitions seem to be used quite widely (modified from \cite{chen91}): 
-
-\begin{define}[Potential Instability at $\iw_0$] A two-port network is said to be potentially unstable at $\iw_0$ on the real frequency, 
-if there exist two passive one-port immitances that, when terminated at the ports, produce a natural frequency at $\iw_0$ overall network.   
-\end{define}
-
-\begin{define}[Absolute Stability at $\iw_0$] A two-port network is said to be absolutely stable at $\iw_0$ on the real frequency, 
-if it is not potentially unstable at $\iw_0$.   
-\end{define}
+Over the past two decades, it has been confirmed in various studies that, if present, the communication delays are a major 
+source of instability (reports date back to 60's, e.g., \cite{sheridanferrell} and the references in \cite{andersonspong}).
+Even when the delay duration $t$ is known and constant, delay operator can be shown to be nonpassive since
+$e^{-st}$ is not positive real. Hence, when combined with the passivity framework, it violates the assumptions on the uncertain
+operators. 
 
 
-\subsection{Llewellyn Stability Criteria}\label{sec:llewellyn}
-The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
-\begin{thm}[Llewellyn's Criteria]\label{thm:llw}
-A two-port network $N$,  described by its transfer matrix
-\[
-N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
-\]
-and interconnected to passive termination immitances as in \Cref{fig:portrep}, is stable if and only if
-\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:llew2}\end{equation} and
-\begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:llew3}\end{equation} 
-or
-\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:llew3}$'$}\label{eq:llew3p}\end{equation}
-for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
-\end{thm}
-
-
-As shown in \cite{rollett}, the conditions stated in \thmref{thm:llw} are invariant under immitance substitution. 
-
-
-=====================Still draft================
-
-
-
-
-\vspace{3cm}
-==============Sentence drafts after this===============
-
-
-
-
-
-
-
-
-
-
-For our purposes, we consider only the immitance 
-matrices that describe $G$ as an input-output mapping (as opposed to transmission or ABCD parameters) as {follows}:
+At end of the 80's, two prominent studies (\cite{andersonspong,nieslotine}) proposed a direct handle to handle delay 
+robustness problem using the scattering transformations. This notion is best explained by loop transformations since the 
+original articles refer to microwave and transmission line theories which use quite specialized terminology. One can also
+find the system theoretical view of these transformations in \cite{colgate3}. The key concept of the scattering transformation
+or the wave variables methods is mapping the closed right half plane to the closed unit disk via bijective M\"{o}bius (or linear 
+fractional or bilinear) transformations: 
+ 
 \begin{equation}
-\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u} \ , \ \pmatr{p\\u}=\pmatr{\Delta_s &0\\0&\Delta_l} \pmatr{q\\y}.
-%\label{eq:pasgdel}
+s:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\quad, \quad s(z) = \frac{z-1}{z+1}
+\label{eq:lit:smith}
 \end{equation}
-Therefore, the overall interconnection can be {depicted} by the block diagram given in \Cref{fig:portrep}. 
-In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to the human and the unknown environment. 
+
+One can directly verify that $1\to 0,\infty\to 1$ and $0\to -1$ under $s$. Pictorially, the mapping is given in 
+\Cref{fig:lit:smith} using a Smith chart which is located at the origin. Hence, positive real transfer matrices
+become norm bounded by $1$ such that we can analyze the interconnection using the small-gain theorem.
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[scale=0.7]
+\begin{smithchart}[show origin,
+axis background/.style={shading=eightball},
+no marks,
+grid=major,
+axis equal,samples=150,
+]
+\foreach \t in {0,0.2,0.5,1}{
+\addplot+[ultra thick,domain=-10:10] (\t,\x);
+}
+\end{smithchart}
+\begin{scope}[shift={(8cm,0)}]
+\begin{axis}[axis lines=middle,
+grid=major,
+no marks,
+axis background/.style={right color=black!50,left color=white},
+xmax=1.5,
+ytick=\empty,
+every axis/.append style={
+extra description/.code={
+\node[xshift=-5mm] at (0,1) {Im$(z)$};
+\node[xshift=-5mm] at (1,0.55) {Re$(z)$};
+}}]
+\foreach \x in {0,0.2,0.5,1}{
+\addplot+[ultra thick] coordinates {(\x,-10) (\x,10)};
+}
+\end{axis}
+\end{scope}
+\end{tikzpicture}
+\caption{Mapping the closed right half plane onto the unit disc. Origin is shown with a white dot.}%
+\label{fig:lit:smith}%
+\end{figure}
+
+Under this mapping the Nyquist curve of $e^{-sT}$ (unit circle) is mapped onto the imaginary axis, 
+hence unbounded. This once agin shows that delay uncertainty does not satisfy the norm constraint
+$\|s(e^{-\iw t})\|_\infty \leq 1$ to invoke the small-gain theorem in the transformed coordinates. 
+Had it been the case that the uncertainty was bounded by one, then it would have been possible to 
+conclude stability. Thus, these transformations are not beneficial for analysis, however, following 
+the cue from the previous mapping results, papers \cite{andersonspong} and \cite{nieslotine} made it 
+possible to design controllers that takes into account this delay uncertainty. The resulting loop 
+is stable regardless of delay period, hence they belong to the class of methods often distinguished
+by ``delay-independent'' methods. According to the literature, these are the most common 
+
+ 
+The major disadvantage of the passivity methods are that
+the procedure is focused almost only on the energy exchange and performance specifications are very difficult to formulate and also 
+difficult to integrate into the analysis and synthesis steps. As an example, the signals that are not port variables such as position errors,
+and nonlinear effects that are functions of these signals, can't be utilized easily in the performance specifications. 
+
+
+Another disadvantage is that the power or the energy based analysis, due to the inner-product structure, can not distinguish the individual 
+signal properties. Consider the ideal case where the human and the local device is pushing each other and cancelling each other's contribution. 
+In this case the energy exchange based on the port variables is zero (negligible) which can not be distinguished form the case of not touching at all
+(a small motion on the device). 
+
+
 
 
 
 \section{Synthesis}
 
+\subsection{2-,3-, and 4-Channel Control}
+\subsection{Time-Domain Passivity Control}

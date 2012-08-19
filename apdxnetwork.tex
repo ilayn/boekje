@@ -57,32 +57,60 @@ is the main focus of network theory based modeling paradigm.
 This becomes crucial when modeling multi-local multi-remote teleoperation devices
 as one needs to keep track of the energy distribution between different users or different remote devices in order to 
 keep the network modeling paradigm consistent with the physical system (see e.g. \cite{panzirsch}).
+%
+%A $n-$port with effort $F_i$ and flow $V_i$ variables (positive if into the system) associated 
+%with the $i$\textsuperscript{th} port is passive if 
+%
+%\[
+%\int^t_0 F^T(\tau)V(\tau)d\tau \geq 0 \quad \forall t\geq 0.
+%\]
+%\begin{rem}There is no consensus in the literature on whether the above definition or the following is assumed for passivity
+%\[
+%\int^\infty_0 F^T(\tau)V(\tau)d\tau \geq 0
+%\]
+%However, it's an important difference as the former does not allow for temporary activity while the latter does. One can also extend
+%this definition to incremental passivity such that instead of the integrated versions, the power condition is evaluated at each time 
+%instance $t>0$. The former condition often appears in the nonlinear context and the latter is generally used in the linear frequency 
+%domain counterparts. In the IQC framework, this distinction is made via \emph{Hard IQCs} vs. \emph{Soft IQCs} however the details 
+%are omitted. Thus, it makes no difference to give 
+%\end{rem}
 
-A $n-$port with effort $F_i$ and flow $V_i$ variables (positive if into the system) associated 
-with the $i$\textsuperscript{th} port is passive if 
 
-\[
-\int^t_0 F^T(\tau)V(\tau)d\tau \geq 0 \quad \forall t\geq 0.
-\]
-\begin{rem}There is no consensus in the literature on whether the above definition or the following is assumed for passivity
-\[
-\int^\infty_0 F^T(\tau)V(\tau)d\tau \geq 0
-\]
-However, it's an important difference as the former does not allow for temporary activity while the latter does. One can also extend
-this definition to incremental passivity such that instead of the integrated versions, the power condition is evaluated at each time 
-instance $t>0$. The former condition often appears in the nonlinear context and the latter is generally used in the linear frequency 
-domain counterparts. In the IQC framework, this distinction is made via \emph{Hard IQCs} vs. \emph{Soft IQCs} however the details 
-are omitted.
-\end{rem}
-Without delving into the philosophical reasons, by far and large the most common ports among the practically relevant are the 
-$2-$terminal ports that are strongly related to the second order systems (one can invoke the analogies between mechanical/%
-electrical/thermal etc. systems quite early however serves no purpose for our discussion).  Since every $2-terminal$ port
-can be characterized by two variables (flow and the effort variable) it is customary to characterize the interconnected
+Since every two-terminal port can be characterized by two variables (flow and the effort variable), it is customary to characterize the interconnected
 n-port networks by differential equation systems. This is done by imposing an artificial causality scheme, 
 two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
 (\cite{behavbook}). This is the simplest input/output modeling of physical systems via treating one port variable as the 
 \emph{cause} and the other one as the \emph{effect} to this cause e.g. the current is due to the voltage drop across the terminals or 
 vice versa. 
+
+Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance 
+and hybrid parameters for two-port networks and their combinations for general $n$-port network interconnections. 
+In the cases where the two-port is LTI, with a slight abuse of notation, we will use the term ``immitance" matrix to refer to 
+any of these representations. Suppose that a two-port immitance matrix is partitioned as
+\[
+\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u}
+\]
+where $q,y,p,u$ represent the flow (current, velocity etc.) and the effort(potential difference, force etc.) signals. Then, 
+obtaining one representation from another is possible by a combination of the following elementary ``permutation" and 
+``{partial} inversion" operations:
+\begin{align*}
+\pmatr{q\\y}&=\pmatr{G_2 &G_1\\G_4 &G_3}\pmatr{u\\p}, \ \ \ \tag{Permutation}\\
+\pmatr{p\\y}&=\pmatr{\inv{G_1} &-\inv{G_1}G_2\\G_3\inv{G_1} &G_4-G_3\inv{G_1}G_2}\pmatr{q\\u}. \ \ \ \tag{Partial Inversion}
+\end{align*}
+In the latter operation it is assumed that the inverse exists. The existence of inverses are limiting the realizability
+of networks as impedance or admittance matrices. Moreover, in \cite{andersonHmat}, it has been shown that a hybrid matrix
+realization is always possible regardless of the zero diagonals. However, since we are interested in asymptotical stability
+properties of networks, a simple open-circuit argument reveals that the inverses must exist.
+
+For our purposes, we consider only the immitance 
+matrices that describe $G$ as an input-output mapping (as opposed to transmission or ABCD parameters) as {follows}:
+\begin{equation}
+\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u} \ , \ \pmatr{p\\u}=\pmatr{\Delta_s &0\\0&\Delta_l} \pmatr{q\\y}.
+%\label{eq:pasgdel}
+\end{equation}
+Therefore, the overall interconnection can be {depicted} by the block diagram given in \Cref{fig:portrep}. 
+In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to the human and the unknown environment. 
+
 
 \section{Passivity Theorem}
 In this section passivity related important concepts are defined. We have neither the intention nor the possibility to give a full 
@@ -120,9 +148,46 @@ If moreover, there exists positive real number $\delta$ such that
 \[
 \langle Hx,x \rangle_T \geq \delta\norm{x_T}^2+ \beta\quad \forall x\in\mathcal{H}_e,\forall t\in\mathcal{T}
 \]
-$H$ is said to be strictly passive. The scalar $\beta$ is to model the offset for nonlinear systems and 
+$H$ is said to be strictly passive. The scalar $\beta$ is used to model the initial offset for nonlinear systems and 
 will be taken as zero since we would be focusing on linear systems exclusively. 
 \end{define}
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[>=stealth]
+\node[draw,minimum size=1cm] (h2) {$H_2$};
+\node[draw,minimum size=1cm, above=1cm of h2] (h1) {$H_1$};
+\node[draw,circle,inner sep=1mm,right= 1cm of h2]   (a1) {};
+\node[draw,circle,inner sep=1mm,left= 1cm of h1,label={[inner sep=0]-60:$-$}] (a2) {};
+\draw[->] (h1) -| (a1) node[right,midway] {$y_1$};
+\draw[->] (h2) -| (a2) node[left,midway] {$y_2$};
+\draw[->] (a1) -- (h2) node[above,midway] {$e_2$};
+\draw[->] (a2) -- (h1) node[above,midway] {$e_1$};
+\draw[<-] (a1) -- +(1cm,0) node[right] {$u_2$};
+\draw[<-] (a2) -- +(-1cm,0) node[left] {$u_1$};
+\end{tikzpicture}
+\caption{Negative feedback interconnection}%
+\label{fig:apdx:passint}%
+\end{figure}
+
+\begin{define}For an LTI operator $H$, passivity is equivalent to the corresponding transfer function $H(s)$ being positive real:
+\begin{align*}
+{\Re{H(\iw)}\geq 0} &{\Longleftrightarrow
+\hat{u}^*(\iw) \Re{H(\iw)}\hat{u}(\iw) \geq 0}\\
+&{\Longleftrightarrow \int_{-\infty}^\infty{\hat{u}^*(\iw)\Re{H(\iw)} \hat{u}(\iw)d\omega} \geq 0}\\
+&{\Longleftrightarrow \int_{-\infty}^\infty{{[H(\iw)\hat{u}(\iw)]^*}\hat{u}(\iw)d\omega} \geq 0}
+\end{align*}
+for all $\omega\in\Realext$ and for all $u\in\mathcal{L}_{2}^n$. Furthermore, if the condition
+\[
+\int_0^\infty{H(u)(\tau)^Tu(\tau)d\tau} \geq \delta\norm{u}_2^2 + \epsilon\norm{H(u)}_2^2
+\]
+is satisfied with $\delta > 0$, $\epsilon = 0$ (or $\delta = 0$, $\epsilon > 0$) then the operator is said to be Strictly Input 
+(Output) Passive with level $\delta$ (or level $\epsilon$) respectively. 
+\end{define}
+
+
+
 Suppose we are given with two dynamical systems $H_1,H_2: \mathcal{H}_e\to\mathcal{H}_e$ for which the system structure is given in time-domain with 
 \begin{align}
 \dot{x} &= f(x,e)\\
@@ -144,24 +209,6 @@ the interconnection is well posed if $\inv{(I-H_1H_2)}(s)$ is a proper transfer 
 Note that, in our context $u_1,u_2$ model the voluntary part of the human force input as mentioned in \Cref{chap:litsurvey}. 
 
 
-\begin{figure}%
-\centering
-\begin{tikzpicture}[>=stealth]
-\node[draw,minimum size=1cm] (h2) {$H_2$};
-\node[draw,minimum size=1cm, above=1cm of h2] (h1) {$H_1$};
-\node[draw,circle,inner sep=1mm,right= 1cm of h2]   (a1) {};
-\node[draw,circle,inner sep=1mm,left= 1cm of h1,label={[inner sep=0]-60:$-$}] (a2) {};
-\draw[->] (h1) -| (a1) node[right,midway] {$y_1$};
-\draw[->] (h2) -| (a2) node[left,midway] {$y_2$};
-\draw[->] (a1) -- (h2) node[above,midway] {$e_2$};
-\draw[->] (a2) -- (h1) node[above,midway] {$e_1$};
-\draw[<-] (a1) -- +(1cm,0) node[right] {$u_2$};
-\draw[<-] (a2) -- +(-1cm,0) node[left] {$u_1$};
-\end{tikzpicture}
-\caption{Negative feedback interconnection}%
-\label{fig:apdx:passint}%
-\end{figure}
-
 
 \begin{thm}Consider the well-posed feedback interconnection shown in \Cref{fig:apdx:passint} and 
 described by \Cref{eq:apdx:passint1,eq:apdx:passint2}. Assume that there exist constants $\gamma_1,\beta_1,
@@ -169,7 +216,7 @@ described by \Cref{eq:apdx:passint1,eq:apdx:passint2}. Assume that there exist c
 \begin{align}
 \norm{H_1x}_T &\leq \gamma_1\norm{x_T}+\beta_1\\
 \langle x,H_1x\rangle_T &\geq \delta_1\norm{x_T}^2+\beta'_1\\
-\langle H_2x,x\rangle_T &\geq \epsilon_2\norm{x_T}^2+\beta'_2\\
+\langle H_2x,x\rangle_T &\geq \epsilon_2\norm{H_2x_T}^2+\beta'_2
 \end{align}
 for all $x\in\mathcal{H}_e$ and for all $T\in\mathcal{T}$. If 
 \begin{equation}
@@ -179,28 +226,3 @@ for all $x\in\mathcal{H}_e$ and for all $T\in\mathcal{T}$. If
 then, $u_1,u_2 \in \mathcal{H}$ imply that $e_1,e_2,y_1,y_2\in\mathcal{H}$ 
 \end{thm}
 
-
-
-
-
-== === =======================================
-
-
-Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance 
-and hybrid parameters for 2-port networks and their combinations for general $n$-port network interconnections. 
-With a slight abuse of notation, we will use the term ``immitance" matrix to refer to any of these representations. 
-Suppose that a 2-port immitance matrix is partitioned as
-\[
-\pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u}
-\]
-where $q,y,p,u$ represent the flow (current, velocity etc.) and the effort(potential difference, force etc.) signals. Then, 
-obtaining one representation from another is possible by a combination of the following elementary ``permutation" and 
-``{partial} inversion" operations:
-\begin{align*}
-\pmatr{q\\y}&=\pmatr{G_2 &G_1\\G_4 &G_3}\pmatr{u\\p}, \ \ \ \tag{Permutation}\\
-\pmatr{p\\y}&=\pmatr{\inv{G_1} &-\inv{G_1}G_2\\G_3\inv{G_1} &G_4-G_3\inv{G_1}G_2}\pmatr{q\\u}. \ \ \ \tag{Partial Inversion}
-\end{align*}
-In the latter operation it is assumed that the inverse exists. The existence of inverses are limiting the realizability
-of networks as impedance or admittance matrices. Moreover, in \cite{andersonHmat}, it has been shown that a hybrid matrix
-realization is always possible regardless of the zero diagonals. However, since we are interested in asymptotical stability
-properties of networks, a simple open-circuit argument reveals that the inverses must exist.
