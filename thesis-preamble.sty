@@ -43,6 +43,7 @@
     tikz,     % Requires at least v2.10 !!
     bm,       %
     pgfplots, % Requires at least v1.5.1 !!
+    mathtools
 }
 \definecolor{darkred}{rgb}{0.4,0,0}
 \definecolor{darkgreen}{rgb}{0,0.4,0}
@@ -70,7 +71,7 @@
 
 
 
-%\RequirePackage[font={sf,small}]{caption}
+\RequirePackage[font={small}]{caption}
 %\captionsetup[table]{position=top}
 
 
@@ -97,7 +98,7 @@
   ]{biblatex}
 
 
-\bibliography{phdthesis.bib}
+\bibliography{phdthesis}
 
 \def\bibfont{\small}
 \AtEveryBibitem{%
@@ -282,6 +283,9 @@
     \makeoddfoot{plain}{}{\thesispage}{}
 }
 \chapterstyle{phdstayla}
+
+
+
 
 
 %%% SECTIONS

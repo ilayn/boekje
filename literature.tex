@@ -19,7 +19,7 @@ hard-contact of remote device with the environment, however, these inputs should
 the obstacle. Hence, the force signal is simultaneously tracked for mimicking the user motion and  
 is defied in case of a resisting force at the remote site. If this is not enough, when the user suddenly decides to release the 
 local device, this resistance should die out as soon as possible, preventing a kickback. As an example, when a user leans to a wall located at 
-position $x_0\!\!\uparrow$, applying a horizontal force and then stops, it is not expected that the wall continues to 
+position $x_0\!\!\uparrow$, applying a horizontal force and then retreats, it is not expected that the wall continues to 
 push the user even after the user has the position $x<x_0$. There are a few other scenarios that would further complicate 
 the requirements. In short, the user and the environment properties are time-varying and make it difficult to design a control 
 law such that these and many other details are handled properly simultaneously. 
@@ -40,8 +40,8 @@ are a subset of the general performance requirements of the bilateral teleoperat
 
 
 The inception of the bilateral teleoperation technology is often attributed to the work 
-of Raymond Goertz in Argonne National Laboratories, \cite{goertz}. (In \cite{basanezsuarez}, 
-it's traced back to Nikola Tesla and in \cite{sheridan89}, even some 16th century tools are accepted as precursors 
+of Raymond Goertz in Argonne National Laboratories, \cite{goertz} (In \cite{basanezsuarez}, 
+it's traced back to Nikola Tesla and, in \cite{sheridan89}, even some 16th century tools are accepted as precursors 
 of the modern teleoperation). The main motivation of Goertz' work (similarly later in Europe 
 by Vertut \cite{vertutcoiffet}) was handling and manipulating nuclear material, thus the very 
 first teleoperators were purely mechanical to cope with the hostile environment conditions. Though not much 
@@ -65,13 +65,13 @@ the hardware developments with a more historical perspective which we will omit 
 
 As we keep on narrowing down our focus to control theoretical parts of this challenging problem, we have to 
 note that many parts of the bilateral teleoperation problem can be scrutinized under different frameworks. 
-Hence, there is no shortage of different frameworks for which bilateral teleoperation problem is an ideal 
+Hence, there is no shortage of techniques for which bilateral teleoperation problem is an ideal 
 test case. Among the plethora of methods, for example, the variation of human and environment properties give 
 naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed under 
 switched control systems, jump control systems or constrained linear systems etc. Before we go into the 
 details of the proposed methods of this thesis, let us sample a few important and successful approaches 
 reported so far together with their shortcomings if any. We emphasize that the literature covered here is 
-far from comprehensive and deliverately shaped with pragmatic intentions. Hence a large body of research is 
+far from comprehensive and deliberately shaped with pragmatic intentions. Hence a large body of research is 
 left out. This is certainly not due to their lack of thoroughness or else, but simply due to the irrelevance 
 to the purpose of this chapter.
 
@@ -223,15 +223,16 @@ systems via energy balancing between subcomponents (See \cite{gawthrop} for an i
 of bonds representing the instant energy or power exchange between nodes via edges drawn between them. Therefore, bond-graphs
 already presents a powerful framework for abstraction of the bilateral interaction between the local and the remote site. For a 
 classical use of bond-graphs in impedance control, the reader is referred to the Hogan's trilogy (\cite{hogan:1,hogan:2,hogan:3}).
-There are also many studies with application focus, e.g., \cite{krishnaswamy} using hydraulic systems for bilateral teleoperation. 
+There are also many studies with application focus, e.g., \cite{krishnaswamy} using hydraulic systems for bilateral teleoperation
+among many others. 
 
 
 
 \subsection{Assumptions on the Local and Remote ``Ports''}
 
 Up to this point, we have touched upon how network theory offered a great opportunity for modeling the 
-teleoperation systems. Still, to invoke the stability analysis and synthesis results of the network there is a need to further distinguish
-$\Delta_s,\Delta_l$ from the universum of $1-$ports. Otherwise there is not much we can conclude from such an 
+teleoperation systems. Still, to invoke the stability analysis and synthesis results of the network thoery there is a need 
+to further distinguish $\Delta_s,\Delta_l$ from the universum of $1-$ports. Otherwise there is not much we can conclude from such an 
 interconnection, put differently, they can be any arbitrary model with arbitrary behavior set as long as they respect the port 
 condition. This is obviously not sufficient to capture the real physical interaction that teleoperation systems embody. 
 
@@ -269,8 +270,8 @@ stiffness matrix, it would simply be a failure of the test subject (regardless o
 is a plausible assumption for the rehabilitation tasks. The other possibility would then be is that the test subject was unable to keep up 
 with the changes, or using the control theory jargon, the bandwidth of the subject was lower than the required agility to 
 perform the test adequately.  The well-known phenomenon of such behavior is the ``pilot induced oscillations'' in which the pilot
-of an aircraft, while trying to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many reasons (response time of the pilot 
-and thus the phase lag with response time of the aircraft contribute among many other reasons). We refer to the interesting 
+of an aircraft, while trying to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many distinct reasons 
+(response time of the pilot and thus the phase lag with response time of the aircraft etc.). We refer to the interesting 
 report \cite{mcruer} for a more detailed exposition. Moreover, if for some reason, the task at hand is to prevent the system 
 to reach a steady state at a certain position and the perturbations are applied accordingly i.e., to create a virtual potential, 
 the results obtained from the experiments would most probably different from that of \cite{mussa85}. Thus, it's worth mentioning 
@@ -334,9 +335,9 @@ that even if the system has an active term, the system stability
 is guaranteed unless the active term is in some way state dependent.
 Obviously, the operator is passive when $\tau_{op}= 0$.
 Therefore, we will give the following assumption about $\tau_{op}$:
-``The operators input $\tau_{op}$ independent to the state of the
+\emph{``The operators input $\tau_{op}$ independent to the state of the
 master-slave system. In other words, the operator does not
-generate $\tau_{op}$ that will cause the system to be unstable.''
+generate $\tau_{op}$ that will cause the system to be unstable.''}
 Dudragne et al. [3] gave a similar assumption in order to use
 the concept of passivity for stability distinction. The above
 assumption seems tricky in a sense, but it is necessary to ensure
@@ -358,7 +359,7 @@ nonpassive are adequately stable in clinical rehabilitation tasks [26].
 
 
 We should mention here that Hogan's paper together with other identification experiments are extremely important for many
-fields and needs no motivation. However, the discussion above only points out that the inference that follows from his results, 
+fields and needs no motivation. The discussion above only points out that the inference that follows from his results, 
 is not inline with the results themselves. 
 
 The idea of modeling the teleoperation as a two-port network seems to have multiple origins and we have no reference to 
@@ -445,7 +446,7 @@ stability problem is called \emph{coupled stability}. To the best of our knowled
 \cite{colgatehogan88} hence we refer to this paper (or Colgate's thesis \cite{colgatephd}) for a more detailed motivation. 
 
 
-It's also worth mentioning that the passivity and stability is used often interchangeably and also usually referred to 
+It's also worth mentioning that the passivity and stability is used often interchangeably and also usually referred to the classical texts
 \cite{haykin,mitra69,chen91} for the precise definitions. Hence, there is a little guesswork required to classify the stability definitions given in the
 literature. The important distinguishing point is that the marginal stability is often accepted in the definition of stability results since
 it arises frequently in lossless (hence passive) models where energy conservation is assumed. However, the analysis results often 
@@ -466,7 +467,9 @@ the involved operators is strictly passive the teleoperation system is asymptoti
 \begin{figure}%
 \centering
 \includegraphics[width=0.6\columnwidth]{\impath/literature/train}%
-\caption{A transparent two-port network with passive terminations. (Source: Fred Dean Jr., \href{http://www.flickr.com/photos/be216cd1/5971825854/}{[Flickr:Fred Dean Jnr]})}%
+\caption[A transparent two-port network with passive terminations]{A transparent two-port network with passive 
+terminations. The actuation of the railcar is taken as state-independent input to the system. (Source: Fred Dean Jr., 
+\href{http://www.flickr.com/photos/be216cd1/5971825854/}{[Flickr:Fred Dean Jnr]})}%
 \label{fig:lit:train}%
 \end{figure}
 
@@ -475,6 +478,20 @@ The passivity assumptions are not necessary for stability but sufficient. There 
 subsystems. Therefore, the conservatism brought in by passivity theorem is quite high (especially in the nonlinear case). Facetious as it 
 may seem, the test also takes into account the port terminations shown in \Cref{fig:lit:train} for a table-top joystick. We have to emphasize that
 the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network. It's that conservative.
+
+
+The major disadvantage of the passivity methods is that the procedure is focused almost only on the 
+energy exchange and performance specifications are very difficult to formulate and also difficult to integrate 
+into the analysis and synthesis steps using only the inner product structure. As an example, the signals that are not port variables such as position errors,
+and nonlinear effects that are functions of these signals, can't be utilized easily in the performance specifications. 
+Same difficulty arises in the normed space structures though much can be achieved. Unfortunately, much sought after $\LL_\infty$ methods are not mature enough to handle any practical system. 
+
+
+Another disadvantage is that the power- or the energy-based analysis, due to the inner-product structure, can not distinguish the individual 
+signal properties. Consider the ideal case where the human and the local device is pushing each other and cancelling each other's contribution. 
+In this case the external or observable energy exchange based on the port variables is zero (negligible) which can not be distinguished from 
+the case of not touching at all (a small motion on the device). 
+
 
 When the network model is assumed to be Linear Time Invariant (LTI), the frequency domain methods
 allow us the analyze the teleoperation systems for stability and performance. The most common stabiliy analysis tool for such 
@@ -489,7 +506,7 @@ if there exist two passive one-port immitances that, when terminated at the port
 if it is not potentially unstable at $\iw_0$.   
 \end{define}
 
-If moreover,  human, and the environment models are LTI then absoulte stability theorem is an exact stability characterization. 
+If moreover,  human, and the environment models are assumed to be LTI then absoulte stability theorem is an exact stability characterization. 
 
 \subsection{Llewellyn Stability Criteria}\label{sec:llewellyn}
 The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the 
@@ -511,9 +528,9 @@ for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and ima
 As shown in \cite{rollett}, the conditions stated in \Cref{thm:apdx:llw} are invariant under immitance substitution. This result forms the 
 basis for almost all passivity-based frequency domain bilateral teleoperation stability analysis approaches in the literature. 
 We would also derive this theorem from an IQC perspective and show that it is actually the passivity counterpart of the 
-of the $D$-scalings in the $\mu$-tools. Thanks to the frequency domain formulation, it also allows us to rewrite the condition 
+of the $D$-scalings in the $\mu$-tools. Thanks to the frequency domain formulation, it is possible  to rewrite the condition 
 \eqref{eq:lit:llew3} as a fraction and see the problematic regions in which the fraction gets close to or crosses to the instability, 
-together with \eqref{eq:lit:llew2}. 
+together with one of the conditions given in \eqref{eq:lit:llew2}. 
 
 
 \begin{figure}%
@@ -546,9 +563,16 @@ to the actual $\Delta$ and we can only describe its components by means of indir
 If the interconnection subsystems are represented in the scattering parameters, the $\mu$ test is precisely equivalent to the test of
 Llewellyn's theorem and often called as Rollett's stability parameter. This is due to the well-known equivalence between the small-gain 
 and passivity theorem \cite{desvid}. We have to note that the equivalence is stated in terms of the stability characterization. Otherwise, 
-small-gain theorem requires a normed space whereas passivity theorem requires an inner product space, hence the applicability is relatively limited. 
+small-gain theorem requires a normed space structure whereas passivity theorem requires an inner product space structure, hence the 
+applicability is relatively limited. This is also related to the fact that we need to work with power variables exclusively in the 
+passivity framework and this is not always convenient if the performance specifications are related to other variables.
 
-As we will show in \Cref{chap:analysis}, one can reproduce the results of Llewellyn and also the passivity theorem using the IQC framework. 
+In the literature, this analysis method often follows the scattering transformations such that, the passivity assumption avoids the
+explicit modeling and small-gain theorem allows to handle the delay problem via with bounded operators.
+
+
+We can also directly take the uncertain modeling of the human and the environment and utilize $\mu-$analysis for the teleoperation
+system. 
 
 
 
@@ -563,6 +587,9 @@ As we will show in \Cref{chap:analysis}, one can reproduce the results of Llewel
 \caption{Uncertain Interconnection}%
 \label{fig:lit:uncincgeneral}%
 \end{figure}
+
+
+
 \subsection{Modeling the Communication Delay}
 
 Over the past two decades, it has been confirmed in various studies that, if present, the communication delays are a major 
@@ -580,13 +607,43 @@ or the wave variables methods is mapping the closed right half plane to the clos
 fractional or bilinear) transformations: 
  
 \begin{equation}
-s:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\quad, \quad s(z) = \frac{z-1}{z+1}
+W:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\quad, \quad W(z) = \frac{z-1}{z+1}
 \label{eq:lit:smith}
 \end{equation}
 
 One can directly verify that $1\to 0,\infty\to 1$ and $0\to -1$ under $s$. Pictorially, the mapping is given in 
 \Cref{fig:lit:smith} using a Smith chart which is located at the origin. Hence, positive real transfer matrices
 become norm bounded by $1$ such that we can analyze the interconnection using the small-gain theorem.
+
+
+Since often omitted in the literature, let us demonstrate a few properties of this transformation. First, this mapping can be shown with
+a block diagram. Assume an LTI SISO system $G(s)$ and let the input/output relation is given by $y=Gu$. Then, with a
+standard manipulation, we obtain a feedback interconnection that leads to the mapping
+\[
+W(G(s)) = \frac{G(s)-1}{G(s)+1} = -1 + \frac{2G(s)}{G(s)+1} \Longrightarrow 
+\begin{tikzpicture}[baseline=(g.center),scale=0.5,transform shape,every node/.style={draw,minimum size=1cm},every path/.style={->},>=stealth]
+\node[draw] (g) at (0,0) {$G$};
+\node[draw,left=1cm of g] (s1) {$\sqrt{2}$};
+\node[draw,right=1cm of g] (s2) {$\sqrt{2}$};
+\node[draw,circle, right=1cm of s2,minimum size=0,inner sep=3pt] (j) {};
+\draw (s1) -- (g) node[midway,circle,fill=white,minimum size=2mm,inner sep=0] (f) {};
+\draw ($(g)!0.5!(s2)$) |- ++(-1cm,-1cm) -| (f);
+\draw (g) -- (s2);\draw (s2)--(j);\draw (j)--+(1cm,0);
+\draw (s1) ++(-25mm,0) -- (s1);
+\draw (s1) ++(-15mm,0) |- ([shift={(-1cm,1cm)}]j.center) -| (j);
+\path (j)++(50:3mm) node[draw=none,minimum size=0,inner sep=3pt] {$-$};
+\end{tikzpicture}
+\]
+The distribution of $\sqrt{2}$ is a matter of convention and provides symmetry in the block diagrams. Also we have, 
+\begin{align*}
+(W\circ W)(G) &= \frac{-1}{G},\\
+(W\circ W \circ W) (G) &= \frac{-1}{W(G)},\\
+(W\circ W \circ W \circ W) (G) &= G\\
+\end{align*}
+which is nothing but the $90^\circ$ rotations of the Riemann sphere about the axis parallel to the imaginary axis ($W$ is an element of 
+M\"{o}bius group with $\circ$ operation). This is closely related to the stability parameter of Edwards and Sinsky (\cite{edsin}). 
+
+
 
 \begin{figure}%
 \centering
@@ -600,6 +657,7 @@ axis equal,samples=150,
 \foreach \t in {0,0.2,0.5,1}{
 \addplot+[ultra thick,domain=-10:10] (\t,\x);
 }
+
 \end{smithchart}
 \begin{scope}[shift={(8cm,0)}]
 \begin{axis}[axis lines=middle,
@@ -619,31 +677,82 @@ extra description/.code={
 \end{axis}
 \end{scope}
 \end{tikzpicture}
-\caption{Mapping the closed right half plane onto the unit disc. Origin is shown with a white dot.}%
+\caption[Mapping the closed right half plane onto the unit disc.]%
+{Mapping the closed right half plane onto the unit disc. Origin on the right is mapped to the point $(-1,0)$ shown with a white dot on the left.}%
 \label{fig:lit:smith}%
 \end{figure}
 
-Under this mapping the Nyquist curve of $e^{-sT}$ (unit circle) is mapped onto the imaginary axis, 
+Obviously once this transformation is introduced, there is a need for the ``inverse'' of $W$, such that the
+loop equations remain unchanged, that is to say we have to introduce another transformation that undoes
+$W$. The simplest way to obtain a mapping $\hat{W}$ is to follow the block diagram backwards as shown in 
+\Cref{lit:syn:invscat}. Another block diagram reduction (or rotating three more times as shown above) shows that 
+\[
+\hat{W}(z) = -\frac{z+1}{z-1} = -\frac{1}{W(z)}
+\]
+The negative sign usually does not show up in the formulations because the passive interconnections 
+require a sign change in the loop to indicate the ``from'' and ``to'' ports. A more detailed derivation
+is given in \cite{colgate3}.
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[scale=0.7,transform shape,every node/.style={draw,minimum size=1cm},every path/.style={->},>=stealth]
+\node[draw] (g) at (0,0) {$G$};
+\node[draw,left=1cm of g] (s1) {$\sqrt{2}$};
+\node[draw,right=1cm of g] (s2) {$\sqrt{2}$};
+\node[draw,circle, right=1cm of s2,minimum size=0,inner sep=3pt] (j) {};
+\draw (s1) -- (g) node[midway,circle,fill=white,minimum size=2mm,inner sep=0] (f) {};
+\draw ($(g)!0.5!(s2)$) |- ++(-1cm,-1cm) -| (f);
+\draw (g) -- (s2);\draw (s2)--(j);
+\draw (s1) ++(-15mm,0) |- ([shift={(-1cm,1.5cm)}]j.center) -| (j);
+\path (j)++(50:3mm) node[draw=none,minimum size=0,inner sep=3pt] {$-$};
+\node[draw] (h) at (0,-2cm) {$H$};
+\node[draw,left=1cm of h] (is1) {$\frac{1}{\sqrt{2}}$};
+\node[draw,right=1cm of h] (is2) {$\frac{1}{\sqrt{2}}$};
+\node[draw,circle, right=1cm of is2,minimum size=0,inner sep=3pt] (j2) {};
+\draw (j)-|++(1cm,-1cm)|-(j2);
+\draw (h) -- (is1) node[midway,circle,fill=white,minimum size=2mm,inner sep=0] (f2) {};
+\draw (is2) -- (h);\draw (j2)--(is2);
+\draw ($(h)!0.5!(is2)$) |- ++(-1cm,-1cm) -| (f2);
+\draw (is1) --++(-25mm,0) |- (s1);
+\draw (is1) ++(-15mm,0) |- ([shift={(-1cm,-1.5cm)}]j2.center) -| (j2);
+\path (f) ++(-70:5mm) node[draw=none] {$-$};
+%\path (f2) ++(-70:5mm) node[draw=none] {$-$};
+\end{tikzpicture}
+\caption[Scattering transformation and its inverse.]{Scattering transformation and its inverse.}%
+\label{lit:syn:invscat}%
+\end{figure}
+
+
+Under the mapping $W$, the Nyquist curve of $e^{-sT}$ (unit circle) is mapped onto the imaginary axis, 
 hence unbounded. This once agin shows that delay uncertainty does not satisfy the norm constraint
-$\|s(e^{-\iw t})\|_\infty \leq 1$ to invoke the small-gain theorem in the transformed coordinates. 
+$\|W(e^{-\iw t})\|_\infty \leq 1$ to invoke the small-gain theorem in the transformed coordinates. 
 Had it been the case that the uncertainty was bounded by one, then it would have been possible to 
-conclude stability. Thus, these transformations are not beneficial for analysis, however, following 
-the cue from the previous mapping results, papers \cite{andersonspong} and \cite{nieslotine} made it 
-possible to design controllers that takes into account this delay uncertainty. The resulting loop 
-is stable regardless of delay period, hence they belong to the class of methods often distinguished
-by ``delay-independent'' methods. According to the literature, these are the most common 
+conclude stability directly in the passivity theorem. Thus, these transformations are not directly 
+beneficial for analysis, however, following the cue from the previous mapping results, papers 
+\cite{andersonspong} and \cite{nieslotine} 
+made it possible to design controllers that takes into account this delay uncertainty. The resulting 
+loop is stable regardless of delay period, hence they belong to the class of methods often distinguished
+by ``delay-independent'' methods. According to the literature, these are the most common methods
+applied in the face of delay uncertainty.
+
+Another possibility is to utilize the simple fact that the delay operator is gain-bounded and obtain the 
+generalized plant by pulling out the uncertainty out of the loop. Obviously, this would be a very crude
+characterization of the unit circle since as unit disk is used as the uncertainty instead. 
+
+Similar approach is reported in \cite{leungfa} using $\mu-$synthesis. But the authors have omitted 
+the uncertainty of the human and the environment. Therefore, their analysis is only valid for nominal 
+teleoperation systems. Though, this can be extended to more general cases, we have to note that, they 
+don't consider the human as ``some impedance$+$state-independent force input'' but as an finite-energy
+force input signal filtered through the human characteristics. Technically, this amounts to the common 
+input-filtering often used in the $H_\infty$ design problems. 
 
  
-The major disadvantage of the passivity methods are that
-the procedure is focused almost only on the energy exchange and performance specifications are very difficult to formulate and also 
-difficult to integrate into the analysis and synthesis steps. As an example, the signals that are not port variables such as position errors,
-and nonlinear effects that are functions of these signals, can't be utilized easily in the performance specifications. 
 
 
-Another disadvantage is that the power or the energy based analysis, due to the inner-product structure, can not distinguish the individual 
-signal properties. Consider the ideal case where the human and the local device is pushing each other and cancelling each other's contribution. 
-In this case the energy exchange based on the port variables is zero (negligible) which can not be distinguished form the case of not touching at all
-(a small motion on the device). 
+
+
+
 
 
 
@@ -651,5 +760,188 @@ In this case the energy exchange based on the port variables is zero (negligible
 
 \section{Synthesis}
 
-\subsection{2-,3-, and 4-Channel Control}
+Complementary to the analysis section, we cover a few popular controller design among many other except the 
+art of control engineering, namely, the manual PID tuning. 
+
+\subsection{Two-, Three-, and Four-Channel Control Architectures}
+In the teleoperation literature, the control laws are categorized in terms of how many measurement signals 
+are sent over to the opposite medium during the teleoperation for control and the actual controller synthesis method
+that is, how we actually obtain the controller is often not considered in this classification.  Hence, the naming 
+goes with ``$n-$channel control''. The naming scheme can be better visualized as shown in \Cref{lit:syn:ela}. 
+
+
+\subsubsection{Position-Postion and Position-Force Controllers}
+The simplest control architecture among all is probably the PERR (position error) control in which the 
+position of both local and the remote site devices are collected by the controller and control input is
+produced.
+
+Assume that the local and the remote device are at rest at position $x=0$ in the respective world coordinates. 
+Also assume that the user moves the local device to position $x=\SI{10}{\centi\metre}$. What the control algorithm
+should do is to measure the position difference and force each device accordingly to minimize the error. Hence, the
+control law is of the form
+\[
+\pmatr{F_l\\F_r} = \pmatr{-1\\1} K_p(s) (x_l-x_r).
+\]
+where $F_r,F_l$ denote the control action at the local and the remote sites. $K(s)$ can be a constant or a SISO dynamical 
+system or any other esoteric control law. One can perform the same with velocity signals (to comply with the passivity 
+analysis) if available in noise-free measurements. Otherwise, position drift is unaviodable even with integral action. 
+
+Typically, this control architecture would give a sluggish performance since there is no preference or priority in 
+correcting the error signal on each side. Therefore, while the remote site is pulled forward to track the local device,
+simultaneously, the local device is pulled back with the same force. This results with a feel similar to extending a 
+damper, only in this case, it softens up according to the position error instead of travel velocity.
+
+Another widely used, control architecture is the so-called Position-Force Controller. In this method the first channel 
+in the PERR control structure is replaced with the remote site force input. Hence, local site device tracks the remote site 
+encountered force while the remote site device tracks the position of the local site device. 
+\[
+\pmatr{F_l\\F_r} = \pmatr{K_f(s)F_{env} \\ K(s) (x_l-x_r)}.
+\]
+Clearly, the side-effect of PERR type control is avoided since the position and force errors are tracked independently 
+in two seperate channels. But this brings in another tuning problem: If the position control gain dominates, the force tracking 
+behaves aggresively in the hard contact case due to the overuse of control action to drive the remote device into the obstacle
+and generally results with kickback or the local device. Conversely, domination of the force gain results with chattering of 
+the remote device on the obstacle due to the discontinuous nature of the force reference signal if the user touches the handle 
+with just softly enough to sustain an oscillation. Therefore, not only the gains of the individual channels are hard to tune, but
+also relative magnitudes of the gains makes the tuning more tedious.
+
+\subsubsection{Force-Force+PERR}
+
+To increase the bandwidth and to reduce the side-effects of aforementioned methods, a feedforward controller is added to the 
+position-force control architecture. 
+\[
+\pmatr{F_l\\F_r} = \pmatr{K_{f1}(s)F_{env} \\ K(s) (x_l-x_r)+K_{f2}(s)F_{hum}}.
+\]
+Hence, the name a three-channel controller. This has been introduced in \cite{hashzaad1999} and also analyzed in CITE!.
+
+\subsubsection{Lawrence Control Architecture}
+
+In \cite{lawrence}, a general control scheme is proposed (later extended by \cite{salcudeanzhu,hzaadsalcu2}). In this architecture, 
+also the remaining channel of remote position is sent over to the local site, completing the number of channels transmitted to four.
+The individual controller blocks and the resulting overall block diagram is shown in \Cref{lit:syn:ela}.  
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[
+imp/.style={draw,inner sep=4pt},
+impc/.style={draw,inner sep=4pt,ultra thick},
+junc/.style={draw,circle,inner sep=3pt},>=stealth]
+\begin{scope}[xshift=-3cm]
+\node[impc] (c4) at (0,0) {$C_4$};
+\node[impc] (c3) at (2cm,0cm) {$C_3$};
+\node[impc] (c2) at (4cm,0cm) {$C_2$};
+\node[impc] (c1) at (6cm,0cm) {$C_1$};
+
+\node[imp] (zinvs) at (1cm,2cm) {$Z_s^{-1}$};
+\node[impc] (cs) at (1cm,3cm) {$C_s$};
+\node[impc] (c5) at (5cm,3cm) {$C_5$};
+\node[imp] (ze) at (3cm,5cm) {$Z_e$};
+
+\node[imp] (zinvm) at (5cm,-2cm) {$Z_m^{-1}$};
+\node[impc] (cm) at (5cm,-3cm) {$C_m$};
+\node[impc] (c6) at (1cm,-3cm) {$C_6$};
+\node[imp] (zh) at (3cm,-5cm) {$Z_h$};
+\end{scope}
+\foreach \x in {1,4}{
+\draw[dotted] (-3.5cm,\x) --(3.5cm,\x) (-3.5cm,-\x) --(3.5cm,-\x);
+}
+\foreach \x[count=\xi] in {(0.25,2),(3,5),(0,-2),(-3,-5)}{
+\node[junc] (j\xi) at \x {};
+}
+\draw[->] (zinvs.west) -| (c4);
+\draw[->] (zinvs.east -| c4) |- (cs.west);
+\draw[->] (cs-|c4) |- (ze);
+\draw[->] (ze) -- (j2);
+\draw[->] (j2) |- (c5);
+\draw[->] (j2 |- c5) |- (j1);
+\draw[->] ({{j2 |- j1}}-| c2) -- (c2.north);
+\draw[->] (c1.north) -- ++(0,2mm) --(j1.-45);
+\draw[->] (cs.east) -- ++(5mm,0) --(j1);
+\draw[->] (j1) -- (zinvs);
+\draw[->] (c5.west) -- ++(-5mm,0) --(j1);
+\draw[->] (c3.north) -- ++(0,5mm) --(j1);
+
+\draw[->] (zinvm.east) -| (c1);
+\draw[->] (zinvm.east -| c1) |- (cm.east);
+\draw[->] (cm-|c1) |- (zh);
+\draw[->] (zh) -- (j4);
+\draw[->] (j4) |- (c6);
+\draw[->] (j4 |- c6) |- (j3);
+\draw[->] ({{j4 |- j3}}-| c3) -- (c3.south);
+
+\draw[->] (c4.south) -- ++(0,-2mm) --(j3.135);
+\draw[->] (cm.west) -- ++(-5mm,0) --(j3);
+\draw[->] (j3) -- (zinvm);
+\draw[->] (c6.east) -- ++(5mm,0) -- (j3);
+\draw[->] (c2.south) -- ++(0,-5mm) --(j3);
+
+\draw[<-] (j2) -- ++(8mm,0) node[midway,above] {$f^*_e$}; 
+\draw[<-] (j4) -- ++(-8mm,0) node[midway,above] {$f^*_h$};
+
+\path (j2) ++(200:4mm) node {$\scriptstyle-$};
+\foreach \x/\y in {20/+,60/-,120/-,240/+,-20/-}{
+\draw (j1) ++(\x:5mm)node   {$\scriptstyle\y$};
+}
+\foreach \x/\y in {160/+,120/-,60/-,-60/-,200/+}{
+\draw (j3) ++(\x:5mm)node   {$\scriptstyle\y$};
+}
+\end{tikzpicture}
+\caption[Extended Lawrence Architecture]{Extended Lawrence Architecture, adapted from \cite{hashzaad1999}. 
+Starred signals are the exogenous force inputs by the human/environment}%
+\label{lit:syn:ela}%
+\end{figure}
+
+
+Instead of such classification, one can directly start with a MIMO control structure and avoid 
+such classifications while keeping the control problem formulation fixed. For this purpose, consider the 
+control mapping $K:\Real^{n_1}\times\Real^{n_2}\times\Real^3\times\Real^3\to \Real^{m_1}\times\Real^{m_2}$ from the 
+measurements to the local and remote control actions via 
+\begin{equation}
+\pmatr{F_l\\F_r} = K \pmatr{x_l\\x_r\\F_{hum}\\F_{env}} 
+\vcentcolon = 
+\tikz[baseline=(m.center),
+every left delimiter/.style={xshift=1ex},%tighter delimiter spacing
+every right delimiter/.style={xshift=-1ex}]
+{\matrix[matrix of math nodes,
+ampersand replacement=\&,
+left delimiter={[},
+right delimiter={]},
+nodes={minimum width=1cm}
+](m){
+-C_m \& |[fill=gray]| C_4 \& C_5 \& |[fill=gray]|-C_2\\ 
+|[fill=gray]|C_1  \& C_s \& |[fill=gray]|C_3 \& -C_6\\
+};
+}
+\pmatr{x_l\\x_r\\F_{hum}\\F_{env}}
+\label{eq:lit:MIMOcont}
+\end{equation}
+where $n_1,n_2$ denote the number position measurements and $m_1,m_2$ denote the actuation inputs with overactuated 
+robotic manipulators in mind. The grayed entries are the control subcomponents that works with the variables sent over 
+the network. If we recap the architectures above with this notation, they can be represented as
+\[
+K = \bmatr{
+-k &k&0&0\\
+k&-k&0&0
+}\pmatr{x_l\\x_r\\F_{hum}\\F_{env}},
+\]
+\[
+K = \bmatr{
+0&0&0&k_f\\
+k&-k&0&0
+}\pmatr{x_l\\x_r\\F_{hum}\\F_{env}},
+\]
+\[
+K = \bmatr{
+0&0&0&k_{f1}\\
+k&-k&0&k_{f2}
+}\pmatr{x_l\\x_r\\F_{hum}\\F_{env}}
+\]
+respectively. Each of the lower case $k_i$ represents some constant or dynamic controller. Obviously, one can 
+generate many more architectures populating different entries and the zero blocks. 
+
+
+
+
+
+
 \subsection{Time-Domain Passivity Control}
