@@ -600,9 +600,9 @@ operators.
 
 
 At end of the 80's, two prominent studies (\cite{andersonspong,nieslotine}) proposed a direct handle to handle delay 
-robustness problem using the scattering transformations. This notion is best explained by loop transformations since the 
-original articles refer to microwave and transmission line theories which use quite specialized terminology. One can also
-find the system theoretical view of these transformations in \cite{colgate3}. The key concept of the scattering transformation
+robustness problem using the scattering transformations. This notion is best explained, in our humble opinion, by loop transformations 
+since the original articles refer to microwave and transmission line theories which use quite specialized terminology. One can also
+find a slightly different system theoretical view of these transformations in \cite{colgate3}. The key concept of the scattering transformation
 or the wave variables methods is mapping the closed right half plane to the closed unit disk via bijective M\"{o}bius (or linear 
 fractional or bilinear) transformations: 
  
@@ -611,12 +611,12 @@ W:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq
 \label{eq:lit:smith}
 \end{equation}
 
-One can directly verify that $1\to 0,\infty\to 1$ and $0\to -1$ under $s$. Pictorially, the mapping is given in 
+One can directly verify that $1\to 0,\infty\to 1$ and $0\to -1$ under $W$. Pictorially, the mapping is given in 
 \Cref{fig:lit:smith} using a Smith chart which is located at the origin. Hence, positive real transfer matrices
 become norm bounded by $1$ such that we can analyze the interconnection using the small-gain theorem.
 
 
-Since often omitted in the literature, let us demonstrate a few properties of this transformation. First, this mapping can be shown with
+Let us demonstrate a few properties of this transformation. First, this mapping can be shown with
 a block diagram. Assume an LTI SISO system $G(s)$ and let the input/output relation is given by $y=Gu$. Then, with a
 standard manipulation, we obtain a feedback interconnection that leads to the mapping
 \[
@@ -685,13 +685,19 @@ extra description/.code={
 Obviously once this transformation is introduced, there is a need for the ``inverse'' of $W$, such that the
 loop equations remain unchanged, that is to say we have to introduce another transformation that undoes
 $W$. The simplest way to obtain a mapping $\hat{W}$ is to follow the block diagram backwards as shown in 
-\Cref{lit:syn:invscat}. Another block diagram reduction (or rotating three more times as shown above) shows that 
+\Cref{lit:syn:invscat}. A block diagram reduction step(or rotating three more times as shown above) shows that 
 \[
 \hat{W}(z) = -\frac{z+1}{z-1} = -\frac{1}{W(z)}
 \]
-The negative sign usually does not show up in the formulations because the passive interconnections 
+The negative sign usually does not show up in the formulations in the literature because the passive interconnections 
 require a sign change in the loop to indicate the ``from'' and ``to'' ports. A more detailed derivation
-is given in \cite{colgate3}.
+is given in \cite{colgate3}. Also note that a positive real operator when negated has its Nyquist curve 
+confined in the close left half plane (anti-positive real) which is equivalent to a $180^\circ$ rotation. 
+Thus, some attention must paid for the book-keeping of the negative signs and seemingly the best practice
+is to absorb the negative sign into $H$ at the outset and work with $-H$ afterwards. This makes the required
+transformations identical. One can see that there are variants of this mapping, especially in wave variables 
+definition, e.g., $\frac{z-b}{z+b}$ but for simplicity we take $b=1$ as it doesn't play any crucial role 
+in our presentation of the method. 
 
 
 \begin{figure}%
@@ -725,53 +731,51 @@ is given in \cite{colgate3}.
 
 
 Under the mapping $W$, the Nyquist curve of $e^{-sT}$ (unit circle) is mapped onto the imaginary axis, 
-hence unbounded. This once agin shows that delay uncertainty does not satisfy the norm constraint
+hence unbounded. This once again shows that delay uncertainty does not satisfy the norm constraint
 $\|W(e^{-\iw t})\|_\infty \leq 1$ to invoke the small-gain theorem in the transformed coordinates. 
 Had it been the case that the uncertainty was bounded by one, then it would have been possible to 
-conclude stability directly in the passivity theorem. Thus, these transformations are not directly 
-beneficial for analysis, however, following the cue from the previous mapping results, papers 
+conclude stability directly in the passivity theorem anyhow. Thus, these transformations are not directly 
+beneficial for analysis, however, following the cue from the previous mapping results, studies 
 \cite{andersonspong} and \cite{nieslotine} 
 made it possible to design controllers that takes into account this delay uncertainty. The resulting 
 loop is stable regardless of delay period, hence they belong to the class of methods often distinguished
 by ``delay-independent'' methods. According to the literature, these are the most common methods
 applied in the face of delay uncertainty.
 
+\subsubsection{Delay is Small-Gain}
 Another possibility is to utilize the simple fact that the delay operator is gain-bounded and obtain the 
 generalized plant by pulling out the uncertainty out of the loop. Obviously, this would be a very crude
-characterization of the unit circle since as unit disk is used as the uncertainty instead. 
+characterization of the unit circle since as unit disk is used as the uncertainty instead. However, as 
+we show later, wave variables/scattering transformations directly use this conservative formulation to 
+model the delay in the stabilization of the loop.
 
-Similar approach is reported in \cite{leungfa} using $\mu-$synthesis. But the authors have omitted 
-the uncertainty of the human and the environment. Therefore, their analysis is only valid for nominal 
-teleoperation systems. Though, this can be extended to more general cases, we have to note that, they 
-don't consider the human as ``some impedance$+$state-independent force input'' but as an finite-energy
-force input signal filtered through the human characteristics. Technically, this amounts to the common 
-input-filtering often used in the $H_\infty$ design problems. 
+A similar approach is reported in \cite{leungfa} using $\mu-$synthesis. By exploiting the
+low frequency property of the operator $e^{-sT}-1$ and covering with a dynamic filter, the conservatism
+is reduced. But the authors have omitted the uncertainty of the human and the environment. Therefore, 
+their analysis is only valid for nominal teleoperation systems. Though, this can be extended to more 
+general cases, we have to note that, they don't consider the human as ``some impedance$+$state-independent 
+force input'' but as an finite-energy force input signal filtered through the human characteristics. 
+Technically, this amounts to the common disturbance input-filtering often used in the $H_\infty$ design problems. 
 
  
 
 
 
 
-
-
-
-
-
-
 \section{Synthesis}
 
-Complementary to the analysis section, we cover a few popular controller design among many other except the 
-art of control engineering, namely, the manual PID tuning. 
+Complementary to the analysis section, we cover a few popular controller structures among many others except the 
+art of control engineering: manual PID tuning. 
 
 \subsection{Two-, Three-, and Four-Channel Control Architectures}
 In the teleoperation literature, the control laws are categorized in terms of how many measurement signals 
-are sent over to the opposite medium during the teleoperation for control and the actual controller synthesis method
-that is, how we actually obtain the controller is often not considered in this classification.  Hence, the naming 
-goes with ``$n-$channel control''. The naming scheme can be better visualized as shown in \Cref{lit:syn:ela}. 
+are sent over to the opposite medium during the teleoperation for control. The actual controller synthesis method
+that is, how we actually obtain the particular controllers is often not considered in this classification.  Hence, the naming 
+``$n-$channel control''. The naming scheme can be better visualized as shown in \Cref{lit:syn:ela}. 
 
 
 \subsubsection{Position-Postion and Position-Force Controllers}
-The simplest control architecture among all is probably the PERR (position error) control in which the 
+The most basic control architecture among all is probably the PERR (position error) control in which the 
 position of both local and the remote site devices are collected by the controller and control input is
 produced.
 
@@ -788,7 +792,7 @@ analysis) if available in noise-free measurements. Otherwise, position drift is 
 
 Typically, this control architecture would give a sluggish performance since there is no preference or priority in 
 correcting the error signal on each side. Therefore, while the remote site is pulled forward to track the local device,
-simultaneously, the local device is pulled back with the same force. This results with a feel similar to extending a 
+simultaneously, the local device is pushed back with the same force. This results with a feel similar to extending a 
 damper, only in this case, it softens up according to the position error instead of travel velocity.
 
 Another widely used, control architecture is the so-called Position-Force Controller. In this method the first channel 
@@ -940,8 +944,122 @@ respectively. Each of the lower case $k_i$ represents some constant or dynamic c
 generate many more architectures populating different entries and the zero blocks. 
 
 
+\subsection{Wave Variable-Scattering Transformation Control for delays}
 
+We have discussed the transformation from a passive interconnection to small-gain interconnection however
+we have assumed that the interconnection did not involve any communication delays. When the delays are 
+introduced to the loop as depicted in \Cref{lit:syn:delinc}, the transformations actually shift the stability problem from
+one domain to another. In other words, the transformations make the delay operators unbounded-gain as we have showed previously. 
+Therefore, interconnection of passive and small-gain operators avoids to be handled by neither small-gain nor passivity theorems. 
+Hence, we are left with the only option to modify the system. This technique has dominated the literature thanks to 
+\cite{andersonspong,nieslotine, nieslotine2}. 
+
+%
+%\begin{figure}%
+%\centering
+%\begin{tikzpicture}[%scale=0.8,
+%transform shape,
+%every node/.style={draw,minimum size=1cm},
+%every path/.style={->},>=stealth]
+%\node[draw] (g) at (0,0) {$G$};
+%\node[draw] (h) at (0,-2cm) {$H$};
+%\node[draw] (d1) at (2cm,-1cm) {$e^{-sT}$};
+%\node[draw] (d2) at (-2cm,-1cm) {$e^{-sT}$};
+%\draw (h) -| (d2);\draw (d2) |- (g);
+%\draw (g) -| (d1);\draw (d1) |- (h);
+%\end{tikzpicture}
+%\caption[A delayed interconnection]{A delayed interconnection (Negative feedback sign is included in $H$)}%
+%\label{lit:syn:delinc}%
+%\end{figure}
+
+Suppose we are given strictly passive LTI systems $G,H$ interconnected as shown in \Cref{lit:syn:delinc} on the 
+left with communication delays. We, then, rewrite the interconnection as a two block interconnection as shown on 
+the right for which we will use the shorthand $P-\Delta$ interconnection (delay block being the $\Delta$). Now if 
+the system was small-gain we would directly conclude with stability since $\norm{\Delta}_\infty = 1$, i.e.,
+\[
+\bmatr{0 &e^{\iw T}\\e^{\iw T}&0}\bmatr{0 &e^{-\iw T}\\e^{-\iw T}&0}= I \quad \ \forall\omega,T. 
+\]
+However, we have $P$ strictly passive, thus not necessarily a bounded operator. But we have showed how to transform 
+such operators into norm bounded ones. This is actually the key point of the wave variables. We simply use the mapping 
+$W(P)$ and obtain 
+\begin{align}
+W(P) = (P-I)\inv{(P+1)} &= \bmatr{G-I & 0\\0 &-H-I}\inv{\bmatr{G+I & 0\\0 &-H+I}}\\ &= \bmatr{W(G) &\\&W(-H)}
+\end{align}
+
+This constitutes as a simple justification of the common ``left'' and ``right'' scattering transformation of the port terminations, leaving 
+the delay operators in the ``hybrid'' structure untouched in the two port network terminology. Note that, we have only applied the mapping $W$ to $P$ and 
+there is no inverse mapping to ``undo'' this in the loop. Technically speaking, this is not precisely a loop transformation 
+but actually a change to the system structure via control action. The block diagrams that we have presented earlier is precisely 
+achieved by the use of a feedforward/feedback control law, which can be represented by \Cref{eq:lit:MIMOcont}, to create this 
+transformation. The explicit derivation of the wave variable controller entries, in terms of a MIMO controller, is given in 
+\cite{christiansson2008}. One can also verify that the control law given in \cite{andersonspong} can be obtained via this formulation. 
+
+It is this very reason that the motivation often found in the literature is slightly misleading. Because, we did not 
+and also could not do any modification on the delays. Quite the contrary, we have modified our system such that we can use 
+the small-gain theorem to conclude stability uin the face of $\Delta$. Therefore, we refrain to see 
+this method as a passification of the communication channel. It is certainly possible to reflect the transformation 
+on $\Delta$ but the author thinks that this only complicates the presentation since it's the change in the control 
+action that stabilizes the loop not the change in the characteristics of the delay operator. 
+
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[%scale=0.7,
+>=stealth,
+]
+\begin{scope}[transform shape,
+every node/.style={draw,minimum size=1cm},
+every path/.style={->},
+shift={(-7cm,0cm)}
+]
+\node[draw] (g) at (0,0) {$G$};
+\node[draw] (h) at (0,-2cm) {$-H$};
+\node[draw] (d1) at (2cm,-1cm) {$e^{-sT}$};
+\node[draw] (d2) at (-2cm,-1cm) {$e^{-sT}$};
+\draw (h) -| (d2);\draw (d2) |- (g);
+\draw (g) -| (d1);\draw (d1) |- (h);
+\end{scope}
+
+\matrix (p) at (0,-2cm) [matrix of math nodes,nodes in empty cells,draw,nodes={minimum width=8mm}] {
+G &0\\
+0 &\!\!\!\!\!-H\\
+};
+\matrix (d) at (0cm,0cm) [matrix of math nodes,nodes in empty cells,draw] {
+0 &e^{-sT}\\
+e^{-sT} &0\\
+};
+\draw[->] (d) -| ++ (2cm,-1cm) |- (p);
+\draw[->] (p) -| ++ (-2cm,1cm) |- (d);
+\end{tikzpicture}
+\caption[A delayed interconnection]{A delayed interconnection in the input/output setting and 
+block diagram as a two block interconnection.}%
+\label{lit:syn:delinc}%
+\end{figure}
+
+
+It is clear that we have introduced the same conservatism by treating $\Delta$ as a gain-bounded operator 
+which the $\mu-$analysis approaches also assume. Moreover, we have directly transformed the strictly passive 
+operator to the small-gain operator. In case of a passivity excess, i.e., the mapped operator is confined only 
+in a subregion of the unit disk, we, yet again, introduce conservatism by using the small-gain theorem, for which 
+one can invoke the the scaled small-gain theorem to reduce the conservatism. We should note that, this method
+works for any norm-bounded linear/nonlinear $\Delta$ operator as long as the passivity structure is preserved 
+and certainly not limited to delays (as in the passivity case, it's that conservative). Note that, if one convert
+the $\Delta$ to a block diagonal matrix and formulate a $\mu-$synthesis problem (together with the shifting of the delays etc.)
+with a controller $K$ to be found we recover the results of \cite{leungfa} with a $DK-$iteration procedure. In 
+this, above control law becomes an element of structured controller set that stabilizes the system (due to 
+the particular zero blocks in the controller structure). Thus, in terms of conservatism involved, $\mu-$synthesis 
+based synthesis is guaranteed to give better results than that of wave variables methods.
+
+It has been noted the such control algorithm is prone to position drifts due to the velocity communication and 
+different alternatives proposed to tackle this mismatch e.g., \cite{yokokohji,chopratro06}. Also there are generalizations of the scattering 
+transformations available in the literature, e.g., \cite{hirchebuss} to exploit the degree of freedom on the 
+mapping $W$ using different rotation-scaling combinations for the unitary transformation matrix and also 
+\cite{stramigioli} for multidimensional systems.  
 
 
 
 \subsection{Time-Domain Passivity Control}
+In \cite{hannafordryu}, the passivity approach is formulated in time domain and the energy exchange is literally
+monitored and regulated. The basic idea is to see whether at any port there is energy is generated with a ``passivity
+observer''. If 
