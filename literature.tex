@@ -972,37 +972,6 @@ Hence, we are left with the only option to modify the system. This technique has
 %\label{lit:syn:delinc}%
 %\end{figure}
 
-Suppose we are given strictly passive LTI systems $G,H$ interconnected as shown in \Cref{lit:syn:delinc} on the 
-left with communication delays. We, then, rewrite the interconnection as a two block interconnection as shown on 
-the right for which we will use the shorthand $P-\Delta$ interconnection (delay block being the $\Delta$). Now if 
-the system was small-gain we would directly conclude with stability since $\norm{\Delta}_\infty = 1$, i.e.,
-\[
-\bmatr{0 &e^{\iw T}\\e^{\iw T}&0}\bmatr{0 &e^{-\iw T}\\e^{-\iw T}&0}= I \quad \ \forall\omega,T. 
-\]
-However, we have $P$ strictly passive, thus not necessarily a bounded operator. But we have showed how to transform 
-such operators into norm bounded ones. This is actually the key point of the wave variables. We simply use the mapping 
-$W(P)$ and obtain 
-\begin{align}
-W(P) = (P-I)\inv{(P+1)} &= \bmatr{G-I & 0\\0 &-H-I}\inv{\bmatr{G+I & 0\\0 &-H+I}}\\ &= \bmatr{W(G) &\\&W(-H)}
-\end{align}
-
-This constitutes as a simple justification of the common ``left'' and ``right'' scattering transformation of the port terminations, leaving 
-the delay operators in the ``hybrid'' structure untouched in the two port network terminology. Note that, we have only applied the mapping $W$ to $P$ and 
-there is no inverse mapping to ``undo'' this in the loop. Technically speaking, this is not precisely a loop transformation 
-but actually a change to the system structure via control action. The block diagrams that we have presented earlier is precisely 
-achieved by the use of a feedforward/feedback control law, which can be represented by \Cref{eq:lit:MIMOcont}, to create this 
-transformation. The explicit derivation of the wave variable controller entries, in terms of a MIMO controller, is given in 
-\cite{christiansson2008}. One can also verify that the control law given in \cite{andersonspong} can be obtained via this formulation. 
-
-It is this very reason that the motivation often found in the literature is slightly misleading. Because, we did not 
-and also could not do any modification on the delays. Quite the contrary, we have modified our system such that we can use 
-the small-gain theorem to conclude stability uin the face of $\Delta$. Therefore, we refrain to see 
-this method as a passification of the communication channel. It is certainly possible to reflect the transformation 
-on $\Delta$ but the author thinks that this only complicates the presentation since it's the change in the control 
-action that stabilizes the loop not the change in the characteristics of the delay operator. 
-
-
-
 \begin{figure}%
 \centering
 \begin{tikzpicture}[%scale=0.7,
@@ -1037,6 +1006,36 @@ block diagram as a two block interconnection.}%
 \label{lit:syn:delinc}%
 \end{figure}
 
+Suppose we are given strictly passive LTI systems $G,H$ interconnected as shown in \Cref{lit:syn:delinc} on the 
+left with communication delays. We, then, rewrite the interconnection as a two block interconnection as shown on 
+the right for which we will use the shorthand $P-\Delta$ interconnection (delay block being the $\Delta$). Now if 
+the system was small-gain we would directly conclude with stability since $\norm{\Delta}_\infty = 1$, i.e.,
+\[
+\bmatr{0 &e^{\iw T}\\e^{\iw T}&0}\bmatr{0 &e^{-\iw T}\\e^{-\iw T}&0}= I \quad \ \forall\omega,T. 
+\]
+However, we have $P$ strictly passive, thus not necessarily a bounded operator. But we have showed how to transform 
+such operators into norm bounded ones. This is actually the key point of the wave variables. We simply use the mapping 
+$W(P)$ and obtain 
+\begin{align}
+W(P) = (P-I)\inv{(P+1)} &= \bmatr{G-I & 0\\0 &-H-I}\inv{\bmatr{G+I & 0\\0 &-H+I}}\\ &= \bmatr{W(G) &\\&W(-H)}
+\end{align}
+
+This constitutes as a simple justification of the common ``left'' and ``right'' scattering transformation of the port terminations, leaving 
+the delay operators in the ``hybrid'' structure untouched in the two port network terminology. Note that, we have only applied the mapping $W$ to $P$ and 
+there is no inverse mapping to ``undo'' this in the loop. Technically speaking, this is not precisely a loop transformation 
+but actually a change to the system structure via control action. The block diagrams that we have presented earlier is precisely 
+achieved by the use of a feedforward/feedback control law, which can be represented by \Cref{eq:lit:MIMOcont}, to create this 
+transformation. The explicit derivation of the wave variable controller entries, in terms of a MIMO controller, is given in 
+\cite{christiansson2008}. One can also verify that the control law given in \cite{andersonspong} can be obtained via this formulation. 
+
+It is this very reason that the motivation often found in the literature is slightly misleading. Because, we did not 
+and also could not do any modification on the delays. Quite the contrary, we have modified our system such that we can use 
+the small-gain theorem to conclude stability in the face of $\Delta$. Therefore, we refrain to see 
+this method as a passification of the communication channel. It is certainly possible to reflect the transformation 
+on $\Delta$ but the author thinks that this only complicates the presentation since it's the change in the control 
+action that stabilizes the loop, and not the change in the characteristics of the delay operator or making the 
+communication line a lossless $LC$ line, which would otherwise revolutionize the power transmission technology.
+
 
 It is clear that we have introduced the same conservatism by treating $\Delta$ as a gain-bounded operator 
 which the $\mu-$analysis approaches also assume. Moreover, we have directly transformed the strictly passive 
@@ -1044,22 +1043,78 @@ operator to the small-gain operator. In case of a passivity excess, i.e., the ma
 in a subregion of the unit disk, we, yet again, introduce conservatism by using the small-gain theorem, for which 
 one can invoke the the scaled small-gain theorem to reduce the conservatism. We should note that, this method
 works for any norm-bounded linear/nonlinear $\Delta$ operator as long as the passivity structure is preserved 
-and certainly not limited to delays (as in the passivity case, it's that conservative). Note that, if one convert
-the $\Delta$ to a block diagonal matrix and formulate a $\mu-$synthesis problem (together with the shifting of the delays etc.)
-with a controller $K$ to be found we recover the results of \cite{leungfa} with a $DK-$iteration procedure. In 
-this, above control law becomes an element of structured controller set that stabilizes the system (due to 
-the particular zero blocks in the controller structure). Thus, in terms of conservatism involved, $\mu-$synthesis 
-based synthesis is guaranteed to give better results than that of wave variables methods.
+and certainly not limited to delays (as in the passivity case, it's that conservative). 
+
+Furthermore, if one shuffles the loop equations and bring the $\Delta$ block to a block diagonal form, it's possible
+to formulate a $\mu-$synthesis problem. By doing so we can recover the scheme of \cite{leungfa}. In this context, 
+we can clearly see that the control law above is in the subset of all stabilizing controllers set (due 
+to the particular zero blocks in the controller structure). Thus, in terms of conservatism involved, 
+$\mu-$synthesis based synthesis is guaranteed to at least as good as of the wave variables methods in the linear 
+case if not more. If, in addition, dynamic $D-$scalings are introduced, then the resulting conservatism 
+can be reduced even further.
 
 It has been noted the such control algorithm is prone to position drifts due to the velocity communication and 
 different alternatives proposed to tackle this mismatch e.g., \cite{yokokohji,chopratro06}. Also there are generalizations of the scattering 
 transformations available in the literature, e.g., \cite{hirchebuss} to exploit the degree of freedom on the 
 mapping $W$ using different rotation-scaling combinations for the unitary transformation matrix and also 
-\cite{stramigioli} for multidimensional systems.  
+\cite{stramigioli} for multidimensional systems. Delay problems are also addressed in many studies, e.g., 
+\cite{chopraberes}. 
 
 
 
 \subsection{Time-Domain Passivity Control}
 In \cite{hannafordryu}, the passivity approach is formulated in time domain and the energy exchange is literally
-monitored and regulated. The basic idea is to see whether at any port there is energy is generated with a ``passivity
-observer''. If 
+monitored and regulated. The basic idea is to see whether at any port there is energy is generated, using a ``passivity
+observer'' (PO): for an $N-$port network the observed total energy is given by
+\[
+E_{obsv}(n) = \sum_{k=0}^n \Delta T_k(F(k)^TV(k))
+\]
+where $\Delta T_k$ is the sampling period at each step with nonuniform sampling in mind. If 
+$E_{obsv}(n) $ is greater than or equal to zero then the energy is dissipated by the network, conversely if
+it is negative at some $k$, than the network has generated energy equal to the amount of $-E_{obsv}(n)$,. Note that
+this is a cumulative term and it is not implied that the energy is generated in the last step but analogous to the 
+integral-action control. Also, it has been shown that observing the energy flow only at the open ended ports is 
+sufficient to monitor the total ``net'' energy flow which is analogous to the observability concept in the 
+linear control theory. 
+
+The ``Passivity Control'' (PC) is implemented on top of this as a virtual dissipative element. It relies on the 
+passivity observer and if the energy generation is detected a dissipative element is introduced. The practical 
+implementation is very similar to a safety relay circuit, e.g., it's only active when some relay switch is 
+triggered. Depending on the causality (following the analogy, current sensing or voltage sensing relay), the 
+PC can be implemented in series or parallel to the port. 
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[contact/.style={circle,draw,fill=white,inner sep=0.5pt}]
+\node[draw,minimum size=1.5cm] (n) {$N$};
+\draw (n.140) -- +(-2cm,0)  (n.-140) -- +(-2cm,0);
+\draw ([xshift=-1cm]n.140) -- ++(0,-2mm) node[draw,anchor=north,inner sep=2pt] (a) {$\alpha$};
+\draw (a) -- ++(0,-3mm) node [shift={(-1mm,0cm)},anchor=east,rotate=90,shape=var make contact IEC,minimum width=3mm,minimum height=2mm,draw] (s) {};
+\draw (s) -- (s|- n.-140);
+\node[scale=0.5,minimum height=3mm,minimum width=7mm,draw] at ([xshift=-8mm]s) (r) {$PO$};
+\draw[densely dashed] (r) -- ([xshift=2mm]s.south);
+
+\begin{scope}[xshift=5cm,decoration={markings,
+mark connection node=my node,
+mark=at position .5 with
+{\node [draw] (my node) {$\alpha$};}}]
+\node[draw,minimum size=1.5cm] (n) {$N$};
+\draw[decorate] (n.155) -- +(-1cm,0) node[contact](c2){};
+\draw (n.140) -- +(-1cm,0) node[contact] (c1){};
+\draw  (n.-140) -- +(-2cm,0);
+\draw ([xshift=-1cm]$(c1)!0.5!(c2)$)  -- ++(7mm,0) -- (c1.south);
+\node[scale=0.5,minimum height=3mm,minimum width=7mm,draw] at ([shift={(-1.5mm,-3mm)}]c2) (r) {$PO$};
+\draw[densely dashed] (r) -- ++(0,8mm);
+\end{scope}
+\end{tikzpicture}
+\caption{Passivity Controller (PC) implemetations.}%
+\label{lit:syn:pc}%
+\end{figure}
+
+This concept is then generalized to two-ports in \cite{ryukwonhanna,ryukwonhanna2} and also results regarding
+the delay problem in the Time Domain Passivity Control context can be found in \cite{ryu}. 
+
+\subsection{Others}
+
+There are other approaches such as Energy Bounding Algorithm (EBA), \cite{kimryu,seokim}, sliding mode control, \cite{parkcho},
+reset control, \cite{villaverdereset}
