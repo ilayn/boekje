@@ -1,3 +1,5 @@
+%!TEX root = thesis.tex
+
 \chapter{A Brief and Opiniated Literature Survey}\label{chap:litsurvey}
 
 The teleoperation systems are structurally interesting and equally challenging 
@@ -48,7 +50,7 @@ first teleoperators were purely mechanical to cope with the hostile environment 
 happened in terms of commercial product realizations, the concept of telemanipulation kept its appeal 
 and a large body of research was reported until the 1980s. In that decade, with the help of the 
 ever-increasing computational power and the popularity of Virtual Reality (VR), teleoperation 
-technology received more attention for a possible use in the space-, underwater-, medical-related 
+technology received more attention for a possible use in the space-, underwater-, and medical-related 
 tasks. Together with the advances in control theory and network theory (e.g. \cite{miyazaki,furuta}), 
 a more systematic control methodology is adopted. Especially, stability analysis results that can be 
 related to design guidelines (physical parameter bounds, bandwidth limitations etc.) are utilized
@@ -217,8 +219,8 @@ is circumvented. However, due to the same reasoning, passivity property does not
 passive. For this reason, some of the crucial information is lost about these specific ports. In other words, we discard
 any impedance or admittance relations shared by the port variables.
 
-We have mentioned the ports and energy transfer between them as the main modeling paradigm so far. Energy based modeling is 
-the natural basis for bond-graphs too. Bond-graphs, much like port representations, are graphical tools to model the dynamical 
+We have mentioned the ports and energy transfer between them as the main modeling paradigm so far but energy based modeling is 
+also the natural basis of bond-graphs. Bond-graphs, much like port representations, are graphical tools to model the dynamical 
 systems via energy balancing between subcomponents (See \cite{gawthrop} for an introduction). In other words, the bond-graphs are built on top of the notion 
 of bonds representing the instant energy or power exchange between nodes via edges drawn between them. Therefore, bond-graphs
 already presents a powerful framework for abstraction of the bilateral interaction between the local and the remote site. For a 
@@ -230,24 +232,25 @@ among many others.
 
 \subsection{Assumptions on the Local and Remote ``Ports''}
 
-Up to this point, we have touched upon how network theory offered a great opportunity for modeling the 
-teleoperation systems. Still, to invoke the stability analysis and synthesis results of the network thoery there is a need 
-to further distinguish $\Delta_s,\Delta_l$ from the universum of $1-$ports. Otherwise there is not much we can conclude from such an 
-interconnection, put differently, they can be any arbitrary model with arbitrary behavior set as long as they respect the port 
-condition. This is obviously not sufficient to capture the real physical interaction that teleoperation systems embody. 
+We have touched upon how network theory offered a great opportunity for modeling the 
+teleoperation systems or better, how we can avoid the refined modeling step. Still, to invoke the stability analysis and synthesis 
+results of the network thoery there is a need to further distinguish $\Delta_s,\Delta_l$ from the universum of $1-$ports. Otherwise 
+there is not much we can conclude from such an interconnection, put differently, they can be any arbitrary model with arbitrary 
+behavior set as long as they respect the port condition. This is obviously not sufficient to capture the real physical interaction 
+that teleoperation systems embody. 
 
-In teleoperation and haptics literature, it is customary to assume that the load and the source terminations as ``passive''
-mathematical operators (see \Cref{chap:apdxnetwork}). By this hypothesis, the main tool that one has is the physical-interaction-based approach. 
+In teleoperation and haptics literature, it is customary to assume the load and the source terminations as ``passive''
+mathematical operators (see \Cref{chap:apdxnetwork}). By this hypothesis, the main technique is the energy-exchange approach. 
 Hence the view of the designer is tuned to see the energy interaction between two distant media. This approach treats the human and the 
 environment as passive elements with additional effort sources modeling the intentional force input to the system and the 
-controller is viewed as the energy regulator preventing excess energy causing the system go unstable. Moreover, as we have
-briefly summarized in \Cref{chap:apdxnetwork} and in the analysis section below, one can use the network theory based conditions 
+controller is viewed as the energy regulator preventing excess energy generation to avoid a possible instability. Moreover, as we have
+briefly summarized in \Cref{chap:apdxnetwork} and in the analysis section, one can use the network theory based conditions 
 to assess the stability and performance conditions thanks to this hypothesis.
 
-This brings us to the discussion of the justification of the validity of such an assumption as it is generally not given in full generality in the
-literature. If one scans through the literature about the passivity of human operators, it is Hogan's paper \cite{hogan89}
-that is almost universally cited. The striking detail is, however, that Hogan never claims that the human exhibits a passive
-behavior. Instead he clearly shows that under certain conditions, human behavior is indistinguishable than that of a 
+This brings us to the discussion of the justification of such an assumption as it is generally not given in full generality in the
+literature. If one scans through the literature about the passivity of human operators, it is the Hogan's paper \cite{hogan89}
+that is almost universally cited. The striking detail is, however, that Hogan never claims that the human hand/arm is a passive
+system. Instead he clearly shows that under certain conditions, human behavior is indistinguishable than that of a 
 passive system: 
 \begin{quote}
 Thus, despite the fact that the
@@ -262,19 +265,19 @@ experimental result strongly suggests that neural feedback in the
 human arm is carefully tuned to preserve stability under the
 widest possible set of conditions.
 \end{quote}
-Moreover, the task that is given to human operators and analyzed afterwards is about making the human 
+Moreover, the task that given to human operators and analyzed afterwards is about making the human 
 be as passive as possible. The task is, roughly speaking, holding a handle which is perturbed by random disturbances and 
 trying to keep the handle still at a predefined position on the 2D plane. Hence, the task is simply to mimic a passive 
-component that is, again roughly, a mass-spring-damper system. Had it been the case that the human would exhibit non-symmetric 
-stiffness matrix, it would simply be a failure of the test subject (regardless of the physical limitations). Note that this 
-is a plausible assumption for the rehabilitation tasks. The other possibility would then be is that the test subject was unable to keep up 
+component that is a mass-spring-damper system. Had it been the case that the human would exhibit non-symmetric 
+stiffness matrix, it would simply be a failure of the test subject (regardless of the physical limitations of the human arm in general). Note that this 
+is a plausible situation for the rehabilitation tasks. The other possibility would then be is that the test subject was unable to keep up 
 with the changes, or using the control theory jargon, the bandwidth of the subject was lower than the required agility to 
 perform the test adequately.  The well-known phenomenon of such behavior is the ``pilot induced oscillations'' in which the pilot
 of an aircraft, while trying to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many distinct reasons 
 (response time of the pilot and thus the phase lag with response time of the aircraft etc.). We refer to the interesting 
 report \cite{mcruer} for a more detailed exposition. Moreover, if for some reason, the task at hand is to prevent the system 
 to reach a steady state at a certain position and the perturbations are applied accordingly i.e., to create a virtual potential, 
-the results obtained from the experiments would most probably different from that of \cite{mussa85}. Thus, it's worth mentioning 
+the results obtained from the experiments would most probably differ from that of \cite{mussa85}. Thus, it's worth mentioning 
 that the passivity of the human is closely linked to the passivity of the environment. 
 
 
@@ -1035,10 +1038,14 @@ this method as a passification of the communication channel. It is certainly pos
 on $\Delta$ but the author thinks that this only complicates the presentation since it's the change in the control 
 action that stabilizes the loop, and not the change in the characteristics of the delay operator or making the 
 communication line a lossless $LC$ line, which would otherwise revolutionize the power transmission technology.
+We have to emphasize that this transformation does not guarantee stability if the original $P$ is not strictly passive.
+However if any other plant $\hat{P}$ from an arbitrary class of systems can be brought into a unity norm-bounded form with some
+other transformation/control law, then this method applies with different physical interpretations.  
 
 
-It is clear that we have introduced the same conservatism by treating $\Delta$ as a gain-bounded operator 
-which the $\mu-$analysis approaches also assume. Moreover, we have directly transformed the strictly passive 
+
+Clearly, we have introduced the same conservatism by treating $\Delta$ as a gain-bounded operator 
+that $\mu-$analysis approaches also use as a hypothesis. Moreover, we have directly transformed the strictly passive 
 operator to the small-gain operator. In case of a passivity excess, i.e., the mapped operator is confined only 
 in a subregion of the unit disk, we, yet again, introduce conservatism by using the small-gain theorem, for which 
 one can invoke the the scaled small-gain theorem to reduce the conservatism. We should note that, this method
@@ -1051,10 +1058,11 @@ we can clearly see that the control law above is in the subset of all stabilizin
 to the particular zero blocks in the controller structure). Thus, in terms of conservatism involved, 
 $\mu-$synthesis based synthesis is guaranteed to at least as good as of the wave variables methods in the linear 
 case if not more. If, in addition, dynamic $D-$scalings are introduced, then the resulting conservatism 
-can be reduced even further.
+can be reduced even further. 
 
 It has been noted the such control algorithm is prone to position drifts due to the velocity communication and 
-different alternatives proposed to tackle this mismatch e.g., \cite{yokokohji,chopratro06}. Also there are generalizations of the scattering 
+different alternatives have been proposed to tackle this mismatch e.g., \cite{yokokohji,chopratro06}. 
+Also there are generalizations of the scattering 
 transformations available in the literature, e.g., \cite{hirchebuss} to exploit the degree of freedom on the 
 mapping $W$ using different rotation-scaling combinations for the unitary transformation matrix and also 
 \cite{stramigioli} for multidimensional systems. Delay problems are also addressed in many studies, e.g., 
@@ -1116,5 +1124,12 @@ the delay problem in the Time Domain Passivity Control context can be found in \
 
 \subsection{Others}
 
-There are other approaches such as Energy Bounding Algorithm (EBA), \cite{kimryu,seokim}, sliding mode control, \cite{parkcho},
-reset control, \cite{villaverdereset}
+There are other approaches such as Energy Bounding Algorithm (EBA), \cite{kimryu,seokim}, sliding mode control, 
+\cite{parkcho,buttolo}, reset control, \cite{villaverdereset} and many more which we will omit here since they 
+are not directly related to the model-based control design methods which we will also propose. 
+
+
+Once again this is a pragmatic choice and is intentional. We have not performed a rigorous comparison with any algorithm that is 
+skipped in this brief and biased survey. It's our humble opinion, however, a ``one-size-fits-for-all'' design 
+toward operator- and task-aware control laws without dedicated modeling and/or classification, seems very 
+unlikely to produce a generally applicable results with high-performance guarantees. 
