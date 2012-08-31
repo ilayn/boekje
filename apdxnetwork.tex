@@ -1,5 +1,14 @@
 \chapter{Network Theory Primer}\label{chap:apdxnetwork}
 
+\tikz \draw[-latex,ultra thick]  node[right,fill=yellow,
+append after command={(a.south west) -- ($(a.south west)!0.8!(a.south east)$)},
+label={[inner sep=0]south east:$100$},
+label={[inner sep=0]south west:$0$},text width=0.8\textwidth,align=center] (a) {Current status: 80\%. Dummy version below 
+is only required for the missing \LaTeX\space labels. Current version does not have enough text but content is 
+fixed. Expected to be finished in a few days.};
+\vspace{1cm}
+
+
 We would like to follow Jan C. Willems' formulation for a systematic definition of terminals and ports which 
 appeared in \cite{willemsCSM}. 
 
@@ -11,7 +20,7 @@ interact with its surroundings via ``ports" or, more generally, circuit terminal
 satisfy some technical assumptions. 
 
 
-\tikz \draw[->,ultra thick] (0,0) -- ++(4cm,0) node[right,fill=yellow] {(More info on behaviors below!)};
+\tikz \draw[->,ultra thick] (0,0) -- ++(4cm,0) node[right] {(More info on behaviors below!)};
 
 
 In modeling language and block diagrams, the terminals denote the information carriage
@@ -226,3 +235,17 @@ for all $x\in\mathcal{H}_e$ and for all $T\in\mathcal{T}$. If
 then, $u_1,u_2 \in \mathcal{H}$ imply that $e_1,e_2,y_1,y_2\in\mathcal{H}$ 
 \end{thm}
 
+A well-known absolute stability analysis result for the LTI network is due to Llewellyn \cite{llewellyn}. 
+An explicit indication of the frequency dependence is omitted for notational convenience.
+\begin{thm}[Llewellyn's Criteria]\label{thm:apdx:llw}
+A two-port network $N$,  described by its transfer matrix
+\[
+N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
+\]
+and interconnected to passive LTI termination immitances as in \Cref{fig:portrep}, is stable if and only if
+\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:lit:llew2}\end{equation} and
+\begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:lit:llew3}\end{equation} 
+or
+\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\label{eq:lit:llew3p}\end{equation}
+for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
+\end{thm}

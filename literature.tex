@@ -2,6 +2,17 @@
 
 \chapter{A Brief and Opiniated Literature Survey}\label{chap:litsurvey}
 
+\tikz \draw[-latex,ultra thick]  node[
+right,
+fill=yellow,
+append after command={(a.south west) -- ($(a.south west)!0.9!(a.south east)$)},
+label={[inner sep=0]south east:$100$},
+label={[inner sep=0]south west:$0$},
+text width=0.8\textwidth,align=center] (a) {Current status: 90\% Polishing the Tone and a last scan of Literature (maybe minor reordering)};
+\vspace{1cm}
+
+
+
 The teleoperation systems are structurally interesting and equally challenging 
 systems. This is especially true from a system theoretical point of view. As an example, 
 if we just focus on the local and the remote devices that would be used for manipulation, 
@@ -156,9 +167,9 @@ a mere mechanical-electrical system analogy. Arguably, the most prominent concep
 view of the bilateral teleoperation systems. The reader is referred to \Cref{chap:apdxnetwork} for a short recap of network theory.
 Today, the quoted convenience also applies to almost all physical systems i.e. one can simulate arbitrary models via many 
 computational packages. Yet, it's a de facto standard to use the circuit modeling while the teleoperation devices are mostly 
-mechanical. Hence, it's not clear whether the benefit of such an artificial step didn't vanish. Once the system is represented 
+mechanical. Hence, it's not clear whether the benefit of such an artificial step still exists. Once the system is represented 
 by a mathematical model, as it is demonstrated in the later sections, the mechanical/electrical analogy is, roughly, an equivalence
-based on the resulting model and works in the electrical$\to$mechanical direction too. Therefore, to the best of our knowledge, the 
+based on the resulting model and works in the electrical$\to$mechanical direction too. Therefore, the 
 circuit based modeling is merely a convention rather than a requirement.
 
 \subsection{Two-port Modeling of Teleoperation Systems}
@@ -237,7 +248,7 @@ teleoperation systems or better, how we can avoid the refined modeling step. Sti
 results of the network thoery there is a need to further distinguish $\Delta_s,\Delta_l$ from the universum of $1-$ports. Otherwise 
 there is not much we can conclude from such an interconnection, put differently, they can be any arbitrary model with arbitrary 
 behavior set as long as they respect the port condition. This is obviously not sufficient to capture the real physical interaction 
-that teleoperation systems embody. 
+that teleoperation systems exhibit. 
 
 In teleoperation and haptics literature, it is customary to assume the load and the source terminations as ``passive''
 mathematical operators (see \Cref{chap:apdxnetwork}). By this hypothesis, the main technique is the energy-exchange approach. 
@@ -265,7 +276,7 @@ experimental result strongly suggests that neural feedback in the
 human arm is carefully tuned to preserve stability under the
 widest possible set of conditions.
 \end{quote}
-Moreover, the task that given to human operators and analyzed afterwards is about making the human 
+Moreover, the task that is given to human operators and analyzed afterwards, is about making the human 
 be as passive as possible. The task is, roughly speaking, holding a handle which is perturbed by random disturbances and 
 trying to keep the handle still at a predefined position on the 2D plane. Hence, the task is simply to mimic a passive 
 component that is a mass-spring-damper system. Had it been the case that the human would exhibit non-symmetric 
@@ -274,11 +285,11 @@ is a plausible situation for the rehabilitation tasks. The other possibility wou
 with the changes, or using the control theory jargon, the bandwidth of the subject was lower than the required agility to 
 perform the test adequately.  The well-known phenomenon of such behavior is the ``pilot induced oscillations'' in which the pilot
 of an aircraft, while trying to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many distinct reasons 
-(response time of the pilot and thus the phase lag with response time of the aircraft etc.). We refer to the interesting 
-report \cite{mcruer} for a more detailed exposition. Moreover, if for some reason, the task at hand is to prevent the system 
-to reach a steady state at a certain position and the perturbations are applied accordingly i.e., to create a virtual potential, 
-the results obtained from the experiments would most probably differ from that of \cite{mussa85}. Thus, it's worth mentioning 
-that the passivity of the human is closely linked to the passivity of the environment. 
+(response time of the pilot and thus the phase lag. response time of the aircraft etc.). We refer to the interesting 
+report \cite{mcruer} for a more detailed exposition. Also, if for some reason, the task at hand is to prevent the system 
+to reach a steady state at a certain position and the perturbations are applied accordingly i.e., to create a virtual negative potential, 
+the results obtained from the experiments would most probably differ from that of \cite{mussa85}. Thus, it's emphasized here 
+that the passivity of the human is closely linked to the task requirements. 
 
 
 \begin{rem}
@@ -301,11 +312,13 @@ The question of how, then, a human can actually move anything while remaining pa
 story more complicated. The voluntary input of the human is taken as an exogenous input to the system. This is due to the 
 fact that, in passivity based analysis, the closed loop stability is tested against square integrable functions of time 
 modeling the finite energy inputs by the human which will be covered in \Cref{sec:litchapanalysis} in this chapter.  
+(FIX this sentence!!!!)
 
 A keen eyed reader would spot that this is not inline with Hogan's remark since the human force input has 
 alredy been considered in the apparent stiffness measurements. In other words, without the human's active control, the passivity 
-argument does not hold as the stiffness matrix might be non-symmetric and hence would have a non-zero curl. Therefore, we have to further
-separate the human force into two parts, namely, the active neuromuscular feedback force and the voluntary and cognitive force 
+argument does not hold as the stiffness matrix might be non-symmetric or simply there might be pattern in the cocontraction of the muscles 
+which is a function of the motion direction (as in the rehabilitation case speculated above), hence would have a non-zero curl. Therefore, 
+we have to further separate the human force into two parts, namely, the active neuromuscular feedback force and the voluntary and cognitive force 
 input applied to the system. How this is usually performed is not clear in the literature. To the best of our knowledge, this 
 issue is addressed explicitly (but still briefly) only in \cite[Sec. II.B]{kazeroonitsay} and references therein.
 
@@ -512,22 +525,7 @@ if it is not potentially unstable at $\iw_0$.
 If moreover,  human, and the environment models are assumed to be LTI then absoulte stability theorem is an exact stability characterization. 
 
 \subsection{Llewellyn Stability Criteria}\label{sec:llewellyn}
-The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the 
-following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
-\begin{thm}[Llewellyn's Criteria]\label{thm:apdx:llw}
-A two-port network $N$,  described by its transfer matrix
-\[
-N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
-\]
-and interconnected to passive LTI termination immitances as in \Cref{fig:portrep}, is stable if and only if
-\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:lit:llew2}\end{equation} and
-\begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:lit:llew3}\end{equation} 
-or
-\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\label{eq:lit:llew3p}\end{equation}
-for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
-\end{thm}
-
-
+The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in \Cref{chap:apdxnetwork}.
 As shown in \cite{rollett}, the conditions stated in \Cref{thm:apdx:llw} are invariant under immitance substitution. This result forms the 
 basis for almost all passivity-based frequency domain bilateral teleoperation stability analysis approaches in the literature. 
 We would also derive this theorem from an IQC perspective and show that it is actually the passivity counterpart of the 
@@ -620,7 +618,7 @@ become norm bounded by $1$ such that we can analyze the interconnection using th
 
 
 Let us demonstrate a few properties of this transformation. First, this mapping can be shown with
-a block diagram. Assume an LTI SISO system $G(s)$ and let the input/output relation is given by $y=Gu$. Then, with a
+a block diagram. Assume a proper positive real LTI SISO system $G(s)$ and let the input/output relation is given by $y=Gu$. Then, with a
 standard manipulation, we obtain a feedback interconnection that leads to the mapping
 \[
 W(G(s)) = \frac{G(s)-1}{G(s)+1} = -1 + \frac{2G(s)}{G(s)+1} \Longrightarrow 
@@ -1016,7 +1014,7 @@ the system was small-gain we would directly conclude with stability since $\norm
 \[
 \bmatr{0 &e^{\iw T}\\e^{\iw T}&0}\bmatr{0 &e^{-\iw T}\\e^{-\iw T}&0}= I \quad \ \forall\omega,T. 
 \]
-However, we have $P$ strictly passive, thus not necessarily a bounded operator. But we have showed how to transform 
+However, we have $P$ strictly passive, thus not necessarily a unity gain-bounded operator. But we have showed how to transform 
 such operators into norm bounded ones. This is actually the key point of the wave variables. We simply use the mapping 
 $W(P)$ and obtain 
 \begin{align}
@@ -1033,40 +1031,40 @@ transformation. The explicit derivation of the wave variable controller entries,
 
 It is this very reason that the motivation often found in the literature is slightly misleading. Because, we did not 
 and also could not do any modification on the delays. Quite the contrary, we have modified our system such that we can use 
-the small-gain theorem to conclude stability in the face of $\Delta$. Therefore, we refrain to see 
+the small-gain theorem to conclude stability in the face of $\Delta$. Therefore, we refrain from seeing 
 this method as a passification of the communication channel. It is certainly possible to reflect the transformation 
-on $\Delta$ but the author thinks that this only complicates the presentation since it's the change in the control 
-action that stabilizes the loop, and not the change in the characteristics of the delay operator or making the 
-communication line a lossless $LC$ line, which would otherwise revolutionize the power transmission technology.
+on $\Delta$ and invoke an impedance matching argument but the author thinks that this 
+only complicates the presentation since it's the change in the control action that stabilizes the loop, and not the 
+change in the characteristics of the delay operator or making the communication line a lossless $LC$ line, which 
+would otherwise revolutionize the power transmission technology.
 We have to emphasize that this transformation does not guarantee stability if the original $P$ is not strictly passive.
-However if any other plant $\hat{P}$ from an arbitrary class of systems can be brought into a unity norm-bounded form with some
-other transformation/control law, then this method applies with different physical interpretations.  
+However if any other plant $\hat{P}$ from an arbitrary class of systems $X$ can be brought into a unity norm-bounded form 
+with some other transformation/control law, then this method applies with different physical interpretations as we might 
+say that we have $X-$ified the communication channel.  
 
 
 
 Clearly, we have introduced the same conservatism by treating $\Delta$ as a gain-bounded operator 
 that $\mu-$analysis approaches also use as a hypothesis. Moreover, we have directly transformed the strictly passive 
-operator to the small-gain operator. In case of a passivity excess, i.e., the mapped operator is confined only 
+operator to a small-gain operator. In case of a passivity excess, i.e., the mapped operator is confined only 
 in a subregion of the unit disk, we, yet again, introduce conservatism by using the small-gain theorem, for which 
-one can invoke the the scaled small-gain theorem to reduce the conservatism. We should note that, this method
-works for any norm-bounded linear/nonlinear $\Delta$ operator as long as the passivity structure is preserved 
-and certainly not limited to delays (as in the passivity case, it's that conservative). 
+one can shift the disk to the origin and use the scaled small-gain theorem to reduce the conservatism. We should 
+note also that, this method works for any norm-bounded linear/nonlinear $\Delta$ operator as long as the 
+passivity structure is preserved and certainly not limited to delays (as in the passivity case, it's that conservative). 
 
 Furthermore, if one shuffles the loop equations and bring the $\Delta$ block to a block diagonal form, it's possible
-to formulate a $\mu-$synthesis problem. By doing so we can recover the scheme of \cite{leungfa}. In this context, 
-we can clearly see that the control law above is in the subset of all stabilizing controllers set (due 
-to the particular zero blocks in the controller structure). Thus, in terms of conservatism involved, 
-$\mu-$synthesis based synthesis is guaranteed to at least as good as of the wave variables methods in the linear 
-case if not more. If, in addition, dynamic $D-$scalings are introduced, then the resulting conservatism 
-can be reduced even further. 
+to formulate a $\mu-$synthesis problem. By doing so we can recover the setup of \cite{leungfa}. Then, a wave variables 
+control law above is in the subset of all stabilizing controllers set (due 
+to the particular zero blocks in the controller structure). Thus, in terms of the conservatism involved, 
+$\mu-$synthesis with constant $D-$scalings ($D=I$) covers the wave variables controller design.
 
 It has been noted the such control algorithm is prone to position drifts due to the velocity communication and 
 different alternatives have been proposed to tackle this mismatch e.g., \cite{yokokohji,chopratro06}. 
 Also there are generalizations of the scattering 
 transformations available in the literature, e.g., \cite{hirchebuss} to exploit the degree of freedom on the 
 mapping $W$ using different rotation-scaling combinations for the unitary transformation matrix and also 
-\cite{stramigioli} for multidimensional systems. Delay problems are also addressed in many studies, e.g., 
-\cite{chopraberes}. 
+\cite{stramigioli} for multidimensional systems. Delay problems are also addressed in this context e.g., 
+\cite{chopraberes} and references therein. 
 
 
 
@@ -1132,4 +1130,13 @@ are not directly related to the model-based control design methods which we will
 Once again this is a pragmatic choice and is intentional. We have not performed a rigorous comparison with any algorithm that is 
 skipped in this brief and biased survey. It's our humble opinion, however, a ``one-size-fits-for-all'' design 
 toward operator- and task-aware control laws without dedicated modeling and/or classification, seems very 
-unlikely to produce a generally applicable results with high-performance guarantees. 
+unlikely to produce a generally applicable results with high-performance guarantees. Nevertheless, robust 
+control at least addresses the conservatism reduction in a systematic way, if there is no other way to model the 
+teleoperation systems.
+
+
+We have shown that most of the proposed methods in the literature use passivity or small-gain theorems  and 
+the involved mathematical operators are often indistinguishable from any other physical system. It's our belief that
+without any further refinements, all above methods can be shown to be, essentially, equivalent stability 
+characterizations.
+
