@@ -1,5 +1,7 @@
 \chapter{Network Theory Primer}\label{chap:apdxnetwork}
 
+
+
 \tikz \draw[-latex,ultra thick]  node[right,fill=yellow,
 append after command={(a.south west) -- ($(a.south west)!0.8!(a.south east)$)},
 label={[inner sep=0]south east:$100$},
@@ -8,49 +10,66 @@ is only required for the missing \LaTeX\space labels. Current version does not h
 fixed. Expected to be finished in a few days.};
 \vspace{1cm}
 
+When dealing with electrical circuits, often the engineering practice is to neglect any changes to the signal traveling through 
+a wire from location $A$ to $B$ if the distortion from various sources
+%\begin{itemize}
+	%\item the length of the path between $A$ and $B$
+    %\item the conduction properties of the medium
+    %\item the energy disspation along the path
+    %\item the wave propagation speed compared to the speed of light
+%\end{itemize}
+is negligible. This allows us to use the abstraction in block diagrams and calculations that point
+$A$ and $B$ have the same measurable characteristics through time. This is typically shown with a 
+straight line connecting $A$ and $B$. The interpretation is that $A$ and $B$ share the same variables of 
+interest on that line. Therefore, $A$ and $B$ are said to be interconnected terminals connected by a wire. 
+Clearly creating terminals are as simple as cutting the connection arbitrarily on a path. Often, we define 
+hypothetical terminals as if there were distinct points on the circuit and we have connected them artificially. 
 
-We would like to follow Jan C. Willems' formulation for a systematic definition of terminals and ports which 
-appeared in \cite{willemsCSM}. 
-
-
-In network theory and also in its application {to bilateral teleoperation}, the ``system" refers 
-to the network model that is hypothetically disconnected (thus admitting virtual terminals) from 
-its ``surroundings" such as the ``load" and the ``source" of a circuit. This system is allowed to 
-interact with its surroundings via ``ports" or, more generally, circuit terminal pairings that 
-satisfy some technical assumptions. 
-
-
-\tikz \draw[->,ultra thick] (0,0) -- ++(4cm,0) node[right] {(More info on behaviors below!)};
-
-
-In modeling language and block diagrams, the terminals denote the information carriage
-of certain properties of the system. Hence, the reader is warned about the ambiguity of this hidden 
-switch from a purely electrical view of the networks to a more general and symbolic nature of these
-logical terminals. For example a spring can be modeled as a black box with two terminals, for which each terminal 
-having two variables attached to it, namely the force being exerted ``to'' or ``by'' and the position of 
-that terminal. Hence, when interconnected with other terminals, these variables are shared by both connected terminals.
-This is the basic reformulation of the port condition from network theory, namely a pair of terminals form a port 
-if the magnitude of current flowing in from one is equal to the magnitude of the current flowing out from the other.
-
-Consider a network with N terminals. Let $\mathcal{B}\subseteq (\Real^N\times\Real^N)^\Real$ denote the behavior set 
-that is defined as the set of all admissible potential and current (counted positive when into the circuit) 
-trajectories compatible with the network architecture at each terminal. Here $(\Real^N\times\Real^N)^\Real$ denotes 
-the set of all maps $f: \Real\to\Real^N\times\Real^N$ e.g. each terminal voltage and current evolution through time 
-and $\mathcal{B}$ is the restriction to the maps that are compatible with the network structure.
-
-A subset of terminals such that potential/current behavior of the circuit implies that the sum of the currents into the 
-circuit along the terminals of the subset is zero and such that the behavior is invariant under the addition of a constant 
-to the potentials of the terminals of the subset, is a port. As an example, the terminals of an electrical circuit that stores no electrical 
-charge should satisfy the Kirchoff laws: 
+Hence, following Jan C. Willems' formulation for a systematic definition of terminals and ports in \cite{willemsCSM}; 
+an electrical circuit is a device, a black box, with wires so-called terminals
+through which the circuit can interact with its surroundings. In electrical circuits, the interaction takes place
+via the electrical voltage drop across the terminals and the electrical current that flows through the black box.
+Therefore each terminal admits two real variables attached to it, the potential and the current. Conventionally, 
+the current is denoted with a positive number when it flows into the circuit. Thus, an interconnection is connecting
+a wire from terminal $A$ of the black box $(1)$ to $B$ of $(2)$ enforcing the following to hold
 \[
-(V,I) \in \mathcal{B}\,\text{and}\, \alpha\in\Real \implies (V+\alpha e,I) \in \mathcal{B}\,\text{and}\, e^T I = 0
+V_A = V_B \quad \text{and} \quad I_A=-I_B
 \]
-where $e=\bmatr{1&1&\cdots&1}^T$, all ones vector of length $N$. Thus, in the mechanical analogy, the behavior of the 
-port should only depend on the net force acting on the port (not the absolute values) and also the directed sum of 
-velocities should add up to zero. Note that a port can have arbitrary number of terminals such as a op-amps, transistors, 
-$Y-\Delta$ resistance networks etc. as long as the terminals satisfy the port condition given above. 
+Then, we can look at the resulting interconnected system (3) as (1) and (2) combined and exhibiting the same
+phenomenon at their terminals $A$ and $B$. 
 
-Given a port with $n-$terminals with $V,I$ denoting the effort and the flow variables, the instantaneous power is given by 
+The collection of physically attainable phenomena are abstracted with the notion of the behavior set (\cite{behavbook}):
+Consider a circuit with N terminals. Let $\mathcal{B}\subseteq (\Real^N\times\Real^N)^\Real$ denote the behavior set 
+that is defined as the set of all admissible potential and current trajectories compatible with the network architecture 
+at each terminal. Here $(\Real^N\times\Real^N)^\Real$ denotes 
+the set of all maps $f: \Real\to\Real^N\times\Real^N$ e.g. each terminal voltage and current evolution through time 
+and $\mathcal{B}$ is the restriction to the maps that are compatible with the network structure. Roughly speaking, behavior
+set excludes all the trajectories that are physically impossible to attain by the black box. Thus, when it is said that
+a particular trajectory is in the behaviour set i.e., 
+\[
+(V_1,\ldots,V_N,I_1,\ldots,I_N)\coloneqq (V,I) \in\mathcal{B}
+\]
+it implies that there exists an initial condition $(V(0),I(0))$ such that $(V,I)$ is a an admissible trajectory through time
+(with a particular external excitation sequence if present).
+
+
+Assuming a conservative magnetic field, a circuit obeys the well-known Kirchhoff voltage and current laws compactly described 
+as 
+\begin{align}
+(V,I)\in\mathcal{B} &\implies (V+\alpha\mathbb{1},I)\in\mathcal{B} \quad \forall \alpha\in\Real^\Real \tag{KVL}\\
+(V,I)\in\mathcal{B} &\implies \sum_{k=1}^N{I_k}=\mathbb{1}^TI=0 \tag{KCL}
+\end{align}
+where $\mathbb{1}$ denotes a vector with all entries are equal to $1$ whose size is clear from the context.
+
+Let, $P \subseteq \{1,\ldots,N\}$ denote an $m-$tuple selection of indices out of $N$ terminals of a circuit. Then, terminals
+$P_i$ for all $i\in P$ are said to form a port if 
+\[
+(V,I)\in\mathcal{B} \implies p^TI=0 \tag{Port KCL}
+\]
+where $p$ is a vector with $k-$th entry being $1$ if $k\in P$ and $0$ otherwise. This is nothing but a reformulation of the well-known 
+port condition from circuit theory. Thus, we can also define a port as the set of terminals that satisfy port KCL. Given a port with 
+$n-$terminals with $V,I$ denoting the effort and the flow variables, the 
+instantaneous power is given by 
 \[
 P = \sum_{k=1}^n{V_k(t)I_k(t)}
 \]
@@ -59,13 +78,68 @@ to/from that port in the time interval $[t_1,t_2]$:
 \[
 E = \int^{t_{2}}_{t_{1}}\sum_{k=1}^n{V_k(t)I_k(t)}dt
 \]
+These formulas hold only if the terminals form a port and a port can have arbitrary number of terminals 
+e.g., op-amps, transistors, $Y-\Delta$ resistance networks are examples for three terminal ports. 
 
-As almost always stability is related to one way or the other to a finite-energy notion, the energy transfer through ports
-is the main focus of network theory based modeling paradigm.
 
-This becomes crucial when modeling multi-local multi-remote teleoperation devices
-as one needs to keep track of the energy distribution between different users or different remote devices in order to 
-keep the network modeling paradigm consistent with the physical system (see e.g. \cite{panzirsch}).
+%
+%Using block diagrams, bond, or signal-flow graphs etc. this basic assumption is always inherent. In the heart of 
+%feedback control theory also lies this assumption as shown in \Cref{fig:apdx:fct}. The arrows implicitly shows that
+%the information at the source is equivalent to the one at the destination. Obviously, it is trivially true for 
+%digitally encoded information sent over a network in terms of the encoded information. However our focus is on the 
+%technology that allows that information to reach to its destination. 
+%
+%Hence we can view the closed loop system shown in \Cref{fig:apdx:fct} as a black box with two wires sticking out 
+%from this box. 
+%
+%
+%\begin{figure}%
+%\centering
+%\begin{tikzpicture}[
+%auto, 
+%node distance=2cm,
+%>=latex',
+%block/.style={draw, fill=blue!20, rectangle, minimum height=2em, minimum width=3em},
+%sum/.style={draw, fill=blue!20, circle, node distance=1cm}
+%]
+    %\coordinate (input);
+    %\node [sum, right of=input] (sum) {};
+    %\node [block, right of=sum] (controller) {K};
+    %\draw[<-] node[block, right of=controller, append after command={(system.north)--++(0,2em)}, node distance=3cm] (system) {P};
+    %\draw [->] (controller) -- node[name=u] {$u$} (system);
+    %\coordinate[right of=system] (output) {};
+    %\node [block, below of=u] (measurements) {S};
+%
+    %% Once the nodes are placed, connecting them is easy. 
+    %\draw [draw,->] (input) -- node {$r$} (sum);
+    %\draw [->] (sum) -- node {$e$} (controller);
+    %\draw [->] (system) -- node [name=y] {$y$}(output);
+    %\draw [->] (y) |- (measurements);
+    %\draw [->] (measurements) -| node[pos=0.99] {$-$} node [near end] {$y_m$} (sum);
+%\end{tikzpicture}
+%\caption{Basic feedback interconnection}%
+%\label{fig:apdx:fct}%
+%\end{figure}
+
+
+
+%
+%
+%In modeling language and block diagrams, the terminals denote the information carriage
+%of certain properties of the system. Hence, the reader is warned about the ambiguity of this hidden 
+%switch from a purely electrical view of the networks to a more general and symbolic nature of these
+%logical terminals. For example a spring can be modeled as a black box with two terminals, for which each terminal 
+%having two variables attached to it, namely the force being exerted ``to'' or ``by'' and the position of 
+%that terminal. Hence, when interconnected with other terminals, these variables are shared by both connected terminals.
+%This is the basic reformulation of the port condition from network theory, namely a pair of terminals form a port 
+%if the magnitude of current flowing in from one is equal to the magnitude of the current flowing out from the other.
+%
+%As almost always stability is related to one way or the other to a finite-energy notion, the energy transfer through ports
+%is the main focus of network theory based modeling paradigm.
+%
+%This becomes crucial when modeling multi-local multi-remote teleoperation devices
+%as one needs to keep track of the energy distribution between different users or different remote devices in order to 
+%keep the network modeling paradigm consistent with the physical system (see e.g. \cite{panzirsch}).
 %
 %A $n-$port with effort $F_i$ and flow $V_i$ variables (positive if into the system) associated 
 %with the $i$\textsuperscript{th} port is passive if 
@@ -84,13 +158,31 @@ keep the network modeling paradigm consistent with the physical system (see e.g.
 %are omitted. Thus, it makes no difference to give 
 %\end{rem}
 
+Using a mechanical-electrical analogy, the mechanical teleoperation devices are converted to a network of ports. In network theory 
+applications to bilateral teleoperation, the ``system" refers to the network model that is hypothetically disconnected 
+(thus admitting virtual terminals) from its ``surroundings" such as the ``load" and the ``source" of a circuit. This system is 
+allowed to interact with its surroundings via ``ports". In our context, load refers to the environment that is to be explored and 
+the source is the human exploring the environment from a distance via the teleoperation system.
 
-Since every two-terminal port can be characterized by two variables (flow and the effort variable), it is customary to characterize the interconnected
-n-port networks by differential equation systems. This is done by imposing an artificial causality scheme, 
-two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
-(\cite{behavbook}). This is the simplest input/output modeling of physical systems via treating one port variable as the 
+Since every two-terminal port can be characterized by two variables (``through'' and ``across'' quantities), it is possible to 
+characterize the interconnected $n-$port networks as if one quantity is due to the other. This is done by imposing an artificial 
+causality scheme, two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
+(\cite{behavbook}). This is the simplest kind of input/output view of physical systems via treating one port variable as the 
 \emph{cause} and the other one as the \emph{effect} to this cause e.g. the current is due to the voltage drop across the terminals or 
 vice versa. 
+
+
+\begin{rem}
+We have to note that, in this formulation, a single mass can not be interpreted as a port: i) First, the electrical analog of  
+a mass (in the force-current context) is required to be a \emph{grounded} capacitor (see \cite{smith} the development 
+of the exact analogue of a capacitor, \emph{the inerter}). ii) The mass does not satisfy the 
+port KCL unless it is thought to be applying an opposite force to a fixed inertial frame at a distance. We will not 
+go into the details and refer to \cite{willemsCSM} for a thorough analysis of the pitfalls and quite nonintuitive power/energy 
+results. Though, the inappropriateness of such view is brought to attention in numerous atudies by Jan C. Willems and his 
+colleagues, we are obliged to use the input/output formulation as we have no results regarding the behavioral approach on bilateral 
+teleoperation systems (yet). However, we remind the reader that the potential of a behavioral modeling of teleoperation systems
+is simply unavoidable. 
+\end{rem}
 
 Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance 
 and hybrid parameters for two-port networks and their combinations for general $n$-port network interconnections. 
@@ -108,8 +200,9 @@ obtaining one representation from another is possible by a combination of the fo
 \end{align*}
 In the latter operation it is assumed that the inverse exists. The existence of inverses are limiting the realizability
 of networks as impedance or admittance matrices. Moreover, in \cite{andersonHmat}, it has been shown that a hybrid matrix
-realization is always possible regardless of the zero diagonals. However, since we are interested in asymptotical stability
-properties of networks, a simple open-circuit argument reveals that the inverses must exist.
+realization is always possible regardless. This is yet another artifact of input/output formulation. 
+
+
 
 For our purposes, we consider only the immitance 
 matrices that describe $G$ as an input-output mapping (as opposed to transmission or ABCD parameters) as {follows}:
