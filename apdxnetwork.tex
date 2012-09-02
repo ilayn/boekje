@@ -10,6 +10,14 @@ is only required for the missing \LaTeX\space labels. Current version does not h
 fixed. Expected to be finished in a few days.};
 \vspace{1cm}
 
+
+
+We present the often encountered concepts in the bilateral teleoperation studies in a rather abstract fashion. Our aim is to
+prepare the basis for the main arguments in the body of this thesis. Hence, the experts of the field can safely skip this appendix. 
+The style and the content of this chapter is shaped for the systems and their interconnections in a network rather than basic 
+network theory introduction. Hence many circuit theory preliminaries are omitted which should be presented in any proper ``primer''.
+
+\section{Terminology}
 When dealing with electrical circuits, often the engineering practice is to neglect any changes to the signal traveling through 
 a wire from location $A$ to $B$ if the distortion from various sources
 %\begin{itemize}
@@ -68,8 +76,7 @@ $P_i$ for all $i\in P$ are said to form a port if
 \]
 where $p$ is a vector with $k-$th entry being $1$ if $k\in P$ and $0$ otherwise. This is nothing but a reformulation of the well-known 
 port condition from circuit theory. Thus, we can also define a port as the set of terminals that satisfy port KCL. Given a port with 
-$n-$terminals with $V,I$ denoting the effort and the flow variables, the 
-instantaneous power is given by 
+$n-$terminals with $V,I$ denoting the through and across variables, the instantaneous power is given by 
 \[
 P = \sum_{k=1}^n{V_k(t)I_k(t)}
 \]
@@ -164,25 +171,26 @@ applications to bilateral teleoperation, the ``system" refers to the network mod
 allowed to interact with its surroundings via ``ports". In our context, load refers to the environment that is to be explored and 
 the source is the human exploring the environment from a distance via the teleoperation system.
 
+\begin{rem}
+We have to note that, in this formulation, a single mass can not be interpreted as a port: The mass does not satisfy the 
+port KCL unless it is thought to be applying an opposite force to a fixed inertial frame at a distance. This is the underlying
+reason for the electrical analog of a mass (in the force-current context) is required to be a \emph{grounded} capacitor 
+(see \cite{smith} for the development of the exact mechanical analogue of a capacitor, \emph{the inerter} which is succesfully implemented by 
+McLaren Mercedes and Renault F1 teams and being used succesfully since 2005\footnote{According to the official statements.}). We will not 
+go into the details and and simply refer to \cite{willemsCSM} for a thorough analysis of the pitfalls and quite nonintuitive power/energy 
+results. Though, the inappropriateness of such view is brought to attention in numerous studies by Jan C. Willems and his 
+colleagues, we are obliged to use the input/output formulation as we have no results regarding the behavioral approach to bilateral 
+teleoperation systems (yet). However, we remind the reader that the potential of a behavioral modeling of teleoperation systems
+is just unavoidable. 
+\end{rem}
+
+
 Since every two-terminal port can be characterized by two variables (``through'' and ``across'' quantities), it is possible to 
 characterize the interconnected $n-$port networks as if one quantity is due to the other. This is done by imposing an artificial 
 causality scheme, two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
 (\cite{behavbook}). This is the simplest kind of input/output view of physical systems via treating one port variable as the 
 \emph{cause} and the other one as the \emph{effect} to this cause e.g. the current is due to the voltage drop across the terminals or 
 vice versa. 
-
-
-\begin{rem}
-We have to note that, in this formulation, a single mass can not be interpreted as a port: i) First, the electrical analog of  
-a mass (in the force-current context) is required to be a \emph{grounded} capacitor (see \cite{smith} the development 
-of the exact analogue of a capacitor, \emph{the inerter}). ii) The mass does not satisfy the 
-port KCL unless it is thought to be applying an opposite force to a fixed inertial frame at a distance. We will not 
-go into the details and refer to \cite{willemsCSM} for a thorough analysis of the pitfalls and quite nonintuitive power/energy 
-results. Though, the inappropriateness of such view is brought to attention in numerous atudies by Jan C. Willems and his 
-colleagues, we are obliged to use the input/output formulation as we have no results regarding the behavioral approach on bilateral 
-teleoperation systems (yet). However, we remind the reader that the potential of a behavioral modeling of teleoperation systems
-is simply unavoidable. 
-\end{rem}
 
 Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance 
 and hybrid parameters for two-port networks and their combinations for general $n$-port network interconnections. 
@@ -250,10 +258,10 @@ If moreover, there exists positive real number $\delta$ such that
 \[
 \langle Hx,x \rangle_T \geq \delta\norm{x_T}^2+ \beta\quad \forall x\in\mathcal{H}_e,\forall t\in\mathcal{T}
 \]
-$H$ is said to be strictly passive. The scalar $\beta$ is used to model the initial offset for nonlinear systems and 
-will be taken as zero since we would be focusing on linear systems exclusively. 
+$H$ is said to be strictly passive. 
 \end{define}
-
+The scalar $\beta$ is used to model the initial offset for nonlinear systems and 
+will be taken as zero since we would be focusing on linear systems exclusively. 
 
 \begin{figure}%
 \centering
@@ -302,13 +310,13 @@ is a continous function satisfying $f(0,0)=0$, $h(0,0)=0$.
 be well-posed if there exist unique solutions $e_1,e_2$ to the equations
 \begin{align}\label{eq:apdx:passint1}
 e_1 &= u_1-h_2(x_2,e_2)\\\label{eq:apdx:passint2}
-e_2 &= u_1+h_1(x_1,e_1)
+e_2 &= u_2+h_1(x_1,e_1)
 \end{align}
 for all admissible $(x_1,x_2,u_1,u_2)$. In the LTI case, assume that the respective transfer functions $H_1,H_2\in\RH_\infty$. Then
 the interconnection is well posed if $\inv{(I-H_1H_2)}(s)$ is a proper transfer matrix.
 \end{define}
 
-Note that, in our context $u_1,u_2$ model the voluntary part of the human force input as mentioned in \Cref{chap:litsurvey}. 
+Note that, in our context $u_1,u_2$ model the voluntary part of the human/environment force input as mentioned in \Cref{chap:litsurvey}. 
 
 
 

@@ -608,7 +608,8 @@ or the wave variables methods is mapping the closed right half plane to the clos
 fractional or bilinear) transformations: 
  
 \begin{equation}
-W:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\quad, \quad W(z) = \frac{z-1}{z+1}
+W:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\, ,\, W(z) 
+= \frac{z-1}{z+1}=\tanh{\frac{z}{2}}
 \label{eq:lit:smith}
 \end{equation}
 
@@ -641,7 +642,7 @@ The distribution of $\sqrt{2}$ is a matter of convention and provides symmetry i
 (W\circ W \circ W) (G) &= \frac{-1}{W(G)},\\
 (W\circ W \circ W \circ W) (G) &= G\\
 \end{align*}
-which is nothing but the $90^\circ$ rotations of the Riemann sphere about the axis parallel to the imaginary axis ($W$ is an element of 
+which is nothing but the $90^\circ$ clock-wise rotations of the Riemann sphere about the axis parallel to the imaginary axis ($W$ is an element of 
 M\"{o}bius group with $\circ$ operation). This is closely related to the stability parameter of Edwards and Sinsky (\cite{edsin}). 
 
 
@@ -732,7 +733,20 @@ in our presentation of the method.
 
 
 Under the mapping $W$, the Nyquist curve of $e^{-sT}$ (unit circle) is mapped onto the imaginary axis, 
-hence unbounded. This once again shows that delay uncertainty does not satisfy the norm constraint
+hence unbounded, i.e.
+\[
+\frac{e^{-\iw T}-1}{e^{-\iw T}+1} = i\tan{\frac{\omega T}{2}}
+\]
+One can also obtain a similar qualitative result by seeing the unit circle $\mathbb{T}$ as the image of 
+the imaginary axis under $W$: 
+\[
+W(\mathbb{T}) = (W\circ W)(i\widetilde{\omega} T) = \frac{1}{i\widetilde{\omega} T}
+\]
+We don't need to track the points individually as we are only interested in the domain and the 
+codomain of these transformations. 
+
+
+This once again shows that delay uncertainty does not satisfy the norm constraint
 $\|W(e^{-\iw t})\|_\infty \leq 1$ to invoke the small-gain theorem in the transformed coordinates. 
 Had it been the case that the uncertainty was bounded by one, then it would have been possible to 
 conclude stability directly in the passivity theorem anyhow. Thus, these transformations are not directly 
@@ -1064,7 +1078,7 @@ Also there are generalizations of the scattering
 transformations available in the literature, e.g., \cite{hirchebuss} to exploit the degree of freedom on the 
 mapping $W$ using different rotation-scaling combinations for the unitary transformation matrix and also 
 \cite{stramigioli} for multidimensional systems. Delay problems are also addressed in this context e.g., 
-\cite{chopraberes} and references therein. 
+\cite{chopraberes,munirbook,nieslotine97,uedayoshikawa} and references therein. 
 
 
 
@@ -1118,12 +1132,15 @@ mark=at position .5 with
 \end{figure}
 
 This concept is then generalized to two-ports in \cite{ryukwonhanna,ryukwonhanna2} and also results regarding
-the delay problem in the Time Domain Passivity Control context can be found in \cite{ryu}. 
+the delay problem in the Time Domain Passivity Control context can be found in \cite{ryu}. Since the essential 
+architecture is a PI controller, it also suffers from the same problems integral actions suffers such as, wind-up
+and integrator reset etc., these are also addressed in \cite{kimhannaford}. 
 
 \subsection{Others}
 
 There are other approaches such as Energy Bounding Algorithm (EBA), \cite{kimryu,seokim}, sliding mode control, 
-\cite{parkcho,buttolo}, reset control, \cite{villaverdereset} and many more which we will omit here since they 
+\cite{parkcho,buttolo}, reset control, \cite{villaverdereset}, model predictive control \cite{bemporad,shengspong} 
+and many more which we will omit here since they 
 are not directly related to the model-based control design methods which we will also propose. 
 
 

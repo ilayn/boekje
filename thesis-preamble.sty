@@ -34,7 +34,13 @@
 %\DeclareUnicodeCharacter{2022}{\item}
 
 
-\RequirePackage{siunitx}		
+\RequirePackage{siunitx}
+\sisetup{
+open-bracket=[,close-bracket=],
+per-mode=symbol,
+range-units=brackets,range-phrase={,}
+}
+
 \RequirePackage{
     graphicx, %
     amsmath,  %
@@ -157,8 +163,6 @@
 %\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 %\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
 
-%\renewcommand\bibname{References}
-
 %\usepackage{docmute}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -176,14 +180,9 @@
 %\let\subfloat\subbottom
 
 \def\impath{images/}
-%\def\coilpath{\phdpath Coil/fig/}
 
 %\newcommand\grf[2][]{\includegraphics[#1]{\impath #2}}
 
-%\newcommand\ImportIfFileExists[4]{%
-  %\IfFileExists{#1#2}
-    %{\import{#1}{#2}#3}
-    %{#4}}
 
 % Symmetric ragged commands
 \newcommand\IfOddPage{%
@@ -218,7 +217,7 @@
 %
 
 %% Floats & captions
-\captionnamefont{\scshape}
+%\captionnamefont{\scshape}
 %\setlength\captionwidth{0.9\linewidth}
 %\changecaptionwidth
 
@@ -243,8 +242,6 @@
 
 %\RequirePackage[open,openlevel=4]{bookmark}
 \RequirePackage{cleveref}
-%\RequirePackage[standard]{ntheorem}
-%\crefname{secinapp}{appendix}{appendices}
 \Crefname{secinapp}{Appendix}{Appendices}
 \Crefname{thm}{Theorem}{Theorems}
 \Crefname{lem}{Lemma}{Lemmas}
@@ -270,17 +267,12 @@
   \setlength\beforechapskip{0pt}
   \setlength\midchapskip{0pt}
   \setlength\afterchapskip{40pt}
-  \renewcommand\chapnamefont{%
-    \normalfont\centering\large\scshape\MakeLowercase}
-  \renewcommand\chapnumfont{%
-    \normalfont\centering\fontsize{60pt}{0pt}\selectfont}
-  \renewcommand\chaptitlefont{%
-    \normalfont\HUGE\bfseries\centering}
-  \renewcommand\printchaptername{%
-    \marginpar{\chapnamefont{\@chapapp}}}
+  \renewcommand\chapnamefont{\normalfont\centering\large\scshape\MakeLowercase}
+  \renewcommand\chapnumfont{\normalfont\centering\fontsize{60pt}{0pt}\selectfont}
+  \renewcommand\chaptitlefont{\normalfont\HUGE\bfseries\centering}
+  \renewcommand\printchaptername{\marginpar{\chapnamefont{\@chapapp}}}
   \renewcommand\chapternamenum{}
-  \renewcommand\printchapternum{%
-    \marginpar{\chapnumfont\thechapter}}
+  \renewcommand\printchapternum{\marginpar{\chapnumfont\thechapter}}
     \makeoddfoot{plain}{}{\thesispage}{}
 }
 \chapterstyle{phdstayla}
@@ -362,14 +354,14 @@
       \fi
       ##1}}}
 %\makerunningwidth{phdstayla}{\headwidth}
-\makeheadposition{phdstayla}{flushleft}{flushright}{}{}
+%\makeheadposition{phdstayla}{flushleft}{flushright}{}{}
 \makeevenhead{phdstayla}{\thesispage} {} {\small\leftmark}
 \makeoddhead{phdstayla} {\small\rightmark} {} {\thesispage}
 \makeevenfoot{phdstayla}{}{\thepage}{\textit{Draft: \today}}
 \makeoddfoot{phdstayla}{\textit{Draft: \today}}{\thepage}{}
 \pagestyle{phdstayla}
 
-\makeheadrule{phdstayla}{\dimexpr\textwidth+0.5\marginparwidth+\marginparsep\relax}{0.4pt}
+\makeheadrule{phdstayla}{\dimexpr\textwidth+0.5\marginparwidth+\marginparsep\relax}{0.3pt}
 
 %%% LISTS
 \renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\normalfont\itshape #1}
