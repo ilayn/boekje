@@ -47,7 +47,10 @@ this direction by utilizing quadratic forms (see \cite{megretski} and \cite{safo
 \end{tikzpicture}
 \caption{}\label{fig:uncicpas}
 \end{subfigure}
-\caption{The general interconnection (a) and the assumed interconnection for passive systems (b). In general, the power variables require a sign change relative to the ``from" and ``to" ports in order to indicate the travel direction which translates to a negative sign in the block diagrams.}\label{fig:2}
+\caption{The general interconnection (a) and the assumed interconnection for passive systems 
+(b). In general, the power variables require a sign change relative to the ``from" and ``to" ports 
+in order to indicate the travel direction which translates to a negative sign in the block diagrams.}
+\label{fig:2}
 \end{figure}
 
 It is beyond the scope of this paper to include a comprehensive treatment of the subject, but for the 
@@ -80,23 +83,9 @@ formalized by \eqref{eq:qcdelta}. Indeed, one can see that the former condition 
  while the latter {provides the related condition} imposed on the plant for interconnection stability, both expressed 
 in terms of the multiplier $\Pi$. In particular, we recover the passivity theorem in a similar fashion, if {using} 
 the constant symmetric matrix $\Pi=\left(\begin{smallmatrix}0 &I \\ I &0 \end{smallmatrix} \right)$ as the multiplier 
-under negative feedback. See \cite{safonov} for a lucid ``topological seperation" argument. For our example, assume that
-\eqref{eq:qcdelta} holds for both inequalities for all $\omega$. Then, using the relations, $w=\Delta v,v=G w$ for all 
-$u,y\in\LL_2$ we obtain the following contradiction
-\begin{align}
-0 &\preceq v^*\pmatr{\Delta\\I}^*\!\!\!\Pi\pmatr{\Delta\\I}v\\ &=\phantom{v^*}\pmatr{w\\v}^*\Pi\pmatr{w\\v}\\
-&=w^*\pmatr{I\\G}^*\!\!\!\Pi\pmatr{I\\G}w \\&\prec 0, 
-\end{align}
-hence
-\[
-\operatorname{im}\pmatr{I\\G} \cap \operatorname{im}\pmatr{\Delta \\ I} =\{0\} ,\ \forall \omega\in\Realext.
-\]
-Using this we can conclude that 
-\[
-\det\pmatr{I &\Delta\\G &I}\neq 0\ \forall \omega\in\Realext
-\]
-Various other classical stability tests fall under this particular {scenario based on the so-called static 
-(frequency-independent) multipliers which, therefore, presents} a significantly unified methodology.
+under negative feedback. See \cite{safonov} for a lucid ``topological seperation" argument. Various other classical 
+stability tests fall under this particular {scenario based on the so-called static (frequency-independent) multipliers 
+which, therefore, presents} a significantly unified methodology.
 
 If $\Delta$ admits a diagonal structure [as in \Cref{fig:portrep}], it is well known that the small-gain theorem 
 and passivity theorem are conservative. A natural generalization toward a tighter analysis test is using a frequency-dependent 
@@ -110,30 +99,60 @@ An IQC for the input and output signals of $\Delta$ is expressed as
 \begin{equation}{\displaystyle\infint{\pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}^*\Pi(\iw)\pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}d\omega}} \geq 0.
 \label{eq:IQC}
 \end{equation}
-A bounded operator $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ is said to satisfy the constraint defined by $\Pi(\iw)$ if \eqref{eq:IQC} holds for all $v\in\mathcal{L}^m_2$.
-The following sufficient {stability condition for the interconnection in \Cref{fig:uncic}} forms the basis for the IQC framework.
-\begin{thm}[\cite{megretski}] Let $G\in\mathcal{RH}^{n\times m}_\infty$ be given and let $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ be a bounded causal operator. Suppose that
+A bounded operator $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ is said to satisfy the constraint defined by $\Pi(\iw)$ 
+if \eqref{eq:IQC} holds for all $v\in\mathcal{L}^m_2$. The following sufficient {stability condition for the interconnection 
+in \Cref{fig:uncic}} forms the basis for the IQC framework. 
+\begin{thm}[\cite{megretski}]\label{IQCthm} Let $G\in\mathcal{RH}^{n\times m}_\infty$ be given and 
+let $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ be a bounded causal operator. Suppose that
 \begin{enumerate}
 	\item for every $\tau\in[0,1]$, the interconnection of $G$ and $\tau\Delta$ is well posed;
-	\item for every $\tau\in[0,1]$, $\tau\Delta$ satisfies the IQC defined by $\Pi(\iw)$ {which is bounded as a function of $\omega\in\Real$;}
+	\item for every $\tau\in[0,1]$, $\tau\Delta$ satisfies the IQC 
+    defined by $\Pi(\iw)$ which is bounded as a function of $\omega\in\Real$;
 	\item there exists some $\epsilon>0$ such that
 	\begin{equation}
 	\pmatr{I\\G(\iw)}^*\Pi(\iw)\pmatr{I\\G(\iw)} \preceq -\epsilon I\text{\ for all\ }\omega\in\mathbb{\Real}.
 	\label{eq:IQCthmFDI}
 	\end{equation}
-\label{IQCthm}
 \end{enumerate}
 Then the $G-\Delta$ interconnection {in \Cref{fig:uncic}}  is stable.
 \end{thm}
-\begin{rem}\label{remiqc}
-\begin{enumerate}
-  \item Note that both properties 1 and 2 in \Cref{IQCthm} have to hold for $\tau\Delta$ 
+
+We include a few remarks this result: 
+\begin{rem}\label{remiqc1}
+Note that both properties 1 and 2 in \Cref{IQCthm} have to hold for $\tau\Delta$ 
 if $\tau$ moves from $\tau=0$ (for which stability is obvious) to the target value $\tau=1$ 
-(for which stability is desired). In our examples the left-upper $m\times m$ block (the right-lower 
-$n\times n$ block) of $\Pi(\iw)$ is negative(positive) semi-definite for all $\omega\in\Realext$ 
-respectively. It is then easy to see that \eqref{eq:IQC} implies property 2 in \Cref{IQCthm}; 
-hence one only needs to verify \eqref{eq:IQC} for the original uncertainty $\Delta$.
-\item
+(for which stability is desired). But, the reason for using a scalar $\tau$ is to scale the uncertainty
+size, therefore it does not have to be a multiplication operation, e.g., in the delay uncertainty cases,
+scaling the uncertainty $\tau e^{-sT}$ is incorrect for the application of IQC theorem. Instead, 
+the result can still be used if one considers $e^{-s\tau T}$ for $\tau\in[0,1]$, as we will derive
+a multiplier class later in this chapter. In summary, the homotopy 
+argument can be customized and  by no means limited to $\tau\Delta$. 
+
+Let the multiplier $\Pi(\iw)$ partitioned as
+\begin{equation}
+\Pi = \pmatr{\Pi_1&\Pi_2\\\Pi_2^* &\Pi_3}
+\label{eq:Pipart}
+\end{equation}
+In our examples the left-upper $m\times m$ block is negative semi-definite for all $\omega\in\Realext$
+which guarantees concavity. In other words, convex combinations of two particular uncertainty element 
+$\Delta_1, \Delta_2$ that satisfies the IQC, also satisfy the IQC since
+\[
+\pmatr{I\\ \tau\Delta_1+(1-\tau)\Delta_2}^*\pmatr{\cdot &\cdot\\\cdot &-}\pmatr{I\\ \tau\Delta_1+(1-\tau)\Delta_2}
+\]
+is a concave function. Furthermore, we assume that the right-lower $n\times n$ block of $\Pi(\iw)$ 
+positive semidefinite for all $\omega\in\Realext$. Then
+\[
+\pmatr{I\\ 0}^*\pmatr{+ &\cdot\\\cdot &\cdot}\pmatr{I\\0} \geq 0
+\]
+i.e. $0\in\bm{\Delta}$.
+Hence, given a $\Delta$ that satisfies the IQC with $\Pi_1 \geq 0, \Pi_3\leq 0$, select $\Delta_1 = 0, \Delta_2 = \Delta$, 
+for every $\tau\in [0,1]$, $\tau\Delta$ satisfies the IQC. 
+
+It is then easy to see that \eqref{eq:qcdelta} implies property 2 in \Cref{IQCthm}; 
+hence one only needs to verify \eqref{eq:qcdelta} for the original uncertainty $\Delta$.
+\end{rem}
+
+\begin{rem}\label{remiqc2}
 Often $\Pi(\iw)$ is a continuous function of $\omega\in\Realext$. Then property 3 is equivalent to
 \begin{equation}
 \pmatr{I\\G(\iw)}^*\Pi(\iw)\pmatr{I\\G(\iw)} \prec 0
@@ -148,19 +167,36 @@ If $\Delta$ is LTI then \eqref{eq:IQC} holds for all $v\in\mathcal{L}^m_2$ if an
 \end{equation}
 The IQC reduces to a frequency-domain inequality (FDI). This provides the link to our introductory discussion.
 
-Suppose that $\Delta$ is LTI and $\Pi(\iw)$ is a continuous function
-of $\omega\in\Realext$. As we have illustrated above, \eqref{eq:IQCthmFDI2} and \eqref{fdidelta} imply
+Suppose that $\Delta$ is LTI and $\Pi(\iw)$ is a continuous function of $\omega\in\Realext$ and assume that 
+\eqref{eq:qcdelta} holds for both inequalities for all $\omega$. Then, using the relations, $w=\Delta v,v=G 
+w$ for all $u,y\in\LL_2$, we obtain the following contradiction
+\begin{align}
+0 &\preceq v^*\pmatr{\Delta\\I}^*\!\!\!\Pi\pmatr{\Delta\\I}v\\ &=\phantom{v^*}\pmatr{w\\v}^*\Pi\pmatr{w\\v}\\
+&=w^*\pmatr{I\\G}^*\!\!\!\Pi\pmatr{I\\G}w \\&\prec 0, 
+\end{align}
+hence
+\[
+\operatorname{im}\pmatr{I\\G} \cap \operatorname{im}\pmatr{\Delta \\ I} =\{0\} ,\ \forall \omega\in\Realext.
+\]
+Using this we can conclude that 
+\[
+\det\pmatr{I &\Delta\\G &I}\neq 0\ \forall \omega\in\Realext
+\] 
+with a Schur complement formula, we have \eqref{eq:IQCthmFDI2} and \eqref{fdidelta} implying
 \begin{equation}
 \det(I-G(\iw)\Delta(\iw))\neq 0\text{\ \ for all\ \ }\omega\in\Realext,
 \end{equation}
-which is the precise condition that forms the basis of SSV theory \cite{packdoyle}. This gives some intuition for the validity
-of the IQC theorem and relates to $\mu$ in SSV theory. 
-\item  In combination with the previous remarks, properties 2 and 3 imply
+which is the precise condition that forms the basis of SSV theory \cite{packdoyle}. This gives some 
+intuition for the validity of the IQC theorem and relates to $\mu$ in SSV theory. 
+\end{rem}
+
+\begin{rem}\label{rem:iqc3}
+In combination with the previous remarks, properties 2 and 3 imply
 $\det(I-\tau G(\infty)\Delta(\infty))\neq 0$ for $\tau\in[0,1]$
 which is nothing but property 1.
 Two conclusions can be drawn: On one hand, under these circumstances property 1 is redundant in \Cref{IQCthm}. On the other 
-hand, if 1 and 2 have been verified, it suffices to check \eqref{eq:IQCthmFDI2} only for finite $\omega\in\Real$ in order to infer stability with the IQC theorem.
-\end{enumerate}
+hand, if 1 and 2 have been verified, it suffices to check \eqref{eq:IQCthmFDI2} only for finite 
+$\omega\in\Real$ in order to infer stability with the IQC theorem.
 \end{rem}
 
 
@@ -172,13 +208,20 @@ a genuine linear matrix inequality (LMI) by using state space representations. F
 one can further use the Generalized KYP Lemma (\cite{genelKYP}) to limit the analysis to some physically relevant frequency band.
 
 \section{Basic IQC Multiplier Classes}
-In the previous section, we have shown how classical frequency domain techniques can be embedded into the IQC formulation. In this section, we focus on the types of existing multipliers for different uncertainty classes. Although they frequently appear in the robust control literature, we include them for completeness.
+In the previous section, we have shown how classical frequency domain techniques can be embedded into the IQC formulation. 
+In this section, we focus on the types of existing multipliers for different uncertainty classes. Although they frequently 
+appear in the robust control literature, we include them for completeness.
 
 
 \subsection{Parametrized Passivity}\label{sec:osppass}
-Another well-known version of the passivity theorem, {which we will denote as} theorem of parameterized passivity (see e.g. \cite[Thm. VI.5.10]{desvid}), allows to consider cases in which the ''non-passivity'' of some block is compensated by an excess of passivity in other blocks without endangering stability. This can even be utilized to determine the lowest tolerable level of passivity of the uncertainties for which a given interconnection remains stable. For output strictly passive uncertainties, stability can be characterized as in the next result, which is a direct consequence of the general IQC theorem.
+Another well-known version of the passivity theorem, {which we will denote as} theorem of parameterized passivity (see e.g. 
+\cite[Thm. VI.5.10]{desvid}), allows to consider cases in which the ''non-passivity'' of some block is compensated by an 
+excess of passivity in other blocks without endangering stability. This can even be utilized to determine the lowest 
+tolerable level of passivity of the uncertainties for which a given interconnection remains stable. For output strictly passive 
+uncertainties, stability can be characterized as in the next result, which is a direct consequence of the general IQC theorem.
 
-\begin{coroll}\label{thm:desvidpass} {The interconnection of $G_p,\Delta\in \mathcal{RH}^{\bullet \times \bullet}_\infty$ as in \Cref{fig:uncicpas} is stable}
+\begin{coroll}\label{thm:desvidpass} The interconnection of $G_p,\Delta\in 
+\mathcal{RH}^{\bullet \times \bullet}_\infty$ as in \Cref{fig:uncicpas} is stable
 if there exist a ${p\geq 0}$ such that
 \begin{align}
 \pmatr{\Delta(\iw)\\I}^*\pmatr{-pI &I\\I &0}\pmatr{\Delta(\iw)\\ I} &\succeq 0 \label{eq:parampas1}\\
@@ -191,9 +234,11 @@ if there exist a ${p\geq 0}$ such that
 	\Delta(\iw) + \Delta^*(\iw) &\succeq p\Delta^*(\iw)\Delta(\iw),\label{parpas1}\\
 	G_p(\iw) + G_p^*(\iw) &\succ -pI.\label{parpas2}
 \end{align}
-The case $p=0$ recovers the classical passivity theorem. Moreover, the larger the value of $p>0$, the smaller is the set of uncertainties described by \eqref{parpas1}, as illustrated in \Cref{fig:pregions} for different values of $p$. In fact, this result is used in Colgate's condition thanks to the damping term $b$ and closely related to the impedance bounds of Bounded Impedance Absolute Stability \cite{haddadizaad} using ``impedance circles".
-%I did not understand the next sentence.
-%After introducing dynamics to the multiplier, it is straightforward to utilize the test for the class of uncertainties that satisfy the conditions above.
+The case $p=0$ recovers the classical passivity theorem. Moreover, the larger the value of $p>0$, 
+the smaller is the set of uncertainties described by \eqref{parpas1}, as illustrated in \Cref{fig:pregions} 
+for different values of $p$. In fact, this result is used in Colgate's condition thanks to the damping term 
+$b$ and closely related to the impedance bounds of Bounded Impedance Absolute Stability \cite{haddadizaad} 
+using ``impedance circles".
 \end{rem}
 
 \begin{figure}%
@@ -210,6 +255,70 @@ The case $p=0$ recovers the classical passivity theorem. Moreover, the larger th
 \label{fig:pregions}%
 \end{figure}
 
+\subsection{Dynamic LTI Uncertainties}
+Often system identification experiments lead to system representations that match the physical 
+system within some tolerance levels. There can be also other sources of such frequency dependent 
+mismatch and they are usually captured by frequency dependent weights. The usual practice 
+is to define a nominal system that ``always pass through middle point of the error bound at 
+each frequency and the rest is defined either multiplicatively that is in the form of $G_{nom}
+(I+W\Delta)$ or additively that is $G_{nom} + W\Delta$ which can be converted from one form to 
+another. 
+
+For the sake of simplicity, let us assume that $\Delta, G_{nom}$ are SISO LTI systems. Since the 
+magnitude of the uncertainty is scaled by the weight $W$ and in turn the weight can be absorbed
+by the plant, without loss of generality, we can assume 
+that $\norm{\Delta}_\infty\leq 1$ i.e. 
+\[
+1 \geq \Delta(\iw)^*\Delta(\iw) \quad \forall \omega\in\Realext
+\]
+Obviously, this inequality remains true if we multiply both sides with a positive scalar that is
+\[
+\lambda \geq \lambda\Delta(\iw)^*\Delta(\iw) \quad \forall \omega\in\Realext ,\lambda>0
+\]
+We can also represent this inequality as follows,
+\[
+\pmatr{\Delta(\iw) \\ 1}\pmatr{-\lambda &0\\0 &\lambda}\pmatr{\Delta(\iw) \\ 1}\geq 0, \quad 
+\forall \omega\in\Realext \lambda>0
+\]
+Note that, validity of this step relies on the commutative property of 
+$\Delta \lambda = \lambda\Delta$. Hence, we have parametrized all the unity
+norm bounded uncertainty constraints. For some historical reason, this type 
+of norm-bound multipliers is referred to as $D-$scalings. In particular we have obtained 
+the family of constant(static) $D-$scalings. 
+One can see that, we might use a different $\lambda$ at each freqency and the inequality 
+still holds true. 
+\[
+\pmatr{\Delta(\iw) \\ 1}\pmatr{-\lambda(\iw) &0\\0 &\lambda(\iw)}\pmatr{\Delta(\iw) \\ 1}\geq 0, \lambda(\iw)>0
+\quad \forall \omega\in\Realext 
+\]
+This type of multipliers are the celebrated Dynamic $D-$scalings that is made famous 
+by the $\mu-$syntesis tool $D-K$ iteration. Note again that this result relies on the 
+commutativity property $\Delta(\iw)\lambda(\iw) = \lambda(\iw)\Delta(\iw)$. 
+
+Now assume that $\Delta\in\mathcal{RH}^{n\times m}_\infty$. We can follow the same idea, 
+\[
+I\succeq \Delta(\iw)^*\Delta(\iw) \quad \forall\omega\in\Realext.
+\]
+However, introducing a positive definite matrix $\lambda$ requires a particular structure
+since we have lost the commutativity property i.e. $\Delta(\iw)\lambda(\iw) \neq \lambda(\iw)
+\Delta(\iw)$ in general. The commutativity can be restored if we assume a diagonal structure,
+since $\Delta(\iw)(\lambda_0(\iw)I) = (\lambda_0(\iw)I)\Delta(\iw)$ where $\lambda_0\in\Real_+$
+for all $\omega\in\Realext$. Hence, along the same lines with the SISO case, the constraints 
+take the form 
+\[
+\pmatr{\Delta(\iw) \\ I}\pmatr{-\lambda_0(\iw)I &0\\0 &\lambda_0(\iw)I}\pmatr{\Delta(\iw) \\ I}
+\succeq 0, \lambda_0(\iw)>0 \quad \forall \omega\in\Realext 
+\]
+Clearly, one can repeat the same machinery for the repeated SISO $\Delta$ blocks to obtain 
+``full-block'' $D-$scalings. 
+
+As we have mentioned in the previous chapter and also will demonstrate again in this chapter, 
+this particular multiplier type is the difference between small-gain theorem and $\mu-$synthesis.
+Also we have to emphasize that constant scalings are often employed for the analysis of norm-%
+bounded static or time-varying nonlinearities where the Fourier transform of $\Delta$ does not 
+make sense. 
+
+
 
 \subsection{Real Parametric Uncertainties}\label{sec:ltvenv}
 In many applications, the uncertainties originate from the lack of the precision
@@ -220,7 +329,9 @@ examples of this kind. After re-scaling and shifting, the real parametric uncert
 are assumed to take values in the interval $\left[ -r,r \right]$ centered around
 the nominal value zero.
 
-\subsubsection{LTI uncertain parameters} The well-known $DG$ multiplier family (\cite{meinsmafu,fantits}) is used to assess robustness against unknown but constant parameters. In fact, for all bounded functions $D:\mathbb{R}\mapsto(0,\infty)$ and $G:\mathbb{R}\mapsto i\mathbb{R}$ one has
+\subsubsection{LTI uncertain parameters} The well-known $DG$ multiplier family (\cite{meinsmafu,fantits}) 
+is used to assess robustness against unknown but constant parameters. In fact, for all bounded functions 
+$D:\mathbb{R}\mapsto(0,\infty)$ and $G:\mathbb{R}\mapsto i\mathbb{R}$ one has
 \begin{equation*}
 \pmatr{\delta\\1}^*\pmatr{-D(\omega) &G(\omega)\\G^*(\omega) &r^2D(\omega)}\pmatr{\delta\\1}\geq 0
 %\label{eq:DGscalingderiv}
@@ -231,19 +342,28 @@ this holds since $|\delta|^2\leq r^2$, $D(\omega)>0$ and $G(\omega)+G(\omega)^*=
 
 
 \subsubsection{Time-varying parameters with arbitrary rate of variation}
-In this case we employ constant multipliers; the time-varying parameter $\delta:[0,\infty)\mapsto [-r,r]$ satisfies the quadratic constraint
+In this case we employ constant multipliers; the time-varying parameter $\delta:[0,\infty)\mapsto [-r,r]$ 
+satisfies the quadratic constraint
 \begin{equation*}
 \pmatr{\delta(t)\\1}^*\pmatr{-D &iG\\-iG &r^2D}\pmatr{\delta(t)\\1}\geq 0
 %\label{eq:DGscalingderiv_arbfast}
 \end{equation*}
-for all $D>0$, $G\in\mathbb{R}$ and for all $t\geq 0$. This implies the validity of \eqref{eq:IQC} for the multiplication operator which
-maps $v\in \mathcal{L}_2^n$ into $w\in\mathcal{L}_2^n$ with $w(t)=\delta(t)v(t)$.
+for all $D>0$, $G\in\mathbb{R}$ and for all $t\geq 0$. This implies the validity of \eqref{eq:IQC} 
+for the multiplication operator which maps $v\in \mathcal{L}_2^n$ into $w\in\mathcal{L}_2^n$ with 
+$w(t)=\delta(t)v(t)$.
 
 
-\subsubsection{Time-varying parameters with bounded rate of variation} If there is a known bound on the rate-of-variation (ROV) of the time-varying parameter, it is conservative to use constant $DG$ scalings. To characterize slowly-varying real parametric uncertainties, we use the so-called ``swapping lemma" (\cite{helmersson,jonsson,koroglu}, cf. \cite{packardteng}) which allows to take the ROV bound explicitly into account. For the sake of completeness, we include a scalar version of this well known result from adaptive control.
+\subsubsection{Time-varying parameters with bounded rate of variation} If there is a known bound on 
+the rate-of-variation (ROV) of the time-varying parameter, it is conservative to use constant $DG$ 
+scalings. To characterize slowly-varying real parametric uncertainties, we use the so-called ``swapping 
+lemma" (\cite{helmersson,jonsson,koroglu}, cf. \cite{packardteng}) which allows to take the ROV 
+bound explicitly into account. For the sake of completeness, we include a scalar version of this 
+well known result from adaptive control.
 
 \begin{lem}[Swapping Lemma]\label{lem:swap}
-Consider the bounded and differentiable function $\delta:[0,\infty)\to\Real$ whose derivative is bounded as $|\dot{\delta}(t)| \leq d$ for all $t\geq 0$. Moreover, let $T(s) = C(sI-A)^{-1}B+D$ be a transfer function with a stable state-space realization and define
+Consider the bounded and differentiable function $\delta:[0,\infty)\to\Real$ whose derivative is 
+bounded as $|\dot{\delta}(t)| \leq d$ for all $t\geq 0$. Moreover, let $T(s) = C(sI-A)^{-1}B+D$ 
+be a transfer function with a stable state-space realization and define
 \begin{equation*}
 T_c(s) :=  C(sI-A)^{-1}, \quad T_b(s) :=  (sI-A)^{-1}B.
 %\label{eq:swapfunc}
@@ -252,7 +372,8 @@ If viewing $T$, $T_c$, $T_b$ and $\delta$ (by point-wise multiplication) as oper
 $\mathcal{L}_2\to \mathcal{L}_2$, one has $\delta T = T\delta  + T_c \dot{\delta} T_b $ and thus
 \begin{equation*}
 \underbrace{\pmatr{T &T_c\\0 &I}}_{T_{\mathrm{left}}}\underbrace{
-\pmatr{\delta\\ \dot{\delta}T_b}}_{\Delta_s} = \underbrace{\pmatr{\delta &0\\0 & \dot{\delta}I}}_{\Delta_x} \underbrace{\pmatr{T\\T_b}}_{T_{\mathrm{right}}}
+\pmatr{\delta\\ \dot{\delta}T_b}}_{\Delta_s} = \underbrace{\pmatr{\delta &0\\0 & \dot{\delta}I}}_{\Delta_x} 
+\underbrace{\pmatr{T\\T_b}}_{T_{\mathrm{right}}}
 %\label{eq:swapmeq}
 \end{equation*}
 where $x$, $s$ stand for ``eXtended'' and ``Stacked" respectively.
@@ -278,7 +399,8 @@ $$
 w=\pmatr{T_{\mathrm{left}}\Delta_s\\T_{\mathrm{right}}}v=\pmatr{T_{\mathrm{left}} &0\\0 &T_{\mathrm{right}}}
 \pmatr{\delta \\\dot{\delta}T_b\\1}
 $$
-which proves the claim. Thus, after augmenting the corresponding channel with zero columns so as to make the plant compatible with $\Delta_s$, the robustness test can be performed.
+which proves the claim. Thus, after augmenting the corresponding channel with zero columns so as to make 
+the plant compatible with $\Delta_s$, the robustness test can be performed.
 
 
 \subsection{Delay Uncertainty}\label{sec:delayiqc}
@@ -308,13 +430,25 @@ modifying the system to $\tilde{G}$ (by unity feedback around $G$) as in
 \begin{figure}
 \begin{subfigure}[b]{.4\linewidth}
 \centering%
-\begin{tikzpicture}[>=stealth,scale=0.8,transform shape]
+\begin{tikzpicture}[>=stealth,scale=0.9,transform shape,baseline=-1.25cm]
 \draw[loosely dashed,fill=black!5] (-1.4,-0.7) rectangle (1.3,1.1);
 \draw[loosely dashed,fill=black!5] (-1.4,1.4) rectangle (1.3,3.2);
 \node[draw,inner sep=1mm,minimum height=1cm] (delay) at (0,2.5) {$e^{-s\tau}$};
 \node[draw,inner sep=3.5mm] (plant) at (0,0) {$G$};
-\path (delay.east) -| ++(0.5,-0.7) node[draw,fill=white,circle,inner sep=2pt,label={[inner sep=0mm]above right:\tiny$+$},label={[inner sep=0mm]below left:\tiny$-$}] (junc1) {} --%
-++(0,-1) node[draw,fill=white,circle,inner sep=2pt,label={[inner sep=0mm]above right:\tiny$+$},label={[inner sep=0mm]below left:\tiny$+$}] (junc2) {}%
+\path (delay.east) -| ++(0.5,-0.7) 
+node[draw,
+     fill=white,
+    circle,
+    inner sep=2pt,
+    label={[inner sep=0mm]above right:\tiny$+$},
+    label={[inner sep=0mm]below left:\tiny$-$}] (junc1) {} --%
+++(0,-1) 
+    node[draw,
+    fill=white,
+    circle,
+    inner sep=2pt,
+    label={[inner sep=0mm]above right:\tiny$+$},
+    label={[inner sep=0mm]below left:\tiny$+$}] (junc2) {}%
  |- (plant.east);
 \draw[->] (plant.west) -| ++(-0.5,1) |- (delay.west);
 \draw[->] (delay.east) -| (junc1.north);
@@ -329,7 +463,7 @@ modifying the system to $\tilde{G}$ (by unity feedback around $G$) as in
 \end{subfigure}%
 \begin{subfigure}[b]{.6\linewidth}
 \centering%
-\begin{tikzpicture}[scale=0.5]
+\begin{tikzpicture}[scale=0.6]
 \begin{semilogxaxis}[%
 legend style={at={(0.98,0.2)}},
 no markers,
@@ -338,41 +472,55 @@ domain=1:400,
 ymin=0.220,
 ymax=2.1,
 xmax=400,
-samples=450,
+samples=50,
 tick style={thick},
 xlabel=Frequency {[Hz]},
 ylabel=Magnitude {[abs]}]
 \addplot{sqrt(((-1+cos(0.02*deg(2*pi*x)))^2 + (sin(0.02*deg(2*pi*x)))^2)};
-\addplot[ultra thick]{sqrt(((1600*pi^2*x^2 + 1)*(10000*pi^2*x^2 + 10387729))/(2500*(1600*pi^4*x^4 + 1028164*pi^2*x^2 + 3805656100))};
+\addplot[ultra thick]
+    {sqrt(((1600*pi^2*x^2 + 1)*(10000*pi^2*x^2 + 10387729))/(2500*(1600*pi^4*x^4 + 1028164*pi^2*x^2 + 3805656100))};
 \legend{$e^{-0.02s}-1$,$W_d$}
 \end{semilogxaxis}
 \end{tikzpicture}
 \phantomsubcaption\label{fig:delayvsW}%
 \end{subfigure}
-\caption{(a) Rewriting the interconnection such that $\tau=0$ implies $\tilde{\Delta}=0$. (b) Frequency domain covering of the shifted delay operator.}\label{fig:3}
+\caption{(a) Rewriting the interconnection such that $\tau=0$ implies 
+$\tilde{\Delta}=0$. (b) Frequency domain covering of the shifted delay 
+operator.}
+\label{fig:3}
 \end{figure}
 
-The uncertainty is then characterized by using two properties of $\tilde \Delta$: For all $\omega,\tau$, the complex number $z=e^{-\iw{\tau}}-1$ is located on the unit circle centered at $(-1,0)$ in the complex plane. Since condition $\abs{z+1}=1$ translates into $z^*z+z^*+z=0$, we infer
-for all bounded $\Omega:\Real\to\Real$ that
+The uncertainty is then characterized by using two properties of $\tilde \Delta$: For all 
+$\omega,\tau$, the complex number $z=e^{-\iw{\tau}}-1$ is located on the unit circle centered 
+at $(-1,0)$ in the complex plane. Since condition $\abs{z+1}=1$ translates into $z^*z+z^*+z=0$, 
+we infer for all bounded $\Omega:\Real\to\Real$ that
 \begin{equation}
-\pmatr{\tilde{\Delta}(\iw)\\1}^*\pmatr{\Omega(\omega) &\Omega(\omega)\\ \Omega(\omega) &0}\pmatr{\tilde{\Delta}(\iw)\\1} = 0\ \ \forall\omega\in\Real
+\pmatr{\tilde{\Delta}(\iw)\\1}^*\pmatr{\Omega(\omega) &\Omega(\omega)\\ \Omega(\omega) &0}
+\pmatr{\tilde{\Delta}(\iw)\\1} = 0\ \ \forall\omega\in\Real
 \label{eq:onthecircle}
 \end{equation}
-for any delay time $\tau\in\Real$. Furthermore, we need to take the low frequency property of the magnitude of the frequency response into account. This is typically captured by a frequency dependent weight. If we define,
+for any delay time $\tau\in\Real$. Furthermore, we need to take the low frequency property of the 
+magnitude of the frequency response into account. This is typically captured by a frequency dependent 
+weight. If we define,
 \begin{equation*}
-W_d(s)= 2\frac{(s+ \frac{4}{\pi\bar{\tau}}) (s+ \frac{\beta}{\bar{\tau}})}{(s-\frac{\pi}{2\bar{\tau}}e^{i\theta})(s-\frac{\pi}{2\bar{\tau}}e^{-i\theta})}
-%\label{eq:delayweightformula}
+W_d(s)= 2\frac{(s+ \frac{4}{\pi\bar{\tau}}) (s+ \frac{\beta}{\bar{\tau}})}%
+{(s-\frac{\pi}{2\bar{\tau}}e^{i\theta})(s-\frac{\pi}{2\bar{\tau}}e^{-i\theta})}
 \end{equation*}
-with $\theta=\left( \frac{\pi}{2}\right)^2$ and some small $\beta>0$, then $W_d$ covers the delay uncertainty in the sense that $|\tilde{\Delta}(\iw)|\leq |W(\iw)|$ for all $\omega\in\Real$ and for all $\tau\in [0,\bar{\tau}]$. An example of magnitude covering is shown in \Cref{fig:delayvsW}.
+with $\theta=\left( \frac{\pi}{2}\right)^2$ and some small $\beta>0$, then $W_d$ covers the delay 
+uncertainty in the sense that $|\tilde{\Delta}(\iw)|\leq |W(\iw)|$ for all $\omega\in\Real$ and 
+for all $\tau\in [0,\bar{\tau}]$. An example of magnitude covering is shown in \Cref{fig:delayvsW}.
 
-This property, in turn, translates into $(\tilde{\Delta})^*\tilde{\Delta}\leq (W_d)^*W_d$ for all $\omega\in\Real$. Then we can utilize the classical $D$-scalings to obtain the following constraint with a dynamic multiplier:
+This property, in turn, translates into $(\tilde{\Delta})^*\tilde{\Delta}\leq (W_d)^*W_d$ for all 
+$\omega\in\Real$. Then we can utilize the classical $D$-scalings to obtain the following constraint 
+with a dynamic multiplier:
 \begin{equation}
-\pmatr{\star}^*\pmatr{-\mathcal{D}(\omega) &0\\0 &W_d(\iw)^*\mathcal{D}(\omega)W_d(\iw)}\pmatr{\tilde{\Delta}(\iw)\\1} \geq 0
+\pmatr{\star}^*\pmatr{-\mathcal{D}(\omega) &0\\0 &W_d(\iw)^*\mathcal{D}(\omega)W_d(\iw)}
+\pmatr{\tilde{\Delta}(\iw)\\1} \geq 0
 \label{eq:normbounded}
 \end{equation}
-for all bounded $\mathcal{D}:\Real\to (0,\infty)$. Then the overall multiplier family results from a  conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
+for all bounded $\mathcal{D}:\Real\to (0,\infty)$. Then the overall multiplier family results from a 
+conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
 \[
-%\arraycolsep.3ex
 \pmatr{\star}^*\pmatr{-\mathcal{D}+\Omega &\Omega\\
 \Omega &W_d^*\mathcal{D}W_d}\pmatr{\tilde{\Delta}\\1}
 \geq 0 \quad \forall\omega\in\Real_e
