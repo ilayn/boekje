@@ -259,7 +259,7 @@ using ``impedance circles".
 Often system identification experiments lead to system representations that match the physical 
 system within some tolerance levels. There can be also other sources of such frequency dependent 
 mismatch and they are usually captured by frequency dependent weights. The usual practice 
-is to define a nominal system that ``always pass through middle point of the error bound at 
+is to define a nominal system that always ``pass through middle point of the error bound'' at 
 each frequency and the rest is defined either multiplicatively that is in the form of $G_{nom}
 (I+W\Delta)$ or additively that is $G_{nom} + W\Delta$ which can be converted from one form to 
 another. 
@@ -291,20 +291,28 @@ still holds true.
 \pmatr{\Delta(\iw) \\ 1}\pmatr{-\lambda(\iw) &0\\0 &\lambda(\iw)}\pmatr{\Delta(\iw) \\ 1}\geq 0, \lambda(\iw)>0
 \quad \forall \omega\in\Realext 
 \]
-This type of multipliers are the celebrated Dynamic $D-$scalings that is made famous 
-by the $\mu-$syntesis tool $D-K$ iteration. Note again that this result relies on the 
-commutativity property $\Delta(\iw)\lambda(\iw) = \lambda(\iw)\Delta(\iw)$. 
+Note again that this result relies on the commutativity property $\Delta(\iw)\lambda(\iw) 
+= \lambda(\iw)\Delta(\iw)$. This type of multipliers are the celebrated Dynamic $D-$scalings 
+that is made famous by the $\mu-$syntesis tool $D-K$ iteration. Also, one can get a rough 
+picture of the fast plant size growth in the $D-K$iteration process in the classical 
+$\mu$-synthesis. Since the approximation quality is increased via higher order terms as we try
+to reconstruct a function of $\omega$ from its finitely many discrete points, 
+the approximate function involving the higher order terms absorbed by the plant at the $D-$analysis 
+step for another $K-$synthesis step.
+
+
 
 Now assume that $\Delta\in\mathcal{RH}^{n\times m}_\infty$. We can follow the same idea, 
 \[
 I\succeq \Delta(\iw)^*\Delta(\iw) \quad \forall\omega\in\Realext.
 \]
-However, introducing a positive definite matrix $\lambda$ requires a particular structure
+However, introducing a positive definite matrix $\lambda$ necessitates a particular structure
 since we have lost the commutativity property i.e. $\Delta(\iw)\lambda(\iw) \neq \lambda(\iw)
-\Delta(\iw)$ in general. The commutativity can be restored if we assume a diagonal structure,
-since $\Delta(\iw)(\lambda_0(\iw)I) = (\lambda_0(\iw)I)\Delta(\iw)$ where $\lambda_0\in\Real_+$
-for all $\omega\in\Realext$. Hence, along the same lines with the SISO case, the constraints 
-take the form 
+\Delta(\iw)$ in general\footnote{To the best of our knowledge, there is no systematic way to 
+parameterize all matrices that satisfy $AB=BA$ for an arbitrary matrix $A$.}. The commutativity 
+can be restored if we assume a diagonal structure, since $\Delta(\iw)(\lambda_0(\iw)I) = 
+(\lambda_0(\iw)I)\Delta(\iw)$ where $\lambda_0:\Real\mapsto\Real_+$. Thus, along the same lines 
+with the SISO case, the constraints take the form 
 \[
 \pmatr{\Delta(\iw) \\ I}\pmatr{-\lambda_0(\iw)I &0\\0 &\lambda_0(\iw)I}\pmatr{\Delta(\iw) \\ I}
 \succeq 0, \lambda_0(\iw)>0 \quad \forall \omega\in\Realext 
@@ -313,15 +321,17 @@ Clearly, one can repeat the same machinery for the repeated SISO $\Delta$ blocks
 ``full-block'' $D-$scalings. 
 
 As we have mentioned in the previous chapter and also will demonstrate again in this chapter, 
-this particular multiplier type is the difference between small-gain theorem and $\mu-$synthesis.
-Also we have to emphasize that constant scalings are often employed for the analysis of norm-%
-bounded static or time-varying nonlinearities where the Fourier transform of $\Delta$ does not 
-make sense. 
+this particular multiplier type is the difference between small-gain theorem and $\mu-$analysis,
+and a similar argument holds for passivity theorem and Llewellyn's criteria.
+
+Furthermore, although it's conservative, we have to emphasize that constant scalings are often 
+employed for the analysis of norm-bounded static or time-varying nonlinearities where the Fourier 
+transform of $\Delta$ does not make sense. 
 
 
 
 \subsection{Real Parametric Uncertainties}\label{sec:ltvenv}
-In many applications, the uncertainties originate from the lack of the precision
+In many applications, the uncertainties also originate from the lack of the precision
 on the actual values of the parameters in the system model. This applies in
 particular to the models used in bilateral teleoperation. Parameters such as the
 stiffness and the damping of the environment or the human arm are the simplest
@@ -337,8 +347,33 @@ $D:\mathbb{R}\mapsto(0,\infty)$ and $G:\mathbb{R}\mapsto i\mathbb{R}$ one has
 %\label{eq:DGscalingderiv}
 \end{equation*}
 for all $\delta\in[-r,r]$, just because it reads as
-$-D(\omega)|\delta|^2 + r^2 D(\omega) + (G(\omega)^*+G(\omega))\delta\geq 0$;
-this holds since $|\delta|^2\leq r^2$, $D(\omega)>0$ and $G(\omega)+G(\omega)^*=0$.
+\[-D(\omega)|\delta|^2 + r^2 D(\omega) + (G(\omega)^*+G(\omega))\delta\geq 0\]
+this holds since $|\delta|^2\leq r^2$, $D(\omega)>0$ and $G(\omega)+G(\omega)^*=0$. Hence, the realness property 
+$\delta=\delta^*$ is exploited via $G$ scalings for all the elements in the uncertainty set which otherwise are only constrained 
+to be norm bounded by $r$. Similar to the dynamic LTI uncertainties, we enlarge the set of multipliers by adding 
+dynamics. 
+
+As a remark on such multipliers, we give a simple example on how to modify the plant/multiplier if the parameter interval 
+is not centered around zero which apply to all real parametric uncertainties given in this subsection. We assume that 
+the parameter lives in the interval $[a,b]$ with/out some physical units with $ab>0$. 
+\begin{itemize}
+	\item The first step is always to check whether zero is in the interval. If not, by dummy feedforward/feedback 
+in the loop one can always set the interval such that zero is included. In other words, the parameter interval $[a,b]$
+can be rewritten as $\frac{a+b}{2} + [\frac{a-b}{2},\frac{b-a}{2}]$. Then, including the constant feedthrough term as a 
+feedback loop in the plant we obtain $[-r,r]$ interval with $r=\frac{b-a}{/2}$.
+
+The reason why we are so interested in zero is the fact that when $\Delta=0$, it corresponds to the (unperturbed) nominal 
+system and, as is for the IQC theorem, many stability results rely on tracking the stability property while traveling on 
+the nominal system$\to$fully uncertain system path, say, via root loci, Nyquist test, root boundary crossing theorem, $\mu$ 
+and many others. 
+    \item Alternatively, we can modify the multiplier using \[\delta\in[a,b] \iff \abs{\delta- \frac{b+a}{2}}^2\leq 
+    \left(\frac{b-a}{2}\right)^2\iff -\delta^2 + (b+a)\delta -ab\geq 0\] and hence,
+    \[
+    \pmatr{\delta\\1}^*\pmatr{-D(\omega) & \frac{b+a}{2}D(\omega) + G(\omega)\\ 
+    \frac{b+a}{2}D(\omega) + G^*(\omega) &abD(\omega)}\pmatr{\delta\\1}\geq 0.
+    \]
+\end{itemize} 
+
 
 
 \subsubsection{Time-varying parameters with arbitrary rate of variation}
@@ -525,3 +560,669 @@ conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
 \Omega &W_d^*\mathcal{D}W_d}\pmatr{\tilde{\Delta}\\1}
 \geq 0 \quad \forall\omega\in\Real_e
 \]
+
+\section{Numerical Case Studies}\label{sec:num}
+In this section, we show how frequently encountered analysis problems can be solved 
+under the IQC formulation with ease. We utilize the multipliers as given above for  
+robustness tests applied to a simple teleoperation system taken from \cite{willaert,
+willaertIJRR10}. Our main emphasis is on showing how one can reproduce the numerical 
+results of such frequency domain techniques and, as the key contribution of this paper, 
+how it is possible to substantially widen the range of allowed uncertainties in the 
+IQC framework for which no classical analytical stability tests exist. This serves as 
+an illustration for the possibility to improve analysis and, more importantly in 
+future work, optimization-based controller synthesis results if better human/environment 
+models become available.
+
+\subsection{Algorithmic Verification}\label{sec:algver}
+
+We have discussed some classical stability tests that reduce to explicit scalar 
+inequalities which can be verified in a frequency-by-frequency fashion. In contrast, 
+the equivalent re-formulations in terms of IQCs open the way to verifying these conditions 
+numerically, by applying algorithms from the by now well-established area of semi-definite 
+programming \cite{lmiboydbook}. For example, checking at each frequency the existence of 
+some diagonal $\Lambda\succ 0$ which satisfies \eqref{eq:thportFDI} boils down to an 
+efficiently tractable LMI problem in the three diagonal entries of $\Lambda$, which 
+can be readily implemented in software environments such as \cite{yalmip}. We also 
+show how it is even possible to avoid any frequency-gridding and to reduce the tests 
+to finite-dimensional semi-definite programming problems that can be solved in one shot.
+
+This section serves to illustrate this procedure for Rollett's stability condition, 
+which requires to determine a frequency-dependent bounded and strictly positive 
+$\lambda$ satisfying the FDI \eqref{eq:rolFDI}. Without loss of generality, it 
+suffices to search for proper and rational functions $\lambda$ that have no poles 
+and are positive on the extended imaginary axis. Due to the well-established spectral 
+factorization theorem (e.g. \cite{francis}), we can express any such function as 
+$\psi^*\psi$ with some stable transfer function $\psi$ (without zeros in the closed 
+right half-plane). For some fixed pole $a<0$ let us choose the basis vectors
+\begin{equation*}
+\Phi_n(s) = \pmatr{1 &\frac{1}{s-a} &\frac{1}{(s-a)^2} &\cdots &\frac{1}{(s-a)^{n-1}}}^T
+%\label{eq:outerfactor}
+\end{equation*}
+for $n=0,1,2,\ldots$. By a well-known fact from approximation theory (\cite{pinkus}), 
+the function $\psi$ can be approximated to an arbitrary degree by $L^T\Phi_n$ for some 
+suitable $L\in\Real^n$ uniformly on the imaginary axis, if only $n$ is taken sufficiently 
+large. More precisely, $\inf_{L\in\Real^n}\|\psi-L^T\Phi_n\|_\infty$ converges to zero for 
+$n\to\infty$. In summary, any proper rational $\lambda$ with $\lambda(\iw)>0$ for 
+$\omega\in\Realext$ can be approximated arbitrarily closely by $\Phi_n^*LL^T\Phi_n$ or, 
+in turn, by $\Phi_n^*D\Phi_n\text{\ \ with\ \ }D=D^T\in\Real^{n\times n}.$
+
+This discussion justifies why one can parameterize the multiplier (middle term) in \eqref{eq:rolFDI} as
+\[\arraycolsep0.3ex
+\Psi_n^*
+\underbrace{\left(\begin{array}{cc|cc}
+-D&0  & 				& \\
+0	  			&-1  &  				&\\ \hline
+	  			& 	&D &0\\
+	  			& 	&0 				&1
+\end{array}\right)}_{M}
+\underbrace{\left(\begin{array}{cc|cc}\Phi_n &&&\\ &1 &&\\\hline &&\Phi_n& \\&&&1\end{array}\right)}_{\Psi_n}
+\]
+in terms of a frequency-dependent outer factor $\Psi_n$ and a diagonally structured real 
+symmetric matrix $M$ in the middle. Let us denote the set of all these matrices $M$ by 
+$\mathcal{M}$ (dropping the dependence on $n$). For checking Rollet's condition we then need 
+to verify the existence of $M\in{\mathcal{M}}$ such that the FDIs
+\begin{equation*}
+\Phi_n^*D\Phi_n>0\text{\ \ and\ \ }
+\pmatr{I\\S}^*\Psi_n^*M\Psi_n\pmatr{I\\S} \prec 0
+%\label{eq:rolFDI2}
+\end{equation*}
+are satisfied. We include the classical result (\cite{rantzerkyp}) that allows us to 
+convert these frequency domain inequalities into LMIs:
+\begin{thm}\label{KYP}[KYP Lemma] Let $G=\tikz[baseline={([yshift=-3pt]current bounding box.center)},
+scale=0.8,transform shape]{\matrix (s1) [ssmatrix] {A \& B \\ C \& D \\};\draw (s1-1-1.north east) --
+(s1-2-1.south east) (s1-1-1.south west) -- (s1-1-2.south east);}$ and suppose that $A$ has no eigenvalues on 
+the imaginary axis. For a real matrix $P=P^T$, the following {two statements} are equivalent:
+\begin{enumerate}
+	\item The following FDI holds:
+	\begin{equation}
+	{G(\iw)}^*P {G(\iw)} \succ 0 \ \ \forall \omega\in\Realext.
+	\label{eq:KYPFDI}
+	\end{equation}
+	\item There exists a symmetric matrix $X$ with
+	\begin{equation}
+	\pmatr{I &0\\A &B\\ \hline C &D}^T 
+	\left(\begin{array}{cc|c}0 &X &0\\X &0 &0\\
+	\hline 0 &0 &P\end{array}\right) 
+	\pmatr{I &0\\A &B\\ \hline C &D} \succ 0.
+	\label{eq:KYPLMI}
+	\end{equation}
+\end{enumerate}
+\end{thm}
+
+Now choose the minimal state space realizations
+\begin{equation*}
+\Phi_n = \left[ \begin{array}{c|c}
+	A_{\Phi} &B_{\Phi}\\ \hline C_{\Phi} &D_{\Phi}
+\end{array} \right]
+\text{\ \ and\ \ }
+\Psi_n\pmatr{I\\S} = \left[ \begin{array}{c|c}
+	\mathcal{A} &\mathcal{B}\\ \hline \mathcal{C}&\mathcal{D}
+\end{array} \right].%\label{outfac}
+\end{equation*}
+This allows to apply the KYP Lemma in order to equivalently convert $\lambda>0$ 
+and \eqref{eq:rolFDI} into the feasibility of the LMIs
+\begin{equation}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}}^T
+\pmatr{0 &Z &0\\Z &0 &0\\0 &0 &D}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}} \succ 0
+\label{eq:outerpos}
+\end{equation}
+and
+\begin{equation}
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}}^T
+\pmatr{0 &\mathcal{X} &0\\ \mathcal{X}&0 &0\\0 &0 &M}
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}} \prec 0.
+\label{eq:KYPex}
+\end{equation}
+More precisely, if one can computationally verify the existence of $X$, $Z$, $M\in{\mathcal{M}}$
+and $D=D^T$ which satisfy \eqref{eq:outerpos} and \eqref{eq:KYPex}, we have verified Rollet's
+condition. Conversely, if Rollet's condition holds, then these LMIs are guaranteed to have
+solutions if $n$ is chosen sufficiently large.
+
+Let us emphasize again that the very same procedure applies to considerable more
+complex interconnections and structured uncertainties $\Delta$. In fact, for many
+interesting classes of uncertainties one can systematically construct multiplier
+families (see e.g. \cite{megretski}) which are known to admit a description of the
+form $\Pi = \Psi^*M\Psi,\ \ M\in\mathcal{M}$ with a stable outer factor transfer matrix
+$\Psi$ and with some set of structured symmetric matrices ${\mathcal{M}}$ that can itself
+be described as the feasible set of an LMI. Checking stability of the $G-\Delta$
+interconnection in \Cref{fig:uncic} then requires to verify the validity of the FDI
+\begin{equation*}
+\pmatr{I\\G}^*\Psi^*{M}\Psi\pmatr{I\\G} \prec 0.
+%\label{eq:IQCthmFDIfact}
+\end{equation*}
+Literally along the same lines as described above this is translated into a semi-definite 
+program with Theorem \ref{KYP}.
+
+\begin{rem}
+In our numerical examples the basis length $n$ is chosen large enough that the performance level 
+does not significantly change by further increasing $n$. As shown below, 
+the required length $n$ for adequate accuracy in the multipler approximation
+is (regardless of the conservatism of the test) often quite small in practice. 
+\end{rem}
+
+In what follows, we will continue to utilize the shorthand notation of
+state-space realizations in a similar manner, i.e., $\mathcal{A,B,C,D}$ for
+the combined outer factors by replacing $S$ with the respective plant, and
+$A_\Phi,B_\Phi,C_\Phi,D_\Phi$ for the basis vector.
+
+
+\subsection{System Model}
+In \cite{willaert}, a simple teleoperation system described with the following equations is 
+considered:
+\begin{align*}
+F_h+\tau_m &= M_m \ddot{x}_m + B_m \dot{x}_m\\
+\tau_s -F_e &= M_s \ddot{x}_s + B_s \dot{x}_s.
+\end{align*}
+Here $M_m,M_s$ are the masses, $B_m,B_s$ are the damping coefficients, $\tau_m,\tau_s$ 
+are the device motor torques, {and} $x_m,x_s$ are the position coordinates of the local 
+and the remote devices respectively. $F_h,F_e$  denote the human and the environment forces. 
+The human and the environment are assumed to be LTI passive operators {and} {are denoted by 
+$\Delta_h,\Delta_e$ which substitute $\Delta_s,\Delta_l$ as employed in the more general 
+network-related context in the earlier sections.}
+
+Additionally, a particular PD type of a position-force controller scheme, denoted 
+by \textbf{P}-\textbf{F} , is used:
+\[
+\tau_s = K_p(\mu x_m-x_s)-K_v \dot{x}_s ,\quad \tau_m = -K_f F_e.
+\]
+The overall teleoperation system is {then described}, with $Y_m(s) = \inv{(M_ms+B_m)}$ and 
+$Y_s(s) = \frac{\mu K_p}{M_s s^2+(B_s+K_v)s+K_p}$, in terms of the following admittance matrix:
+\begin{equation}
+ Y = \pmatr{Y_m &- {K_f}Y_m\\ -Y_mY_s&\frac{M_m s^2+B_m s+\mu K_f K_p}{(M_s s^2+(B_s+K_v)s+K_p)}Y_m}.
+\label{eq:admitsys}
+\end{equation}
+As shown in \cite{willaert}, the system's performance is related to the transparency of the 
+teleoperator, {which is characterized by the maximal} attainable {product $\mu K_f$} while 
+maintaining stability (see also \cite{danielmcaree}). We will evaluate our results with respect 
+to this performance measure. For all computations, we have used \cite{sdpt3,sedumi,yalmip} 
+with MATLAB 7.12.0 on a computer with a \SI{2.4}{\giga\hertz} processor and with 
+\SI{4}{\giga\byte} RAM memory running Win 7-64 Bit OS. The system parameters are $M_m=0.64, 
+M_s=0.61,B_m=0.64,B_s=11,K_v=87.8,K_p=4000$.
+
+\begin{figure}
+\begin{subfigure}[b]{.5\linewidth}
+\centering%
+	\begin{tikzpicture}[>=stealth,scale=0.7,transform shape]
+	\matrix [draw,matrix of math nodes,nodes={transform shape,scale=0.7},ampersand replacement=\&] 
+	(y) at (0,0) { Y_{11} \& Y_{12} \\ Y_{21} \&Y_{22} \\ };
+	\matrix [draw,matrix of math nodes,nodes={transform shape,scale=0.7},ampersand replacement=\&] 
+	(d) at (0,2cm) { \Delta_h \&\\ \&\Delta_e \\};
+	\node[draw,circle,inner sep=2,label={180:$-$}] (junc) at (-1.5,1) {};
+	\draw[->] (y.west) -| (junc.south);
+	\draw[->] (junc.north) |- (d.west);
+	\draw[->] (d.east) -| (1.5,1) |- (y.east);
+	\end{tikzpicture}
+\caption{Unconditional Stability}\label{fig:Case1blockdia}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering%
+\begin{tikzpicture}[>=stealth,transform shape,scale=0.7]
+\matrix [draw,matrix of math nodes,nodes={scale=0.7,transform shape},ampersand replacement=\&] 
+(plant) at (0,0) { Y_{11} \& Y_{12} \\ Y_{21} \&Y_{22} \\ };
+\matrix [draw,matrix of math nodes,nodes={scale=0.7,transform shape},ampersand replacement=\&] 
+(del) at (0,2) { \Delta_h \\ \& \delta_e \\ };
+\draw[->] (plant.160) -| ++ (-0.7,0.5) node[draw,circle,fill=white,inner sep=2,label=180:$-$] {} |- (del.160);
+\draw[<-] (plant.20) -| ++ (0.7,0.4) |- (del.20);
+\draw[->] (plant.-160) -| ++ (-0.3,0.5) |- (del.-160);
+\draw[<-]  (plant.-20) -| ++ (0.3,0.4) |- (del.-20);
+ \end{tikzpicture}
+\caption{Uncertain stiff environment}\label{fig:Case2blockdia}
+\end{subfigure}
+\caption{System interconnections for \Cref{sec:numcase1} and \Cref{sec:numcase2}.}\label{fig:6}
+\end{figure}
+
+
+\subsection{Case 1 : Unconditional Stability Analysis via IQCs}\label{sec:numcase1}
+We start with applying Llewellyn's test based on \eqref{eq:LlewellynFDI} to the system given 
+above. In a first computation, we choose a frequency grid of $2000$ logarithmically spaced 
+points in $[0,10000] \si[per-mode=fraction]{\radian\per\second}$ and solve, at each grid point, 
+a feasibility problem in $\lambda>0$. This is incorporated into a bisection algorithm that 
+searches for the maximum value of $\mu K_f$ for which feasibility at each grid-point can be 
+guaranteed. Due to gridding, this method typically gives an upper bound rather than the exact 
+value on the guaranteed performance level, just because there is a chance to miss critical 
+frequencies. Nevertheless, we obtained the exact value $\approx 0.137$ as in  \cite{willaert}. 
+The inner search for $\lambda$ requires $\SI{8.52}{\second}$, while the overall computation 
+takes about \SI{117}{\second}; note that the latter heavily depends on the initial bisection 
+interval and on the desired accuracy.
+
+In a second computation, we follow the path as described in \Cref{sec:algver}. The resulting FDI is
+\begin{equation} \left(\Psi \pmatr{I\\-Y}\right)^* M
+\left(\Psi \pmatr{I\\-Y}\right)\prec 0\label{eq:numcase1FDI}
+\end{equation}
+where
+\begin{equation}
+\arraycolsep0.3ex
+\Psi = \left (\begin{array}{cc|cc}\Phi &0&0&0\\0&1&0&0\\\hline 0&0&\Phi&0\\0&0&0&1
+\end{array}\right ),\ \
+{M} = \left(\begin{array}{cc|cc}
+	 0&0 &M_1 &0\\
+	 0&0&0&1\\\hline
+	 M_1&0&0&0\\
+	 0&1&0&0
+\end{array}\right)
+\label{eq:numcase1mult}
+\end{equation}
+with some unstructured real symmetric matrix $M_1$.
+
+\begin{coroll}\label{cor:llewellyn}
+The $Y-\Delta$ interconnection depicted in \Cref{fig:Case1blockdia} is stable for all 
+passive blocks $\Delta_h$ and $\Delta_e$ if there exist symmetric matrices $\mathcal{X},
+Z,M_1$ such that
+\begin{align*}
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}}^T
+\pmatr{0 &\mathcal{X} &0\\ \mathcal{X}&0 &0\\0 &0 &M}
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}} \prec 0 \\
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}}^T
+\pmatr{0 &Z &0\\Z &0 &0\\0 &0 &M_1}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}} \succ 0.
+\end{align*}
+\end{coroll}
+
+We applied \Cref{cor:llewellyn} with a basis of length $n=8$ and with the pole $a=-7$. 
+In this way we computed again the maximal value $\mu K_f\approx 0.137$ for which stability 
+can be guaranteed in about \SI{36}{\second}.
+
+\begin{rem}
+Since $Y$ is strictly proper,
+\eqref{eq:numcase1FDI} cannot be satisfied at $\omega=\infty$ because its left-hand side vanishes. 
+However, the interconnection is certainly well-posed such that the FDI only needs to be verified 
+for all finite frequencies (\Cref{remiqc}). Therefore, the gridding approach can be applied  directly. 
+In the alternative path without gridding, we can circumvent this trouble by replacing $Y$ with $Y+\epsilon 
+I$, with $\epsilon=10^{-5}$ in our case. Let us stress that this perturbation (also in the cases 
+presented below) is only required in those channels that are related to passive uncertainties.
+\end{rem}
+\subsection{Case 2: Stability with Uncertain Stiff Environments}\label{sec:numcase2}
+We characterize the admissible environments as pure springs modeled by
+$Z_e = \frac{k}{s}$ with an uncertain constant stiffness coefficient $k\in[0,\bar{k}]$ 
+\si[per-mode=fraction]{\newton\per\metre}. After merging $-\frac{\bar{k}}{s}$ with the 
+system (and slightly perturbing the pole of the integrator to render the nominal system 
+stable) we are left with the uncertainty structure $\Delta = \operatorname{diag}(\Delta_h, 
+\delta_e )$ where the human uncertainty is assumed to be passive LTI and $\delta_e$ is an 
+uncertain real scalar parameter in the interval $[0,1]$. Using a modified $DG$-scaling for 
+the shifted parameter range, we can easily adapt the multiplier and obtain, next to 
+$\lambda>0$ and $d>0$, the following FDI for interconnection stability:
+\begin{equation}%\arraycolsep0.3ex
+({\star})^*\left(\begin{array}{cc|cc}
+      0&0  &\lambda &0 \\
+      0&-d  &0         &\frac{d}{2} + ig\\ \hline
+      \lambda &0 &0 &0\\
+      0 &\frac{d}{2} - ig&0 &0
+\end{array}\right)
+\pmatr{1 &0\\0 &1\\\hline-Y_{11} &-Y_{12}\\Y_{21} &Y_{22}} \prec 0.
+\label{eq:uncenvFDI}
+\end{equation}
+With the frequency grid as in the previous case we obtained too optimistic results (after 
+comparing the values with those computed below), which suggests the need to refine the grid.
+With additional  $1500$ points in the interval $[10^{-6},100]\si[per-mode=fraction]{\radian\per\second}$,
+we obtained the exact value of $(\mu K_f)_\text{max}\approx 0.215$ for 
+$\bar{k}=1000\si[per-mode=fraction]{\newton\per\metre}$ in $\SI{127.7}{\second}$. 
+We infer that the grid resolution, whether logarithmic or linear, plays a crucial role 
+for the computations.
+
+This reveals that, especially for systems that have high bandwidth and complex dynamics, 
+it is instrumental to choose a sufficiently fine frequency grid in stability analysis. 
+This is the very reason for the alternative path of computations (via multiplier 
+parametrization and LMIs in state-space) as proposed above. In this particular example, 
+the resulting condition boils down to two simple LMIs to be verified numerically. After 
+normalizing the environment uncertainty by scaling, we just need to verify feasibility 
+of the LMIs in the next result.
+\begin{coroll}\label{cor:Case1} The $Y-\Delta$ interconnection in \Cref{fig:Case2blockdia} 
+is stable for all passive LTI $\Delta_h$ and LTI real parametric uncertainty $\delta_e\in[0,1]$ 
+if there exist symmetric matrices $\mathcal{X},Z_2,D_2$ and a skew symmetric matrix $G_2$ such that
+\begin{equation*}
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}}^T\pmatr{0 &\mathcal{X} &0\\ \mathcal{X}&0 &0\\0 &0 &M}\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}} \prec 0,
+%\label{eq:Case2LMI1}
+\end{equation*}
+\begin{equation*}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}}^T\pmatr{0 &Z_2 &0\\Z_2 &0 &0\\0 &0 &D_2}\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}} \succ 0
+%\label{eq:outerpos2}
+\end{equation*} hold, where
+\[\arraycolsep0.3ex
+M=\left(\begin{array}{cc|cc}
+      0&0  &1 &0 \\
+      0&-D_2  &0         &\frac{1}{2}D_2 + G_2\\ \hline
+      1 &0 &0 &0\\
+      0 &\frac{1}{2}D_2 - G_2&0 &0
+\end{array}\right), \Psi = \left (\begin{array}{cc|cc}1&0&0&0\\0&\Phi_2&0&0\\\hline 0&0&1&0\\0&0&0&\Phi_2\end{array}\right ).
+\]
+\end{coroll}
+For this example we have used the basis $\Phi_2$ with length $12$ and selected 
+the pole $a=-16$. Bisection over $\mu K_f$ took \SI{29.3}{\second} and the resulting 
+maximum admissible value is found to be $0.215$ for a sample value of $\bar{k}=1000$. 
+Values higher than $0.215$ would render the nominal system unstable, which means that 
+we obtain the best possible result. The performance curve for different values of 
+$\bar{k}$ is given in \Cref{fig:increasingKe}.
+
+\begin{figure}\centering%
+\begin{tikzpicture}[scale=0.6]
+\begin{axis}[%
+%height=4cm,
+%width=9cm,
+grid=both,
+xmin=800,
+xmax = 8000,
+domain=0:10000,
+ymin=0.12,
+ymax=0.28,
+no markers,
+xlabel=$\bar{k}$,
+ylabel=$\mu K_f$,
+ylabel shift=-3pt,
+/pgf/number format/.cd,
+1000 sep={},
+x unit = \si{\newton\per\metre},%
+]
+\addplot [thick,smooth] coordinates {
+(800,0.255227661132812)
+(900,0.230212158203125)
+(1000,0.215080165863037)
+(1500,0.177325439453125)
+(2000,0.157321166992187)
+(2500,0.146893310546875)
+(3000,0.14127197265625)
+(3500,0.138397216796875)
+(4000,0.13724365234375)
+(4500,0.137142944335938)
+(5000,0.137179565429688)
+(5500,0.137188720703125)
+(6000,0.136904907226563)
+(6500,0.137197875976562)
+(7000,0.137307739257813)
+(7500,0.13724365234375)
+(8000,0.137371826171875)
+};
+\addplot[thick,red,dashed] coordinates {(0,0.137)(8000,0.137)};
+\end{axis}
+\end{tikzpicture}
+\caption{Performance loss for increasing environment stiffness uncertainty. 
+The dashed line shows the value for unconditional stability from \Cref{sec:numcase1}.
+}%
+\label{fig:increasingKe}%
+\end{figure}
+
+
+\subsection{Case 3: Robustness against Delays}\label{sec:numcase3}
+
+We reconsider the plant given in \eqref{eq:admitsys} and modify it in order to relate
+the results to the undelayed cases given above. We assume that there exist communication 
+delays present in the forward and backward path and, without loss of generality, we 
+choose both maximally allowed delay durations to be equal for simplicity. We thus consider
+\[
+Y= \pmatr{%
+Y_m  &-K_f Y_me^{-s\tau}\\ -Y_m Y_s\mu K_p e^{-s\tau} 
+&\frac{M_m s^2+B_m s+\mu K_f K_p e^{-2s\tau}}{(M_s s^2+(B_s+K_v)s+K_p) (M_ms+B_m)}
+}
+\]
+where $\tau\in[0,\bar{\tau}]$. By pulling out the delay uncertainties from $Y$, the nominal plant $Y_d$ is given by
+\[
+\arraycolsep0.2ex
+Y_d  = \pmatr{Y_m &0 &-Y_m &0\\0 &sY_s &0 &-K_pY_s\\0 &K_f &0 &0\\\mu Y_m &0 &-\mu Y_m &0}
+\]
+and is interconnected to the structured uncertainty block
+\[
+\Delta = \operatorname{diag}\left(\Delta_h,\Delta_e,e^{-s\tau},e^{-s\tau}\right).
+\]
+In accordance with \Cref{sec:delayiqc}, a unity feedback is applied and 
+two delay weights are included in the plant. 
+
+\begin{coroll}\label{cor:Case3} The $Y_d-\Delta$ interconnection is stable 
+for all passive LTI $\Delta_h,\Delta_e$ and LTI delay uncertainties if there 
+exist symmetric matrices $\mathcal{X},M_1,M_2,D_3,D_4,R_3,R_4$ and $Z_i$ 
+for $i=1,\ldots,4$ such that
+\[
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}}^T\pmatr{0 &\mathcal{X} &0\\ 
+\mathcal{X}&0 &0\\0 &0 &P}\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}} \prec 0
+\]
+and
+\[
+\pmatr{I &0\\A^i_{\Phi} &B^i_{\Phi}\\C^i_{\Phi}&D^i_{\Phi}}^T
+\pmatr{0 &Z_i &0\\Z_i &0 &0\\0 &0 &\Upsilon_i}
+\pmatr{I &0\\A^i_{\Phi} &B^i_{\Phi}\\C^i_{\Phi}&D^i_{\Phi}} \succ 0
+\]
+hold where $\Upsilon_1= M_1$, $\Upsilon_2= M_2$, $\Upsilon_3= D_3$, $\Upsilon_4= D_4$,
+\begin{align*}
+P = \pmatr{P_{11}&P_{12}\\P_{12}^T&P_{22}},\begin{cases}
+P_{11}\kern-2ex &= \operatorname{diag}\left(0,0,-D_3,R_3,-D_4,R_4\right),\\
+P_{12}\kern-2ex &= \operatorname{diag}\left(M_1,M_2,0,R_3,0,R_4\right),\\
+P_{22}\kern-2ex &= \operatorname{diag}\left(0,0,D_3,0,D_4,0\right)
+\end{cases}
+\end{align*}
+and
+\[
+\Psi =
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+\matrix (psi) [matrix of math nodes,left delimiter=(,right delimiter=),nodes={inner sep=2pt,scale=0.8,transform shape}]{
+											\Phi_1 &&&&&&&\\
+                      &\Phi_2&&&&&&\\
+											&     &\Phi_3&&&&& \\
+											&     &\Phi_5&&&&& \\
+											&     &      &\Phi_4 &&&&\\
+											&     &      &\Phi_6 &&&&\\
+											&     &      &      &\Phi_1  &&& \\
+											&     &      &      &       &\Phi_2 && \\
+											&     &      &      &       &       &\Phi_3 W_d &\\
+											&     &      &      &       &       &\Phi_5 &\\
+											&     &      &      &       &       &       &\Phi_4 W_d\\
+											&     &      &      &       &       &       &\Phi_6 \\};
+\draw[thick] ( psi.north west -| psi-6-4.east) -- ( psi.south west -| psi-6-4.east);
+\draw[thick] ( psi.north west |- psi-6-4.south) -- ( psi.south east |- psi-6-4.south);
+\foreach \x in {1-1,2-2,3-3,7-5,8-6,9-7}
+\draw[loosely dashed,draw=black!30] (psi.north west -| psi-\x.east) -- ( psi.south west -| psi-\x.east);
+\foreach \x in {1-1,2-2,4-3,7-5,8-6,10-7}
+\draw[loosely dashed,draw=black!30] (psi.north west |- psi-\x.south) -- ( psi.south east |- psi-\x.south);
+\end{tikzpicture}.
+\]
+\end{coroll}
+
+This test has been applied for various maximum delay durations $\bar{\tau}\in[0.01,0.1]\si{\second}$
+with $0.005$\si{\second} increments and the results are shown in \Cref{fig:increasingtau}.
+At each $\bar{\tau}$ point, the bisection algorithm took on average $577.4\si{\second}$
+(varying in $[435,1040]$\si{\second}). The basis lengths and the pole locations are selected
+as $n_i = 3,3,3,3,5,5$ and $a_i= -16,-17,-19,-8,-13,-14$ respectively. The pole locations are
+selected away from the system's poles but arbitrary otherwise.
+
+
+\subsection{Additional Remarks} In concluding this section, we would like to address the
+issue of conservatism in our numerical examples. The first two cases involve none at all
+for sufficiently long basis functions as confirmed numerically.
+
+If considering only passive LTI uncertainties in standard problems, there is no room for
+further algorithmic improvements since the resulting tests are guaranteed to be exact. On
+the other hand, there is a huge potential in searching for refined uncertainty characterizations
+in order to reduce conservatism. We have illustrated that there is no need to confine the
+analysis to passive uncertainties as long as they can be associated with some integral
+quadratic constraint, possibly through some physical experiments (see e.g. \cite{buergerhogan1}
+for a parametric uncertainty case which can be improved directly using the multipliers given
+above). Thus, once IQCs are
+known for individual uncertainty blocks, it has been also demonstrated how to computationally
+verify robust stability against their combined influence on the interconnection with ease.
+
+
+On the other hand, this might not be the case for the test in \Cref{cor:Case3}. To
+quantify the potential conservatism, we use extreme values for
+the stiff environment and the delay uncertainty and determine
+the maximum achievable values of $\mu K_f$ for which the transfer
+function seen by the human is still strictly passive. Environments that
+are modeled as pure stiffnesses are considered to be ``worst
+cases" since their Nyquist curves are located at the boundary
+of the closed right half plane and since their low frequency
+contribution, unlike pure mass models, is significant. As shown in
+\Cref{fig:increasingKbarLFT}, the performance decreases for increasing
+levels of $\bar{\tau}$ and $\bar{k}$, but the trade-off curve does not change
+significantly beyond the value $\bar{k} = \SI{100000}{\newton\per\metre}$. We have
+also overlayed the results of \Cref{fig:increasingtau}. If it is indeed true
+that a pure stiffness environment is the worst case, then the
+difference between the two lowest curves in \Cref{fig:increasingKbarLFT} can
+be attributed to the conservatism of the test in \Cref{cor:Case3}.
+Thus, we can conclude that the conservatism is not very large; this is of particular
+significance for delay-independent robust stability tests which
+would result in values in the range of $\mu K_f \approx 10^{-5}$.
+
+
+Let us briefly compare with results obtained for time-varying
+environments. This makes a particularly interesting
+case since, in practice, a remote device might explore environments
+with varying characteristics. We have analyzed
+the non-delayed system where the environment is a pure
+spring with a stiffness coefficient $k(t) \in [0,1000]\si{\newton\per\metre}$ and
+different bounds on the rate-of-variation as shown in \Cref{fig:increasingtvb}.
+Classical absolute stability tests can only handle arbitrary
+fast variations which leads to small values of performance
+of $\approx 2\cdot 10^{-5}$. The inclusion of information about the ROV
+(as possible through the class of multipliers discussed above)
+substantially reduces the conservatism as is visible in the plot.
+
+
+
+We include a final remark about the performance criterion.
+In the literature, one often encounters PID-based controller
+architectures which makes it possible to analyze the effect
+of variations in the controller gains onto the performance of
+the teleoperation system. In our set-up, we can attribute the increase of performance to the
+increase of $\mu K_f$ due to the simplicity of the system structure.
+If moving towards more complicated controller architectures,
+such clear relations are not expected to be valid any more.
+This precludes obtaining graphical or analytical stability and
+performance tests with robustness guarantees. Although not
+made explicit for reasons of space, the IQC framework allows
+the incorporation of a performance channel and to develop
+robust performance analysis tests, very much along the same
+lines as discussed for stability in this paper. Such formulations
+of the performance problems make it convenient to compare 
+different PID controllers. 
+
+In conjunction with robust performance analysis, we can further utilize
+robust controller synthesis methods with dynamic IQCs, as recently developed in \cite{scherer2009,
+veenmanIFAC}. In \cite{scherer2009}, a general class of
+robust synthesis problems has been identified which can be handled by convex optimization techniques. 
+The well-known $\mu$-synthesis algorithm, based on the so-called $D/K$-iteration,
+has been extended to general dynamic IQCs in \cite{veenmanIFAC} for problems that
+do not admit a convex formulation. In addition to robustness analysis for existing PID controller,
+this opens the way for model based controller synthesis in future work.
+
+%==============================================================
+% Plot data
+%==============================================================
+\pgfplotstableread{
+tau	k1	k2	k4	k10	k100	kcomp
+0.01	0.1069	0.0699	0.0525	0.044		0.0422	0.0409
+0.015	0.0854	0.0549	0.0401	0.0321	0.0286	0.0274
+0.02	0.0711	0.0452	0.0325	0.0253	0.0216	0.0198
+0.025	0.0609	0.0384	0.0273	0.0209	0.0174	0.0149
+0.03	0.0533	0.0333	0.0235	0.0177	0.0145	0.0117
+0.035	0.0473	0.0295	0.0206	0.0154	0.0125	0.0095
+0.04	0.0426	0.0264	0.0184	0.0137	0.0109	0.0078
+0.045	0.0387	0.024		0.0166	0.0123	0.0097	0.0066
+0.05	0.0355	0.0219	0.0151	0.0111	0.0088	0.0058
+0.055	0.0328	0.0202	0.0139	0.0102	0.008		0.0050
+0.06	0.0304	0.0187	0.0128	0.0094	0.0073	0.0044
+0.065	0.0284	0.0174	0.0119	0.0087	0.0068	0.0039
+0.07	0.0266	0.0163	0.0112	0.0081	0.0063	0.0034
+0.075	0.025		0.0153	0.0105	0.0076	0.0059	0.0031
+0.08	0.0236	0.0145	0.0099	0.0071	0.0055	0.0028
+0.085	0.0224	0.0137	0.0093	0.0067	0.0052	0.0026
+0.09	0.0213	0.013		0.0088	0.0064	0.0049	0.0025
+0.095	0.0203	0.0124	0.0084	0.006		0.0046	0.0023
+0.1		0.0193	0.0118	0.008		0.0057	0.0044	0.0021
+}\delaystifftbl %
+%==============================================================
+%==============================================================
+\begin{figure}\centering%
+\begin{tikzpicture}[scale=0.6]
+\begin{axis}[%
+grid=both,%
+change x base,
+xmin=0.01,xmax = 0.1,%
+ymin=0,ymax=0.045,%
+%width=8cm,
+%height=4cm,
+no markers,
+xlabel=$\bar{\tau}$,ylabel={Lower bound \\ on $\mu K_f$},%
+ylabel style={text width=2cm,align=center},
+x unit = \si{\second},%x SI prefix = milli,
+yticklabel style={/pgf/number format/.cd,fixed,precision=3},
+xticklabel style={/pgf/number format/.cd,fixed,precision=2}]
+\addplot[black,ultra thick,smooth] table[x=tau,y=kcomp] {\delaystifftbl};
+\end{axis}
+\end{tikzpicture}
+\caption{Performance loss for increasing maximal delay duration.}%
+\label{fig:increasingtau}%
+\end{figure}
+
+\begin{figure}\centering%
+\begin{tikzpicture}[scale=0.7,
+delaynode/.style={sloped, inner xsep=1pt, inner ysep=0pt, fill=white, anchor=mid}
+]
+\begin{axis}[%
+grid=both,
+scaled x ticks = false,
+x tick label style={/pgf/number format/.cd,fixed,precision=3},
+y tick label style={/pgf/number format/.cd,fixed,precision=2},
+scaled y ticks =false,
+no markers,
+ylabel=$\mu K_f$,
+xlabel = $\bar{\tau}$,
+xmin = 0.01,xmax = 0.1,ymax=0.065,
+x unit = \si{\second}]
+\addplot[ultra thick,smooth] table[x=tau,y=kcomp] {\delaystifftbl};\addlegendentry{\Cref{fig:increasingtau}}
+\addplot +[smooth] table[x=tau,y=k1]  {\delaystifftbl} node [pos=0.50, delaynode] {1000};
+\addplot +[smooth] table[x=tau,y=k2]  {\delaystifftbl} node [pos=0.52, delaynode] {2000};
+\addplot +[smooth] table[x=tau,y=k4]  {\delaystifftbl} node [pos=0.60, delaynode] {4000};
+\addplot +[smooth] table[x=tau,y=k10] {\delaystifftbl} node [pos=0.73, delaynode] {10000};
+\addplot +[smooth,solid] table[x=tau,y=k100] {\delaystifftbl} node [pos=0.40, delaynode] {100000};
+	\end{axis}
+\end{tikzpicture}
+\caption{Robust performance for different stiff environment cases in the face of 
+increasing delay uncertainty duration.
+}%
+\label{fig:increasingKbarLFT}%
+\end{figure}
+
+\begin{figure}\centering%
+\begin{tikzpicture}[scale=0.7]
+\begin{semilogxaxis}[%compat=1.3,
+grid=both,
+domain=0:10000,%
+xmax = 1e6,
+xmin = 100,
+ymax=0.16,
+%height=4.5cm,
+%width=9cm,
+no markers,
+/pgf/number format/.cd,
+1000 sep={},
+xlabel=$\displaystyle\max_t{|\dot{k}(t)|}$,
+x unit = {\si[per-mode=fraction]{\newton\per\metre\per\second}},
+ylabel=$\mu K_f$,
+ylabel shift=-3pt,
+y tick label style={/pgf/number format/.cd,fixed,precision=2}]
+
+\addplot coordinates {
+(100,0.15146484375)
+(200,0.15068359375)
+(300,0.15087890625)
+(400,0.15146484375)
+(500,0.15029296875)
+(600,0.150171875)
+(700,0.14384765625)
+(1000,0.1344)
+(2000,0.1148)
+(4000,0.0633)
+(5000,0.045)
+(8000,0.0311)
+(20000,0.0108)
+(50000,0.007125)
+(70000,0.0069)
+(100000,0.0046)
+(200000,0.0006545)
+(500000,0.000201875)
+(1e6,0.000254139404296875)
+};
+\end{semilogxaxis}
+\end{tikzpicture}
+\caption{The performance loss with respect to the increase in ROV bound of 
+the time-varying uncertaint parameter $k(t)\in[0,1000]\si{\newton\per\metre}$.
+}%
+\label{fig:increasingtvb}%
+\end{figure}
