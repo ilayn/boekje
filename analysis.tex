@@ -176,7 +176,7 @@ w$ for all $u,y\in\LL_2$, we obtain the following contradiction
 \end{align}
 hence
 \[
-\operatorname{im}\pmatr{I\\G} \cap \operatorname{im}\pmatr{\Delta \\ I} =\{0\} ,\ \forall \omega\in\Realext.
+\operatorname{im}\pmatr{I\\G} \cap \operatorname{im}\pmatr{\Delta \\ I} =\{\mathbb{0}\} ,\ \forall \omega\in\Realext.
 \]
 Using this we can conclude that 
 \[
@@ -560,6 +560,384 @@ conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
 \Omega &W_d^*\mathcal{D}W_d}\pmatr{\tilde{\Delta}\\1}
 \geq 0 \quad \forall\omega\in\Real_e
 \]
+
+
+\subsection{Llewellyn's Stability Criteria}\label{sec:llewellyn}
+The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
+\begin{thm}[Unconditional Stability]\label{thm:llw}
+A $2$-port network $N$,  described by its transfer matrix
+\[
+N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
+\]
+and interconnected to passive termination immittances as in \Cref{fig:nom_net}, is stable if and only if
+\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:llew2}\end{equation}
+\vspace{0ex}
+and
+\begin{multline}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)\\-
+	\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:llew3}\end{multline} or
+\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:llew3}$'$}\label{eq:llew3p}\end{equation}
+for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
+\end{thm}
+
+\begin{rem}\label{rem:nonstrictness}In contrast to some references, this 
+result is formulated with strict inequalities in order to
+guarantee $\mathcal{L}_2$-gain stability (See also \cite[Sec. V]{lawrence}
+and \cite[Thm. 6.1]{khalil}).
+\end{rem}
+
+As shown in \cite{rollett}, the conditions stated in \Cref{thm:llw} are invariant under
+immittance substitution. Hence, we assume that the network and the terminations are represented
+with an input/output mapping as depicted in  \Cref{fig:uncicpas}.
+
+The stability conditions of \Cref{thm:llw} can be reproduced via the IQC theorem as follows. If $\Delta_l$ and $\Delta_s$ are passive and stable LTI systems, they satisfy
+\[
+\Delta_l + \Delta_l^* \geq 0 \ \ \text{and}\ \
+\Delta_s + \Delta_s^* \geq 0
+\]
+for all $\omega\in\Realext$. If we choose arbitrary $\lambda_1(\omega)>0$ and $\lambda_2(\omega)>0$, it is clear that
+the inequalities
+$\lambda_2(\Delta_l + \Delta_l^*) \geq 0$ and $\lambda_1(\Delta_s + \Delta_s^*) \geq 0$
+persist to hold, which can, in turn, be combined into
+\[%\arraycolsep0.3ex
+\pmatr{\Delta_s &0\\0 &\Delta_l\\\hline 1 &0\\0 &1}^*\left(\begin{array}{cc|cc}
+      0&0  &\lambda_1 &0 \\
+      0&0  &0         &\lambda_2\\ \hline
+      \lambda_1 &0 &0 &0\\
+      0 &\lambda_2 &0 &0
+\end{array}\right)
+\pmatr{\Delta_s &0\\0 &\Delta_l\\\hline 1 &0\\0 &1}
+\succeq 0.
+\]
+After division by $\lambda_2(\omega)$ and with
+$\lambda(\omega)=\frac{\lambda_1(\omega)}{\lambda_2(\omega)}$ we
+obtain
+\begin{equation}
+\pmatr{\Delta_s &0\\0 &\Delta_l\\\hline 1 &0\\0 &1}^*\left(\begin{array}{cc|cc}
+      0&0  &\lambda &0 \\
+      0&0  &0         &1\\ \hline
+      \lambda &0 &0 &0\\
+      0 &1 &0 &0
+\end{array}\right)
+\pmatr{\Delta_s &0\\0 &\Delta_l\\\hline 1 &0\\0 &1} \succeq 0.
+\label{eq:qcdeltall}
+\end{equation}
+In this fashion we have constructed a whole family of multipliers, parameterized by $\lambda(\omega)>0$, such that the quadratic constraint (\ref{eq:qcdeltall}) holds for all passive $\Delta_l,\Delta_s\in\mathcal{RH}_\infty$. Stability of the $N-\Delta$ interconnection is then guaranteed if one can find a positive $\lambda(\omega)$ for which the frequency domain inequality
+\begin{equation}
+({\star})^*\left(\begin{array}{cc|cc}
+      0&0  &\lambda &0 \\
+      0&0  &0         &1\\ \hline
+      \lambda &0 &0 &0\\
+      0 &1 &0 &0
+\end{array}\right)
+\pmatr{1 &0\\0 &1\\\hline-N_{11} &-N_{12}\\-N_{21} &-N_{22}} \prec 0
+\label{eq:LlewellynFDI}
+\end{equation}
+is also satisfied at each frequency $\omega\in\Realext$ (Negation of $N$ 
+results from the application of the IQC theorem to the negative feedback 
+interconnection \Cref{fig:uncicpas}). The resulting condition is equivalent 
+to checking whether, at each frequency, there exists a $\lambda > 0$ such that
+\[
+H = \left[
+\begin{array}{cc} - 2\lambda R_{11} &  -\lambda N_{12} - N^*_{21}\\ 
+-\lambda N_{12}^* - N_{21} &-2R_{22} 
+\end{array}
+\right]\prec 0
+\]
+holds. This leads us to the relation with the classical results. Indeed, 
+the $2\times 2$ matrix $H$ is negative definite if and only if
+\[
+R_{11} > 0 \quad \text{or} \quad R_{22} > 0
+%\label{eq:llewellynaux}
+\]
+and
+\begin{multline*}
+\det H =  \left(-R_{12}^2 - X_{12}^2\right)\lambda^2 - R_{21}^2 - X_{21}^2 \\ + \left(4R_{11}R_{22} - 2R_{12}R_{21} + 2X_{12}X_{21}\right)\lambda  > 0.
+\end{multline*}
+Since the leading and constant coefficient of the involved polynomial are negative, 
+the apex of the corresponding parabola should stay above the $\lambda$-axis. Using 
+the apex coordinates of a concave parabola one can show that this is equivalent to 
+\eqref{eq:llew3}. Symmetry of the resulting conditions with respect to the indices 
+is shown by simply switching the roles of $\lambda_1$ and $\lambda_2$ in our derivation.
+
+\begin{rem} In the previous FDI condition \eqref{eq:LlewellynFDI} and if assuming 
+$\lambda = 1$ over all frequencies, we also recover the Raisbeck's conditions 
+\cite{raisbeck}. A comparison of Raisbeck's and Llewellyn's criteria indicates that 
+the use of frequency dependent multipliers demonstrates the possibility of a substantial 
+decrease of conservatism in stability analysis. In fact, the difference between Llewellyn's 
+conditions and of Raisbeck's is the use of dynamic multipliers instead of static ones.
+\end{rem}
+\begin{rem} One should also note that Llewellyn's original conditions are both sufficient
+and necessary and, hence, involve no conservatism. Exactness is due to the vast generality 
+of the uncertainties, since one just assumes that the human and the environment are  
+represented by passive LTI operators. The Nyquist curves of the corresponding positive 
+real functions are only constrained {to be} lying in the closed right half plane. In 
+reality, however, one is rather interested in operators whose Nyquist curves are confined 
+to a sub-region of the closed right-half plane (or even to other bounded sets elsewhere 
+in the complex plane). Covering the relevant region of interest in the complex plane 
+with the full closed right-half plane for describing the involved uncertainty provides a 
+clear account of the conservatism of the stability tests in teleoperation systems. Thus, 
+if one wishes to reduce conservatism, additional structural information about the operators 
+should be included {in order} to further constrain the uncertainty set (e.g. \cite{chopark,
+hzaadsalcu,haddadizaad,willaertIJRR10}). It will be illustrated in \Cref{sec:num} how this 
+can be achieved by using conic combinations of different multipliers which express refined 
+properties of the involved operators.
+\end{rem}
+
+%===================================================================================
+%===================================================================================
+\subsection{Unconditional Stability Analysis of 3-port Networks}\label{sec:threeport}
+For the analysis of 3-port networks, there exists no obvious unconditional stability 
+result other than terminating one of the ports with a known environment model 
+and then performing an analysis on the resulting 2-port network (see e.g. \cite{khademian} 
+and references therein). Still, we can obtain the exact conditions for a 3-port case in a 
+straightforward fashion along the above described lines without port termination. 
+However, as expected, the test derived in this section is more conservative
+than those of port termination based methods since the additional information about
+the model with which the port is terminated renders the uncertainty set
+significantly smaller.
+
+
+If compared to the previous section, the only modification is to take a system 
+representation $N\in\mathcal{RH}_\infty^{3\times 3}$ and three passive uncertainty 
+blocks living in $\mathcal{RH}_\infty$ which are collected as
+\begin{equation}
+\Delta(\iw) = \text{diag} \left( \Delta_1(\iw),\Delta_2(\iw),\Delta_3(\iw)\right)
+\label{eq:diagDelta}
+\end{equation}
+in order to model the three port terminations. With
+\begin{equation}
+\Lambda(\iw) = \text{diag}\left( \lambda_1(\omega),\lambda_2(\omega),\lambda_3(\omega)\right)\succ 0
+\label{eq:diagLambda}
+\end{equation}
+we obtain the following quadratic constraint
+\[
+%\arraycolsep0.3ex
+\pmatr{\Delta\\I}^*\pmatr{0 &\Lambda\\\Lambda &0}\pmatr{\Delta\\I}\succeq 0
+%\label{eq:thportIQC}
+\]
+which reflects passivity of the three sub-blocks. The corresponding FDI for guaranteeing stability reads as
+\begin{equation}
+\pmatr{I \\ -N}^*
+\pmatr{0 &\Lambda\\\Lambda &0}
+\pmatr{I \\ -N} \prec 0.
+\label{eq:thportFDI}
+\end{equation}
+%We arrive at the following 3-port unconditional stability condition.
+\begin{thm}[Llewellyn's $3$-port Criteria]\label{thm:3portll}
+
+A network, represented by its $3\times3$ transfer function $N \in \mathcal{RH}_\infty^{3\times 3}$ 
+and in\-ter\-connected to the {stable}, passive and block diagonal $\Delta$ as given in 
+\eqref{eq:diagDelta} is stable if and only if there exists a structured $\Lambda$ with 
+\eqref{eq:diagLambda} such that \eqref{eq:thportFDI} holds for all $\omega\in\Realext$.
+\end{thm}
+
+Exact conditions for unconditional stability could be obtained  from \eqref{eq:thportFDI} 
+by symbolic computations. However, getting formulas similar to {those in} \eqref{eq:llew2}, 
+\eqref{eq:llew3} would lead to quite cumbersome expressions (see e.g. \cite{kuochu, tan, 
+khademian}). Moreover, variants of expressing negative definiteness would result in different 
+formulations of the stability conditions in terms of scalar inequalities. In the IQC formulation 
+this is completely avoided while it is still possible to easily verify the resulting conditions 
+numerically.
+
+
+%===================================================================================
+%===================================================================================
+\subsection{Rollett's Stability Condition}\label{sec:rollett}
+Similarly, as is for Llewellyn's stability conditions, it is straightforward to derive 
+unconditional stability {tests if} the network is represented by scattering parameters. 
+In what follows, we denote transformed passive LTI uncertainties with $\tilde{\Delta}_{s}, 
+\tilde{\Delta}_l$ which are unity gain bounded. The corresponding interconnection is 
+supposed to be given by the loop equations
+$q = S p$, $p=\tilde{\Delta} q$ i.e.
+\begin{equation}
+\underbracket[0.2pt]{\pmatr{q_1\\q_2}}_{q}=
+\underbracket[0.2pt]{\pmatr{S_{11} &S_{12}\\S_{21} &S_{22}}}_{S}
+\underbracket[0.2pt]{\pmatr{p_1\\p_2}}_{p} \ , \ \pmatr{p_1\\p_2}=
+\underbracket[0.2pt]{\pmatr{\tilde{\Delta}_s&0\\0&\tilde{\Delta}_l}}_{\tilde{\Delta}} \pmatr{q_1\\q_2}.
+\label{eq:rolic}
+\end{equation}
+Rollett's conditions (\cite{stern,rollett,kurokawa}) for stability are then
+formulated as follows: The inequality
+\begin{equation}
+K = \frac{1+\abs{\nabla}^2-\abs{S_{11}}^2-\abs{S_{22}}^2}{2\abs{S_{12}S_{21}}} > 1
+%\label{eq:rollett}
+\end{equation}
+holds for all frequencies together with an auxiliary condition in terms of $\nabla = S_{11}S_{22}-
+S_{12}S_{21}$. This extra condition can be stated in at least five different ways, such as 
+\[ 1-\abs{S_{11}}^2 > \abs{S_{12}S_{21}}\ \text{ or } \ (1-\abs{S_{22}}^2)> \abs{S_{12}S_{21}}. \] 
+(See \cite{edsin} for further details). With almost identical arguments as for Llewellyn's test, 
+one derives the following quadratic constraints {for positive $\lambda$} and for stable LTI systems 
+$\tilde{\Delta}_l$ and $\tilde{\Delta}_s$ whose gains are bounded by one:
+\[
+\pmatr{\tilde{\Delta}_s &0\\0 &\tilde{\Delta}_l\\\hline 1 &0\\0 &1}^*\left(\begin{array}{cc|cc}
+-\lambda  &0  & 				& \\
+0	  			&-1  &  				&\\ \hline
+	  			& 	&\lambda 	&0\\
+	  			& 	&0 				&1
+	  			\end{array}\right)
+\pmatr{\tilde{\Delta}_s &0\\0 &\tilde{\Delta}_l\\\hline 1 &0\\0 &1} \succeq 0.
+\]
+
+Interconnection stability is then assured if one can find a positive frequency dependent 
+$\lambda$ for which the FDI
+\begin{equation}
+\pmatr{1 &0\\0 &1\\\hline S_{11} &S_{12}\\S_{21} &S_{22}}^*\left(\begin{array}{cc|cc}
+-\lambda  &0  & 				& \\
+0	  			&-1  &  				&\\ \hline
+	  			& 	&\lambda 	&0\\
+	  			& 	&0 				&1
+\end{array}\right)
+\pmatr{1 &0\\0 &1\\\hline S_{11} &S_{12}\\S_{21} &S_{22}} \prec 0
+\label{eq:rolFDI}
+\end{equation}
+or, equivalently,
+\[
+H = \bmatr{\abs{S_{21}}^2 + \lambda(\abs{S_{11}}^2 - 1) &S_{22}S_{21}^* + \lambda S_{12}S_{11}^*\\
+S_{22}^*S_{21} + \lambda S_{12}^*S_{11} &\abs{S_{22}}^2 - 1 + \lambda\abs{S_{12}}^2 }\prec 0
+\]
+hold for all $\omega\in\Realext$. Then, it is elementary to express $H\prec0$ by $\det{({H})}>0$ 
+and by negativity of the diagonal entries of $H$ for all $\omega\in\Realext$. Positivity of the 
+determinant of $H$ means
+\[
+(1- \abs{S_{22}}^2 - \abs{S_{11}}^2 +\abs{\nabla}^2)\lambda - \abs{S_{12}}^2\lambda^2 - \abs{S_{21}}^2 > 0.
+\]
+If this is expressed as $f(\lambda)= -a\lambda^2+b\lambda-c>0$ with $a,c>0$, we require the 
+apex coordinates $\smash{\left(\frac{b}{2a},\frac{b^2-4ac}{4a}\right)}$ both to be positive. 
+Since $a>0$, we have
+\begin{equation}
+(1+\abs{\nabla}^2 - \abs{S_{22}}^2 - \abs{S_{11}}^2)^2 > 4\abs{S_{12}S_{21}}^2
+\label{eq:prerollett1}
+\end{equation}
+due to $b^2>4ac$. Moreover, negativity of the diagonal terms {is expressed as}
+\begin{equation}\label{eq:prerollett2}
+\lambda(1-\abs{S_{11}}^2) > \abs{S_{21}}^2 \quad \text{or} \quad 1- \abs{S_{22}}^2 > \lambda\abs{S_{12}}^2.
+\end{equation}
+To make the connection to the classical auxiliary conditions, observe that evaluating 
+$f(\lambda)$ at  $\lambda_0=\sqrt{\frac{c}{a}} =\tfrac{\abs{S_{21}}}{\abs{S_{12}}}$ would 
+lead to the condition $b>0$ since $f(\lambda_0)=b\sqrt{\frac{c}{a}}-2c>0$. Hence 
+\eqref{eq:prerollett2} becomes
+\begin{equation}
+1-\abs{S_{11}}^2 > \abs{S_{12}S_{21}} \quad \text{or} \quad 1- \abs{S_{22}}^2 > \abs{S_{12}S_{21}}.
+\label{eq:rollettaux}
+\end{equation}
+{In the literature, the quantity $\lambda_0$ is called the ``maximum stable power gain".} Finally, 
+after explicitly including the condition $b>0$, one can take the square root of \eqref{eq:prerollett1} 
+and obtain
+\[
+1+\abs{\nabla}^2 - \abs{S_{22}}^2 - \abs{S_{11}}^2 > 2\abs{S_{12}S_{21}},
+%\label{eq:rollett1}
+\]
+which is precisely Rollett's first condition.
+
+There has been quite some discussion in various studies (e.g. \cite{lombardi,edsin,woods,pirola}) 
+whether testing both conditions in \eqref{eq:rollettaux} is really required, while it rolls out 
+from our FDI arguments that one of these auxiliary inequalities is sufficient. In fact, 
+\eqref{eq:rolFDI} renders this discussion obsolete since we deal with a single matrix inequality 
+to be tested at each frequency. This test is equivalent to the one based on the Edwards-Sinsky 
+stability parameter $\mu$ (\cite{edsin}) in the sense that only one condition needs to be verified. 
+Alternatively, one can perform a symbolic computation of the largest eigenvalue of $H$ and search 
+for a positive $\lambda$ that renders that quantity strictly negative. Recently, the $\mu$ parameter 
+has been used in the context of teleoperation in \cite{haddadizaad} and their results can also be 
+recovered by using multipliers similar to the ones given in the next section.
+
+%===================================================================================
+%===================================================================================
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[>=stealth,scale=0.75,transform shape,every node/.style={minimum height=1.1cm,minimum width=1.1cm},label distance=1mm]
+\node[draw] (del) at (-3,2) {$\frac{1-e^{-s\tau}}{s} $};
+\node[draw] (plant) at (0,2) {$\frac{1}{ms+b}$};
+\node[draw] (integ) at (3,2) {$\frac{1}{s}$};
+\node[draw] (z0) at (0,3.5) {$Z_0$};
+\node[draw,label={[text width=1.6cm,inner sep=0,scale=0.8,xshift=1mm,yshift=2mm]below:{\small Unilateral Constraint}}] (uniconst) at (1,0) {\tikz{
+\draw[thick,->] (0.5,0)--(0.5,1);\draw (0.5,0.5) -- (1,1);\draw[thick,->] (0,0.5) -- (1,0.5);}
+};
+\node[draw] (h) at (-1.5,0) {$H(z)$};
+\node[circle,minimum size=0mm,inner sep=1mm,draw,%
+label={[minimum size=0mm,inner sep=0mm]100:$-$},
+label={[minimum size=0mm,inner sep=0mm]175:$-$}] (j) at ($(del.east)!0.5!(plant.west)$) {};
+\draw[->] (plant.east) -- (integ.west);
+\draw[->]  (integ.east) -| ++(0.5,-0.5) |- (3.5,0) -- ($(3.5,0)!1!-40:++(-0.5,0)$) node[anchor=north,inner sep=0] {$T$} (3,0) -- (uniconst.east);
+\draw[->] (uniconst.west) -- (h.east);
+\draw[->] (h.west) -| ($(del.west)-(0.5,0)$) -- (del.west);
+\draw[->] (del.east) -- (j.west);
+\draw[->] (j.east) -- (plant.west);
+\draw[->] ($(plant.east)!0.5!(integ.west)$) |- (z0.east);
+\draw[->] (z0.west) -| (j.north);
+\end{tikzpicture}
+	\caption{The teleoperation setup from \cite{colgate1}}
+	\label{fig:colgate}
+\end{center}
+\end{figure}
+\subsection{Colgate's Minimum Damping Condition}\label{sec:colgate}
+
+In this section, the analysis problem from \cite{colgate2,colgate3} is investigated by IQCs. 
+In this example, the master device {is} modeled as $\frac{1}{ms+b}$ {and} is combined with 
+a passive operator impedance $Z_0(s)$ {as shown in} \Cref{fig:colgate}. We limit the 
+analysis to the {situation} without the unilateral constraint. The overall operator and master 
+device transfer function reads as $\Delta(s) = \frac{1}{ms+b+Z_0(s)}$. Since $Z_0(s)$ is 
+passive and $b$ {is positive}, the Nyquist curve of $\Delta^{-1}(s)$ is confined to the 
+half-plane $\{z\in\mathbb{C}: \Re{z} \geq b\}$ {and $\Delta^{-1}(s)$ is strictly input 
+passive with parameter $b$.} In \cite{colgate2}, the problem is converted to the small 
+gain theorem with a geometric reasoning. In our setting, passivity is expressed as
+\[
+\pmatr{1\\ \Delta(\iw)^{-1} }^*
+\pmatr{-2b &1\\1 &0}
+\pmatr{1\\ \Delta(\iw)^{-1} } \geq 0
+\]
+which is clearly equivalent to
+\[
+\pmatr{\Delta(\iw)\\ 1 }^*\pmatr{-2b &1\\1 &0}\pmatr{\Delta(\iw)\\1} \geq 0
+\]
+for all $\omega\in\Realext$. The FDI guaranteeing stability then reads as
+\[
+\pmatr{1\\ -G_d(\iw)}^*\pmatr{-2b &1\\1 &0}\pmatr{1\\ -G_d(\iw)} < 0
+\]
+for all $\omega\in\Realext$. Using the closed form formula in \cite{colgate2},
+\begin{equation*}
+G_d(\iw) = \frac{T}{2}\frac{e^{\iw T}-1}{1- \cos{(\omega T)}}H(e^{\iw T}),
+%\label{eq:Colgateclosedform}
+\end{equation*}
+this directly leads to Colgate's original condition:
+\begin{multline*}%\label{eq:colgate}
+-2b - G_d^*(\iw) - G_d(\iw) < 0 \\
+\Longleftrightarrow b > \frac{T}{2}\frac{1}{1-\cos{(\omega T)}}\Re{(1-e^{-\iw T})H({e^{\iw T}})}.
+\end{multline*}
+{The employed multiplier can be transformed into the one for the small-gain theorem along the following lines:}
+\begin{align*}
+0&\leq  2b\pmatr{\Delta(\iw)\\ 1 }^*\pmatr{-2b &1\\1 &0}\pmatr{\Delta(\iw)\\1} \\\nonumber  %\label{eq:dummymult}
+&=(\star)^*\left[\pmatr{2b&-1\\0&1}^T\pmatr{-1 &0\\0 &1}\pmatr{2b&-1\\0&1}\right]\pmatr{\Delta(\iw)\\1}\\\nonumber
+&=(\star)^*\pmatr{-1 &0\\0 &1}\pmatr{2b\Delta(\iw) - 1\\ 1 } \Longleftrightarrow |2b\Delta(\iw)-1| \leq 1.
+\end{align*}
+This links our arguments to those appearing in \cite{colgate2,colgate3} and reveals that the direct application of 
+tools from robust control allows to circumvent any transformation to scattering parameters (or, in other words, 
+the application of a loop transformation) for obtaining the stability conditions. In fact, the congruence transformation
+\begin{equation*}\arraycolsep0.5ex
+%\label{eq:scat}
+\left(\frac{1}{\sqrt{2b}}\pmatr{1 &-b\\1&b}\right)^T\pmatr{-1 &0\\0
+&1}
+\left(\frac{1}{\sqrt{2b}}\pmatr{1 &-b\\1 &b}\right) = \pmatr{0&1 \\
+1 &0}
+\end{equation*}
+with the scattering transformation matrix turns the small-gain multiplier into the one for passivity. This observation allows to easily show the equivalence of the small gain and passivity theorems through scattering transformations (\cite{andersonspong}) and wave variable methods (\cite{nieslotine,nieslotine2}).
+
+
+%===================================================================================
+\subsection{Exactness of Robustness Tests}\label{sec:exact}
+As mentioned before, IQC-based stability criteria are typically only sufficient.
+Still the classical conditions as discussed above %in Sections \ref{sec:llewellyn} to \ref{sec:colgate}
+turn out to be also necessary. Necessity of these criteria can as well be seen to be a specialization of
+celebrated exactness results in structured singular-value theory. In fact, IQC tests
+for structured LTI uncertainties with two or three full diagonal blocks as derived above are known to be always exact.
+This implies, in particular, that the 3-port counterpart of Llewellyn's conditions is indeed
+a necessary and sufficient test for stability. It is far beyond the scope of this paper to provide
+all possible cases in which IQC-based robustness tests are known to be exact. For a detailed discussion related
+to LTI uncertainties we refer to \cite{packdoyle,fantits,cwssimax}.
+
+We would like to emphasize that these beautiful exactness properties come at the price of some limitations of the classical framework. For instance, Llewellyn's conditions are not sufficient for stability any more if we only assume that the uncertainties are passive but not necessarily LTI. On the other hand, if allowing for arbitrary causal and passive uncertainties, stability is still guaranteed if we can find a frequency-independent $\lambda>0$ which renders the FDI \eqref{eq:LlewellynFDI} satisfied, and this property can be easily verified numerically.
+
+
+
 
 \section{Numerical Case Studies}\label{sec:num}
 In this section, we show how frequently encountered analysis problems can be solved 

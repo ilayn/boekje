@@ -382,6 +382,8 @@ The idea of modeling the teleoperation as a two-port network seems to have multi
 point out to a common source. However, in general, the popularity of two-ports can be attributed to 
 \cite{andersonspong,nieslotine,rajuphd,hannaford89,yokokohjiyoshikawa}. 
 
+
+
 \subsection{Uncertain Models of Bilateral Teleoperation for Robustness Tests}\label{sec:lit:uncmodel}
 
 Another possibility of modeling the human arm and its cognitive input is to define an input force signal ``filtered'' by the 
@@ -438,8 +440,8 @@ experiments, but in the passivity approach all of these are lumped into a single
 the main difficulty is to get a model (out of hypothetical insights, identification experiments etc.) which is
 not required in the passivity approach.
 
-The paper \cite{leelee} offers an interesting alternative as it tries to incorporate many of the aforementioned 
-effects, however, the results are prospective and yet to be utilized. 
+The paper \cite{leelee,prekopiou} offer interesting alternatives for human modeling as they attempt to incorporate 
+many of the aforementioned effects but the results are prospective and yet to be utilized. 
 
 
 
@@ -569,7 +571,9 @@ applicability is relatively limited. This is also related to the fact that we ne
 passivity framework and this is not always convenient if the performance specifications are related to other variables.
 
 In the literature, this analysis method often follows the scattering transformations such that, the passivity assumption avoids the
-explicit modeling and small-gain theorem allows to handle the delay problem via with bounded operators.
+explicit modeling and small-gain theorem allows to handle the delay problem via with bounded operators. A refinement can be found 
+ in \cite{poortenyokokohji} as the authors utilize a direct $\mu-$analysis to reduce the conservatism, however rather remarkably, it's not
+picked up by other studies and the analysis is mainly limited to small-gain conditions even in the linear cases. 
 
 
 We can also directly take the uncertain modeling of the human and the environment and utilize $\mu-$analysis for the teleoperation
@@ -600,7 +604,7 @@ $e^{-st}$ is not positive real. Hence, when combined with the passivity framewor
 operators. 
 
 
-At end of the 80's, two prominent studies (\cite{andersonspong,nieslotine}) proposed a direct handle to handle delay 
+At end of the 80's and early 90's, two prominent studies (\cite{andersonspong,nieslotine}) proposed a direct handle to handle delay 
 robustness problem using the scattering transformations. This notion is best explained, in our humble opinion, by loop transformations 
 since the original articles refer to microwave and transmission line theories which use quite specialized terminology. One can also
 find a slightly different system theoretical view of these transformations in \cite{colgate3}. The key concept of the scattering transformation
@@ -609,11 +613,11 @@ fractional or bilinear) transformations:
  
 \begin{equation}
 W:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\, ,\, W(z) 
-= \frac{z-1}{z+1}=\tanh{\frac{z}{2}}
+= \frac{z-1}{z+1}
 \label{eq:lit:smith}
 \end{equation}
 
-One can directly verify that $1\to 0,\infty\to 1$ and $0\to -1$ under $W$. Pictorially, the mapping is given in 
+One can directly verify that $1\mapsto 0,\infty\mapsto 1$ and $0\mapsto -1$ under $W$. Pictorially, the mapping is given in 
 \Cref{fig:lit:smith} using a Smith chart which is located at the origin. Hence, positive real transfer matrices
 become norm bounded by $1$ such that we can analyze the interconnection using the small-gain theorem.
 
@@ -667,20 +671,20 @@ grid=major,
 no marks,
 axis background/.style={right color=black!50,left color=white},
 xmax=1.5,
-ytick=\empty,
+%ytick=\empty,
 every axis/.append style={
 extra description/.code={
 \node[xshift=-5mm] at (0,1) {Im$(z)$};
 \node[xshift=-5mm] at (1,0.55) {Re$(z)$};
 }}]
 \foreach \x in {0,0.2,0.5,1}{
-\addplot+[ultra thick] coordinates {(\x,-10) (\x,10)};
+\addplot+[ultra thick] coordinates {(\x,-1.5) (\x,1.5)};
 }
 \end{axis}
 \end{scope}
 \end{tikzpicture}
 \caption[Mapping the closed right half plane onto the unit disc.]%
-{Mapping the closed right half plane onto the unit disc. Origin on the right is mapped to the point $(-1,0)$ shown with a white dot on the left.}%
+{Mapping the closed right half plane onto the unit disc. Origin is shown with a white dot on the left.}%
 \label{fig:lit:smith}%
 \end{figure}
 
@@ -742,8 +746,8 @@ the imaginary axis under $W$:
 \[
 W(\mathbb{T}) = (W\circ W)(i\widetilde{\omega} T) = \frac{1}{i\widetilde{\omega} T}
 \]
-We don't need to track the points individually as we are only interested in the domain and the 
-codomain of these transformations. 
+We don't need to track the points individually as we are only interested in the domain and its image
+under these transformations. 
 
 
 This once again shows that delay uncertainty does not satisfy the norm constraint
@@ -780,13 +784,13 @@ Technically, this amounts to the common disturbance input-filtering often used i
 \section{Synthesis}
 
 Complementary to the analysis section, we cover a few popular controller structures among many others except the 
-art of control engineering: manual PID tuning. 
+art of control engineering; manual PID tuning. 
 
 \subsection{Two-, Three-, and Four-Channel Control Architectures}
 In the teleoperation literature, the control laws are categorized in terms of how many measurement signals 
-are sent over to the opposite medium during the teleoperation for control. The actual controller synthesis method
-that is, how we actually obtain the particular controllers is often not considered in this classification.  Hence, the naming 
-``$n-$channel control''. The naming scheme can be better visualized as shown in \Cref{lit:syn:ela}. 
+are sent over to the opposite medium during the teleoperation for control. The actual controller synthesis 
+method is often not considered in this classification.  Hence, the naming ``$n-$channel control''. The naming 
+scheme can be better visualized as shown in \Cref{lit:syn:ela}. 
 
 
 \subsubsection{Position-Postion and Position-Force Controllers}
@@ -1084,8 +1088,9 @@ mapping $W$ using different rotation-scaling combinations for the unitary transf
 
 \subsection{Time-Domain Passivity Control}
 In \cite{hannafordryu}, the passivity approach is formulated in time domain and the energy exchange is literally
-monitored and regulated. The basic idea is to see whether at any port there is energy is generated, using a ``passivity
-observer'' (PO): for an $N-$port network the observed total energy is given by
+monitored and regulated. An initial version of this idea can also be found in \cite{yokokohji}. The basic idea is 
+to see whether at any port there is energy is generated, using a ``passivity observer'' (PO): for an $N-$port 
+network the observed total energy is given by
 \[
 E_{obsv}(n) = \sum_{k=0}^n \Delta T_k(F(k)^TV(k))
 \]
