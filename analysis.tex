@@ -1,14 +1,10 @@
 \chapter{Analysis}\label{chap:analysis}
 
-
-\tikz \draw[-latex,ultra thick]  node[right,fill=yellow,append after command={(a.south west) -- ($(a.south west)!0.4!(a.south east)$)},label={[inner sep=0]south east:$100$},
-label={[inner sep=0]south west:$0$}] (a) {Current status: 40\% Converting the article to thesis format};
+\begin{center}
+\tikz \draw[-latex,ultra thick]  node[right,fill=yellow,append after command={(a.south west) -- ($(a.south west)!0.7!(a.south east)$)},label={[inner sep=0]south east:$100$},
+label={[inner sep=0]south west:$0$}] (a) {Current status: 70\% Converting the article to thesis format};
+\end{center}
 \vspace{1cm}
-
-
-This chapter would be simply a copy of the Transactions on Robotics Vol.28(6) 2012 paper and 
-more info on IQC multipliers (Zames-Falb etc.) missing from the article. Expected time for finishing:
- 2 weeks (hopefully synced with Cesar's arrival).
 
 
 \section{Quadratic Forms for Stability Analysis}
@@ -53,7 +49,7 @@ in order to indicate the travel direction which translates to a negative sign in
 \label{fig:2}
 \end{figure}
 
-It is beyond the scope of this paper to include a comprehensive treatment of the subject, but for the 
+It is realistic to include a comprehensive treatment of this huge body research, but for the 
 sake of completeness, we present the general methodology by sampling a few important special cases. 
 To begin with, consider the following reformulation of the conditions of the small-gain theorem:
 \begin{equation}
@@ -102,7 +98,9 @@ An IQC for the input and output signals of $\Delta$ is expressed as
 A bounded operator $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ is said to satisfy the constraint defined by $\Pi(\iw)$ 
 if \eqref{eq:IQC} holds for all $v\in\mathcal{L}^m_2$. The following sufficient {stability condition for the interconnection 
 in \Cref{fig:uncic}} forms the basis for the IQC framework. 
-\begin{thm}[\cite{megretski}]\label{IQCthm} Let $G\in\mathcal{RH}^{n\times m}_\infty$ be given and 
+
+
+\begin{thm}[\cite{megretski}]\label{IQCthm} Let $G\in\mathcal{RH}^{m\times n}_\infty$ be given and 
 let $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ be a bounded causal operator. Suppose that
 \begin{enumerate}
 	\item for every $\tau\in[0,1]$, the interconnection of $G$ and $\tau\Delta$ is well posed;
@@ -117,7 +115,7 @@ let $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ be a bounded causal operator. Sup
 Then the $G-\Delta$ interconnection {in \Cref{fig:uncic}}  is stable.
 \end{thm}
 
-We include a few remarks this result: 
+We include a few remarks about this result: 
 \begin{rem}\label{remiqc1}
 Note that both properties 1 and 2 in \Cref{IQCthm} have to hold for $\tau\Delta$ 
 if $\tau$ moves from $\tau=0$ (for which stability is obvious) to the target value $\tau=1$ 
@@ -137,16 +135,21 @@ In our examples the left-upper $m\times m$ block is negative semi-definite for a
 which guarantees concavity. In other words, convex combinations of two particular uncertainty element 
 $\Delta_1, \Delta_2$ that satisfies the IQC, also satisfy the IQC since
 \[
-\pmatr{I\\ \tau\Delta_1+(1-\tau)\Delta_2}^*\pmatr{\cdot &\cdot\\\cdot &-}\pmatr{I\\ \tau\Delta_1+(1-\tau)\Delta_2}
+\pmatr{\tau\Delta_1+(1-\tau)\Delta_2\\ I}^*\pmatr{-&\cdot\\\cdot &\cdot}\pmatr{\tau\Delta_1+(1-\tau)\Delta_2\\I}
 \]
-is a concave function. Furthermore, we assume that the right-lower $n\times n$ block of $\Pi(\iw)$ 
+is a concave function. Furthermore, we assume that the right-lower $m\times m$ block of $\Pi(\iw)$ 
 positive semidefinite for all $\omega\in\Realext$. Then
 \[
-\pmatr{I\\ 0}^*\pmatr{+ &\cdot\\\cdot &\cdot}\pmatr{I\\0} \geq 0
+\pmatr{0\\I}^*\pmatr{\cdot &\cdot\\\cdot &+}\pmatr{0\\ I} \geq 0
 \]
 i.e. $0\in\bm{\Delta}$.
 Hence, given a $\Delta$ that satisfies the IQC with $\Pi_1 \geq 0, \Pi_3\leq 0$, select $\Delta_1 = 0, \Delta_2 = \Delta$, 
 for every $\tau\in [0,1]$, $\tau\Delta$ satisfies the IQC. 
+The reason why we are so interested in zero is the fact that when $\Delta=0$, it corresponds to the (unperturbed) nominal 
+system and, as is for the IQC theorem, many stability results rely on tracking the stability property while traveling on 
+the nominal system$\to$fully uncertain system path, say, via root loci, Nyquist test, root boundary crossing theorem, $\mu$ 
+etc. 
+
 
 It is then easy to see that \eqref{eq:qcdelta} implies property 2 in \Cref{IQCthm}; 
 hence one only needs to verify \eqref{eq:qcdelta} for the original uncertainty $\Delta$.
@@ -176,13 +179,13 @@ w$ for all $u,y\in\LL_2$, we obtain the following contradiction
 \end{align}
 hence
 \[
-\operatorname{im}\pmatr{I\\G} \cap \operatorname{im}\pmatr{\Delta \\ I} =\{\mathbb{0}\} ,\ \forall \omega\in\Realext.
+\operatorname{im}\pmatr{I\\G} \cap \operatorname{im}\pmatr{\Delta \\ I} =\{ 0 \} ,\ \forall \omega\in\Realext.
 \]
 Using this we can conclude that 
 \[
 \det\pmatr{I &\Delta\\G &I}\neq 0\ \forall \omega\in\Realext
 \] 
-with a Schur complement formula, we have \eqref{eq:IQCthmFDI2} and \eqref{fdidelta} implying
+and, with an application of Schur complement formula, we have \eqref{eq:IQCthmFDI2} and \eqref{fdidelta} implying
 \begin{equation}
 \det(I-G(\iw)\Delta(\iw))\neq 0\text{\ \ for all\ \ }\omega\in\Realext,
 \end{equation}
@@ -361,11 +364,6 @@ the parameter lives in the interval $[a,b]$ with/out some physical units with $a
 in the loop one can always set the interval such that zero is included. In other words, the parameter interval $[a,b]$
 can be rewritten as $\frac{a+b}{2} + [\frac{a-b}{2},\frac{b-a}{2}]$. Then, including the constant feedthrough term as a 
 feedback loop in the plant we obtain $[-r,r]$ interval with $r=\frac{b-a}{/2}$.
-
-The reason why we are so interested in zero is the fact that when $\Delta=0$, it corresponds to the (unperturbed) nominal 
-system and, as is for the IQC theorem, many stability results rely on tracking the stability property while traveling on 
-the nominal system$\to$fully uncertain system path, say, via root loci, Nyquist test, root boundary crossing theorem, $\mu$ 
-and many others. 
     \item Alternatively, we can modify the multiplier using \[\delta\in[a,b] \iff \abs{\delta- \frac{b+a}{2}}^2\leq 
     \left(\frac{b-a}{2}\right)^2\iff -\delta^2 + (b+a)\delta -ab\geq 0\] and hence,
     \[
@@ -562,34 +560,35 @@ conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
 \]
 
 
-\subsection{Llewellyn's Stability Criteria}\label{sec:llewellyn}
-The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
-\begin{thm}[Unconditional Stability]\label{thm:llw}
-A $2$-port network $N$,  described by its transfer matrix
-\[
-N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
-\]
-and interconnected to passive termination immittances as in \Cref{fig:nom_net}, is stable if and only if
-\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:llew2}\end{equation}
-\vspace{0ex}
-and
-\begin{multline}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)\\-
-	\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:llew3}\end{multline} or
-\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:llew3}$'$}\label{eq:llew3p}\end{equation}
-for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
-\end{thm}
-
-\begin{rem}\label{rem:nonstrictness}In contrast to some references, this 
-result is formulated with strict inequalities in order to
-guarantee $\mathcal{L}_2$-gain stability (See also \cite[Sec. V]{lawrence}
-and \cite[Thm. 6.1]{khalil}).
-\end{rem}
+\subsection{Llewellyn's Stability Criteria}\label{sec:ana:llewellyn}
+%The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
+%\begin{thm}[Unconditional Stability]\label{thm:llw}
+%A $2$-port network $N$,  described by its transfer matrix
+%\[
+%N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
+%\]
+%and interconnected to passive termination immittances as in \Cref{fig:nom_net}, is stable if and only if
+%\begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:llew2}\end{equation}
+%\vspace{0ex}
+%and
+%\begin{multline}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)\\-
+	%\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:llew3}\end{multline} or
+%\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:llew3}$'$}\label{eq:llew3p}\end{equation}
+%for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
+%\end{thm}
+%
+%\begin{rem}\label{rem:nonstrictness}In contrast to some references, this 
+%result is formulated with strict inequalities in order to
+%guarantee $\mathcal{L}_2$-gain stability (See also \cite[Sec. V]{lawrence}
+%and \cite[Thm. 6.1]{khalil}).
+%\end{rem}
 
 As shown in \cite{rollett}, the conditions stated in \Cref{thm:llw} are invariant under
 immittance substitution. Hence, we assume that the network and the terminations are represented
 with an input/output mapping as depicted in  \Cref{fig:uncicpas}.
 
-The stability conditions of \Cref{thm:llw} can be reproduced via the IQC theorem as follows. If $\Delta_l$ and $\Delta_s$ are passive and stable LTI systems, they satisfy
+The stability conditions of \Cref{thm:llw} can be reproduced via the IQC theorem as 
+follows. If $\Delta_l$ and $\Delta_s$ are passive and stable LTI systems, they satisfy
 \[
 \Delta_l + \Delta_l^* \geq 0 \ \ \text{and}\ \
 \Delta_s + \Delta_s^* \geq 0
@@ -919,7 +918,9 @@ the application of a loop transformation) for obtaining the stability conditions
 \left(\frac{1}{\sqrt{2b}}\pmatr{1 &-b\\1 &b}\right) = \pmatr{0&1 \\
 1 &0}
 \end{equation*}
-with the scattering transformation matrix turns the small-gain multiplier into the one for passivity. This observation allows to easily show the equivalence of the small gain and passivity theorems through scattering transformations (\cite{andersonspong}) and wave variable methods (\cite{nieslotine,nieslotine2}).
+with the scattering transformation matrix turns the small-gain multiplier into the one for passivity. This observation 
+allows to easily show the equivalence of the small gain and passivity theorems through scattering transformations 
+(\cite{andersonspong}) and wave variable methods (\cite{nieslotine,nieslotine2}).
 
 
 %===================================================================================
@@ -930,11 +931,16 @@ turn out to be also necessary. Necessity of these criteria can as well be seen t
 celebrated exactness results in structured singular-value theory. In fact, IQC tests
 for structured LTI uncertainties with two or three full diagonal blocks as derived above are known to be always exact.
 This implies, in particular, that the 3-port counterpart of Llewellyn's conditions is indeed
-a necessary and sufficient test for stability. It is far beyond the scope of this paper to provide
-all possible cases in which IQC-based robustness tests are known to be exact. For a detailed discussion related
-to LTI uncertainties we refer to \cite{packdoyle,fantits,cwssimax}.
+a necessary and sufficient test for stability. It's not feasible for us to provide a full treatment of all possible 
+cases in which IQC-based robustness tests are known to be exact. Nevertheless, for a detailed discussion related to LTI 
+uncertainties we refer to \cite{packdoyle,fantits,cwssimax}.
 
-We would like to emphasize that these beautiful exactness properties come at the price of some limitations of the classical framework. For instance, Llewellyn's conditions are not sufficient for stability any more if we only assume that the uncertainties are passive but not necessarily LTI. On the other hand, if allowing for arbitrary causal and passive uncertainties, stability is still guaranteed if we can find a frequency-independent $\lambda>0$ which renders the FDI \eqref{eq:LlewellynFDI} satisfied, and this property can be easily verified numerically.
+We would like to emphasize that these beautiful exactness properties come at the price of some limitations 
+of the classical framework. For instance, Llewellyn's conditions are not sufficient for stability any more 
+if we only assume that the uncertainties are passive but not necessarily LTI. On the other hand, if allowing 
+for arbitrary causal and passive uncertainties, stability is still guaranteed if we can find a 
+frequency-independent $\lambda>0$ which renders the FDI \eqref{eq:LlewellynFDI} satisfied, and this property 
+can be easily verified numerically.
 
 
 
@@ -1154,13 +1160,13 @@ M_s=0.61,B_m=0.64,B_s=11,K_v=87.8,K_p=4000$.
 \subsection{Case 1 : Unconditional Stability Analysis via IQCs}\label{sec:numcase1}
 We start with applying Llewellyn's test based on \eqref{eq:LlewellynFDI} to the system given 
 above. In a first computation, we choose a frequency grid of $2000$ logarithmically spaced 
-points in $[0,10000] \si[per-mode=fraction]{\radian\per\second}$ and solve, at each grid point, 
+points in \SIrange{0}{10000}{\radian\per\second} and solve, at each grid point, 
 a feasibility problem in $\lambda>0$. This is incorporated into a bisection algorithm that 
 searches for the maximum value of $\mu K_f$ for which feasibility at each grid-point can be 
 guaranteed. Due to gridding, this method typically gives an upper bound rather than the exact 
 value on the guaranteed performance level, just because there is a chance to miss critical 
 frequencies. Nevertheless, we obtained the exact value $\approx 0.137$ as in  \cite{willaert}. 
-The inner search for $\lambda$ requires $\SI{8.52}{\second}$, while the overall computation 
+The inner search for $\lambda$ requires \SI{8.52}{\second}, while the overall computation 
 takes about \SI{117}{\second}; note that the latter heavily depends on the initial bisection 
 interval and on the desired accuracy.
 
@@ -1212,8 +1218,8 @@ presented below) is only required in those channels that are related to passive 
 \end{rem}
 \subsection{Case 2: Stability with Uncertain Stiff Environments}\label{sec:numcase2}
 We characterize the admissible environments as pure springs modeled by
-$Z_e = \frac{k}{s}$ with an uncertain constant stiffness coefficient $k\in[0,\bar{k}]$ 
-\si[per-mode=fraction]{\newton\per\metre}. After merging $-\frac{\bar{k}}{s}$ with the 
+$Z_e = \frac{k}{s}$ with an uncertain constant stiffness coefficient 
+$k\in\SIrange[parse-numbers = false]{0}{\text{$\bar{k}$}}{\newton\per\metre}$. After merging $-\frac{\bar{k}}{s}$ with the 
 system (and slightly perturbing the pole of the integrator to render the nominal system 
 stable) we are left with the uncertainty structure $\Delta = \operatorname{diag}(\Delta_h, 
 \delta_e )$ where the human uncertainty is assumed to be passive LTI and $\delta_e$ is an 
@@ -1516,8 +1522,8 @@ ymin=0,ymax=0.045,%
 %width=8cm,
 %height=4cm,
 no markers,
-xlabel=$\bar{\tau}$,ylabel={Lower bound \\ on $\mu K_f$},%
-ylabel style={text width=2cm,align=center},
+xlabel=$\bar{\tau}$,ylabel={Lower bound on $\mu K_f$},%
+%ylabel style={text width=2cm,align=center},
 x unit = \si{\second},%x SI prefix = milli,
 yticklabel style={/pgf/number format/.cd,fixed,precision=3},
 xticklabel style={/pgf/number format/.cd,fixed,precision=2}]
@@ -1604,3 +1610,46 @@ the time-varying uncertaint parameter $k(t)\in[0,1000]\si{\newton\per\metre}$.
 }%
 \label{fig:increasingtvb}%
 \end{figure}
+
+\section{Discussion}
+
+
+In this chapter, we have investigated the analysis problem from a Integral Quad\-ratic Constraints (IQCs) perspective. 
+The content is mainly based on \cite{polattro}. At this point, we have to openly state a few points
+about the motivation of such use of these recent tools provided by the control
+theory. These points have often come up during the author's discussions held with experts, colleagues and
+practicioners.
+
+First and foremost argument is on the comparison with other passivity-based techniques. As we will show later 
+in this chapter, IQC tests are far more general than passivity-based analysis results since passivity is a 
+system property and therefore, only specific to a class of systems. IQCs are system property qualifiers in which 
+the designers input the qualifier and obtains a robustness test. Thus, if the designer decides to perform a 
+robustness test against passive uncertainties then a particular IQC is selected and the stability test follows
+from that constraint. Furthermore, via IQCs it is possible to combine different properties of the same class 
+of systems. Suppose we have a class of uncertainties that are both passive and small-gain, then it's not clear
+how to combine small-gain theorem and passivity theorem exclusively to remove the resulting conservatism had we 
+had used only one of these stability results since each neglects the other system property. 
+
+The equivalence we have presented is a consequence of the so-called Main Loop Theorem which is originally formulated 
+for $\mu-$analysis but tailored for our context 
+(see \cite[Thm. 11.7]{zhoubook}): 
+\begin{thm}
+Let $N$ be an LTI network interconnected to a human model $\Delta_1$ from the 
+class of passive LTI operators and to the environment $\Delta_2$ from some class of models. For our convenience, 
+let us also use $M$ to denote the 1-port immitance operator seen by $\Delta_1$ (or perceived by the human). 
+Then the following two statements are equivalent:
+\begin{enumerate}
+	\item[i)] The interconnection of $N$ with both uncertainties $\Delta_1$ and $\Delta_2$ from their respective classes is stable.
+	\item[ii)] The $M-\Delta_1$ interconnection is stable for all $\Delta_1$ and $\Delta_2$, if $M$ is strictly passive for all $\Delta_2$ in the respective class.
+\end{enumerate}
+\end{thm}
+In other words, passivity-based techniques focus on verifying condition ii) by implicitly fixing to one class of 
+uncertainties (here passivity) and then test whether the system seen by that uncertainty is also strictly in that
+class, while our IQC approach is based on checking i).
+
+This formulation also allows us to exemplify the point that we strongly underline in this chapter: Assertion ii) 
+resists to be utilized in a convenient way if we are aware of an extra property that also characterizes $\Delta_1$ 
+such as the small-gain and passive LTI operator example we have given above. 
+As the main difficulty, it is in many cases unknown how to translate this information into a test for $M$ that needs 
+to be verified for all admissible $\Delta_2$. However, the IQC formulation based on (i) does not exhibit this 
+complication, which is one of its powerful features as demonstrated with the delay robustness example. 

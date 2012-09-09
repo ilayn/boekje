@@ -440,7 +440,7 @@ experiments, but in the passivity approach all of these are lumped into a single
 the main difficulty is to get a model (out of hypothetical insights, identification experiments etc.) which is
 not required in the passivity approach.
 
-The paper \cite{leelee,prekopiou} offer interesting alternatives for human modeling as they attempt to incorporate 
+The papers \cite{leelee,prekopiou} offer interesting alternatives for human modeling as they attempt to incorporate 
 many of the aforementioned effects but the results are prospective and yet to be utilized. 
 
 
@@ -554,7 +554,7 @@ together with one of the conditions given in \eqref{eq:lit:llew2}.
 \label{fig:lit:passint}%
 \end{figure}
 
-\subsection{$\mu-$analysis}
+\subsection{\texorpdfstring{$\mu$}{mu}-analysis}
 As given in \Cref{sec:lit:uncmodel}, stability in the face of uncertainties can also be analyzed in the generalized plant framework 
 of robust control. After rewriting the signal relations, the teleoperation system can be written as an uncertain interconnection as 
 shown in \Cref{fig:lit:uncincgeneral}. In this setting, $G$ is the model of the nominal bilateral teleoperation system and $\Delta$ 
@@ -1030,9 +1030,10 @@ left with communication delays. We, then, rewrite the interconnection as a two b
 the right for which we will use the shorthand $P-\Delta$ interconnection (delay block being the $\Delta$). Now if 
 the system was small-gain we would directly conclude with stability since $\norm{\Delta}_\infty = 1$, i.e.,
 \[
-\bmatr{0 &e^{\iw T}\\e^{\iw T}&0}\bmatr{0 &e^{-\iw T}\\e^{-\iw T}&0}= I \quad \ \forall\omega,T. 
+\bmatr{0 &e^{\iw T}\\e^{\iw T}&0}\bmatr{0 &e^{-\iw T}\\e^{-\iw T}&0}= I \quad \ \forall\omega,T 
 \]
-However, we have $P$ strictly passive, thus not necessarily a unity gain-bounded operator. But we have showed how to transform 
+which also justifies why this methodology works regardless of the delays involved. However, we have $P$ strictly 
+passive, thus not necessarily a unity gain-bounded operator. But we have showed how to transform 
 such operators into norm bounded ones. This is actually the key point of the wave variables. We simply use the mapping 
 $W(P)$ and obtain 
 \begin{align}
@@ -1150,7 +1151,7 @@ are not directly related to the model-based control design methods which we will
 
 
 Once again this is a pragmatic choice and is intentional. We have not performed a rigorous comparison with any algorithm that is 
-skipped in this brief and biased survey. It's our humble opinion, however, a ``one-size-fits-for-all'' design 
+skipped in this brief and biased survey. It's our humble opinion, however, that a ``one-size-fits-for-all'' design 
 toward operator- and task-aware control laws without dedicated modeling and/or classification, seems very 
 unlikely to produce a generally applicable results with high-performance guarantees. Nevertheless, robust 
 control at least addresses the conservatism reduction in a systematic way, if there is no other way to model the 
@@ -1161,4 +1162,3 @@ We have shown that most of the proposed methods in the literature use passivity 
 the involved mathematical operators are often indistinguishable from any other physical system. It's our belief that
 without any further refinements, all above methods can be shown to be, essentially, equivalent stability 
 characterizations.
-

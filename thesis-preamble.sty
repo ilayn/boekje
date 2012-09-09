@@ -1,25 +1,27 @@
 %!TEX root = thesis.tex
 \ProvidesPackage{thesis-preamble}
 
-%\edef\thesisjobname{\jobname}
-%\newcommand\chapterinclude[1]{%
-  %\def\jobname{#1}
-  %\include{#1}
-  %\let\jobname\thesisjobname
-%}
-
 %%% PACKAGES
 \RequirePackage[T1]{fontenc}         % sane font encoding
 \RequirePackage{lmodern}        % for sensible sans and tt font
 \RequirePackage[sc,osf]{mathpazo}    % for math
 \RequirePackage{microtype}
+\RequirePackage[utf8]{inputenc}      % sane input encoding
 \linespread{1.1}                     % Palatino needs more leading
 \frenchspacing
 \normalfont
+
+
+
+
 \let\subcaption\undefined
 \let\subfloat\undefined
 \let\subfigure\undefined
 \RequirePackage{subcaption}
+\captionsetup{font={small}}
+\captionsetup[table]{position=top}
+
+
 %% Hyperref
 \RequirePackage[ocgcolorlinks,%
 								breaklinks,%
@@ -28,18 +30,8 @@
 								linktocpage]{hyperref}
 \AtBeginDocument{\hypersetup{pdfauthor={\@author},pdftitle={\@title}}}
 
-%\RequirePackage[framemethod=1]{mdframed}
-\RequirePackage[utf8]{inputenc}      % sane input encoding
-%\DeclareUnicodeCharacter{2014}{\dash}
-%\DeclareUnicodeCharacter{2022}{\item}
 
 
-\RequirePackage{siunitx}
-\sisetup{
-open-bracket=[,close-bracket=],
-per-mode=symbol,
-range-units=brackets,range-phrase={,}
-}
 
 \RequirePackage{
     graphicx, %
@@ -47,10 +39,27 @@ range-units=brackets,range-phrase={,}
     amssymb,  %
     amsthm,
     tikz,     % Requires at least v2.10 !!
-    bm,bbm,       %
+    bm,       %
     pgfplots, % Requires at least v1.5.1 !!
-    mathtools
+    mathtools,
+    bigints
 }
+
+
+\pgfplotsset{compat=newest}
+
+
+\RequirePackage{siunitx}
+\sisetup{mode = math,
+open-bracket={[},close-bracket={]},
+per-mode=symbol,
+range-units=brackets,
+range-phrase={,}
+}
+
+
+
+
 \definecolor{darkred}{rgb}{0.4,0,0}
 \definecolor{darkgreen}{rgb}{0,0.4,0}
 \definecolor{darkblue}{rgb}{0,0,0.4}
@@ -78,7 +87,7 @@ range-units=brackets,range-phrase={,}
 
 
 
-\RequirePackage[font={small}]{caption}
+%\RequirePackage[font={small}]{caption}
 %\captionsetup[table]{position=top}
 
 
