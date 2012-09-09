@@ -14,7 +14,7 @@ The success of the technological advances often can be associated with an unprec
 
 It is quite remarkable, in retrospect, that these ``gadgets" did not perish but rather kept on evolving since initially they were far from perfect. Quite the contrary, they were hardly operational. Even the commercialized version of the early TVs had a narrow bandwidth and minimum image quality. Similarly radio and telephone was barely transmitting sensible information as far as the signal-to-noise ratio is concerned. Nevertheless, they have provided the ways of communication which were unimaginable before their time. Therefore the added value dominated the shortcomings and even though they were quite imperfect, we kept using them. The important lesson to be learned was that a technology should not be judged by its imperfections but rather should be weighed by its contribution in this context or the convenience that is brought in by using it.  
 
-The success is also related to the fact that these technologies mainly relied on the human brain itself at their early stages. For example, the human brain did most of the noise filtering and data recovery by just guessing the missing pieces and identifying patterns from the signal brought by the respective medium. Today, with our smart mobile phones and 3D LED TVs, we can assume that the computational load on the human brain is drastically reduced. In other words, it's true that we are still identifying patterns and utilizing the relevant parts of our brain to make sense out of a TV broadcast\footnote{Pun intended.}. However, we don't need to use a higher level of concentration to reconstruct the words that we hear or to identify the image on the display thanks to the high quality output. We can not exaggerate the importance of the human brain and its immersion power. 
+The success is also related to the fact that these technologies mainly relied on the human brain itself at their early stages. For example, the human brain did most of the noise filtering and data recovery by just guessing the missing pieces and identifying patterns from the signal brought by the respective medium. Today, with our smart mobile phones and 3D LED TVs, we can assume that the computational load on the human brain is drastically reduced. In other words, it's true that we are still identifying patterns and utilizing the relevant parts of our brain to make sense of a TV broadcast\footnote{Pun intended.}. However, we don't need to use a higher level of concentration to reconstruct the words that we hear or to identify the image on the display thanks to the high quality output. We can not exaggerate the importance of the human brain and its immersion power. 
 
 It seems that we are on the same track with the technological developments involving our touch sense. Considering the importance of our touch sense in any given situation, the added value of extending of our perception in this modality needs no motivation. Take the most familiar example: the vibrating mobile phone in the silent mode in our pocket. This is a very important example since every individual learns what that vibration might mean, either an SMS or a call, depending on the vibrational pattern. This means that the touch sense can be used to convey messages and more importantly we can process those messages for inference. 
 
@@ -37,11 +37,59 @@ The touch related applications are diverse. The diversity is not only in terms o
 Hence, it is our belief that the crux of this technology is establishing a interpretable protocol between our brain and the machine but not exactly reflecting the particular state of some distant or virtual physical medium. 
 This would be the main argument of this thesis when we distinguish our approach with its comparable counterparts. For this reason, we would like to narrow down our focus further by defining different types of touch related concepts.
 
+
+
+
+
+
+\newcolumntype{C}{>{\centering\arraybackslash}p{1.9cm}}%
+\begin{table}%
+\centering
+\caption[Functional Features of Cutanous Mechanoreceptors]{Functional Features of Cutanous Mechanoreceptors (Adapted from \cite{idareview})}
+{\tiny
+\pgfplotstabletypeset[
+column type=C,
+every head row/.style={before row={\toprule},after row=\midrule,},
+every last row/.style={after row=\bottomrule},
+%columns/person/.style ={column name=},
+%columns/singGaeilge/.style ={column name=Gaeilge},
+%columns/pluralGaeilge/.style={column name=Gaeilge},
+%columns/singEnglish/.style ={column name=English},
+%columns/pluralEnglish/.style={column name=English},
+every even row/.style={before row={\rowcolor[gray]{0.9}}},
+col sep=&,row sep=\\,
+string type,
+]{
+Feature	                   &Meissner Corpuscles (FAI) &Pacinian Corpuscles (FAII) &Merkel's Disks (SAI) &Ruffini Endings (SAII)\\
+Rate of adaptation         &Rapid &Rapid &Slow	&Slow\\
+Location                   &Superficial dermis &Dermis and subcutaneous &Basal epidermis &Dermis and subcutaneous\\
+Mean receptive area        &\SI{13}{\milli\metre\squared} &\SI{101}{\milli\metre\squared} &\SI{11}{\milli\metre\squared} &\SI{59}{\milli\metre\squared}\\
+Spatial resolution         &Poor&Very poor&Good&Fair\\
+Sensory units              &43\%&13\%&25\%&19\%\\
+Response frequency range   &\SIrange{10}{200}{\hertz}&\SIrange{70}{1000}{\hertz} &\SIrange{0.4}{100}{\hertz} &\SIrange{0.4}{100}{\hertz} \\
+Min. threshold frequency   &\SI{40}{\hertz}&\SIrange{200}{250}{\hertz} &\SI{50}{\hertz}&\SI{50}{\hertz}\\
+Sensitive to temperature   &No&Yes&Yes&At $>\SI{100}{\hertz}$\\
+Spatial summation          &Yes&No&No&Unknown\\
+Temporal summation         &Yes&No&No&Yes\\
+Physical parameter sensed  &Skin curvature, velocity, local shape,flutter, slip &Vibration, slip, acceleration &Skin curvature, local shape, pressure&Skin stretch, local force\\
+}
+}% Closes the \tiny group
+\label{tab:mechano}
+\end{table}
 \subsection{A Terminological Classification}
 
-As we mentioned above, the somatosensory system is quite complex and there are different layers of sensory mechanisms connected to the overall perception. The main two branches of technology relating to the touch perception is the tactile and haptic feedback. The terminology is yet to reach a steady state standard however what follows below is plausible considering the variations and nuances found in the literature. Since there is no fixed definition for such perception we would use the classification with respect to the amplitude of the motion. 
+As we mentioned above, the somatosensory system is quite complex and there are different layers of sensory mechanisms that contribute to the overall perception. The main two branches of technology relating to the touch perception is the tactile and kinesthetic  feedback. The terminology is yet to reach a steady-state standard however what follows below is plausible considering the variations and nuances found in the literature. Since there is no fixed definition for such perception we would use a rough  classification based on the amplitude-frequency of the motion. We have to emphasize that this classification is completely conceptual and only serves to exclude the parts that is not studied in this thesis. Therefore, we refer the reader to the authoritative resources of the involved physiology. 
+
+Typically, the touch perception is classified into two groups. Tactile feedback and kinesthetic (proprioceptive) feedback. For practical purposes, one can use the analogy of parallel connected a high-pass and a low-pass filters. As shown in \Cref{tab:mechano}, and also surveyed in \cite{kontarinis}, there are four main types of mechanisms that are utilized for the force and texture sensing with varying operating conditions and spatial authority. Although all contribute to the high frequency stimulus perception with varying levels, slowly adapting receptors are mainly tuned to detect the low frequency information range (up to \SI{30}{\hertz}). The fast adapting Meissner(FAI) and Pacinian(FAII) Corpuscles can be excited in the frequency range of \SIrange{10}{60}{\hertz} and $\SIrange{60}{1000}{\hertz}$ respectively. Thus, small-area receptors (Meissner) are excited with rate of skin deformation whereas relatively large-area receptors (Pacinian) are with acceleration of the skin. Moreover, FAI units are located closer to the skin surface, have high unit density with small surface area forming a grid of sensors. On the other hand, FAII units are located in the subcutaneous tissue and work as a single load cell with relatively large surface area. This allows experts to assume that FAI units are mainly responsible for spatial information about the skin deformation and FAII units are responsible for the high frequency information. It is also noted that each of these are reported to have response delays \SIrange{50}{500}{\milli\second} \cite{idareview}. Another interesting note in \cite{kontarinis} is that due to their single unit nature FAII units offers the possibility to provide high frequency information with a single vibration display but for FIA units it is more appropriate to supply an array of haptic displays for lower frequency range.  
+
+
+
+
+
+
+
 \subsubsection{Tactile Feedback}
-Roughly, the tactile perception can be associated with the low-stroke high-frequency motion applied relative to the skin. The most striking example is probably the Braille system used by visually impaired or disabled individuals as shown in \Cref{fig:braille}. The average reading speed with Braille system is about 125-150 words per minute (\cite{americanblind}) in contrast with 200-250 words per minute by eyesight. 
+The most striking example is probably the Braille system used by visually impaired or disabled individuals as shown in \Cref{fig:braille}. The average reading speed with Braille system is about 125-150 words per minute (\cite{americanblind}) in contrast with 200-250 words per minute by eyesight. 
 
 \begin{figure}%
 \centering
@@ -53,46 +101,25 @@ regular text (Source: Karl-Heinz Wellmann,
 \label{fig:braille}%
 \end{figure}
 
-Most of today's technological devices utilize this channel to send and receive information. Many mobile phone applications and a few gaming consoles such as Wii\raisebox{0.5ex}{\scriptsize\texttrademark} utilize short vibrational patterns to alert the user that some action has been performed e.g. the user hovers over a hot spot on the screen or some moving object hits an obstacle etc. 
+Most of today's technological devices utilize this channel to send and receive information. Many mobile phone applications and a few gaming consoles such as Nintendo Wii\raisebox{0.5ex}{\scriptsize\texttrademark}, Sony Playstation\raisebox{0.5ex}{\scriptsize\texttrademark} etc., utilize short vibrational patterns to alert the user that some action has been performed e.g. the user hovers over a hot spot on the screen or some moving object hits an obstacle etc. 
 
-
-Not finished.
 
 \subsubsection{Teleoperation}
+
+\pagebreak[1]
+
 \subsubsection{Bilateral Teleoperation}
 
+\pagebreak[1]
 \subsubsection{Haptics}
+\pagebreak[1]
 \subsubsection{Virtual Reality}
-
-
-
-
-
-%
-%
-%it's not just transferring one particular quantity from one physical medium to another but  haptic (or tactile, pressure or others) pattern produced by a technological device from here on we would simply refer to as ``haptic device''
-%
-%
-%
-%
-%
-%
-%
-%Towards the end of the 80's it was apparent that the delay problem was 
+\pagebreak[1]
 
 
 
 \subsection{Objective of This Thesis}
-
+\pagebreak[1]
 
 
 %Transparency TV den istense renkler super olsun falan komple sacma. 
-
-
-%
-%\section{Random Text Population}
-%\kant[3-4]
-%
-%\subsection{O Ye Man!}
-%
-%\kant[3-5]

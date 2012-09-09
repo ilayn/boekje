@@ -43,7 +43,7 @@ this direction by utilizing quadratic forms (see \cite{megretski} and \cite{safo
 \end{tikzpicture}
 \caption{}\label{fig:uncicpas}
 \end{subfigure}
-\caption{The general interconnection (a) and the assumed interconnection for passive systems 
+\caption[The general system interconnections]{The general interconnection (a) and the assumed interconnection for passive systems 
 (b). In general, the power variables require a sign change relative to the ``from" and ``to" ports 
 in order to indicate the travel direction which translates to a negative sign in the block diagrams.}
 \label{fig:2}
@@ -254,7 +254,7 @@ using ``impedance circles".
 \foreach \x in {10,3,2,1}{ \draw (\x,0) circle (\x);}
 \draw[thick,->] (0.1,-2.5) -- (1.5,-1.5) node[right] {$p$};
 \end{tikzpicture}
-\caption{As $p$ increases, the admissible region for the Nyquist curves of $\Delta$ shrinks to smaller disks in the right half plane.}
+\caption[Parametrized strictly output passive uncertainty regions]{As $p$ increases, the admissible region for the Nyquist curves of $\Delta$ shrinks to smaller disks in the right half plane.}
 \label{fig:pregions}%
 \end{figure}
 
@@ -517,7 +517,8 @@ ylabel=Magnitude {[abs]}]
 \end{tikzpicture}
 \phantomsubcaption\label{fig:delayvsW}%
 \end{subfigure}
-\caption{(a) Rewriting the interconnection such that $\tau=0$ implies 
+\caption[(a) Loop transformation for assuring $\tilde{\Delta}(0)=0$. (b) Frequency domain covering of the shifted delay 
+operator.]{(a) Rewriting the interconnection such that $\tau=0$ implies 
 $\tilde{\Delta}=0$. (b) Frequency domain covering of the shifted delay 
 operator.}
 \label{fig:3}
@@ -1614,11 +1615,12 @@ the time-varying uncertaint parameter $k(t)\in[0,1000]\si{\newton\per\metre}$.
 \section{Discussion}
 
 
+
 In this chapter, we have investigated the analysis problem from a Integral Quad\-ratic Constraints (IQCs) perspective. 
 The content is mainly based on \cite{polattro}. At this point, we have to openly state a few points
 about the motivation of such use of these recent tools provided by the control
 theory. These points have often come up during the author's discussions held with experts, colleagues and
-practicioners.
+practitioners.
 
 First and foremost argument is on the comparison with other passivity-based techniques. As we will show later 
 in this chapter, IQC tests are far more general than passivity-based analysis results since passivity is a 
