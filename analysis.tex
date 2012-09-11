@@ -584,11 +584,11 @@ conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
 %and \cite[Thm. 6.1]{khalil}).
 %\end{rem}
 
-As shown in \cite{rollett}, the conditions stated in \Cref{thm:llw} are invariant under
+As shown in \cite{rollett}, the conditions stated in \Cref{thm:apdx:llw} are invariant under
 immittance substitution. Hence, we assume that the network and the terminations are represented
 with an input/output mapping as depicted in  \Cref{fig:uncicpas}.
 
-The stability conditions of \Cref{thm:llw} can be reproduced via the IQC theorem as 
+The stability conditions of \Cref{thm:apdx:llw} can be reproduced via the IQC theorem as 
 follows. If $\Delta_l$ and $\Delta_s$ are passive and stable LTI systems, they satisfy
 \[
 \Delta_l + \Delta_l^* \geq 0 \ \ \text{and}\ \
@@ -656,7 +656,7 @@ and
 Since the leading and constant coefficient of the involved polynomial are negative, 
 the apex of the corresponding parabola should stay above the $\lambda$-axis. Using 
 the apex coordinates of a concave parabola one can show that this is equivalent to 
-\eqref{eq:llew3}. Symmetry of the resulting conditions with respect to the indices 
+\eqref{eq:lit:llew3}. Symmetry of the resulting conditions with respect to the indices 
 is shown by simply switching the roles of $\lambda_1$ and $\lambda_2$ in our derivation.
 
 \begin{rem} In the previous FDI condition \eqref{eq:LlewellynFDI} and if assuming 
@@ -732,8 +732,8 @@ and in\-ter\-connected to the {stable}, passive and block diagonal $\Delta$ as g
 \end{thm}
 
 Exact conditions for unconditional stability could be obtained  from \eqref{eq:thportFDI} 
-by symbolic computations. However, getting formulas similar to {those in} \eqref{eq:llew2}, 
-\eqref{eq:llew3} would lead to quite cumbersome expressions (see e.g. \cite{kuochu, tan, 
+by symbolic computations. However, getting formulas similar to {those in} \eqref{eq:lit:llew2}, 
+\eqref{eq:lit:llew3} would lead to quite cumbersome expressions (see e.g. \cite{kuochu, tan, 
 khademian}). Moreover, variants of expressing negative definiteness would result in different 
 formulations of the stability conditions in terms of scalar inequalities. In the IQC formulation 
 this is completely avoided while it is still possible to easily verify the resulting conditions 
@@ -983,7 +983,7 @@ right half-plane). For some fixed pole $a<0$ let us choose the basis vectors
 \Phi_n(s) = \pmatr{1 &\frac{1}{s-a} &\frac{1}{(s-a)^2} &\cdots &\frac{1}{(s-a)^{n-1}}}^T
 %\label{eq:outerfactor}
 \end{equation*}
-for $n=0,1,2,\ldots$. By a well-known fact from approximation theory (\cite{pinkus}), 
+for $n=\mathbb{N}$. By a well-known fact from approximation theory (\cite{pinkus}), 
 the function $\psi$ can be approximated to an arbitrary degree by $L^T\Phi_n$ for some 
 suitable $L\in\Real^n$ uniformly on the imaginary axis, if only $n$ is taken sufficiently 
 large. More precisely, $\inf_{L\in\Real^n}\|\psi-L^T\Phi_n\|_\infty$ converges to zero for 
@@ -1212,7 +1212,7 @@ can be guaranteed in about \SI{36}{\second}.
 Since $Y$ is strictly proper,
 \eqref{eq:numcase1FDI} cannot be satisfied at $\omega=\infty$ because its left-hand side vanishes. 
 However, the interconnection is certainly well-posed such that the FDI only needs to be verified 
-for all finite frequencies (\Cref{remiqc}). Therefore, the gridding approach can be applied  directly. 
+for all finite frequencies (\Cref{rem:iqc3}). Therefore, the gridding approach can be applied  directly. 
 In the alternative path without gridding, we can circumvent this trouble by replacing $Y$ with $Y+\epsilon 
 I$, with $\epsilon=10^{-5}$ in our case. Let us stress that this perturbation (also in the cases 
 presented below) is only required in those channels that are related to passive uncertainties.
