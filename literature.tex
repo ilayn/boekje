@@ -20,7 +20,7 @@ we see that they are, whether linear or nonlinear, motion-control systems with w
 properties. Hence, one can view the open-loop teleoperation system as a system with a block 
 diagonal structure. However, unlike the typical motion-control systems, these two disjoint systems must be stabilized 
 simultaneously by the same controller (delayed/undelayed local control loops can be seen as a structured central
-controller) that is performing sufficiently in order to ``fool" the user such that the user feels 
+controller) that is performing sufficiently in order to ``fool'' the user such that the user feels 
 a force feedback as if s/he is actually operating at the remote medium. Hence, outputs of each system become
 exogenous inputs of the other and these are regulated by the to-be-designed controller. Therefore, it's this controller 
 that makes a teleoperation system perform adequately or, as in many situations, drive to instability.
@@ -34,7 +34,9 @@ is defied in case of a resisting force at the remote site. If this is not enough
 local device, this resistance should die out as soon as possible, preventing a kickback. As an example, when a user leans to a wall located at 
 position $x_0\!\!\uparrow$, applying a horizontal force and then retreats, it is not expected that the wall continues to 
 push the user even after the user has the position $x<x_0$. There are a few other scenarios that would further complicate 
-the requirements. In short, the user and the environment properties are time-varying and make it difficult to design a control 
+the requirements. 
+
+In short, the user and the environment properties are time-varying and make it difficult to design a control 
 law such that these and many other details are handled properly simultaneously. 
 
 
@@ -76,7 +78,7 @@ and \cite{sheridan89} for a more detailed overview including other practical asp
 the hardware developments with a more historical perspective which we will omit here. 
 
 
-As we keep on narrowing down our focus to control theoretical parts of this challenging problem, we have to 
+As we keep on narrowing down our focus to the control theoretical parts of this challenging problem, we have to 
 note that many parts of the bilateral teleoperation problem can be scrutinized under different frameworks. 
 Hence, there is no shortage of techniques for which bilateral teleoperation problem is an ideal 
 test case. Among the plethora of methods, for example, the variation of human and environment properties give 
@@ -177,7 +179,7 @@ circuit based modeling is merely a convention rather than a requirement.
 In the teleoperation context, if one uses the ``load-source" analogy for the manipulated environment 
 and the human, then the system models all the bilateral interaction between the load and the source 
 ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via their input/output 
-(or external) properties i.e. effort variable/flow variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/linearity
+(or external) properties i.e. across variable/through variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/linearity
 properties of the components are not relevant at the outset if we are only interested in energy exchange which is the basis
 of the so-called Time-Domain Passivity Methods \cite{hannafordryu} which we will mention later in this chapter. Thus, 
 the user, the control system, the environment, the remote and local devices and communication delays are seen as 
@@ -226,42 +228,42 @@ every node/.style={draw,minimum size=1cm}]
 Clearly, thanks to this modeling method, we don't even need to 
 know exactly what $\Delta_l,\Delta_s$ blocks are, except their class (e.g. linear/nonlinear, time invariant/time varying etc.) to analyze 
 the system via $G$.  Thus, the problem of modeling of the human arm or of the uncertain environment
-is circumvented. However, due to the same reasoning, passivity property does not distinguish particular systems as long as they are 
-passive. For this reason, some of the crucial information is lost about these specific ports. In other words, we discard
+is circumvented. However, with the same reasoning, passivity property does not distinguish particular systems as long as they are 
+passive. That is to say, some of the crucial information is lost about these specific ports, we discard
 any impedance or admittance relations shared by the port variables.
 
-We have mentioned the ports and energy transfer between them as the main modeling paradigm so far but energy based modeling is 
-also the natural basis of bond-graphs. Bond-graphs, much like port representations, are graphical tools to model the dynamical 
-systems via energy balancing between subcomponents (See \cite{gawthrop} for an introduction). In other words, the bond-graphs are built on top of the notion 
-of bonds representing the instant energy or power exchange between nodes via edges drawn between them. Therefore, bond-graphs
-already presents a powerful framework for abstraction of the bilateral interaction between the local and the remote site. For a 
-classical use of bond-graphs in impedance control, the reader is referred to the Hogan's trilogy (\cite{hogan:1,hogan:2,hogan:3}).
-There are also many studies with application focus, e.g., \cite{krishnaswamy} using hydraulic systems for bilateral teleoperation
-among many others. 
+Energy based modeling is also the natural basis of bond-graphs. Bond-graphs, much like port representations, are graphical tools 
+to model the dynamical systems via energy balancing between subcomponents (See \cite{gawthrop} for an introduction). In other words, 
+the bond-graphs are built on top of the notion of bonds representing the instant energy or power exchange between nodes via edges 
+drawn between them. Therefore, bond-graphs already presents a powerful framework for abstraction of the bilateral interaction between 
+the local and the remote site. For a classical use of bond-graphs in impedance control, the reader is referred to the Hogan's trilogy 
+(\cite{hogan:1,hogan:2,hogan:3}). There are also many studies with application focus, e.g., \cite{krishnaswamy} using hydraulic 
+systems for bilateral teleoperation among many others. 
 
 
 
 \subsection{Assumptions on the Local and Remote ``Ports''}
 
-We have touched upon how network theory offered a great opportunity for modeling the 
-teleoperation systems or better, how we can avoid the refined modeling step. Still, to invoke the stability analysis and synthesis 
-results of the network thoery there is a need to further distinguish $\Delta_s,\Delta_l$ from the universum of $1-$ports. Otherwise 
-there is not much we can conclude from such an interconnection, put differently, they can be any arbitrary model with arbitrary 
-behavior set as long as they respect the port condition. This is obviously not sufficient to capture the real physical interaction 
-that teleoperation systems exhibit. 
+As mentioned above, network theory offers a great opportunity for modeling the teleoperation systems, or better, avoiding 
+the refined modeling. Still, to invoke the stability analysis and synthesis results of the network theory there is a need 
+to further distinguish $\Delta_s,\Delta_l$ from the universum of $1$-ports. Otherwise there is not much we can conclude 
+from such an interconnection, put differently, they can be any arbitrary model with arbitrary behavior set as long as they 
+respect the port condition. This is obviously a crude approximation of the real physical interaction that teleoperation 
+systems exhibit. 
 
 In teleoperation and haptics literature, it is customary to assume the load and the source terminations as ``passive''
-mathematical operators (see \Cref{chap:apdxnetwork}). By this hypothesis, the main technique is the energy-exchange approach. 
-Hence the view of the designer is tuned to see the energy interaction between two distant media. This approach treats the human and the 
-environment as passive elements with additional effort sources modeling the intentional force input to the system and the 
-controller is viewed as the energy regulator preventing excess energy generation to avoid a possible instability. Moreover, as we have
-briefly summarized in \Cref{chap:apdxnetwork} and in the analysis section, one can use the network theory based conditions 
-to assess the stability and performance conditions thanks to this hypothesis.
+mathematical operators (see \Cref{chap:apdxnetwork}). Starting with this hypothesis, the stability problem can be converted to 
+a typical energy dissipation problem. 
+Hence the view of the designer is tuned to watch for the energy sources and interaction between two distant media. This approach 
+treats the human and the environment as passive $1$-port circuit elements with additional effort sources modeling the 
+intentional force input to the system and the controller is viewed as the energy regulator preventing excess energy generation 
+to avoid a possible instability. Moreover, as summarized in \Cref{chap:apdxnetwork} and in the analysis section, one can use the 
+network theory based conditions to assess the stability and performance conditions thanks to this hypothesis.
 
 This brings us to the discussion of the justification of such an assumption as it is generally not given in full generality in the
 literature. If one scans through the literature about the passivity of human operators, it is the Hogan's paper \cite{hogan89}
 that is almost universally cited. The striking detail is, however, that Hogan never claims that the human hand/arm is a passive
-system. Instead he clearly shows that under certain conditions, human behavior is indistinguishable than that of a 
+system. Instead he clearly shows that under certain conditions, human behavior is indistinguishable from that of a 
 passive system: 
 \begin{quote}
 Thus, despite the fact that the
@@ -276,23 +278,23 @@ experimental result strongly suggests that neural feedback in the
 human arm is carefully tuned to preserve stability under the
 widest possible set of conditions.
 \end{quote}
-Moreover, the task that is given to human operators and analyzed afterwards, is about making the human 
-be as passive as possible. The task is, roughly speaking, holding a handle which is perturbed by random disturbances and 
+Moreover, the task that is given to human operators and analyzed afterwards, can be considered as a biased one because the success 
+of the test is related to passive behavior of the human. The task is, roughly speaking, holding a handle which is perturbed by random disturbances and 
 trying to keep the handle still at a predefined position on the 2D plane. Hence, the task is simply to mimic a passive 
-component that is a mass-spring-damper system. Had it been the case that the human would exhibit non-symmetric 
-stiffness matrix, it would simply be a failure of the test subject (regardless of the physical limitations of the human arm in general). Note that this 
-is a plausible situation for the rehabilitation tasks. The other possibility would then be is that the test subject was unable to keep up 
+system. Had it been the case that the human would exhibit non-symmetric stiffness matrix, it would simply be a failure of the 
+test subject (regardless of the physical limitations of the human arm in general). Note that this 
+is a plausible situation for the rehabilitation tasks. The other possibility would then be that the test subject was unable to keep up 
 with the changes, or using the control theory jargon, the bandwidth of the subject was lower than the required agility to 
-perform the test adequately.  The well-known phenomenon of such behavior is the ``pilot induced oscillations'' in which the pilot
+perform the test adequately.  The well-known phenomenon due to such behavior is the ``pilot induced oscillations'' in which the pilot
 of an aircraft, while trying to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many distinct reasons 
-(response time of the pilot and thus the phase lag. response time of the aircraft etc.). We refer to the interesting 
+(the phase lag of the pilot, response time of the aircraft etc.). We refer to the interesting 
 report \cite{mcruer} for a more detailed exposition. Also, if for some reason, the task at hand is to prevent the system 
 to reach a steady state at a certain position and the perturbations are applied accordingly i.e., to create a virtual negative potential, 
 the results obtained from the experiments would most probably differ from that of \cite{mussa85}. Thus, it's emphasized here 
 that the passivity of the human is closely linked to the task requirements. 
 
 
-\begin{rem}
+\begin{rem}\label{rem:filament}
 A particular detail should be clarified about the measurements taken in \cite{hogan89}. It is stated that: 
 \begin{quote}
 While normal human subjects held the handle of the manipulandum at a stable position
@@ -302,39 +304,117 @@ had returned to steady state following the perturbation but before
 the onset of voluntary intervention by the subjects.
 \end{quote}
 Therefore, it is emphasized that only the involuntary response is taken into account during the measurements in order to
-capture the natural properties human arm before the human correction intervenes. Note that, this does not imply that the
-measurements treat the human arm as a bulky cybernetic device which might only be possible in case of an improbable amputation.
-In fact, in this setting, the voluntary input of the human is not included to the analysis, since the human necessarily puts in
-energy, at the very least, to move the local device. 
+capture the natural properties human arm before the human correction intervenes. 
+%Note that, this does not imply that the
+%measurements treat the human arm as a bulk of flesh which might only be possible in case of an improbable amputation.
+%In fact, in this setting, it is evident from the human restoring force that the arm muscles are preloaded and the arm is 
+%cognitively locked at a certain position. 
+%
+%
+%It is ththe voluntary input of the human is not included to the analysis, since the human necessarily puts in
+%energy, at the very least, to move the local device. 
 \end{rem}
 
-The question of how, then, a human can actually move anything while remaining passive is one that makes the whole 
-story more complicated. The voluntary input of the human is taken as an exogenous input to the system. This is due to the 
-fact that, in passivity based analysis, the closed loop stability is tested against square integrable functions of time 
-modeling the finite energy inputs by the human which will be covered in \Cref{sec:litchapanalysis} in this chapter.  
-(FIX this sentence!!!!)
+We believe that it is unaviodable to introduce some concepts from the muscle physiology in order to put Hogan's 
+argument into some mechanical engineering perspective. It is simply impossible for the author to form a detailed analysis, 
+however, mentioning the involved process via some mechanical analogies in order to relate the results of 
+Hogan and Mussa-Ivaldi seems feasible. This would emphasize the reason why we think that the common inference from their experiments 
+in the literature is not inline with the conclusions of these studies.
+We refer the reader to the physiology literature e.g., \cite{spudich,yildiz} and references therein for a full treatment. Hence, we 
+will only give a rough picture about the apparent behavior. Nevertheless the point that we want to emphasize is, fortunately, 
+not related to the inner workings of the human muscles.
 
-A keen eyed reader would spot that this is not inline with Hogan's remark since the human force input has 
-alredy been considered in the apparent stiffness measurements. In other words, without the human's active control, the passivity 
-argument does not hold as the stiffness matrix might be non-symmetric or simply there might be pattern in the cocontraction of the muscles 
-which is a function of the motion direction (as in the rehabilitation case speculated above), hence would have a non-zero curl. Therefore, 
-we have to further separate the human force into two parts, namely, the active neuromuscular feedback force and the voluntary and cognitive force 
-input applied to the system. How this is usually performed is not clear in the literature. To the best of our knowledge, this 
-issue is addressed explicitly (but still briefly) only in \cite[Sec. II.B]{kazeroonitsay} and references therein.
+
+
+%\begin{tikzpicture}
+%\draw (-110:2) circle (1);
+%\draw[double=gray,double distance=10,line cap=round] (0,0) -- (-95:1.5);
+%\fill[red,rotate=30] (-5:0.9) -- ++(170:0.5) -- (-60:0.2) arc (-60:-200:0.2) --++(80:0.3) -- (117.5:0.9) arc (117.5:-5:0.9) -- cycle;
+%\fill(0,0) circle (0.15);
+%\fill[purple!45,rotate=30] [rounded corners=0.5pt] 
+%(120:1) -- (120:0.5) arc(120:-7.5:0.5) -- (-7.5:1) arc (-7.5:0:1.2) 
+%\foreach \x in {0,20,...,100}{-- (\x+2.5:1.2)   arc (\x+2.5:\x+10:1.2)  -- (\x+12.5:1)  arc (\x+13.5:\x+20:1.2)};
+%\draw[dashdotted] (155:1.1) arc (155:15:1.1);
+%\draw[fill] (-95:1.5) circle (0.15);
+%
+%\end{tikzpicture}
+
+The skeletal muscle activation takes place via a process described by the \emph{sliding filaments model}. The muscles 
+consist of muscle fibers and muscle fibers are made up of \emph{myofibrils}. The myofibrils involve different types of thin 
+and thick filaments, mainly of the type \emph{actin}, \emph{myosin} and \emph{titin} filaments. The myosin filaments involve 
+extensions that can bind to the thin actin filaments. The relative motion of these filaments are produced due to these 
+extensions via ATP hydrolysis. Moreover, these extensions stay connected or disconnected to actin filament unless more 
+ATP is utilized. Hence, the muscle needs extra energy to relax which is the reason behind ``\emph{rigor mortis}'' 
+and some types of the muscle spasms when this additional energy source can not be provided or ATP can not bind to the 
+actin filament for some reason. 
+
+
+One can use an analogy between the mechanical pencil clutch and sliding filaments with the exception that the forces
+are obtained through chemical processes and also the spring action is absent in the muscle cell. In other words, when 
+pressed from the eraser head mechanical pencil stays open such that the graphite layer can slide freely until the eraser 
+cap is pulled back. Another important difference is that muscle behavior is not rachet-like but smooth due to the fact 
+that each cycle takes place independently. Thus, at each time instant, different myosin extensions can be found at 
+different phases of the cycle. Using this analogy, ATP molecules are used to open and to close the pencil clutch made 
+up of myosin extensions and actin filament is pushed forwards. Moreover, titin filaments can be thought as the connecting 
+rod of the pencil from the cap to the clutch which is mostly responsible for the passive elasticity of the muscles. 
+
+
+Note that binding or detachment of these extensions is also regulated by the $\mathrm{Ca}^{++}$ concentration in the muscle cell 
+and controlled, eventually, by motor neurons using yet another chemical trigger. For the sake of simplicity, we would call a muscle 
+cell activated if the myosin extensions are binded to actin filament.
+
+
+Coming back to our original discussion, the stiffness of the arm that has been the subject of the experiments mentioned 
+above is, again invoking the analogy, based on the closed clutch response of the arm. In other words, the brain activates a certain
+number of muscle cells at each limb and when a perturbation is applied what is measured is a cumulative spring-like behavior of the 
+titin filaments, muscle tendons, and the bindings resisting to the applied strain. This is related to the ``human's restoring force'' 
+given in \Cref{rem:filament}. 
+
+Having a spring-like property naturally implies that the arm is passive. But the problem with this argument,as far as the author understands,
+is that there is no reason to assume that the human arm exhibits a symmetric positive definite matrix at each time instant for an arbitrary trajectory. 
+In fact, as shown clearly in \cite{mussa85}, the major eigenvector of the stiffness matrix varies both in terms of 
+direction and magnitude. Therefore, it might be possible to extract energy from the human arm with some particular 
+pathological trajectory. Just in the case of a frozen time analysis of a time-varying operator does not imply stability, the 
+conclusion is only valid for postural analysis at a fixed configuration of the human arm but not for an arm trajectory. 
+
+Therefore, it is our belief that the assumption of human arm being a passive operator is not an experimentally validated one. 
+ 
+
+
+Since it is customary to include the passivity hypothesis in the literature, we will assume that it is so. The question of how, 
+then, a human can possibly move anything while remaining passive is one that makes the whole 
+story even more complicated. The voluntary input of the human is taken as an exogenous and state independent input to the system. 
+Hence, the human cognitive input is an additional but independent force source acting on the handle together with the passive 
+human arm immitance.
+
+
+The reader would spot that this is not inline with Hogan's remark since the activation state in the muscle cells should be altered in 
+order to apply force. Once again, invoking our pencil analogy, we have to initiate a super-fast push-pull action on the eraser cap 
+of the pencil. This would certainly alter the postural stiffness matrix but we have neither experience nor expertise to find out how. 
+But, to the best of our knowledge, this is not given in any teleoperation study. In other words, the answer to the question of whether 
+the human's restoring force would exhibit the same properties during the force exertion phase is not known to us. It has been also shown 
+that muscle force is also related to the muscle tension-length properties \cite{eltit} which we have not considered in our analogy.
+
+Therefore, we have to further separate the human force into two parts, namely, the active neuromuscular feedback force that keeps the 
+human arm passive and the voluntary and cognitive force input applied to the system. How this is usually performed is not clear in the 
+literature. To the best of our knowledge, this issue is considered (but still briefly) only in \cite[Sec. II.B]{kazeroonitsay} and 
+references therein.
+
 
 This ambiguity becomes much more important since the control oriented focus of this thesis necessitates that we concentrate on
 worst cases rather than the experiments performed within the cognitive range of human operators. In other words, we are interested in
-the cases where things go wrong due to many other various reasons, sampling distubances, mesurement noises, directionality etc. Therefore
+the cases where things go wrong due to many other various reasons, sampling disturbances, measurement noises, directionality etc. Therefore
 it cannot be a satisfactory argument if stability depends on the user's neuromuscular feedback or simply user's stabilization capabilities. 
 In order to use the bilateral teleoperation devices in real-life cases, stability should be addressed regardless of human actions. Hogan's 
 findings are not sufficient for supporting the passivity assumption often found in the literature. 
 
 
 In summary, the passivity of the human and the environment (virtual environment in haptics/virtual reality applications), is 
-only plausible in certain occasions which should be verified in order to assume that the corresponding mathematical models 
+only plausible in certain cases which should be verified nevertheless in order to assume that the corresponding mathematical models 
 are passive. Nevertheless, analysis and synthesis methods that invoke this assumption lead to many real-world implementations 
 with varying degree of realism. We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools
 and does not validate the passivity hypotheses on the respective models.
+
 
 A compact version of the argument above is given by Yokokohji and Yoshikawa in \cite{yokokohjiyoshikawa}: 
 \begin{quote}
@@ -375,8 +455,8 @@ nonpassive are adequately stable in clinical rehabilitation tasks [26].
 
 
 We should mention here that Hogan's paper together with other identification experiments are extremely important for many
-fields and needs no motivation. The discussion above only points out that the inference that follows from his results, 
-is not inline with the results themselves. 
+fields and needs no motivation. The discussion above only points out that the frequently reported inference that follows from 
+his results, is not inline with the results. 
 
 The idea of modeling the teleoperation as a two-port network seems to have multiple origins and we have no reference to 
 point out to a common source. However, in general, the popularity of two-ports can be attributed to 
@@ -386,22 +466,21 @@ point out to a common source. However, in general, the popularity of two-ports c
 
 \subsection{Uncertain Models of Bilateral Teleoperation for Robustness Tests}\label{sec:lit:uncmodel}
 
-Another possibility of modeling the human arm and its cognitive input is to define an input force signal ``filtered'' by the 
+Another possibility of modeling the human arm and its cognitive input is to define a reference position signal ``filtered'' by the 
 human arm impedance\footnote{The term \emph{impedance} is used in a more general sense than its common usage to denote
 LTI transfer functions such that no distinction is made between linear and nonlinear or time-invariant and time-varying 
-operators.} 
+operators.} e.g., \cite{leelee,kazeroonitsay}. Various studies pointed out that the identification experiments suggest a 
+mass-spring-damper system pattern is evident in the frequency response data of the human arm recorded under various task 
+performance similar to the one given in \cite{hogan89}. The general method is to instruct the human to perform a specific 
+task and then perturb the hardware with certain predesigned disturbance signals such that the output can be evaluated to obtain 
+a mathematical model. In the literature, the model structure is often set a priori to be a second order transfer function and 
+the parameters are optimized to minimize the mismatch between the experimental and predicted response. It is also well-known 
+that the human can change the inherent impedance of the arm during the task execution (see, e.g., \cite{tsujimorasso}). 
+Therefore, the studies are performed in the ranges where it is safe to assume that the human arm characteristics are constant 
+or constant up to negligible changes. 
 
-Various studies pointed out that the identification experiments suggest a mass-spring-damper system pattern is evident
-in the frequency response data of the human arm recorded under various task performance similar to the one given in \cite{hogan89}.
-The general method is to instruct the human to perform a specific task and then perturb the hardware with certain predesigned
-disturbance signals such that the output can be evaluated to obtain a mathematical model. In the literature, the model structure
-is often set a priori to be a second order transfer function and the parameters are optimized to minimize the mismatch between
-the experimental and predicted response. It is also well-known that the human can change the inherent impedance of the arm during
-the task execution (see, e.g., \cite{tsujimorasso}). Therefore, the studies are performed in the ranges where it is safe to assume 
-that the human arm characteristics are constant or constant up to negligible changes. 
 
-
-The modeling is straightforward via uncertain mass-spring-damper system differential equation manupulations. Suppose the human arm
+The modeling is straightforward via uncertain mass-spring-damper system differential equation manipulations. Suppose the human arm
 assumes the second order model: 
 \[
 M(\Delta_1)\ddot{x} + B(\Delta_2)\dot{x} + K(\Delta_3)x = F_h -F_m
@@ -502,7 +581,8 @@ The major disadvantage of the passivity methods is that the procedure is focused
 energy exchange and performance specifications are very difficult to formulate and also difficult to integrate 
 into the analysis and synthesis steps using only the inner product structure. As an example, the signals that are not port variables such as position errors,
 and nonlinear effects that are functions of these signals, can't be utilized easily in the performance specifications. 
-Same difficulty arises in the normed space structures though much can be achieved. Unfortunately, much sought after $\LL_\infty$ methods are not mature enough to handle any practical system. 
+Same difficulty arises in the normed space structures though much can be achieved. Unfortunately, much sought after 
+$\LL_\infty$ methods are not mature enough to handle any practical system without excessive conservatism. 
 
 
 Another disadvantage is that the power- or the energy-based analysis, due to the inner-product structure, can not distinguish the individual 
@@ -511,20 +591,20 @@ In this case the external or observable energy exchange based on the port variab
 the case of not touching at all (a small motion on the device). 
 
 
-When the network model is assumed to be Linear Time Invariant (LTI), the frequency domain methods
+When the network,human, and the environment models are assumed to be Linear Time Invariant (LTI), the frequency domain methods
 allow us the analyze the teleoperation systems for stability and performance. The most common stabiliy analysis tool for such 
 models is the Llewellyn's stability criteria (also often called absolute stability theorem or unconditional stability theorem). 
 For linear networks, the following definitions seem to be used quite widely (modified from \cite{chen91}): 
 
 \begin{define}[Potential Instability at $\iw_0$] A two-port network is said to be potentially unstable at $\iw_0$ on the real frequency, 
-if there exist two passive one-port immitances that, when terminated at the ports, produce a natural frequency at $\iw_0$ overall network.   
+if there exist two passive one-port immitances that, when terminated at the ports, produce a persisting natural frequency at $\iw_0$.   
 \end{define}
 
 \begin{define}[Absolute Stability at $\iw_0$] A two-port network is said to be absolutely stable at $\iw_0$ on the real frequency, 
 if it is not potentially unstable at $\iw_0$.   
 \end{define}
 
-If moreover,  human, and the environment models are assumed to be LTI then absoulte stability theorem is an exact stability characterization. 
+Note that when the models are assumed to be LTI then absoulte stability theorem is an exact stability characterization. 
 
 \subsection{Llewellyn Stability Criteria}\label{sec:llewellyn}
 The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in \Cref{chap:apdxnetwork}.
@@ -684,7 +764,7 @@ extra description/.code={
 \end{scope}
 \end{tikzpicture}
 \caption[Mapping the closed right half plane onto the unit disc.]%
-{Mapping the closed right half plane onto the unit disc. The origin is shown with a white dot on the left after the mapping}%
+{Mapping the closed right half plane onto the unit disc.}%
 \label{fig:lit:smith}%
 \end{figure}
 
@@ -1090,7 +1170,7 @@ mapping $W$ using different rotation-scaling combinations for the unitary transf
 \subsection{Time-Domain Passivity Control}
 In \cite{hannafordryu}, the passivity approach is formulated in time domain and the energy exchange is literally
 monitored and regulated. An initial version of this idea can also be found in \cite{yokokohji}. The basic idea is 
-to see whether at any port there is energy is generated, using a ``passivity observer'' (PO): for an $N-$port 
+to see whether at any port energy is generated, using a ``passivity observer'' (PO): for an $N-$port 
 network the observed total energy is given by
 \[
 E_{obsv}(n) = \sum_{k=0}^n \Delta T_k(F(k)^TV(k))
@@ -1162,3 +1242,6 @@ We have shown that most of the proposed methods in the literature use passivity 
 the involved mathematical operators are often indistinguishable from any other physical system. It's our belief that
 without any further refinements, all above methods can be shown to be, essentially, equivalent stability 
 characterizations.
+
+As a closing remark, we would like refer to the outstanding survey of \cite{klomp} which we believe that is overlooked
+and can provide a comprehensive outlook to the teleoperation literature. 
