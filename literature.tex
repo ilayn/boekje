@@ -2,17 +2,6 @@
 
 \chapter{A Brief and Opiniated Literature Survey}\label{chap:litsurvey}
 
-\tikz \draw[-latex,ultra thick]  node[
-right,
-fill=yellow,
-append after command={(a.south west) -- ($(a.south west)!0.9!(a.south east)$)},
-label={[inner sep=0]south east:$100$},
-label={[inner sep=0]south west:$0$},
-text width=0.8\textwidth,align=center] (a) {Current status: 90\% Polishing the Tone and a last scan of Literature (maybe minor reordering)};
-\vspace{1cm}
-
-
-
 The teleoperation systems are structurally interesting and equally challenging 
 systems. This is especially true from a system theoretical point of view. As an example, 
 if we just focus on the local and the remote devices that would be used for manipulation, 
@@ -571,7 +560,7 @@ terminations. The actuation of the railcar is taken as state-independent input t
 \end{figure}
 
 
-The passivity assumptions are not necessary for stability but sufficient. There exist stable interconnections that involves nonpassive 
+The passivity assumptions are not necessary for stability but only sufficient. Because there exist stable interconnections that involves nonpassive 
 subsystems. Hence, the conservatism brought in by passivity theorem is quite high (especially in the nonlinear case). Facetious as it 
 may seem, the test also takes into account the port terminations shown in \Cref{fig:lit:train} for a table-top joystick. We have to emphasize that
 the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network. It's that conservative.
@@ -1045,7 +1034,7 @@ generate many more architectures populating different entries and the zero block
 
 \subsection{Wave Variable-Scattering Transformation Control for delays}
 
-We have discussed the transformation from a passive interconnection to small\--gain interconnection however
+We have discussed the transformation from a passive interconnection to small-gain interconnection however
 we have assumed that the interconnection did not involve any communication delays. When the delays are 
 introduced to the loop as depicted in \Cref{lit:syn:delinc}, the transformations actually shift the stability problem from
 one domain to another. In other words, the transformations make the delay operators unbounded-gain as we have showed previously. 
@@ -1134,8 +1123,9 @@ the small-gain theorem to conclude stability in the face of $\Delta$. Therefore,
 this method as a passification of the communication channel. It is certainly possible to reflect the transformation 
 on $\Delta$ and invoke an impedance matching argument but the author thinks that this 
 only complicates the presentation since it's the change in the control action that stabilizes the loop, and not the 
-change in the characteristics of the delay operator or making the communication line a lossless $LC$ line, which 
-would otherwise revolutionize the power transmission technology.
+change in the characteristics of the delay operator or making the communication line a lossless $LC$ line
+%, which would otherwise revolutionize the power transmission technology
+.
 We have to emphasize that this transformation does not guarantee stability if the original $P$ is not strictly passive.
 However if any other plant $\hat{P}$ from an arbitrary class of systems $X$ can be brought into a unity norm-bounded form 
 with some other transformation/control law, then this method applies with different physical interpretations as we might 
@@ -1241,7 +1231,7 @@ teleoperation systems.
 We have shown that most of the proposed methods in the literature use passivity or small-gain theorems  and 
 the involved mathematical operators are often indistinguishable from any other physical system. It's our belief that
 without any further refinements, all above methods can be shown to be, essentially, equivalent stability 
-characterizations.
+characterizations as far as the practical implications are concerned.
 
-As a closing remark, we would like refer to the outstanding survey of \cite{klomp} which we believe that is overlooked
-and can provide a comprehensive outlook to the teleoperation literature. 
+As a closing remark, we would like refer to the outstanding survey of \cite{klomp} which provides a comprehensive 
+outlook to the teleoperation literature.

@@ -3,12 +3,6 @@
 \chapter{Introduction}
 \label{chap:intro}
 
-\tikz \draw[-latex,ultra thick]  node[right,fill=yellow,append after command={(a.south west) -- ($(a.south west)!0.65!(a.south east)$)},label={[inner sep=0]south east:$100$},
-label={[inner sep=0]south west:$0$}] (a) {Current status: 65\%: Delayed until the finish of Chap.3};
-\vspace{1cm}
-
-
-
 The success of the technological advances often can be associated with an unprecedented convenience that they bring in. At the heart of this convenience lies the ability to relax the limitations of the human body to a certain extent. From this point of view, it is not a surprise that the three most prominent technological wonders of the last century, namely the \emph{Television}, the \emph{Telephone} and the \emph{radio} (which was originally called ``radiotelegraphy"), bears the same Greek prefix \emph{tele-} which corresponds to ``\emph{at a distance}" in our context. This shows that there is something of extreme importance about our drive to extend our capabilities beyond the constraints that our bodies impose.
 
 
@@ -28,6 +22,7 @@ Then, we could simply ask \emph{Why bother?}
 
 
 \section{The Objectives}
+\label{sec:intro:obj}
 
 We first give a summary about the current concepts of the involved technology (as we foresee from a narrow ``today's'' perspective) and later on, define our microscopic focus of this thesis in this vast generality. This would hopefully give some perspective to what follows in the later sections.  
 
@@ -56,8 +51,8 @@ col sep=&,row sep=\\,
 string type,
 ]{
 Feature	                   &Meissner Corpuscles (FAI) &Pacinian Corpuscles (FAII) &Merkel's Disks (SAI) &Ruffini Endings (SAII)\\
-Rate of adaptation         &Rapid &Rapid &Slow	&Slow\\
-Location                   &Superficial dermis &Dermis and subcutaneous &Basal epidermis &Dermis and subcutaneous\\
+Rate of adaptation         &Rapid                     &Rapid                      &Slow                 &Slow\\
+Location                   &Superficial dermis        &Dermis and subcutaneous &Basal epidermis &Dermis and subcutaneous\\
 Mean receptive area        &\SI{13}{\milli\metre\squared} &\SI{101}{\milli\metre\squared} &\SI{11}{\milli\metre\squared} &\SI{59}{\milli\metre\squared}\\
 Spatial resolution         &Poor&Very poor&Good&Fair\\
 Sensory units              &43\%&13\%&25\%&19\%\\
@@ -77,7 +72,7 @@ As we mentioned above, the somatosensory system is quite complex and there are d
 
 Typically, the touch perception is classified into two groups. Tactile feedback and kinesthetic (proprioceptive) feedback. For practical purposes, one can use the analogy of parallel connected a high-pass and a low-pass filters. For our control-oriented context, let us define a few key concepts with an engineering point of view. 
 
-In physiology, the sensors on the skin which take different physical measurements, are called \emph{receptors} and prefixed with their area of specialization such as \emph{thermoreceptors, mechanoreceptors, nocioreceptors}(pain) etc. The signal that triggers an action on these receptors are denoted as the \emph{stumuli}. In case of a stimulus, these receptors, through some chemical processes\footnote{which are indistinguishable from black magic to the author}, exhibit a series of \emph{action potentials} or electrical discharge pulses i.e. a \emph{spike train}. In the engineering terminology, this can be modeled as a nonuniform Dirac comb with varying frequency as a function of the stimuli intensity or a digital frequency modulation (FM) signal. The frequency increases with the stimulus intensity. Furthermore, at the input side of this sensor there is a dead-zone nonlinearity hence the stimuli should exceed a particular threshold to trigger a receptor firing.
+In physiology, the sensors on the skin which take different physical measurements, are called \emph{receptors} and prefixed with their area of specialization such as \emph{thermoreceptors, mechanoreceptors, nocioreceptors}(pain) etc. The signal that triggers an action on these receptors are denoted as the \emph{stimuli}. In case of a stimulus, these receptors, through some chemical processes\footnote{which are indistinguishable from black magic to the author}, exhibit a series of \emph{action potentials} or electrical discharge pulses i.e. a \emph{spike train}. In the engineering terminology, this can be modeled as a nonuniform Dirac comb with varying frequency as a function of the stimuli intensity or a digital frequency modulation (FM) signal. The frequency increases with the stimulus intensity. Furthermore, at the input side of this sensor there is a dead-zone nonlinearity hence the stimuli should exceed a particular threshold to trigger a receptor firing.
 
 There is also another process, \emph{neural} or \emph{sensorial adaptation} which quantifies the frequency decay of firing under constant stimulus. One can feel the effect of this process daily e.g., the eyes get used to darkness or our nose loose the sensitivity to a powerful smell if exposed to it for some time or we stop noticing the touch of the glasses on the face or the ring on the finger. Some sensors have a slow decay rate whereas others decay in a matter of seconds. The slow sensors often called the \emph{slowly adapting(SA)} and others are called \emph{fast adapting (FA)} or \emph{rapidly adapting} type (\cite{burdea}).
 
@@ -87,16 +82,16 @@ As shown in \Cref{tab:mechano}, and also surveyed in \cite{kontarinis}, there ar
 The SAI disk receptor has a small, localized receptive surface area as opposed to the SAII with a large field with a decaying sensitivity from center to the edges. Individual Ruffini endings are excited by stretch of the skin in specific directions. The majority of hand receptors consists of FAI units ($>40$), then SAI units are almost a quarter which followed by SAII covering $19\%$ and FAII $13\%$. 
 
 
+\subsubsection{Weber ratio and Just-Noticeable-Difference(JND) }
 
-
-
+Weber ratio is defined as the ratio between the minimal stimulus intensity change in any physical quantity that triggers a change perception and the intensity of the stimulus. In case of a constant or static stimulus the ratio is denoted with Just-Noticable-Difference (JND). 
 
 
 \subsubsection{Tactile Feedback}
 
-Tactile feedback, in general, is utilized to distinguish shape, curvature, vibration, acceleration, and texture perception. Hence, the high-frequency content of the touch information is indispensable to transmit such information. Since the amplitude of the motion at these frequencies are quite small, the palm and finger tissues act as a low-pass filter and avoid such information to penetrate into the skin. Thus, the mechanisms summarized above are the only ones that has access to this information.
+Tactile feedback, in general, is utilized to distinguish fine details such as shape, curvature, vibration, acceleration, and texture perception. Hence, the high-frequency content of the touch information is indispensable to transmit such information. Since the amplitude of the motion at these frequencies are quite small, the palm and finger tissues act as a low-pass filter and avoid such information to penetrate into the skin. Thus, the mechanisms summarized above are the only ones that has access to this information.
 
-A striking example to the mind-boggling the quality of feedback is the Braille system used by visually impaired or disabled individuals (\Cref{fig:braille}). The average reading speed with Braille system is about 125-150 words per minute (\cite{americanblind}) in contrast with 200-250 words per minute by eyesight. 
+A striking example to the mind-boggling quality of feedback is the Braille system used by visually impaired or disabled individuals (\Cref{fig:braille}). The average reading speed with Braille system is about 125-150 words per minute (\cite{americanblind}) in contrast with 200-250 words per minute by eyesight. 
 
 \begin{figure}%
 \centering
@@ -108,33 +103,70 @@ regular text (Source: Karl-Heinz Wellmann,
 \label{fig:braille}%
 \end{figure}
 
-Most of today's technological devices utilize this channel to send and receive information. Many mobile phone applications and a few gaming consoles such as Nintendo Wii\raisebox{0.5ex}{\scriptsize\texttrademark}, Sony Playstation\raisebox{0.5ex}{\scriptsize\texttrademark} etc., utilize short vibrational patterns to alert the user that some action has been performed e.g. the user hovers over a hot spot on the screen or some moving object hits an obstacle etc. 
+Most of today's technological devices utilize this modality to send and receive information. Many mobile phone applications and a few gaming consoles such as Nintendo Wii\raisebox{0.5ex}{\scriptsize\texttrademark}, Sony Playstation\raisebox{0.5ex}{\scriptsize\texttrademark} etc., utilize short vibrational patterns to alert the user that some action has been performed e.g. the user hovers over a hot spot on the screen or some moving object hits an obstacle etc. 
 
-The tactile feedback technology is mainly concerned with the vibrational pattern and high-frequency sweep of stimuli. Therefore, communication via small vibrational or textural subtleties allows the tactile technology to focus on the low-stroke, high-bandwidth haptic displays. Since the involved mechanisms are rapidly adapting, the communication speed can be very high compared to the kinesthetic feedback in which the human should track large amplitude motion and try to pick out patterns from relatively slow motion profiles. 
-
-
-\subsubsection{Kinesthetic Feedback}
-It's a futile attempt to describe the importance of this often overlooked perception (or hidden sense) other than referring to the shocking 1998 BBC \emph{Horizon} documentary \emph{``The man who lost his body''} and the paper \cite{waterman} about Ian Waterman who is the only person known to date that can cope with the loss of proprioceptive feedback and can sustain a regular life (at least from an outsider's perspective) in terms of physical body motions. 
+The tactile technology is, thus, concerned with the vibrational pattern and high-frequency sweep of stimuli. Communication via small vibrational or textural subtleties allows the tactile technology to focus on the low-stroke, high-bandwidth haptic displays. Since the involved mechanisms on the human limbs and hands are rapidly adapting, the communication speed can be very high compared to the kinesthetic feedback in which the human should track and pick out patterns from relatively slow and large-amplitude motion profiles. 
 
 
+\subsubsection{Kinesthetic (Proprioceptive) Feedback}
+Proprioception\footnote{We would not go into nuances between kinesthetic and proprioceptive feedback} (\emph{Proprius}+\emph{perceptio}: the act of gathering of own) is the ability to sense the body position and motion without using the visual aid. Kinesthetic feedback, together with the tactile feedback and limited force sensing abilities of muscles and tendons, is ``vital'' to have control of our own body. It's a futile attempt to describe the importance of this often overlooked perception (or hidden sense) other than referring to the shocking 1998 BBC \emph{Horizon} documentary \emph{``The man who lost his body''} and the paper \cite{waterman} about Ian Waterman who is the only person known to date that can cope with the loss of proprioceptive feedback and still can stand up, walk, maintain posture etc. without any artificial support. Unfortunately, he is completely dependent on his visual feedback as he tirelessly computes trajectories  on-the-fly to compensate for the loss of kinesthetic feedback even when gesturing with hands. 
+
+Thus, whether we are aware of it or not, proprioception is indispensable for us to survey the environment. The force on our limbs, our body configuration at that instance, and body motion are sensed via sensors in the joints, muscle tendons and muscles themselves. Unlike the tactile feedback characteristics given previously, the compliance, the distribution of pressure and and the shape information is measured in a relatively coarse fashion. Hence, when combined with tactile feedback and the brain's internal comparison database we use an unparalleled sophistication to actually perceive the environment without using any visual feedback even the object is foreign to us. In \cite{biggssrinivasan}, a convenient summary of the properties is presented. Distilling even further for a general picture about the proprioception, we provide the following quick facts. 
+
+The compression or stretch of the receptors covered previously changes the impulse of the amplitude of the action potential which in turn used as the position information. Similarly the frequency of these firings are interpreted as the velocity information. For the limb position and motion, the bandwidth of the kinesthetic sensing is around \SIrange{20}{30}{\hertz} with varying accuracy in terms of JND around \SIrange{0.8}{2.5}{\degree}. Moreover, the control bandwidth is reported to be task-dependent: \SIrange{1}{2}{\hertz} for unexpected signals; \SIrange{2}{5}{\hertz} for periodic signals up to \SI{5}{\hertz} for generated or learned trajectories and finally about \SI{10}{\hertz} for reflex actions. 
+
+Regarding the force sensing, it has been experimentally demostrated that pressure JND decreases as the pressure area increases e.g., overall average JND drops to $3.7\%$ with a contact area of \SI{20.27}{\centi\meter\squared} from $15.6\%$ with a contact area of \SI{1.27}{\centi\meter\squared}. 
+
+The kinesthetic technology can be used in conjunction with tactile technology to provide a full manipulative immersion but also in the case of \emph{exoskeletons}, it can also be the vital ingredient to protocol between the environment and the human body. Especially, rehabilitation patients can benefit from such technologies extensively via combining the visual and the kinesthetic feedback to amplify the disabled or impaired control action over the problematic limbs. Thus, kinesthetic technology is mainly involved as low-frequency based manipulative or exploration-type motion tasks. Especially, considering the current hardware limitations, many tasks depend primarily kinesthetic cues for bilateral teleoperation and virtual reality applications.
 
 
 \subsubsection{Teleoperation}
+Teleoperation is the general name for providing human action on media that is not accessible to human direct contact in a precise fashion. Microcomponent assembly, minimal invasive surgery (MIS), space station maintenance and construction, underwater exploration and construction are all typical application examples that the human either can not be present or physically interact with. Also The \emph{da Vinci}\raisebox{0.5ex}{\scriptsize\texttrademark} surgery robot from Intuitive Surgical Inc. is a prime example of one way human manipulation to achieve high precision tracking with surgical tools inside very tight incision (with other qualities that are not relevant to enumerate here). 
 
-\pagebreak[1]
+However, as often motivated by the bilateral teleoperation studies, the human operator often miss the chance to employ his/her precise tactile and kinesthetic abilities to take decisions or to monitor their progress. As an example, surgeons are reported to insert their fingers inside the incision to feel the tumor or some relevant tissue by their stiffness difference compared to the surrounding tissue to get a better spatial understanding when the view is contaminated with blood or other bodily fluids. In the case of an obstruction during an insertion of an instrument into the body, they tend to correct the instrument based on their force feel at hand. Hence, the realism is lost as opposed to the increased precision. 
 
 \subsubsection{Bilateral Teleoperation}
 
-\pagebreak[1]
-\subsubsection{Haptics}
-\pagebreak[1]
+Bilateral teleoperation is simply teleoperation equipped with force feedback to the human operator with the hope to increase the realism by recreating the force vectors of the distant medium at the local environment. The majority of the bilateral teleoperation research is on the kinesthetic feedback. In particular usually the human interacts with the local device by moving a constrained handle to explore the environment or using a stylus-like stick. Hence, the experience is mostly based on the success of imitating a physical tool. Therefore, the tactile cues are of secondary nature. The challenge of course is to increase the performance level to a tactile display level while still maintaining the tool usage capability. The particular MIS tasks that are performed with a scalpel are one of the hot topics of todays research effort and that requires not only kinesthetic feedback, though a major accomplishment by itself, but tactile feedback too to understand the nature of the texture or the stiffness of the tissue. Similarly teleoperated peg-in-hole type of tasks are also a major area of investigation e.g., ground-satellite robotic mission directives or underwater construction tasks would benefit much from such possibilities to reduce the operational cost and duration. 
+
+
+
+There are many interesting challenges when it comes to this recreation process. For example, in a microassembly task, the experienced forces are substantially different than what we feel during daily tasks. Gravity is our main source of reference when interpreting a distant location, however, gravity becomes almost negligible in the micro domain as adhesive forces such as Van der Waals, electrostatic and surface tension forces dominate (the most common example is that the parts that are picked up in microdomain tend to stick to the tweezers). 
+
+If we manage to create a believable level force feedback sensation in these otherwise inaccessible domains, there are a few very important quasi-philosophical and also task-dependent questions that need to be answered. A few of these questions are:
+
+\begin{enumerate}
+	\item Should the device reflect those forces to the human operator for the sake of realism which are utterly counter-intuitive and even worse appear to be happening at random? 
+    \item If we decide to filter the unnecessary force information that are related to mental/muscular fatigue, how should we know what to filter? 
+    \item Is there any correlation between increased realism and increased comfort? In case of a difficult task, what good the realism bring in by replicating the difficult task at a distant location in the local environment?
+    \item Do we need to reflect the human motion to the remote location perfectly since that is a waste of resource, in other words, we neglect the fact that a robot can perform certain tasks much more precisely than a human operator? Is there any downsampling/upsampling protocol to vary the motion precision depending on the receiver?
+    \item Do we use the full capacity of our \emph{internal data bus} to transfer touch information, or put differently, is there any space left to encode other quantities on top of the touch sense?
+    \item Can we assume that all users more or less reach to the same understanding given a kinesthetic cue sequence?
+\end{enumerate}
+
+These questions are indeed very challenging and interesting but the scope of this thesis reaches to a point just before we are ready to attack them properly.
+
+\subsubsection[Haptics]{(Computer) Haptics}
+In general, haptics technology encompasses all the items that are covered up to this point, however, it is also often used as a placeholder for the concept of creating artificial or virtual object perception with a force-feedback capable device. Computer haptics also have additional challenges such as rendering deformations in case of a soft object or realistic graphical presentation of object interaction in terms of collisions etc. In other words, not only the forces are important but the consequences of these force interactions need to be handled in a precise fashion. Conversely, computer haptics is free from the hardware limitations or the noisy measurements as the objects and the physical laws that they should obey are computer generated. 
+
 \subsubsection{Virtual Reality}
-\pagebreak[1]
+
+This term refers to a set of artificially generated immersion technique that can rely on either a single or multiple modalities at once. The common applications consist of headphones and special googles that cover the human vision. By tracking the head movements and adjusting the scene that is projected to the special headset, the user can immerse into the artificial environment. Combined with headphones and if possible haptics the experience can be substantially improved. Especially haptics can increase the immersion level much more compared to only visual+audio supplements since the realism can quickly be destroyed if the user tries to touch any object or surface while actually waving his hand. Hence, the persuasiveness of the scene depicted on the headset needs to be backup with at least kinesthetic feedback if not tactile since the loss of tactile feedback can be swept under the scenario e.g., the user can be placed in a situation with wearing boxing gloves etc. 
 
 
 
-\subsection{Objective of This Thesis}
-\pagebreak[1]
+\subsection{Structure and The Objectives  of This Thesis}
+Let us turn to our initial question just before \Cref{sec:intro:obj}. We bother since there is no need to obtain the ultimate perfect touch sensation for the human in order to interpret the signals correctly. It is the same principle with LED-TVs. Nowhere on the screen, a color different than Red, Green, and Blue is emitted. However, we tend to approximate the output to the closest color since the emitters are close enough and we achieve the color perception. Therefore, realism is not our primary objective. However, before we even enter this discussion, the teleoperation devices must be stable and should exhibit consistent performance such that experts from neuroscience, psychophysiology, and other related scientific fields can join and assess different ways of protocoling with the human brain in this modality. Otherwise their conclusions would be contaminated by the device properties (we can even speculate that this is often the case, though no proof will be presented here). Thus it is the point of this thesis at which we consider the stability properties and control problem of bilateral teleoperation and we believe that we have achieved a limited success toward this direction. \textcolor{blue}{(<- future remark depends on synthesis results)}
 
 
-%Transparency TV den istense renkler super olsun falan komple sacma. 
+To restrict the scope of this thesis further, we exclusively stay in bilateral teleoperation concept as we have defined previously and focus on the control theoretical aspects of the teleoperation for a stable interaction with sufficient performance levels. The reason of such an terminological enumeration above is to precisely draw the boundary of what will follow in the later chapters. 
+
+We first give an opiniated version of the literature to point out to the underlying connections between seemingly different methodologies and also provide a simpler explanation to the well-known \emph{wave variables} formalism. By doing so, we classify such methods in the respective mainstream control theory methods and clearly demonstrate that they are indeed outdated if compared to the recent advances. Moreover, we argue that now-standard assumption of \emph{passivity} property on the human and environment is not an experimentally validated one. We also claim that the success of these methods are due to the conservatism of these tests and not due to the validity of the assumption.
+
+In \Cref{chap:analysis}, we then show also both theoretically and numerically that the frequency methods found in the literature can be combined under one framework via \emph{Integral Quadratic Constraints}. With these results, we demonstrate that the proposed framework of this thesis does not bring in additional complications or conservatism. In fact, via numerical case studies, we show that the results are precisely the same. We also remark that uncertainty modeling is a key aspect in obtaining better controllers for bilateral teleoperation. To highlight the reasons why we promote this framework, we also give examples of different combinations of uncertainties for which classical tools that are employed in the teleoperation literature are not suitable. 
+
+
+After establishing this link with the methods in the literature we turn to the controller synthesis problem in \Cref{chap:synth}. We formulate the problem in a generalized plant framework and attempt to work out scarce details that are found in the literature to obtain a better model-based control synthesis algorithm.  We also provide.... control synthesis.... human modeling... LPV?.... IQC robust estimation?....
+
+In \Cref{chap:conc}, we provide some concluding remarks and in \Cref{chap:apdxnetwork} we recap the basics of the network theory.
+

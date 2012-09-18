@@ -1,6 +1,109 @@
 %!TEX root = thesis.tex
 \ProvidesPackage{thesis-preamble}
 
+%%%%%%%%%%%%%%%%%%%%%
+%! MEMOIR CUSTOMISE
+%
+\maxsecnumdepth{subsection} % number subsections
+\maxtocdepth{subsection} % include subsections in ToC
+
+\renewcommand{\cftchapterpagefont}{}
+\renewcommand{\cftchapterfont}{} % no bold!
+\renewcommand\cftdotsep{999} % no dots
+
+% for page numbers:
+\newcommand\thesispage{\normalfont \thepage}
+
+%%% CHAPTERS
+\makechapterstyle{phdstayla}{%
+  \setlength\beforechapskip{0pt}
+  \setlength\midchapskip{0pt}
+  \setlength\afterchapskip{40pt}
+  \renewcommand\chapnamefont{\normalfont\centering\large\scshape\MakeLowercase}
+  \renewcommand\chapnumfont{\normalfont\centering\fontsize{60pt}{0pt}\selectfont}
+  \renewcommand\chaptitlefont{\normalfont\HUGE\bfseries\centering}
+  \renewcommand\printchaptername{\marginpar{\chapnamefont{\@chapapp}}}
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchapternum{\marginpar{\chapnumfont\thechapter}}
+    %\makeoddfoot{plain}{}{\thesispage}{}
+}
+\chapterstyle{phdstayla}
+
+
+
+
+
+%%% SECTIONS
+\newcommand\marginnum[2]{%
+  \noindent
+  \let\@tempa\relax
+  \savebox\@tempboxa{#2}%
+  %\null\marginpar{#1\@tempa}%
+  #1\@tempa\quad#2}
+
+\def\secstyle{\centering\scshape}
+\def\subsecstyle{\centering\itshape}
+\def\subsubsecstyle{\centering\small\itshape}
+
+\setsecheadstyle{\marginnum\secstyle}
+\setsubsecheadstyle{\marginnum\subsecstyle}
+\setsubsubsecheadstyle{\marginnum\subsubsecstyle}
+
+\setsecnumformat{\unexpanded{%
+  %\protected@xdef\@tempa{{\upshape\S\csname the#1\endcsname}}}}
+  \protected@xdef\@tempa{{\upshape\csname the#1\endcsname}}}}
+
+%%%%%
+
+\renewcommand\contentsname{Table in Contents}
+\nouppercaseheads
+
+\def\printtoctitle#1{\section*{#1}}
+\def\printloftitle#1{\section*{#1}}
+\def\printlottitle#1{\section*{#1}}
+
+% Page headers
+\setlength{\headheight}{\baselineskip}
+%\advance\headwidth by \textwidth + \marginparsep + 0.5\marginparwidth
+\makepagestyle{phdstayla}
+\makepsmarks{phdstayla}{%
+  \let\@mkboth\markboth%
+  \def\chaptermark##1{%
+    \markboth{%
+      \if@mainmatter
+        \textsc{Chapter \thechapter:} %
+      \fi
+      ##1}{##1}}%
+  \def\sectionmark##1{%
+    \markright{%
+      \if@mainmatter
+        \textsc{\thesection:} %
+      \fi
+      ##1}}}
+%\makerunningwidth{phdstayla}{\headwidth}
+%\makeheadposition{phdstayla}{flushleft}{flushright}{}{}
+\makeevenhead{phdstayla}{\thesispage}{}{\small\leftmark}
+\makeoddhead{phdstayla} {\small\rightmark}{}{\thesispage}
+\makeevenfoot{phdstayla}{}{}{}
+\makeoddfoot{phdstayla}{}{}{}
+\makeheadrule{phdstayla}{\textwidth}{0.3pt}
+
+%\pagestyle{phdstayla}
+
+
+
+%% Symmetric ragged commands
+\newcommand\IfOddPage{%
+  \checkoddpage
+  \ifoddpage\expandafter\@firstoftwo
+  \else\expandafter\@secondoftwo\fi}
+\newcommand\raggedout{\IfOddPage\raggedright\raggedleft}
+\newcommand\raggedin{\IfOddPage\raggedleft\raggedright}
+
+
+
+
+
 %%% PACKAGES
 \RequirePackage[T1]{fontenc}         % sane font encoding
 \RequirePackage{lmodern}        % for sensible sans and tt font
@@ -21,7 +124,6 @@
 \captionsetup{font={small}}
 \captionsetup[table]{position=top}
 
-
 %% Hyperref
 \RequirePackage[ocgcolorlinks,%
 								breaklinks,%
@@ -29,6 +131,8 @@
 								pdfpagelabels,%
 								linktocpage]{hyperref}
 \AtBeginDocument{\hypersetup{pdfauthor={\@author},pdftitle={\@title}}}
+
+
 
 
 
@@ -43,7 +147,6 @@
     pgfplots, % Requires at least v1.5.1 !!
     pgfplotstable,
     mathtools,
-    bigints,
     booktabs,
     colortbl
 }
@@ -59,7 +162,6 @@ per-mode=symbol,
 range-units=brackets,
 range-phrase={,}
 }
-
 
 
 
@@ -196,14 +298,6 @@ range-phrase={,}
 %\newcommand\grf[2][]{\includegraphics[#1]{\impath #2}}
 
 
-% Symmetric ragged commands
-\newcommand\IfOddPage{%
-  \checkoddpage
-  \ifoddpage\expandafter\@firstoftwo
-  \else\expandafter\@secondoftwo\fi}
-\newcommand\raggedout{\IfOddPage\raggedright\raggedleft}
-\newcommand\raggedin{\IfOddPage\raggedleft\raggedright}
-
 
 %%%%%%%%%%%%%
 %! FLOATS
@@ -232,9 +326,9 @@ range-phrase={,}
 %\captionnamefont{\scshape}
 %\setlength\captionwidth{0.9\linewidth}
 %\changecaptionwidth
-
-\newcommand\lofcaption[2]{\caption[#1]{#1#2}}
-\DeclareRobustCommand\periodifnocomma{\@ifnextchar,{}{.}}
+%
+%\newcommand\lofcaption[2]{\caption[#1]{#1#2}}
+%\DeclareRobustCommand\periodifnocomma{\@ifnextchar,{}{.}}
 
 %%%%%%%%%%%%
 % These are the varioref definitions:
@@ -262,129 +356,18 @@ range-phrase={,}
 \Crefname{coroll}{Corollary}{Corollaries}
 
 
-%%%%%%%%%%%%%%%%%%%%%
-%! MEMOIR CUSTOMISE
-
-\maxsecnumdepth{subsection} % number subsections
-\maxtocdepth{subsection} % include subsections in ToC
-
-\renewcommand{\cftchapterpagefont}{}
-\renewcommand{\cftchapterfont}{} % no bold!
-\renewcommand\cftdotsep{999} % no dots
-
-% for page numbers:
-\newcommand\thesispage{\normalfont \thepage}
-
-%%% CHAPTERS
-\makechapterstyle{phdstayla}{%
-  \setlength\beforechapskip{0pt}
-  \setlength\midchapskip{0pt}
-  \setlength\afterchapskip{40pt}
-  \renewcommand\chapnamefont{\normalfont\centering\large\scshape\MakeLowercase}
-  \renewcommand\chapnumfont{\normalfont\centering\fontsize{60pt}{0pt}\selectfont}
-  \renewcommand\chaptitlefont{\normalfont\HUGE\bfseries\centering}
-  \renewcommand\printchaptername{\marginpar{\chapnamefont{\@chapapp}}}
-  \renewcommand\chapternamenum{}
-  \renewcommand\printchapternum{\marginpar{\chapnumfont\thechapter}}
-    \makeoddfoot{plain}{}{\thesispage}{}
-}
-\chapterstyle{phdstayla}
 
 
-
-
-
-%%% SECTIONS
-\newcommand\marginnum[2]{%
-  \noindent
-  \let\@tempa\relax
-  \savebox\@tempboxa{#2}%
-  %\null\marginpar{#1\@tempa}%
-  #1\@tempa\quad#2}
-
-\def\secstyle{\centering\scshape}
-\def\subsecstyle{\centering\itshape}
-\def\subsubsecstyle{\centering\small\itshape}
-
-\setsecheadstyle{\marginnum\secstyle}
-\setsubsecheadstyle{\marginnum\subsecstyle}
-\setsubsubsecheadstyle{\marginnum\subsubsecstyle}
-
-\setsecnumformat{\unexpanded{%
-  %\protected@xdef\@tempa{{\upshape\S\csname the#1\endcsname}}}}
-  \protected@xdef\@tempa{{\upshape\csname the#1\endcsname}}}}
-
-%%%%%
-
-\renewcommand\contentsname{Table in Contents}
-\nouppercaseheads
-
-\def\printtoctitle#1{\section*{#1}}
-\def\printloftitle#1{\section*{#1}}
-\def\printlottitle#1{\section*{#1}}
-
-%%%%%
-
-%%The first step to creating a new page header and footer is to create a new 
-% page style using the \makepagestyle{name} command. So if we want to create 
-% a new page style where the header contains the page number and the chapter
-% -section number (if any) and title, we would start out with the following:
-%%
-%%\makepagestyle{mypagestyle}
-%%
-% To create a nice separation between the page number and the title—rather 
-% than typesetting them at opposite ends of the header—we will separate them 
-% with a vertical rule. Now the commands to modify the headers and footers 
-% of a page style are: 
-%%\makeevenhead{style}{left}{center}{right}, 
-%%\makeoddhead 
-%%\makeevenfoot
-%%\makeoddfoot
-% All with the same number of arguments. So, this means we can extend our 
-% page style as follows:
-%%\makeevenhead{mypagestyle}{\thepage\hskip.5cm\vrule\hskip.5cm\leftmark}{}{}
-%%\makeoddhead{mypagestyle}{}{}{\rightmark\hskip.5cm\vrule\hskip.5cm\thepage}
-
-
-
-
-%% Page headers
-\setlength{\headheight}{\baselineskip}
-%\advance\headwidth by \textwidth + \marginparsep + 0.5\marginparwidth
-\makepagestyle{phdstayla}
-\makepsmarks{phdstayla}{%
-  \let\@mkboth\markboth%
-  \def\chaptermark##1{%
-    \markboth{%
-      \if@mainmatter
-        \textsc{Chapter \thechapter:} %
-      \fi
-      ##1}{##1}}%
-  \def\sectionmark##1{%
-    \markright{%
-      \if@mainmatter
-        \textsc{\thesection:} %
-      \fi
-      ##1}}}
-%\makerunningwidth{phdstayla}{\headwidth}
-%\makeheadposition{phdstayla}{flushleft}{flushright}{}{}
-\makeevenhead{phdstayla}{\thesispage} {} {\small\leftmark}
-\makeoddhead{phdstayla} {\small\rightmark} {} {\thesispage}
-\makeevenfoot{phdstayla}{}{\thepage}{\textit{Draft: \today}}
-\makeoddfoot{phdstayla}{\textit{Draft: \today}}{\thepage}{}
-\pagestyle{phdstayla}
-
-\makeheadrule{phdstayla}{\textwidth}{0.3pt}%+0.5\marginparwidth+\marginparsep\relax
 
 %%% LISTS
 \renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\normalfont\itshape #1}
 \tightlists
 
 
-\renewcommand \cftchapterfont {\scshape}
-\renewcommand \cftsectionfont {\normalfont}
-\renewcommand \cftsubsectionfont {\itshape\small}
-\renewcommand \cftsubsectionpagefont {\upshape\small}
+\renewcommand\cftchapterfont{\scshape}
+\renewcommand\cftsectionfont{\normalfont}
+\renewcommand\cftsubsectionfont{\itshape\small}
+\renewcommand\cftsubsectionpagefont{\upshape\small}
 
 
 
@@ -451,5 +434,3 @@ dup
 dup
 }
 \usepgfplotslibrary{smithchart}
-\showboxdepth=5
-\showboxbreadth=5

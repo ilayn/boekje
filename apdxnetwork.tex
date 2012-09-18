@@ -1,21 +1,10 @@
-\chapter{Network Theory Primer}\label{chap:apdxnetwork}
-
-
-
-\tikz \draw[-latex,ultra thick]  node[right,fill=yellow,
-append after command={(a.south west) -- ($(a.south west)!0.8!(a.south east)$)},
-label={[inner sep=0]south east:$100$},
-label={[inner sep=0]south west:$0$},text width=0.8\textwidth,align=center] (a) {Current status: 80\%. Dummy version below 
-is only required for the missing \LaTeX\space labels. Current version does not have enough text but content is 
-fixed. Expected to be finished in a few days.};
-\vspace{1cm}
-
+\chapter{Network Theory Primer}
+\label{chap:apdxnetwork}
 
 
 We present the often encountered concepts in the bilateral teleoperation studies in a rather abstract fashion. Our aim is to
 prepare the basis for the main arguments in the body of this thesis. Hence, the experts of the field can safely skip this appendix. 
-The style and the content of this chapter is shaped for the systems and their interconnections in a network rather than basic 
-network theory introduction. Hence many circuit theory preliminaries are omitted which should be presented in any proper ``primer''.
+The aim is to run down the basic stability related concepts, hence many circuit theory preliminaries are omitted.
 
 \section{Terminology}
 When dealing with electrical circuits, often the engineering practice is to neglect any changes to the signal traveling through 
@@ -185,7 +174,7 @@ is just unavoidable.
 \end{rem}
 
 
-Since every two-terminal port can be characterized by two variables (``through'' and ``across'' quantities), it is possible to 
+Since every two-terminal port can be characterized by two variables ( ``through'' and ``across'' quantities), it is possible to 
 characterize the interconnected $n-$port networks as if one quantity is due to the other. This is done by imposing an artificial 
 causality scheme, two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
 (\cite{behavbook}). This is the simplest kind of input/output view of physical systems via treating one port variable as the 
@@ -199,7 +188,7 @@ any of these representations. Suppose that a two-port immitance matrix is partit
 \[
 \pmatr{q\\y}=\pmatr{G_1 &G_2\\G_3 &G_4}\pmatr{p\\u}
 \]
-where $q,y,p,u$ represent the flow (current, velocity etc.) and the effort(potential difference, force etc.) signals. Then, 
+where $q,y,p,u$ represent the flow (current, velocity etc.) and the effort (potential difference, force etc.) signals. Then, 
 obtaining one representation from another is possible by a combination of the following elementary ``permutation" and 
 ``{partial} inversion" operations:
 \begin{align*}
@@ -223,9 +212,9 @@ In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to th
 
 
 \section{Passivity Theorem}
-In this section passivity related important concepts are defined. We have neither the intention nor the possibility to give a full 
-treatment of the subject. Nevertheless, the material given here is well-known and can be found in many classical sources such as
-\cite{hillmoylan77,desvid,vdschaftbook}. We chose to follow closely \cite{desvid} for the presentation style. 
+In this section passivity related important concepts are defined in a compact fashion. Nevertheless, the material given here 
+is well-known and can be found in many classical sources such as \cite{hillmoylan77,desvid,vdschaftbook}. We chose to 
+follow closely \cite{desvid} for the presentation style. 
 
 Let $V$ be a linear space equipped with a scalar product, $\mathcal{T}$ be the index set of time and $F$ be a class of functions 
 $x:\mathcal{T}\to V$.
@@ -313,10 +302,10 @@ e_1 &= u_1-h_2(x_2,e_2)\\\label{eq:apdx:passint2}
 e_2 &= u_2+h_1(x_1,e_1)
 \end{align}
 for all admissible $(x_1,x_2,u_1,u_2)$. In the LTI case, assume that the respective transfer functions $H_1,H_2\in\RH_\infty$. Then
-the interconnection is well posed if $\inv{(I-H_1H_2)}(s)$ is a proper transfer matrix.
+the interconnection is well posed if $\inv{(I-H_1H_2)}$ is a proper transfer matrix.
 \end{define}
 
-Note that, in our context $u_1,u_2$ model the voluntary part of the human/environment force input as mentioned in \Cref{chap:litsurvey}. 
+Note that, in our context $u_1,u_2$ model the voluntary part of the human/en\-vi\-ron\-ment force input as mentioned in \Cref{chap:litsurvey}. 
 
 
 
@@ -349,4 +338,42 @@ and interconnected to passive LTI termination immitances as in \Cref{fig:portrep
 or
 \begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\label{eq:lit:llew3p}\end{equation}
 for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
+\end{thm}
+
+Similarly, as is for Llewellyn's stability conditions, it is straightforward to derive 
+unconditional stability {tests if} the network is represented by scattering parameters. 
+In what follows, we denote transformed passive LTI uncertainties with $\tilde{\Delta}_{s}, 
+\tilde{\Delta}_l$ which are unity gain bounded. The corresponding interconnection is 
+supposed to be given by the loop equations
+$q = S p$, $p=\tilde{\Delta} q$ i.e.
+\begin{equation}
+\underbracket[0.2pt]{\pmatr{q_1\\q_2}}_{q}=
+\underbracket[0.2pt]{\pmatr{S_{11} &S_{12}\\S_{21} &S_{22}}}_{S}
+\underbracket[0.2pt]{\pmatr{p_1\\p_2}}_{p} \ , \ \pmatr{p_1\\p_2}=
+\underbracket[0.2pt]{\pmatr{\tilde{\Delta}_s&0\\0&\tilde{\Delta}_l}}_{\tilde{\Delta}} \pmatr{q_1\\q_2}.
+\label{eq:rolic}
+\end{equation}
+Rollett's conditions (\cite{stern,rollett,kurokawa}) for stability are then
+formulated as follows: 
+
+\begin{thm} Consider the same network given in Llewellyn's criteria which is represented in scattering parameters.
+The interconnection is stable if and only if the inequality 
+\begin{equation}
+K = \frac{1+\abs{\nabla}^2-\abs{S_{11}}^2-\abs{S_{22}}^2}{2\abs{S_{12}S_{21}}} > 1
+%\label{eq:rollett}
+\end{equation}
+holds for all frequencies together with an auxiliary condition in terms of $\nabla = S_{11}S_{22}-
+S_{12}S_{21}$. This extra condition can be stated in at least five different ways, such as 
+\[ 
+1-\abs{S_{11}}^2 > \abs{S_{12}S_{21}}\ \text{ or } \ (1-\abs{S_{22}}^2)> \abs{S_{12}S_{21}}. 
+\] 
+(See \cite{edsin} for further details). 
+\end{thm}
+
+In \cite{edsin}, Edwards and Sinsky reduced Rollet's conditions to a single quantity denoted as $\mu$ to be checked 
+for being greater than unity for all $\omega\in\Realext$. 
+ \begin{thm} Verifying Rollet's conditions is equivalent to verifying the single condition
+\[
+\mu\coloneqq \frac{1-\abs{S_{11}}^2}{\abs{S_{22}-S_{11}^*\Delta}+\abs{S_{12}S_{21}}} > 1\qquad \forall \omega\in\Realext.
+\]
 \end{thm}

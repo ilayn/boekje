@@ -1,21 +1,28 @@
-\documentclass[a4paper,openright,twoside]{memoir}
-
+\documentclass[b5paper,showtrims]{memoir}
+\settrimmedsize{24cm}{17cm}{*}
+\settypeblocksize{185mm}{127mm}{*}
+\setlrmargins{*}{*}{1.38888}
+\setulmargins{*}{*}{0.72}
+\setheadfoot{\baselineskip}{5mm}
+\checkandfixthelayout
 \usepackage{thesis-preamble}
 
 %\includeonly{intro}
 \begin{document}
+\pagenumbering{roman}
 \hypersetup{pageanchor=false}
 \include{title}
 
 \frontmatter
-\pagestyle{plain}
+
+%\pagestyle{plain}
 %\chapterinclude{abstract}
 %\chapterinclude{acknowledgements}
 \cleardoublepage
-
-\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
 \mainmatter
 \pagestyle{phdstayla}
+\hypersetup{pageanchor=true}
 \raggedbottom
 
 \tableofcontents
@@ -35,15 +42,16 @@
 \include{conclude}
 
 \clearpage
+%
 \appendix
 \include{apdxnetwork}
+
 \backmatter
 \include{references}
 
-\clearpage
 
+\clearpage
 \thispagestyle{empty}
 \null
 \clearpage
-
 \end{document}
