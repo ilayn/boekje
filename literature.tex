@@ -1,35 +1,37 @@
 %!TEX root = thesis.tex
 
-\chapter{A Brief and Opiniated Literature Survey}\label{chap:litsurvey}
+\chapter{A Brief and Opinionated Literature Survey}\label{chap:litsurvey}
 
 The teleoperation systems are structurally interesting and equally challenging 
 systems. This is especially true from a system theoretical point of view. As an example, 
 if we just focus on the local and the remote devices that would be used for manipulation, 
 we see that they are, whether linear or nonlinear, motion-control systems with well-studied 
-properties. Hence, one can view the open-loop teleoperation system as a system with a block 
+properties. Hence, one can view the open-loop teleoperation as a system with a block 
 diagonal structure. However, unlike the typical motion-control systems, these two disjoint systems must be stabilized 
-simultaneously by the same controller (delayed/undelayed local control loops can be seen as a structured central
-controller) that is performing sufficiently in order to ``fool'' the user such that the user feels 
-a force feedback as if s/he is actually operating at the remote medium. Hence, outputs of each system become
-exogenous inputs of the other and these are regulated by the to-be-designed controller. Therefore, it's this controller 
-that makes a teleoperation system perform adequately or, as in many situations, drive to instability.
+simultaneously by the same controller. that is performing sufficiently in order to ``fool'' the user such that the user feels 
+a force feedback as if s/he is actually operating at the remote medium. We emphasize at this point that the 
+delayed/undelayed local control loops can be seen as the entries of a structured central controller. 
+Hence, the outputs of any of these system blocks become exogenous inputs of the other and these are regulated 
+by the to-be-designed controller. Therefore, it is this controller that makes a teleoperation system perform 
+adequately or, as in many cases, drive to instability.
 
 
-For example, in the case of free-air motion (i.e. the remote device is free to roam in the remote site), the human force input 
+For example, in the case of the so-called free-air motion (i.e. the remote device is free to roam in the remote site), the human force input 
 to the local device and/or the position of the local device should be tracked by the remote device. In the case of a 
 hard-contact of remote device with the environment, however, these inputs should be counteracted  if the force vector points into 
 the obstacle. Hence, the force signal is simultaneously tracked for mimicking the user motion and  
-is defied in case of a resisting force at the remote site. If this is not enough, when the user suddenly decides to release the 
-local device, this resistance should die out as soon as possible, preventing a kickback. As an example, when a user leans to a wall located at 
-position $x_0\!\!\uparrow$, applying a horizontal force and then retreats, it is not expected that the wall continues to 
-push the user even after the user has the position $x<x_0$. There are a few other scenarios that would further complicate 
-the requirements. 
+is defied in case of a resisting force at the remote site. As if this is not challenging enough, 
+when the user suddenly decides to release the local device, this resistance should die out as soon as possible, 
+preventing a kickback. To sample the artificial nature of such behavior, consider a user who leans to a wall located at 
+position $x_0\!\!\uparrow$, applying a horizontal force and then retreating after some time. It is not expected 
+that the wall continues to push the user even after the user has the position $x<x_0$. This is not only unrealistic
+but also misleading as it can be confused with a sticky surface as far as the immersion is concerned. There are many other 
+scenarios that would further complicate the requirements but, in short, the user and the environment properties 
+are time-varying and make it difficult to design a straightforward control law such that these and many other details are 
+handled properly, and more importantly, simultaneously. 
 
-In short, the user and the environment properties are time-varying and make it difficult to design a control 
-law such that these and many other details are handled properly simultaneously. 
 
-
-With this short motivation, we can safely claim that looking at the overall system as a motion control 
+With this short motivation, we can safely claim that looking at the overall system as a typical motion control 
 system is not sufficient in terms of complexity (though necessary). In general, motion tracking specifications 
 are a subset of the general performance requirements of the bilateral teleoperation systems. 
 
@@ -46,7 +48,7 @@ are a subset of the general performance requirements of the bilateral teleoperat
 The inception of the bilateral teleoperation technology is often attributed to the work 
 of Raymond Goertz in Argonne National Laboratories, \cite{goertz} (In \cite{basanezsuarez}, 
 it's traced back to Nikola Tesla and, in \cite{sheridan89}, even some 16th century tools are accepted as precursors 
-of the modern teleoperation). The main motivation of Goertz' work (similarly later in Europe 
+of the contemporary  teleoperation). The main motivation of Goertz' work (similarly later in Europe 
 by Vertut \cite{vertutcoiffet}) was handling and manipulating nuclear material, thus the very 
 first teleoperators were purely mechanical to cope with the hostile environment conditions. Though not much 
 happened in terms of commercial product realizations, the concept of telemanipulation kept its appeal 
@@ -70,7 +72,7 @@ the hardware developments with a more historical perspective which we will omit 
 As we keep on narrowing down our focus to the control theoretical parts of this challenging problem, we have to 
 note that many parts of the bilateral teleoperation problem can be scrutinized under different frameworks. 
 Hence, there is no shortage of techniques for which bilateral teleoperation problem is an ideal 
-test case. Among the plethora of methods, for example, the variation of human and environment properties give 
+test case. In this plethora of methods, for example, the variation of human and environment properties give 
 naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed under 
 switched control systems, jump control systems or constrained linear systems etc. Before we go into the 
 details of the proposed methods of this thesis, let us sample a few important and successful approaches 
@@ -176,6 +178,19 @@ $1-$ and $2-$ports exchanging energy in time. Since the external behavior of the
 current and the voltage drop across the terminals, it is indeed very convenient to model these components as 
 interacting ``black boxes'' (See \Cref{fig:portrep}).
 
+\begin{rem} We should emphasize here that in this context, the energy exchange is used as a gauge of a potentially unstable behavior. 
+The motivation relies on the fact that in order to classify a system as an unstable one, the system should exhibit unstable
+behavior at its port(s) and to exhibit such behavior additional energy is needed. Hence if all the components are incapable
+of contributing energy in the loop, finite energy excitations will be eventually decay and the system would reach to its steady state
+after a transient response\footnote{For the sake of brevity, eigenvalues on the imaginary axis or limit cycles are left out at this point.}. 
+As one can directly identify, this is simply the rough sketch of the celebrated passivity theorem. Based 
+on this argument, there is a recurring theme in the literature that a teleoperation system should be passive in order to have a stable 
+interconnection. As we will mention later, this is due to the hypothesis that end terminations are also passive. However, in a few 
+studies, this is mistakenly taken as a sufficient and necessary condition and hence creates quite some confusion for the non-experts 
+of the field. Passivity is not an essential feature of the teleoperation systems but only a convenient shortcut for stability. We should 
+iterate that the stability is the top-priority objective and does not require passivity by any means even if we do guarantee stability 
+by rendering the sub-components passive. 
+\end{rem}
 
 \begin{figure}
 \begin{subfigure}[b]{0.5\textwidth}
@@ -216,7 +231,7 @@ every node/.style={draw,minimum size=1cm}]
 
 Clearly, thanks to this modeling method, we don't even need to 
 know exactly what $\Delta_l,\Delta_s$ blocks are, except their class (e.g. linear/nonlinear, time invariant/time varying etc.) to analyze 
-the system via $G$.  Thus, the problem of modeling of the human arm or of the uncertain environment
+the interconnection via $G$ and its port behavior.  Thus, the problem of modeling of the human arm or of the uncertain environment
 is circumvented. However, with the same reasoning, passivity property does not distinguish particular systems as long as they are 
 passive. That is to say, some of the crucial information is lost about these specific ports, we discard
 any impedance or admittance relations shared by the port variables.
@@ -245,7 +260,7 @@ mathematical operators (see \Cref{chap:apdxnetwork}). Starting with this hypothe
 a typical energy dissipation problem. 
 Hence the view of the designer is tuned to watch for the energy sources and interaction between two distant media. This approach 
 treats the human and the environment as passive $1$-port circuit elements with additional effort sources modeling the 
-intentional force input to the system and the controller is viewed as the energy regulator preventing excess energy generation 
+intentional force input to the system. The controller(s) act as the energy regulator preventing excess energy generation 
 to avoid a possible instability. Moreover, as summarized in \Cref{chap:apdxnetwork} and in the analysis section, one can use the 
 network theory based conditions to assess the stability and performance conditions thanks to this hypothesis.
 
@@ -309,7 +324,7 @@ argument into some mechanical engineering perspective. It is simply impossible f
 however, mentioning the involved process via some mechanical analogies in order to relate the results of 
 Hogan and Mussa-Ivaldi seems feasible. This would emphasize the reason why we think that the common inference from their experiments 
 in the literature is not inline with the conclusions of these studies.
-We refer the reader to the physiology literature e.g., \cite{spudich,yildiz} and references therein for a full treatment. Hence, we 
+We refer the reader to the physiology literature e.g., \cite{spudich,millman,offer,horowits,yildiz} and references therein for a full treatment. Hence, we 
 will only give a rough picture about the apparent behavior. Nevertheless the point that we want to emphasize is, fortunately, 
 not related to the inner workings of the human muscles.
 
@@ -327,6 +342,12 @@ not related to the inner workings of the human muscles.
 %\draw[fill] (-95:1.5) circle (0.15);
 %
 %\end{tikzpicture}
+\begin{figure}%
+\centering
+\includegraphics[width=0.7\columnwidth]{\impath/literature/muscleoffer}%
+\caption[Muscle activation mechanism]{Muscle activation mechanism (taken from \cite{offer}) Going to be drawn from scratch!!}%
+\label{fig:lit:muscle}%
+\end{figure}
 
 The skeletal muscle activation takes place via a process described by the \emph{sliding filaments model}. The muscles 
 consist of muscle fibers and muscle fibers are made up of \emph{myofibrils}. The myofibrils involve different types of thin 
@@ -338,14 +359,15 @@ and some types of the muscle spasms when this additional energy source can not b
 actin filament for some reason. 
 
 
-One can use an analogy between the mechanical pencil clutch and sliding filaments with the exception that the forces
-are obtained through chemical processes and also the spring action is absent in the muscle cell. In other words, when 
+One can use an analogy between the mechanical pencil clutch and sliding filaments with the exception that the spring action 
+is absent in the muscle cell. In other words, when 
 pressed from the eraser head mechanical pencil stays open such that the graphite layer can slide freely until the eraser 
 cap is pulled back. Another important difference is that muscle behavior is not rachet-like but smooth due to the fact 
 that each cycle takes place independently. Thus, at each time instant, different myosin extensions can be found at 
-different phases of the cycle. Using this analogy, ATP molecules are used to open and to close the pencil clutch made 
-up of myosin extensions and actin filament is pushed forwards. Moreover, titin filaments can be thought as the connecting 
-rod of the pencil from the cap to the clutch which is mostly responsible for the passive elasticity of the muscles. 
+different phases of the cycle very much like a helical gear pair that are always in contact at one point. Using this 
+analogy, ATP molecules are used to open and to close the pencil clutch made up of myosin extensions and actin filament 
+is pushed forwards. Moreover, titin filaments can be thought as the connecting rod of the pencil from the cap to the clutch 
+which is mostly responsible for the passive elasticity of the muscles. 
 
 
 Note that binding or detachment of these extensions is also regulated by the $\mathrm{Ca}^{++}$ concentration in the muscle cell 
@@ -400,8 +422,8 @@ findings are not sufficient for supporting the passivity assumption often found 
 
 In summary, the passivity of the human and the environment (virtual environment in haptics/virtual reality applications), is 
 only plausible in certain cases which should be verified nevertheless in order to assume that the corresponding mathematical models 
-are passive. Nevertheless, analysis and synthesis methods that invoke this assumption lead to many real-world implementations 
-with varying degree of realism. We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools
+are passive. Still, analysis and synthesis methods that invoke this assumption lead to many real-world implementations 
+with varying degrees of realism. We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools
 and does not validate the passivity hypotheses on the respective models.
 
 
@@ -567,11 +589,13 @@ the three-carriage railcar with two cabs, is a valid, almost perfectly transpare
 
 
 The major disadvantage of the passivity methods is that the procedure is focused almost only on the 
-energy exchange and performance specifications are very difficult to formulate and also difficult to integrate 
-into the analysis and synthesis steps using only the inner product structure. As an example, the signals that are not port variables such as position errors,
-and nonlinear effects that are functions of these signals, can't be utilized easily in the performance specifications. 
-Same difficulty arises in the normed space structures though much can be achieved. Unfortunately, much sought after 
-$\LL_\infty$ methods are not mature enough to handle any practical system without excessive conservatism. 
+energy exchange. The performance specifications are very difficult to formulate and also difficult 
+to integrate into the analysis and synthesis steps using only the inner product structure. As an 
+example, the signals that are not port variables such as position errors, and nonlinear effects 
+that are functions of these signals, can't be utilized easily in the performance specifications. 
+Same difficulty arises in the normed space structures though much can be achieved. Unfortunately,
+much sought after $\LL_\infty$ methods are not mature enough to handle any practical system without 
+excessive conservatism. 
 
 
 Another disadvantage is that the power- or the energy-based analysis, due to the inner-product structure, can not distinguish the individual 
@@ -676,12 +700,14 @@ operators.
 At end of the 80's and early 90's, two prominent studies (\cite{andersonspong,nieslotine}) proposed a direct handle to handle delay 
 robustness problem using the scattering transformations. This notion is best explained, in our humble opinion, by loop transformations 
 since the original articles refer to microwave and transmission line theories which use quite specialized terminology. One can also
-find a slightly different system theoretical view of these transformations in \cite{colgate3}. The key concept of the scattering transformation
+find a slightly different system theoretical view of these transformations in \cite{colgate3}. If we restrict the discussion to LTI
+operators\footnote{In the nonlinear case, it's a \emph{completion of square} argument to switch from the inner product structure to a 
+norm structure provided that the signal space is suitable for such operation.}, the key concept of the scattering transformation
 or the wave variables methods is mapping the closed right half plane to the closed unit disk via bijective M\"{o}bius (or linear 
 fractional or bilinear) transformations: 
  
 \begin{equation}
-W:[0,\infty]\times[\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\, ,\, W(z) 
+W:[0,\infty]\times i[-\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\, ,\, W(z) 
 = \frac{z-1}{z+1}
 \label{eq:lit:smith}
 \end{equation}
@@ -757,8 +783,8 @@ extra description/.code={
 \label{fig:lit:smith}%
 \end{figure}
 
-Obviously once this transformation is introduced, there is a need for the ``inverse'' of $W$, such that the
-loop equations remain unchanged, that is to say we have to introduce another transformation that undoes
+Obviously once this transformation is introduced, there is a need for the ``inverse'' of $W$ on the operator that is seen
+by the operator $G$ such that the loop equations remain unchanged, that is to say we have to introduce another transformation that undoes
 $W$. The simplest way to obtain a mapping $\hat{W}$ is to follow the block diagram backwards as shown in 
 \Cref{lit:syn:invscat}. A block diagram reduction step(or rotating three more times as shown above) shows that 
 \[
@@ -766,13 +792,13 @@ $W$. The simplest way to obtain a mapping $\hat{W}$ is to follow the block diagr
 \]
 The negative sign usually does not show up in the formulations in the literature because the passive interconnections 
 require a sign change in the loop to indicate the ``from'' and ``to'' ports. A more detailed derivation
-is given in \cite{colgate3}. Also note that a positive real operator when negated has its Nyquist curve 
+is given in \cite{colgate3}. Also note that a positive real transfer matrix, when negated, has its Nyquist curve 
 confined in the close left half plane (anti-positive real) which is equivalent to a $180^\circ$ rotation. 
-Thus, some attention must paid for the book-keeping of the negative signs and seemingly the best practice
+Thus, some care is needed for the book-keeping of the negative signs and seemingly the best practice
 is to absorb the negative sign into $H$ at the outset and work with $-H$ afterwards. This makes the required
 transformations identical. One can see that there are variants of this mapping, especially in wave variables 
-definition, e.g., $\frac{z-b}{z+b}$ but for simplicity we take $b=1$ as it doesn't play any crucial role 
-in our presentation of the method. 
+definition, e.g., $\frac{z-b}{z+b}$ but for simplicity we take $b=1$ as it doesn't play any role in our 
+presentation of the method. 
 
 
 \begin{figure}%
@@ -984,8 +1010,7 @@ Starred signals are the exogenous force inputs by the human/environment}%
 \end{figure}
 
 
-Instead of such classification, one can directly start with a MIMO control structure and avoid 
-such classifications while keeping the control problem formulation fixed. For this purpose, consider the 
+Instead of such classification, one can directly start with a MIMO control structure while keeping the control problem formulation fixed. For this purpose, consider the 
 control mapping $K:\Real^{n_1}\times\Real^{n_2}\times\Real^3\times\Real^3\to \Real^{m_1}\times\Real^{m_2}$ from the 
 measurements to the local and remote control actions via 
 \begin{equation}
@@ -1129,12 +1154,14 @@ change in the characteristics of the delay operator or making the communication 
 We have to emphasize that this transformation does not guarantee stability if the original $P$ is not strictly passive.
 However if any other plant $\hat{P}$ from an arbitrary class of systems $X$ can be brought into a unity norm-bounded form 
 with some other transformation/control law, then this method applies with different physical interpretations as we might 
-say that we have $X-$ified the communication channel.  
+say that we have $X-$ified the communication channel. However, the communication line stays untouched in both cases, though
+the control action on the system would be different. Therefore, it is, in our opinion, better to state the changes done on the
+system instead in terms of control laws.  
 
 
 
 Clearly, we have introduced the same conservatism by treating $\Delta$ as a gain-bounded operator 
-that $\mu-$analysis approaches also use as a hypothesis. Moreover, we have directly transformed the strictly passive 
+that $\mu-$analysis approaches also utilize. Moreover, we have directly transformed the strictly passive 
 operator to a small-gain operator. In case of a passivity excess, i.e., the mapped operator is confined only 
 in a subregion of the unit disk, we, yet again, introduce conservatism by using the small-gain theorem, for which 
 one can shift the disk to the origin and use the scaled small-gain theorem to reduce the conservatism. We should 
@@ -1147,13 +1174,13 @@ control law above is in the subset of all stabilizing controllers set (due
 to the particular zero blocks in the controller structure). Thus, in terms of the conservatism involved, 
 $\mu-$synthesis with constant $D-$scalings ($D=I$) covers the wave variables controller design.
 
-It has been noted the such control algorithm is prone to position drifts due to the velocity communication and 
+It has been noted the these control algorithms are prone to position drifts due to the velocity communication and 
 different alternatives have been proposed to tackle this mismatch e.g., \cite{yokokohji,chopratro06}. 
-Also there are generalizations of the scattering 
-transformations available in the literature, e.g., \cite{hirchebuss} to exploit the degree of freedom on the 
-mapping $W$ using different rotation-scaling combinations for the unitary transformation matrix and also 
-\cite{stramigioli} for multidimensional systems. Delay problems are also addressed in this context e.g., 
-\cite{chopraberes,munirbook,nieslotine97,uedayoshikawa} and references therein. 
+Also there are generalizations of the scattering transformations available in the literature, e.g., 
+\cite{hirchebuss} to exploit the degree of freedom on the mapping $W$ using different rotation-scaling 
+combinations for the unitary transformation matrix and also \cite{stramigioli} for multidimensional systems. 
+Delay problems are also addressed in this context e.g., \cite{chopraberes,munirbook,nieslotine97,uedayoshikawa} 
+and references therein. 
 
 
 
@@ -1168,8 +1195,8 @@ E_{obsv}(n) = \sum_{k=0}^n \Delta T_k(F(k)^TV(k))
 where $\Delta T_k$ is the sampling period at each step with nonuniform sampling in mind. If 
 $E_{obsv}(n) $ is greater than or equal to zero then the energy is dissipated by the network, conversely if
 it is negative at some $k$, than the network has generated energy equal to the amount of $-E_{obsv}(n)$,. Note that
-this is a cumulative term and it is not implied that the energy is generated in the last step but analogous to the 
-integral-action control. Also, it has been shown that observing the energy flow only at the open ended ports is 
+this is a cumulative term and it is not implied that the energy is generated in the last step analogous to the 
+integral-action control. Also, it has been shown that observing the energy flow only at the open-ports is 
 sufficient to monitor the total ``net'' energy flow which is analogous to the observability concept in the 
 linear control theory. 
 
@@ -1209,8 +1236,8 @@ mark=at position .5 with
 
 This concept is then generalized to two-ports in \cite{ryukwonhanna,ryukwonhanna2} and also results regarding
 the delay problem in the Time Domain Passivity Control context can be found in \cite{ryu}. Since the essential 
-architecture is a PI controller, it also suffers from the same problems integral actions suffers such as, wind-up
-and integrator reset etc., these are also addressed in \cite{kimhannaford}. 
+architecture is a PI controller, it also suffers from the same problems integral-action controllers suffer such as, wind-up
+and integrator reset etc. Some of these problems are addressed in \cite{kimhannaford}. 
 
 \subsection{Others}
 

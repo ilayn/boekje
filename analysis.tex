@@ -445,8 +445,8 @@ lozano, arcara, parkcho, aziminejad, leespong}). We refer to the survey article 
 for a detailed exposition of these methods. A great deal of research has been devoted to 
 delay robustness tests in robust control that are applicable to a wide class of teleoperation 
 systems. We also refer to \cite{richard} for a general treatment of the subject (e.g. based on 
-Lyapunov-Krasovskii functionals) and to IQC based results as e.g. in \cite{scorletti,junsafonov,
-kaorantzer,niculescu}.
+Lyapunov-Krasovskii functionals as utilized by \cite{delgado}) and to IQC based results as e.g. 
+in \cite{scorletti,junsafonov,kaorantzer,niculescu}. 
 
 Here, we consider constant but uncertain delays and the maximum delay duration is bounded 
 from above by $\bar{\tau} > 0$ seconds. We emphasize that it requires only a simple 
@@ -929,7 +929,7 @@ In this section, we show how frequently encountered analysis problems can be sol
 under the IQC formulation with ease. We utilize the multipliers as given above for  
 robustness tests applied to a simple teleoperation system taken from \cite{willaert,
 willaertIJRR10}. Our main emphasis is on showing how one can reproduce the numerical 
-results of such frequency domain techniques and, as the key contribution of this paper, 
+results of such frequency domain techniques and 
 how it is possible to substantially widen the range of allowed uncertainties in the 
 IQC framework for which no classical analytical stability tests exist. This serves as 
 an illustration for the possibility to improve analysis and, more importantly in 
@@ -1438,7 +1438,6 @@ substantially reduces the conservatism as is visible in the plot.
 
 
 
-We include a final remark about the performance criterion.
 In the literature, one often encounters PID-based controller
 architectures which makes it possible to analyze the effect
 of variations in the controller gains onto the performance of
@@ -1447,11 +1446,11 @@ increase of $\mu K_f$ due to the simplicity of the system structure.
 If moving towards more complicated controller architectures,
 such clear relations are not expected to be valid any more.
 This precludes obtaining graphical or analytical stability and
-performance tests with robustness guarantees. Although not
-made explicit for reasons of space, the IQC framework allows
+performance tests with robustness guarantees. As we show in \cref{chap:synth},
+ IQC framework allows
 the incorporation of a performance channel and to develop
 robust performance analysis tests, very much along the same
-lines as discussed for stability in this paper. Such formulations
+lines as discussed for stability in this chapter. Such formulations
 of the performance problems make it convenient to compare 
 different PID controllers. 
 

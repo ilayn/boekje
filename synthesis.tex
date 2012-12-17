@@ -7,7 +7,56 @@ label={[inner sep=0]south east:$100$},
 label={[inner sep=0]south west:$0$}] (a) {Current status: 10\% Very rough draft};
 \vspace{1cm}
 
-\pagebreak[1]
+In this chapter we look for possible refinements on the human/environment model to achieve theoretically higher 
+performance levels while still guaranteeing stability. \textcolor{red}{Then we validate our results on an experimental 
+testbed.}
+
+
+\section{Human as Uncertain Filter}
+
+As we have touched upon in \Cref{chap:litsurvey}, one can see the human action as a force input filtered through the
+arm dynamics. Before we start deriving the relevant models, a few remarks seems proper to state here. 
+
+As we have argued up to this point, passivity assumption on the human dynamics seems artificial, conservative and also
+the evidence that is brought up for justification for it is questionable. Therefore, we would like to change the human
+model or the source termination of the port with a refined impedance model, however, we have no substitute for such change. 
+
+This might seem awkward to state, especially after putting so much emphasis on this issue. 
+
+
+
+
+
+\section{IQC Synthesis}
+
+As we have shown in \cref{chap:analysis}, the dynamic multipliers are of the most importance when it comes to reducing the
+conservatism involved in the frequency-domain stability analysis techniques. However including dynamics to the multipliers 
+makes the problem harder for the robust control synthesis problem. Since there is no known convex robust control design 
+method known (It has been recently shown that the problem admits convex solutions if there is no uncertainty 
+contribution on certain entries of the plant data, \cite{scherer2009}) we resort back to a nonconvex multiplier/controller 
+iteration as is the case with the classical $\mu$-tools with the so-called $DK$-iteration. It is this iteration structure that 
+reveals certain, rather technical, problems. 
+
+
+
+
+
+%
+%But, we have also scanned the neuroscience articles and seen that there is no consensus on how the human arm dynamics are altered. 
+%There are many studies with extraordinarily bold titles (which might be standard of publishing in the most prestigious journals),
+%but, in the end they still seem disagreeing with each other if not contradicting thus the results are unlike the titles are suggestive 
+%but not conclusive. \footnote{As an orthogonal comment to the beginners of the field, the scientific standard for claiming to have 
+%a solution is much different in the neuroscience than the engineering customs. The main problem is that most of these studies first 
+%define a hypothesis and then look for patterns to verify the behavior. However, another similar article uses almost the same 
+%experimental setup and reaches to a completely different set of conclusions. Many seem to suffer from the causality often described 
+%with \emph{All apples are red, this is red, therefore it is an apple}.}.
+
+
+
+
+
+
+
 %\section{Model Setup}
 %We present two possibilities of human modeling. In the first one, the uncertain human arm is taken from literature and 
 %in the second we just present the complexity of a possible (Quasi)-LPV model. 
