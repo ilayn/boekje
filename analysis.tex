@@ -560,7 +560,7 @@ conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
 \geq 0 \quad \forall\omega\in\Real_e
 \]
 
-
+\section{Equivalent IQC Based Stability Tests for Common Stability Analysis Approaches}
 \subsection{Llewellyn's Stability Criteria}\label{sec:ana:llewellyn}
 %The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
 %\begin{thm}[Unconditional Stability]\label{thm:llw}
@@ -623,7 +623,8 @@ obtain
 \end{equation}
 In this fashion we have constructed a whole family of multipliers, parameterized by $\lambda(\omega)>0$, such that the quadratic constraint (\ref{eq:qcdeltall}) holds for all passive $\Delta_l,\Delta_s\in\mathcal{RH}_\infty$. Stability of the $N-\Delta$ interconnection is then guaranteed if one can find a positive $\lambda(\omega)$ for which the frequency domain inequality
 \begin{equation}
-({\star})^*\left(\begin{array}{cc|cc}
+\pmatr{1 &0\\0 &1\\\hline-N_{11} &-N_{12}\\-N_{21} &-N_{22}}^*
+\left(\begin{array}{cc|cc}
       0&0  &\lambda &0 \\
       0&0  &0         &1\\ \hline
       \lambda &0 &0 &0\\
@@ -650,14 +651,15 @@ R_{11} > 0 \quad \text{or} \quad R_{22} > 0
 %\label{eq:llewellynaux}
 \]
 and
-\begin{multline*}
-\det H =  \left(-R_{12}^2 - X_{12}^2\right)\lambda^2 - R_{21}^2 - X_{21}^2 \\ + \left(4R_{11}R_{22} - 2R_{12}R_{21} + 2X_{12}X_{21}\right)\lambda  > 0.
-\end{multline*}
+\[
+\det H =  \left(-R_{12}^2 - X_{12}^2\right)\lambda^2 - R_{21}^2 - X_{21}^2 + \left(4R_{11}R_{22} - 2R_{12}R_{21} + 2X_{12}X_{21}\right)\lambda  > 0.
+\]
 Since the leading and constant coefficient of the involved polynomial are negative, 
 the apex of the corresponding parabola should stay above the $\lambda$-axis. Using 
 the apex coordinates of a concave parabola one can show that this is equivalent to 
 \eqref{eq:lit:llew3}. Symmetry of the resulting conditions with respect to the indices 
 is shown by simply switching the roles of $\lambda_1$ and $\lambda_2$ in our derivation.
+
 
 \begin{rem} In the previous FDI condition \eqref{eq:LlewellynFDI} and if assuming 
 $\lambda = 1$ over all frequencies, we also recover the Raisbeck's conditions 
@@ -884,8 +886,8 @@ this directly leads to Colgate's original condition:
 {The employed multiplier can be transformed into the one for the small-gain theorem along the following lines:}
 \begin{align*}
 0&\leq  2b\pmatr{\Delta(\iw)\\ 1 }^*\pmatr{-2b &1\\1 &0}\pmatr{\Delta(\iw)\\1} \\\nonumber  %\label{eq:dummymult}
-&=(\star)^*\left[\pmatr{2b&-1\\0&1}^T\pmatr{-1 &0\\0 &1}\pmatr{2b&-1\\0&1}\right]\pmatr{\Delta(\iw)\\1}\\\nonumber
-&=(\star)^*\pmatr{-1 &0\\0 &1}\pmatr{2b\Delta(\iw) - 1\\ 1 } \Longleftrightarrow |2b\Delta(\iw)-1| \leq 1.
+&=\pmatr{\Delta(\iw)\\1}^*\left[\pmatr{2b&-1\\0&1}^T\pmatr{-1 &0\\0 &1}\pmatr{2b&-1\\0&1}\right]\pmatr{\Delta(\iw)\\1}\\\nonumber
+&=\pmatr{2b\Delta(\iw) - 1\\ 1 }^*\pmatr{-1 &0\\0 &1}\pmatr{2b\Delta(\iw) - 1\\ 1 } \Longleftrightarrow |2b\Delta(\iw)-1| \leq 1.
 \end{align*}
 This links our arguments to those appearing in \cite{colgate2,colgate3} and reveals that the direct application of 
 tools from robust control allows to circumvent any transformation to scattering parameters (or, in other words, 
@@ -901,6 +903,60 @@ with the scattering transformation matrix turns the small-gain multiplier into t
 allows to easily show the equivalence of the small gain and passivity theorems through scattering transformations 
 (\cite{andersonspong}) and wave variable methods (\cite{nieslotine,nieslotine2}).
 
+%===================================================================================
+\subsection{Regions in the Complex Plane}
+Using a similar mechanism to what is given above, one can also characterize different domains in the complex 
+plane different then the whole right half plane as long as it can be represented (or covered with) with a 
+quadratic constraint. Thus, once this multiplier type is set, it's a matter of evaluating the respective FDI for the system
+at hand. For example, recently in \cite{jazayeri}, a vertical strip-like domain for one of the LTI uncertainties is 
+assumed i.e. $-a\leq \Delta_l + \Delta_l^* \leq b$ for all $\omega\in\Real_e$ with $a,b>0$ 
+and stability conditions are derived similar to those of Llewellyn's test along the lines of \cite{edsin}. In terms of quadratic 
+constraints, a direct verification of the constraints below 
+\[
+\pmatr{\Delta(\iw)\\ 1 }^*
+\pmatr{0 &1\\1 &a}
+\pmatr{\Delta(\iw)\\ 1 } \geq 0 \text{ and }
+\pmatr{\Delta(\iw)\\ 1 }^*
+\pmatr{0 &-1\\-1 &b}
+\pmatr{\Delta(\iw)\\ 1 } \geq 0
+\]
+show that these constraints characterize the domain 
+\[
+\{z\in\mathbb{C}: -a \leq \Re{z} \leq b \text{ for }a,b>0\}.
+\]
+Hence, after introducing dynamic multipliers and scaling the overall multiplier with the corresponding $\lambda$ of $\Delta_s$,
+the stability condition can be posed as the existence of $\lambda_1(\omega),\lambda_2(\omega)>0$ for all $\omega\in\Real_e$ such that
+\begin{equation}
+\pmatr{1 &0\\0 &1\\\hline-N_{11} &-N_{12}\\-N_{21} &-N_{22}}^*
+\left(\begin{array}{cc|cc}
+      0 &0                   &1 &0                  \\
+      0 &0                   &0 &\lambda_1-\lambda_2\\ \hline
+      1 &0                   &0 &0                  \\
+      0 &\lambda_1-\lambda_2 &0 &\lambda_1 a+\lambda_2 b
+\end{array}\right)
+\pmatr{1 &0\\0 &1\\\hline-N_{11} &-N_{12}\\-N_{21} &-N_{22}} \prec 0
+\label{eq:jazayeritest}
+\end{equation}
+holds. By carrying out the multiplication, we obtain 
+\[
+\pmatr{
+-2R_{11} + (\lambda_1 a+\lambda_2 b)\abs{N_{21}}^2 & -N_{12} -(\lambda_1 -\lambda_2)N_{21}^*+(\lambda_1 a+\lambda_2 b)N_{21}^*N_{22}\\
+\star                                              &-2(\lambda_1 -\lambda_2)R_{22}+(\lambda_1 a+\lambda_2 b)\abs{N_{22}}^2
+}\prec 0.
+\]
+
+
+If we compare this with the derived conditions in \cite{jazayeri}, we can see that their results don't involve any $b$ terms. Hence, 
+contrary to the claim, those results can only be sufficient since their test only deals with the first part of the constraint, namely 
+$-a\leq \operatorname{Re}({\Delta_l})$. Still we cannot see the actual problematic step as we cannot reproduce their conditions by leaving out 
+the constraint involving $b$ term. Nevertheless, their first remark in \cite[Theorem 3]{jazayeri} is not correct. The upper bound 
+on the real part of the uncertainty certainly plays a role and can not be omitted in the necessity direction in their proof which is omitted 
+in their paper. In other words two uncertainty operators with $\operatorname{Re}{\Delta}\leq b (\geq b)$ for some frequencies respectively,
+can not be distinguished and this possibility already contradicts with the necessity of the test since both will be evaluated on the 
+basis of parameter $a$ and regardless of $b$.
+
+Moreover, as is the case for the previous examples, one can impose these constraints and possibly more on both the human and the environment 
+uncertainties without invoking the passivity theorem in a few steps instead of deriving explicit standalone conditions for each individual case.
 
 %===================================================================================
 \subsection{Exactness of Robustness Tests}\label{sec:exact}
@@ -921,9 +977,7 @@ for arbitrary causal and passive uncertainties, stability is still guaranteed if
 frequency-independent $\lambda>0$ which renders the FDI \eqref{eq:LlewellynFDI} satisfied, and this property 
 can be easily verified numerically.
 
-
-
-
+%===================================================================================
 \section{Numerical Case Studies}\label{sec:num}
 In this section, we show how frequently encountered analysis problems can be solved 
 under the IQC formulation with ease. We utilize the multipliers as given above for  
@@ -1206,7 +1260,8 @@ uncertain real scalar parameter in the interval $[0,1]$. Using a modified $DG$-s
 the shifted parameter range, we can easily adapt the multiplier and obtain, next to 
 $\lambda>0$ and $d>0$, the following FDI for interconnection stability:
 \begin{equation}%\arraycolsep0.3ex
-({\star})^*\left(\begin{array}{cc|cc}
+\pmatr{1 &0\\0 &1\\\hline-Y_{11} &-Y_{12}\\Y_{21} &Y_{22}}^*
+\left(\begin{array}{cc|cc}
       0&0  &\lambda &0 \\
       0&-d  &0         &\frac{d}{2} + ig\\ \hline
       \lambda &0 &0 &0\\
@@ -1447,8 +1502,7 @@ If moving towards more complicated controller architectures,
 such clear relations are not expected to be valid any more.
 This precludes obtaining graphical or analytical stability and
 performance tests with robustness guarantees. As we show in \cref{chap:synth},
- IQC framework allows
-the incorporation of a performance channel and to develop
+ IQC framework allows the incorporation of a performance channel and to develop
 robust performance analysis tests, very much along the same
 lines as discussed for stability in this chapter. Such formulations
 of the performance problems make it convenient to compare 
@@ -1599,10 +1653,10 @@ about the motivation of such use of these recent tools provided by the control
 theory. These points have often come up during the author's discussions held with experts, colleagues and
 practitioners.
 
-First and foremost argument is on the comparison with other passivity-based techniques. As we will show later 
+First and foremost argument is on the comparison with other passivity-based techniques. As we sampled a few cases
 in this chapter, IQC tests are far more general than passivity-based analysis results since passivity is a 
-system property and therefore, only specific to a class of systems. IQCs are system property qualifiers in which 
-the designers input the qualifier and obtains a robustness test. Thus, if the designer decides to perform a 
+system property and therefore, only specific to a class of systems. IQCs are system property qualifiers by which 
+the designer obtains a robustness test. Thus, if the designer decides to perform a 
 robustness test against passive uncertainties then a particular IQC is selected and the stability test follows
 from that constraint. Furthermore, via IQCs it is possible to combine different properties of the same class 
 of systems. Suppose we have a class of uncertainties that are both passive and small-gain, then it's not clear
@@ -1630,6 +1684,6 @@ class, while our IQC approach is based on checking i).
 This formulation also allows us to exemplify the point that we strongly underline in this chapter: Assertion ii) 
 resists to be utilized in a convenient way if we are aware of an extra property that also characterizes $\Delta_1$ 
 such as the small-gain and passive LTI operator example we have given above. 
-As the main difficulty, it is in many cases unknown how to translate this information into a test for $M$ that needs 
+The main difficulty is that in many cases it is unknown how to translate this information into a test for $M$ that needs 
 to be verified for all admissible $\Delta_2$. However, the IQC formulation based on (i) does not exhibit this 
 complication, which is one of its powerful features as demonstrated with the delay robustness example. 
