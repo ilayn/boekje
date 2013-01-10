@@ -284,8 +284,8 @@ We can also represent this inequality as follows,
 Note that, validity of this step relies on the commutative property of 
 $\Delta \lambda = \lambda\Delta$. Hence, we have parametrized all the unity
 norm bounded uncertainty constraints. For some historical reason, this type 
-of norm-bound multipliers is referred to as $D-$scalings. In particular we have obtained 
-the family of constant(static) $D-$scalings. 
+of norm-bound multipliers is referred to as $D$ scalings. In particular we have obtained 
+the family of constant(static) $D$ scalings. 
 One can see that, we might use a different $\lambda$ at each freqency and the inequality 
 still holds true. 
 \[
@@ -295,13 +295,13 @@ still holds true.
 Note again that this result relies on the commutativity property 
 \[\Delta(\iw)\lambda(\iw) = \lambda(\iw)\Delta(\iw).
 \] 
-This type of multipliers are the celebrated Dynamic $D-$scalings 
-that are made famous by the $\mu-$syntesis tool $D-K$ iteration. Also, one can get a rough 
-picture of the fast plant size growth in the $D-K$iteration process in the classical 
+This type of multipliers are the celebrated Dynamic $D$-scalings 
+that are made famous by the $\mu$-syntesis tool $DK$-iteration. Also, one can get a rough 
+picture of the fast plant size growth in the $DK$-iteration process in the classical 
 $\mu$-synthesis. Since the approximation quality is increased via higher order terms as we try
 to reconstruct a function of $\omega$ from its finitely many discrete points, 
-the approximate function involving the higher order terms absorbed by the plant at the $D-$analysis 
-step for another $K-$synthesis step.
+the approximate function involving the higher order terms absorbed by the plant at the $D$-analysis 
+step for another $K$-synthesis step.
 
 
 
@@ -321,10 +321,10 @@ with the SISO case, the constraints take the form
 \succeq 0, \lambda_0(\iw)>0 \quad \forall \omega\in\Realext 
 \]
 Clearly, one can repeat the same machinery for the repeated SISO $\Delta$ blocks to obtain 
-``full-block'' $D-$scalings. 
+``full-block'' $D$-scalings. 
 
 As we have mentioned in the previous chapter and also will demonstrate again in this chapter, 
-this particular multiplier type is the difference between small-gain theorem and $\mu-$analysis,
+this particular multiplier type is the difference between small-gain theorem and $\mu$-analysis,
 and a similar argument holds for passivity theorem and Llewellyn's criteria.
 
 Furthermore, although it's conservative, we have to emphasize that constant scalings are often 
@@ -906,8 +906,8 @@ allows to easily show the equivalence of the small gain and passivity theorems t
 %===================================================================================
 \subsection{Regions in the Complex Plane}
 Using a similar mechanism to what is given above, one can also characterize different domains in the complex 
-plane different then the whole right half plane as long as it can be represented (or covered with) with a 
-quadratic constraint. Thus, once this multiplier type is set, it's a matter of evaluating the respective FDI for the system
+plane different than the whole right half plane as long as it can be represented (or covered with) with a 
+quadratic constraint. Thus, once a multiplier family is set, it's a matter of evaluating the respective FDI for the system
 at hand. For example, recently in \cite{jazayeri}, a vertical strip-like domain for one of the LTI uncertainties is 
 assumed i.e. $-a\leq \Delta_l + \Delta_l^* \leq b$ for all $\omega\in\Real_e$ with $a,b>0$ 
 and stability conditions are derived similar to those of Llewellyn's test along the lines of \cite{edsin}. In terms of quadratic 
@@ -925,7 +925,7 @@ show that these constraints characterize the domain
 \{z\in\mathbb{C}: -a \leq \Re{z} \leq b \text{ for }a,b>0\}.
 \]
 Hence, after introducing dynamic multipliers and scaling the overall multiplier with the corresponding $\lambda$ of $\Delta_s$,
-the stability condition can be posed as the existence of $\lambda_1(\omega),\lambda_2(\omega)>0$ for all $\omega\in\Real_e$ such that
+the stability condition can be posed as for all $\omega\in\Real_e$ the existence of $\lambda_1(\omega),\lambda_2(\omega)>0$ such that
 \begin{equation}
 \pmatr{1 &0\\0 &1\\\hline-N_{11} &-N_{12}\\-N_{21} &-N_{22}}^*
 \left(\begin{array}{cc|cc}
@@ -947,16 +947,16 @@ holds. By carrying out the multiplication, we obtain
 
 
 If we compare this with the derived conditions in \cite{jazayeri}, we can see that their results don't involve any $b$ terms. Hence, 
-contrary to the claim, those results can only be sufficient since their test only deals with the first part of the constraint, namely 
+contrary to the claim, those results can be, at best, sufficient since their test only deals with the first part of the constraint, namely 
 $-a\leq \operatorname{Re}({\Delta_l})$. Still we cannot see the actual problematic step as we cannot reproduce their conditions by leaving out 
 the constraint involving $b$ term. Nevertheless, their first remark in \cite[Theorem 3]{jazayeri} is not correct. The upper bound 
 on the real part of the uncertainty certainly plays a role and can not be omitted in the necessity direction in their proof which is omitted 
 in their paper. In other words two uncertainty operators with $\operatorname{Re}{\Delta}\leq b (\geq b)$ for some frequencies respectively,
 can not be distinguished and this possibility already contradicts with the necessity of the test since both will be evaluated on the 
-basis of parameter $a$ and regardless of $b$.
+basis of parameter $a$ and regardless of $b$. 
 
 Moreover, as is the case for the previous examples, one can impose these constraints and possibly more on both the human and the environment 
-uncertainties without invoking the passivity theorem in a few steps instead of deriving explicit standalone conditions for each individual case.
+uncertainties, without invoking the passivity theorem explicitly, in a few steps instead of deriving standalone conditions for each individual case.
 
 %===================================================================================
 \subsection{Exactness of Robustness Tests}\label{sec:exact}
@@ -1664,7 +1664,7 @@ how to combine small-gain theorem and passivity theorem exclusively to remove th
 had used only one of these stability results since each neglects the other system property. 
 
 The equivalence we have presented is a consequence of the so-called Main Loop Theorem which is originally formulated 
-for $\mu-$analysis but tailored for our context 
+for $\mu$-analysis but tailored for our context 
 (see \cite[Thm. 11.7]{zhoubook}): 
 \begin{thm}
 Let $N$ be an LTI network interconnected to a human model $\Delta_1$ from the 

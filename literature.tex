@@ -172,7 +172,7 @@ ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the
 properties of the components are not relevant at the outset if we are only interested in energy exchange which is the basis
 of the so-called Time-Domain Passivity Methods \cite{hannafordryu} which we will mention later in this chapter. Thus, 
 the user, the control system, the environment, the remote and local devices and communication delays are seen as 
-$1-$ and $2-$ports exchanging energy in time. Since the external behavior of the ports can be characterized completely by the 
+$1$- and $2$-ports exchanging energy in time. Since the external behavior of the ports can be characterized completely by the 
 current and the voltage drop across the terminals, it is indeed very convenient to model these components as 
 interacting \enquote{black boxes} (See \Cref{fig:portrep}).
 
@@ -663,11 +663,11 @@ passivity framework and this is not always convenient if the performance specifi
 
 In the literature, this analysis method often follows the scattering transformations such that, the passivity assumption avoids the
 explicit modeling and small-gain theorem allows to handle the delay problem via with bounded operators. A refinement can be found 
- in \cite{poortenyokokohji} as the authors utilize a direct $\mu-$analysis to reduce the conservatism, however rather remarkably, it's not
+ in \cite{poortenyokokohji} as the authors utilize a direct $\mu$-analysis to reduce the conservatism, however rather remarkably, it's not
 picked up by other studies and the analysis is mainly limited to small-gain conditions even in the linear cases. 
 
 
-We can also directly take the uncertain modeling of the human and the environment and utilize $\mu-$analysis for the teleoperation
+We can also directly take the uncertain modeling of the human and the environment and utilize $\mu$-analysis for the teleoperation
 system. 
 
 
@@ -701,8 +701,8 @@ since the original articles refer to microwave and transmission line theories wh
 find a slightly different system theoretical view of these transformations in \cite{colgate3}. If we restrict the discussion to LTI
 operators\footnote{In the nonlinear case, it's a \emph{completion of square} argument to switch from the inner product structure to a 
 norm structure provided that the signal space is suitable for such operation.}, the key concept of the scattering transformation
-or the wave variables methods is mapping the closed right half plane to the closed unit disk via bijective M\"{o}bius (or linear 
-fractional or bilinear) transformations: 
+or the wave variables methods is mapping the closed right half plane to the closed unit disk via a special case of bijective M\"{o}bius 
+(or linear fractional or bilinear) transformations: 
  
 \begin{equation}
 W:[0,\infty]\times i[-\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\, ,\, W(z) 
@@ -733,7 +733,12 @@ W(G(s)) = \frac{G(s)-1}{G(s)+1} = -1 + \frac{2G(s)}{G(s)+1} \Longrightarrow
 \path (j)++(50:3mm) node[draw=none,minimum size=0,inner sep=3pt] {$-$};
 \end{tikzpicture}
 \]
-The distribution of $\sqrt{2}$ is a matter of convention and provides symmetry in the block diagrams. Also we have, 
+Simply following the signal paths, we also see that the the input/output relation becomes
+\[
+\tilde{y}\coloneqq \sqrt{2}(-u + y) = W(G(s))\tilde{u}\coloneqq W(G(s))\sqrt{2}(u+y).
+\]
+Usually these variables are normalized with $\sqrt{2}$ at the outset. The distribution of $\sqrt{2}$ 
+is a matter of convention and provides symmetry in the block diagrams. Also we have, 
 \begin{align*}
 (W\circ W)(G) &= \frac{-1}{G},\\
 (W\circ W \circ W) (G) &= \frac{-1}{W(G)},\\
@@ -861,7 +866,7 @@ characterization of the unit circle since as unit disk is used as the uncertaint
 we show later, wave variables/scattering transformations directly use this conservative formulation to 
 model the delay in the stabilization of the loop.
 
-A similar approach is reported in \cite{leungfa} using $\mu-$synthesis. By exploiting the
+A similar approach is reported in \cite{leungfa} using $\mu$-synthesis. By exploiting the
 low frequency property of the operator $e^{-sT}-1$ and covering with a dynamic filter, the conservatism
 is reduced. But the authors have omitted the uncertainty of the human and the environment. Therefore, 
 their analysis is only valid for nominal teleoperation systems. Though, this can be extended to more 
@@ -882,7 +887,7 @@ art of control engineering; manual PID tuning.
 \subsection{Two-, Three-, and Four-Channel Control Architectures}
 In the teleoperation literature, the control laws are categorized in terms of how many measurement signals 
 are sent over to the opposite medium during the teleoperation for control. The actual controller synthesis 
-method is often not considered in this classification.  Hence, the naming \enquote{$n-$channel control}. The naming 
+method is often not considered in this classification.  Hence, the naming \enquote{$n$-channel control}. The naming 
 scheme can be better visualized as shown in \Cref{lit:syn:ela}. 
 
 
@@ -1144,22 +1149,20 @@ It is this very reason that the motivation often found in the literature is slig
 and also could not do any modification on the delays. Quite the contrary, we have modified our system such that we can use 
 the small-gain theorem to conclude stability in the face of $\Delta$. Therefore, we refrain from seeing 
 this method as a passification of the communication channel. It is certainly possible to reflect the transformation 
-on $\Delta$ and invoke an impedance matching argument but the author thinks that this 
+on $\Delta$ and invoke an impedance matching argument but we think that this 
 only complicates the presentation since it's the change in the control action that stabilizes the loop, and not the 
-change in the characteristics of the delay operator or making the communication line a lossless $LC$ line
-%, which would otherwise revolutionize the power transmission technology
-.
+change in the characteristics of the delay operator or making the communication line a lossless $LC$ line.
 We have to emphasize that this transformation does not guarantee stability if the original $P$ is not strictly passive.
 However if any other plant $\hat{P}$ from an arbitrary class of systems $X$ can be brought into a unity norm-bounded form 
-with some other transformation/control law, then this method applies with different physical interpretations as we might 
-say that we have $X-$ified the communication channel. However, the communication line stays untouched in both cases, though
+with some other transformation/control law. Then we can infer another set of physical interpretations as we would have 
+$X$-ified the communication channel. However, the communication line stays untouched in both cases, though
 the control action on the system would be different. Therefore, it is, in our opinion, better to state the changes done on the
 system instead in terms of control laws.  
 
 
 
 Clearly, we have introduced the same conservatism by treating $\Delta$ as a gain-bounded operator 
-that $\mu-$analysis approaches also utilize. Moreover, we have directly transformed the strictly passive 
+that $\mu$-analysis approaches also utilize. Moreover, we have directly transformed the strictly passive 
 operator to a small-gain operator. In case of a passivity excess, i.e., the mapped operator is confined only 
 in a subregion of the unit disk, we, yet again, introduce conservatism by using the small-gain theorem, for which 
 one can shift the disk to the origin and use the scaled small-gain theorem to reduce the conservatism. We should 
@@ -1167,10 +1170,10 @@ note also that, this method works for any norm-bounded linear/nonlinear $\Delta$
 passivity structure is preserved and certainly not limited to delays (as in the passivity case, it's that conservative). 
 
 Furthermore, if one shuffles the loop equations and bring the $\Delta$ block to a block diagonal form, it's possible
-to formulate a $\mu-$synthesis problem. By doing so we can recover the setup of \cite{leungfa}. Then, a wave variables 
+to formulate a $\mu$-synthesis problem. By doing so we can recover the setup of \cite{leungfa}. Then, a wave variables 
 control law above is in the subset of all stabilizing controllers set (due 
 to the particular zero blocks in the controller structure). Thus, in terms of the conservatism involved, 
-$\mu-$synthesis with constant $D-$scalings ($D=I$) covers the wave variables controller design.
+$\mu$-synthesis with constant $D$-scalings ($D=I$) covers the wave variables controller design.
 
 It has been noted the these control algorithms are prone to position drifts due to the velocity communication and 
 different alternatives have been proposed to tackle this mismatch e.g., \cite{yokokohji,chopratro06}. 
@@ -1185,7 +1188,7 @@ and references therein.
 \subsection{Time-Domain Passivity Control}
 In \cite{hannafordryu}, the passivity approach is formulated in time domain and the energy exchange is literally
 monitored and regulated. An initial version of this idea can also be found in \cite{yokokohji}. The basic idea is 
-to see whether at any port energy is generated, using a \enquote{passivity observer} (PO): for an $N-$port 
+to see whether at any port energy is generated, using a \enquote{passivity observer} (PO): for an $N$-port 
 network the observed total energy is given by
 \[
 E_{obsv}(n) = \sum_{k=0}^n \Delta T_k(F(k)^TV(k))

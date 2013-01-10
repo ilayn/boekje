@@ -1,15 +1,111 @@
 \chapter{Synthesis}
 \label{chap:synth}
 
-\tikz \draw[-latex,ultra thick]  node[right,fill=yellow,
-append after command={(a.south west) -- ($(a.south west)!0.1!(a.south east)$)},
-label={[inner sep=0]south east:$100$},
-label={[inner sep=0]south west:$0$}] (a) {Current status: 10\% Very rough draft};
-\vspace{1cm}
+As we have shown in the previous chapters, the bilateral teleoperation problem can be carried over to a more general
+framework of IQCs. By doing so not only the existing results are preserved, but also substantial generalization
+options are obtained. Moreover, the shortcomings of the classical results and the underlying relations are clearly 
+seen. 
 
-In this chapter we look for possible refinements on the human/environment model to achieve theoretically higher 
-performance levels while still guaranteeing stability. \textcolor{red}{Then we validate our results on an experimental 
-testbed.}
+Hence, we can proceed with the controller design problem and obtain controllers using the results for IQC synthesis
+literature.
+
+\section{Robust Controller Design using IQCs}
+LMI-based control synthesis methods are in general nonconvex and even the existence of a possible convexification step 
+is not known. The $\mu$-synthesis and Lyapunov-based synthesis methods are the two main classical ways of designing
+a robust controller. 
+
+Clearly, this problem is not much different for IQC synthesis which is closely related to $\mu$
+tools. As we have shown in \cref{chap:analysis}, the dynamic multipliers are of the most importance when it comes to 
+reducing the conservatism involved in the frequency-domain stability analysis techniques. However including dynamics 
+to the multipliers makes the problem harder for the robust control synthesis problem. Since there is no known convex 
+robust control design method known, we resort back to a nonconvex multiplier/controller iteration as is the case with 
+the classical $\mu$-tools with the so-called $DK$-iteration. However, it has been recently shown that, a large class
+of robust control design problems are convex depending on the uncertainty contribution on certain entries of the plant 
+data, \cite{scherer2009}. 
+
+We start with state-space descriptions of systems in the following form 
+\begin{equation}
+\pmatr{\dot{x}\\ z\\ y} = 
+\underbrace{\left(
+\begin{array}{ccc}
+	A    &B_w    &B_u\\
+	C_z  &D_{wz} &D_{uz}\\
+	C_y  &D_{wy} &D_{uy}
+\end{array}
+\right)}_{G}
+\pmatr{x\\ w\\ u}
+\label{eq:genplant}
+\end{equation}
+Here, $w$ denotes the generalized disturbance signals (perturbations, reference signals etc.), $z$ denotes the controlled
+output signals that is selected as the objectives of the control design (minimization of error norms, control actions etc.)
+$y$ signals are the measurements and $u$ are the controller inputs. Typically, the second row is called the \emph{performance 
+channel} and the last row is, similarly, the \emph{control channel}. For the performance characterization, we also use a 
+quadratic form 
+\begin{equation}
+\int_0^\infty{\pmatr{w(t) \\ z(t)}^TP_p \pmatr{w(t) \\ z(t)} dt} \leq -\epsilon\norm{w}^2
+\label{eq:quadperf}
+\end{equation}
+
+
+We will be referring to the state-space representation of a controller $K$ via
+\begin{equation}
+\pmatr{\dot{x}_K\\ u} = 
+\pmatr{
+	A_K  &B_K\\
+	C_K  &D_K
+}
+\pmatr{x_K\\ y}
+\label{eq:contmats}
+\end{equation}
+
+
+The common assumption of $D_{uy}=0$ is also adopted here. This causes no loss of generality as long as the interconnection of 
+$G$-$K$ interconnection is well-posed i.e. $(I-D_{uy}D_K)$ is nonsingular. Then, the closed loop plant $(G\star K)(s)$ state-space 
+matrices are obtained as
+\begin{align}
+\left[\begin{array}{c|c}
+\mathcal{A}	&\mathcal{B} \\\hline
+\mathcal{C}	&\mathcal{D}
+\end{array}
+\right] &= \left[\begin{array}{cc|c}
+A + B_uD_KC_y        & B_uC_K    & B_w + B_uD_KD_{wy} \\
+B_KC_y               & A_K       & B_KD_{wy}\\ \hline
+C_z +  D_{uz}D_KC_y  & D_{uz}C_K & D_{wz} + D_{uz}D_KD_{wy}
+\end{array}\right] \\
+&= \left[
+\begin{array}{cc|c}
+A   & 0  & B_w \\
+0   & 0  & 0\\ \hline
+C_z & 0  & D_{wz}
+\end{array}
+\right] + 
+\left[
+\begin{array}{cc}
+0  & B_u \\
+I  & 0\\ \hline
+0  & D_{uz}
+\end{array}
+\right]
+\left[
+\begin{array}{cc}
+A_K  & B_K \\ \hline
+C_K  & D_K
+\end{array}
+\right]
+\left[
+\begin{array}{cc|c}
+0   & I & 0\\
+C_y & 0 & D_{wy}
+\end{array}
+\right].
+\label{eq:nominalclinc}
+\end{align}
+
+\begin{define}[Generalized Plant] The plant $G$ is said to be a generalized plant if there exists at least one controller 
+$K$ such that the interconnection of $G$ and $K$ is stable. Equivalently, $G$ is a generalized plant if $(A,B_u)$ is stabilizable
+and $(A,C_y)$ is detectable. 
+\end{define}
+
 
 
 \section{Human as Uncertain Filter}
@@ -27,15 +123,6 @@ This might seem awkward to state, especially after putting so much emphasis on t
 
 
 
-\section{IQC Synthesis}
-
-As we have shown in \cref{chap:analysis}, the dynamic multipliers are of the most importance when it comes to reducing the
-conservatism involved in the frequency-domain stability analysis techniques. However including dynamics to the multipliers 
-makes the problem harder for the robust control synthesis problem. Since there is no known convex robust control design 
-method known (It has been recently shown that the problem admits convex solutions if there is no uncertainty 
-contribution on certain entries of the plant data, \cite{scherer2009}) we resort back to a nonconvex multiplier/controller 
-iteration as is the case with the classical $\mu$-tools with the so-called $DK$-iteration. It is this iteration structure that 
-reveals certain, rather technical, problems. 
 
 
 
