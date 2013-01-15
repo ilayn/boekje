@@ -297,13 +297,14 @@ C_y  & 0  & D_{py} & D_{wy}
 \label{eq:uncclinc}
 \end{equation}
 
-Suppose a block diagonal collection of uncertainty operators, $\Delta$ characterized by a family of constant multipliers $\mathbf{P}$. 
+Suppose a block diagonal collection of uncertainty operators, $\bm{\Delta}$ characterized by a family of constant multipliers $\mathbf{P}$. Moreover,
+assume that the $\Delta\star(G\star K)$ is well-posed for all $\Delta\in\bm{\Delta}$.
 For notational convenience we also introduce the partitions 
 \[
 P=\begin{pmatrix}Q&S\\ S^T&R\end{pmatrix},\quad P_p=\begin{pmatrix}Q_p&S_p\\ S^T_p&R_p\end{pmatrix}
 \]
-Again, as given in \Cref{chap:analysis}, the closed loop system is robustly stable and achieves performance characterized by the multiplier 
-$P_p$ if there exist a $P\in\mathbf{P}$ and a symmetric matrix $\mathcal{X}$ such that 
+Again, as given in \Cref{chap:analysis}, the closed loop system is robustly stable for all $\Delta\in\bm{\Delta}$ and achieves performance characterized 
+by the multiplier $P_p$ if there exist a $P\in\mathbf{P}$ and a symmetric matrix $\mathcal{X}$ such that 
 \begin{equation}
 \pmatr{
 I&0&0\\\mathcal{A}&\mathcal{B}_p&\mathcal{B}_w\\
@@ -334,12 +335,186 @@ I&0&0\\\mathcal{A}&\mathcal{B}_p&\mathcal{B}_w\\
 %\end{thm}
 
 For the controller synthesis case, unfortunately previous transformation does not resolve the additional bilinear terms and in fact it is not even known 
-if such a transformation is possible or not. We can either try to solve BMIs with local optima or we can use another nonconvex solution which is known as 
-the multiplier-controller iteration. 
+if such a transformation is possible or not. We can either try to solve BMIs directly with nonconvex optimization techniques or we can use another nonconvex 
+solution which is known as the multiplier-controller iteration. 
 
 Notice that if we have the stabilizing controller then the outer factors are constant matrices and we have an LMI problem. Conversely, if we have a 
 feasible multiplier such that the inequality is satisfied then it's a matter of applying the aforementioned transformation and linearizing lemma to obtain
-a controller. Hence, we can perform an iteration by either fixing the multiplier or the controller. And since 
+a controller. Hence, we can perform an iteration by either fixing the multiplier or the controller. 
+
+\subsection{The Multiplier-Controller Iteration for Frequency-Independent Multipliers}
+
+If we start with a uncertain generalized plant representation, we have neither the controller nor the robustness multipliers. Moreover, we don't have a 
+method to search for both simultaneously. Thus, we first consider the nominal control design problem and obtain a nominally stabilizing controller as 
+given above. It can also be shown that, the closed loop, with the well-posedness assumption and a simple continuity argument, has some, possibly very 
+limited, robustness properties against the uncertainty set we would like to consider. In other words, there is no reason for the controller to be robustly 
+stabilizing against the full uncertainty region that we originally modeled since we did not enforce it by any constraint. 
+%Therefore, we search for the maximum size of a scaled version of original uncertainty set.
+
+\begin{rem}
+This is briefly the rationale behind the common assumption of star-shaped uncertainty region, i.e., $[0,1]\bm{\Delta}\in\bm{\Delta}$. However, it is 
+important to note that, the scaling needs not to be a simple scalar $r\in[0,1]$ such that the uncertainty is scaled with $r\Delta$. This point is often
+implicitly assumed and rarely mentioned. However the notation $r\Delta$ should be taken conceptually. As an example, 
+the delay uncertainty cannot be scaled with $re^{-s\tau}$ for any $r\in[0,1]$ since it would scale the unit-circle. In fact what we want to scale 
+is the $\tau$ variable as $e^{-sr\tau}$ such that when $r=0$ we have $e^0=1$ i.e. a non-delayed line and for $r=1$ we have $e^{-s\tau}$ i.e. full 
+duration of the maximum allowed delay. Similarly, for the saturation and dead-zone nonlinearities are examples of such nontrivial scaling cases. Hence, 
+the star-shapedness in this context becomes a parametrization of the size of the uncertainty from the nominal case to the full-sized uncertainty. 
+Nevertheless most uncertainty types are amenable to scaling with $r$-multiplication hence there is no need to invent yet another
+notation for an already complicated procedure. Therefore, every uncertainty needs to be scaled in a customized way but for notational convenience we will 
+still use $r\bm{\Delta}$ to denote the scaled uncertainty size. 
+\end{rem}
+
+
+
+
+
+Summarizing our current situation, we have obtained a nominally stabilizing controller and we have parameterized a custom scaling method for each of our 
+uncertainty subblocks. Now we would like to search for the maximum achievable $r$ via analysis. Hence, we can search over the maximum $r$ such that the 
+scaled closed loop is robustly stable for all $\Delta\in r\bm{\Delta}$. 
+
+
+
+Formally we have the following two theorems that constitutes the initialization and also the two steps of the iteration: We assume that 
+the uncertain LTI plant 
+\[
+G:\mathcal{L}_{2e}^{n_p+n_w+n_u}\to\mathcal{L}_{2e}^{m_q+m_z+m_y},
+\] 
+is a generalized plant i.e. there exists an LTI controller 
+\[
+K:\mathcal{L}_{2e}^{m_y}\to\mathcal{L}_{2e}^{n_u},
+\]
+such that the nominal closed loop plant $G_{nom}\star K\in\mathcal{RH}_\infty^{m_z\times n_w}$ where 
+\[
+G_{nom}(s) = \pmatr{0_{(m_z+m_y)\times m_q} &I_{m_z+m_y}}G(s)\pmatr{0_{n_p\times(n_w+n_u)}\\I_{n_w+n_u}}. 
+\]
+Additionally $\mathbf{P}$ denotes the suitable multiplier that all $\Delta\in\bm{\Delta}$ satisfies the 
+quadratic constraint.
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\node[draw,minimum size=7mm] (d) {$\Delta$};
+\node[draw,below = 1cm of d,minimum size=9mm] (g) {$G$};
+\node[draw,below = 9mm of g,minimum size=7mm] (k) {$K$};
+\draw[->] (g.150) -| ++(-8mm,8mm)  |- (d);
+\draw[->] (d) -| ++(1.2cm,-8mm) |- (g.30);
+\draw[<-] (g) --++(1.5cm,0) node[right] {$w$};
+\draw[->] (g) --++(-1.5cm,0) node[left] {$z$};
+\draw[->] (g.-150) -| ++(-8mm,-8mm)  |- (k);
+\draw[->] (k) -| ++(1.2cm,8mm) |- (g.-30);
+\end{tikzpicture}
+\caption{The uncertain interconnection}%
+\label{fig:uncicsynth}%
+\end{figure}
+
+\begin{thm}[Analysis Step] The interconnection of an LTI uncertain plant $G(s)$ given by \eqref{eq:uncclinc}
+with a nominally stabilizing controller $K$ given by \eqref{eq:contmats}, depicted in \Cref{fig:uncicsynth} 
+and admits the realization given in \eqref{eq:uncclinc} is robustly stable in the face of all 
+$\Delta\in r\bm{\Delta}$ and achieves the performance level characterized by $P_p$ if there exist a symmetric matrix 
+$\mathcal{X}$ and $P\in\mathbf{P}$ such that \eqref{eq:analysisLMI} hold.
+\end{thm}
+
+One can simply perform a line search for the largest possible $r\in[0,1]$ such that the conditions are numerically
+verified and $P_p$ is optimized. Then the resulting multiplier $P$ is fixed and we switch to the controller design step.
+
+\begin{thm}[Synthesis Step] Assume an uncertain LTI plant $G(s)$ given by \eqref{eq:uncclinc}
+is given. There exist an LTI controller $K$ such that the closed loop is stable for all $\Delta\in r\bm{\Delta}$ and achieves 
+the performance level characterized by $P_p$ if there exist a set of variables $v=\{X,Y,K,L,M,N\}$ such that the linearized 
+version of the constraint (omitted for brevity)
+\begin{equation}
+\pmatr{
+I&0&0\\\mathbf{A}&\mathbf{B}_p&\mathbf{B}_w\\\hline
+0&I&0\\\mathbf{C}_q&\mathbf{D}_{pq}&\mathbf{D}_{wq}\\\hline
+0&0&I\\\mathbf{C}_z&\mathbf{D}_{pz}&\mathbf{D}_{wz}
+}^T
+\left(
+\begin{array}{cc|cc|cc}
+	0&I&&&&\\
+	I&0&&&&\\\hline
+	&&Q&S&&\\
+	&&S^T&R&&\\\hline
+	&&&&Q_p&S_p\\
+	&&&&S_p^T&R_p\\
+\end{array}
+\right)
+\pmatr{
+I&0&0\\\mathbf{A}&\mathbf{B}_p&\mathbf{B}_w\\\hline
+0&I&0\\\mathbf{C}_q&\mathbf{D}_{pq}&\mathbf{D}_{wq}\\\hline
+0&0&I\\\mathbf{C}_z&\mathbf{D}_{pz}&\mathbf{D}_{wz}
+}\prec 0
+\label{eq:thmsynthLMI}
+\end{equation}
+and $\mathbf{X}\succ 0$ hold.
+\end{thm}
+Again, in this step we optimize over $P_p$ while performing a line search over $r$. Theoretically, since the analysis result
+is feasible for some $r_a$, the controller step should at least give a feasible result for $r=r_a$ and possibly larger values
+should also return feasible results. However, numerically it's not the case. One might step down a little to actually obtain 
+feasible results. In our cases, we allowed the maximum retreat value to be the $0.99r$ of the previous step. We have also 
+observed that this might actually improve the conditioning of the LMI solution though by no means guaranteed. 
+
+\begin{rem}
+
+Note that same theorem can be formulated for all $\Delta\in\bm{\Delta}$ and a closed loop plant $\left((G\star K) (s) \right)(r)$
+in other words we can also modify the plant information to scale the uncertainty by subsuming the $r$ parameter suitably into the 
+plant (for a simple case see \Cref{fig:uncscale}).
+To demonstrate the numerical problem, we assume that the uncertainties are of unstructured LTI type and for simplicity assume constant multipliers. 
+For parametric uncertainties, it suffices to scale down the respective uncertainty channels for the scaling as shown in \Cref{fig:uncscale}. 
+
+\[
+\pmatr{r\Delta\\I}^T\pmatr{Q&S\\S^T&R}\pmatr{r\Delta\\I} = \pmatr{\Delta\\I}^T\pmatr{r^2 Q&rS\\rS^T&R}\pmatr{\Delta\\I}\succeq 0.
+\]
+Out of our test experience, we have found out that reflecting the scaling to the plant is better for numerical stability. Seemingly the reason for 
+this is the numerical noise introduced when $r$ is small in the early iteration steps. Notice how the square of $r$ drives the $Q$ block to zero
+if $0<r\ll 1$. In case of a feasible multiplier is found, this multiplier should be stripped off from $r$ since it will be again used in the 
+controller step, but due to the numerical inaccuracies wild changes are possible and usually the resulting multiplier information is contaminated. 
+We have found out\footnote{Initially suggested by C\'esar Lop\'ez during the experiments.} that we have more freedom in the scaled plant case since
+one can decrease the bad effect of small numbers via balanced realizations, cleaning up the state-space matrices etc. Moreover as we show later,
+in the frequency dependent multiplier case, $r$ variable becomes garbled in the factorizations, minimal realizations etc. Hence, in this work, it 
+is recommended to scale the plant instead of the multipliers.
+\end{rem}
+
+\begin{figure}%
+\centering%
+\begin{tikzpicture}
+\node[draw,minimum size=7mm] (d) {$\Delta$};
+\node[draw,below = 1cm of d,minimum size=7mm] (g) {$G$};
+\draw[->] (g.150) -| ++(-8mm,8mm) node[draw,fill=white] {$r$} |- (d);
+\draw[->] (d) -| ++(1.2cm,-8mm) |- (g.30);
+\draw[<-] (g.-30) --++(1cm,0) node[right] {$w$};
+\draw[->] (g.-150) --++(-1cm,0) node[left] {$z$};
+\end{tikzpicture}
+\caption{Reflecting the uncertainty scaling to the plant}%
+\label{fig:uncscale}%
+\end{figure}
+
+
+Hence, we have a theoretically increasing sequence of analysis and synthesis uncertainty sizes 
+\[
+r_{si} = 0< r_{a1} \leq r_{s1} \leq \ldots \leq r_{an} \simeq r_{sn}
+\]
+Similarly, the performance objective gets worse or at least stays constant at after each succesful iteration
+revealing an increasing sequence of real scalar such as the robust $\mathcal{L}_2$ gain or a similar 
+functional. 
+The iteration terminates when the last approximate equality is satisfied with desired accuracy or both limits 
+are close enough to $1$ together with agreeing performance level $P_p$. The aforementioned numerical difficulty 
+might exhibit a phenomenon such that both $r_{a}$ and $r_{s}$ come very close to $1$ but don't quite reach to $1$.
+We have coded an extra condition that if $r$ values come close to $1$ within the prescribed accuracy, the code 
+simply assumes $r=1$, such that the oscillations are removed and the $r=1$ is tested at each step.  However, it's 
+up to the designer's scrutiny whether such result is acceptable or not. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
