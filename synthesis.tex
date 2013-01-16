@@ -7,7 +7,8 @@ options are obtained. Moreover, the shortcomings of the classical results and th
 seen. 
 
 Hence, we can proceed with the controller design problem and obtain controllers using the results for IQC synthesis
-literature.
+literature. Since the results here can be considered as established, we adopt \enquote{a running example} type of style 
+instead of repeating already available results in the literature with theorems and proofs enumerated after one another.
 
 \section{Robust Controller Design using IQCs}
 LMI-based control synthesis methods are in general nonconvex and even the existence of a possible convexification step 
@@ -151,7 +152,9 @@ an immediate problem. If we assume the controller matrices in calligraphic close
 matrix $\mathcal{X}$ variables and hence destroying the affine dependence on the unknowns, rendering the constraint as a Bilinear Matrix 
 Inequality (BMI). Also in the analysis case the stability was assumed at the outset however here the positivity constraint,
 $\mathcal{X}\succ 0$ should be included to guarantee closed loop stability. Thus, the synthesis problem is more involved. The resolution of 
-this problem appeared mainly in \cite{scherermulti,izumi} (also in a strict $\mathcal{H}_\infty$ context, \cite{gahapk,gahinet96}).
+this problem appeared mainly in \cite{scherermulti,izumi} (also in a strict $\mathcal{H}_\infty$ context, \cite{gahapk,gahinet96} with an
+two-step procedure of elimination of the controller parameters and obtaining some of the LMI variables and then resolving the LMIs for controller 
+parameters).
 
 The essential trick is to manifacture a new set of derived variables from the original variables such that the problem is not altered but 
 conditions become LMIs again. For this purpose, suppose we partition the matrices 
@@ -342,7 +345,7 @@ Notice that if we have the stabilizing controller then the outer factors are con
 feasible multiplier such that the inequality is satisfied then it's a matter of applying the aforementioned transformation and linearizing lemma to obtain
 a controller. Hence, we can perform an iteration by either fixing the multiplier or the controller. 
 
-\subsection{The Multiplier-Controller Iteration for Frequency-Independent Multipliers}
+\subsection{The Multiplier-Controller Iteration with Frequency-Independent Multipliers}
 
 If we start with a uncertain generalized plant representation, we have neither the controller nor the robustness multipliers. Moreover, we don't have a 
 method to search for both simultaneously. Thus, we first consider the nominal control design problem and obtain a nominally stabilizing controller as 
@@ -446,6 +449,10 @@ I&0&0\\\mathbf{A}&\mathbf{B}_p&\mathbf{B}_w\\\hline
 \end{equation}
 and $\mathbf{X}\succ 0$ hold.
 \end{thm}
+
+Proofs of both theorems are given in \cite{lmibook99} in detail. 
+
+
 Again, in this step we optimize over $P_p$ while performing a line search over $r$. Theoretically, since the analysis result
 is feasible for some $r_a$, the controller step should at least give a feasible result for $r=r_a$ and possibly larger values
 should also return feasible results. However, numerically it's not the case. One might step down a little to actually obtain 
@@ -495,12 +502,251 @@ r_{si} = 0< r_{a1} \leq r_{s1} \leq \ldots \leq r_{an} \simeq r_{sn}
 Similarly, the performance objective gets worse or at least stays constant at after each succesful iteration
 revealing an increasing sequence of real scalar such as the robust $\mathcal{L}_2$ gain or a similar 
 functional. 
+
 The iteration terminates when the last approximate equality is satisfied with desired accuracy or both limits 
-are close enough to $1$ together with agreeing performance level $P_p$. The aforementioned numerical difficulty 
-might exhibit a phenomenon such that both $r_{a}$ and $r_{s}$ come very close to $1$ but don't quite reach to $1$.
-We have coded an extra condition that if $r$ values come close to $1$ within the prescribed accuracy, the code 
-simply assumes $r=1$, such that the oscillations are removed and the $r=1$ is tested at each step.  However, it's 
-up to the designer's scrutiny whether such result is acceptable or not. 
+are close enough to $1$ together with agreeing performance level $P_p$. Notice that we don't allow the iteration
+to terminate even if the $r$ values agree, the performance levels should also agree for numerical consistency. The 
+aforementioned numerical difficulty might exhibit a phenomenon such that both $r_{a}$ and $r_{s}$ come very close 
+to $1$ but don't quite reach to $1$. We have coded an extra condition that if $r$ values come close to $1$ within 
+the prescribed accuracy, the code simply assumes $r=1$, such that the oscillations are removed and the $r=1$ is 
+tested at each step. 
+
+
+Another numerical difficulty is the factorization of $I-XY=UV^T$. Since the controller construction involves the 
+inverses of $U$ and $V$, it is imperative that the factorization is well-conditioned with respect to inversion.
+
+
+
+
+
+\subsection{The Multiplier-Controller Iteration with Dynamic Multipliers}
+
+
+From our analysis results it can be seen that dynamic multipliers provide substantial conservatism reduction. However,
+the iterative control design procedure given above can not handle the dynamic multipliers in a straightforward 
+fashion. Although, the mechanism is essentially the same, the only missing step is subsuming the frequency-dependent
+part of the multipliers into the outer factors. Let us give a conceptual example to demonstrate the obstacle. For
+notational convenience we partition the closed loop plant into the uncertainty and performance channels
+\[
+H \coloneqq (G\star K) = \pmatr{H_q\\H_z}
+\]
+Suppose we are given with a feasible robustness/performance analysis LMI in frequency domain i.e.
+\[
+\left(
+\begin{array}{cc}
+	I &0\\
+	\multicolumn{2}{c}{H_q}\\\hline
+	0& I\\
+	\multicolumn{2}{c}{H_z}
+\end{array}
+\right)^*
+\left(
+\begin{array}{cc|cc}
+Q(\iw)&S(\iw)&&\\S^*(\iw)&R(\iw)&&\\\hline &&Q_p&S_p\\&&S_p^T&R_p
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+	I &0\\
+	\multicolumn{2}{c}{H_q}\\\hline
+	0& I\\
+	\multicolumn{2}{c}{H_z}
+\end{array}
+\right) \prec 0
+\]
+holds for some $P(\iw),P_p$ for all $\omega\in\Real_e$ and suppose that the frequency-dependent multiplier is parametrized with 
+outer factors, similar to what we have shown in our analysis examples before, as the following;
+\[
+\pmatr{\star}^*
+\bigg(
+\star
+\bigg)^*
+\left(
+\begin{array}{cc|cc}
+M_1&M_2&&\\M^T_2&M_3&&\\\hline &&Q_p&S_p\\&&S_p^T&R_p
+\end{array}
+\right)
+\pmatr{\Psi_1(\iw)&\Psi_2(\iw)&&\\ \Psi_3(\iw)&\Psi_4(\iw)&&&\\\hline &&I&0\\&&0&I}
+\left(
+\begin{array}{cc}
+	I &0\\
+	\multicolumn{2}{c}{H_q}\\\hline
+	0& I\\
+	\multicolumn{2}{c}{H_z}
+\end{array}
+\right)
+\prec 0
+\]
+Now, if we collect the frequency dependent parts together and leave the constant multiplier, we have 
+\[
+\Bigg(\star\Bigg)^*
+\left(
+\begin{array}{cc|cc}
+M_1&M_2&&\\M^T_2&M_3&&\\\hline &&Q_p&S_p\\&&S_p^T&R_p
+\end{array}
+\right)
+\left(
+\begin{array}{>{\centering\arraybackslash$} p{0.7cm} <{$}>{\centering\arraybackslash$} p{0.7cm} <{$}}
+	\multicolumn{2}{c}{\Psi_1 + \Psi_2H_q}\\
+	\multicolumn{2}{c}{\Psi_3 + \Psi_4H_q}\\\hline
+	0& I\\
+	\multicolumn{2}{c}{H_z}
+\end{array}
+\right)
+\prec 0
+\]
+Had it been the case that we have $\pmatr{I &0}$ in the top row of the outer factor, we could simply use our previous 
+synthesis technique and we would be done. However, we don't have any technique to cope with such a complication. In other 
+words, the obstacle is due to how we proceed with the synthesis step. Had we had another synthesis method this might
+not be an obstacle but currently we need to find a way to obtain the structure on that block such that we obtain an 
+augmented plant from which we can extract the controller and hence obtain an augmented open loop plant.
+
+
+Notice that if we had $\Psi_2(\iw)$ identically zero and $\Psi_1$ invertable with a stable inverse, we can multiply 
+the inequality with $\begin{psmallmatrix}\inv{\Psi_1}&\\&I\end{psmallmatrix}$ and obtain the desired structure 
+\[
+\Bigg(\star\Bigg)^*
+\left(
+\begin{array}{cc|cc}
+M_1&M_2&&\\M^T_2&M_3&&\\\hline &&Q_p&S_p\\&&S_p^T&R_p
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+	I&0\\
+	(\Psi_3 + \Psi_4H_{q1})\Psi_1^{-1} &\Psi_4H_{q2}\\\hline
+	0& I\\
+	H_{z1}\Psi_1^{-1} &H_{z2}
+\end{array}
+\right)
+\prec 0.
+\]
+Then, one can show that the resulting open-loop system becomes 
+\begin{equation}
+G_{aug} = \pmatr{
+(\Psi_3 + \Psi_4G_{pq})\Psi_1^{-1} &\Psi_4G_{wq} &\Psi_4G_{uq}\\
+G_{pz}\Psi_1^{-1}                  &G_{wz}       &G_{uz}\\
+G_{py}\Psi_1^{-1}                  &G_{wy}       &0\\
+}
+\label{eq:augplant}
+\end{equation}
+thus, the obstacle that needs to be avoided is to find a way to obtain an equivalent multiplier of the form
+\begin{align}
+P(\iw) &= \pmatr{\star}^*\pmatr{M_1&M_2\\M^T_2&M_3}\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)} \\
+&= \pmatr{\star}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}\\
+&\mathrel{\reflectbox{$\coloneqq$}} \hat{P}(\iw)
+\end{align}
+where $\hat{\Psi}_1$ needs to biproper and bistable. This has been noticed in \cite{goh96,goh962} and also derived 
+in a completely state-space setting in \cite{veenmanIFAC}. Here the essential difficulty is that $\Psi_i$ are often 
+tall basis transfer matrices and are not invertible. Hence we look for square factorizations that are inherently 
+linked to J-spectral factorizations of quadratic forms. We will first take a detour on the structural properties 
+of the multipliers in general before we state the actual multiplier replacement. 
+\begin{define}[Inertia] The triple obtained by the enumeration of the number of the positive, zero and negative eigenvalues is said to be the inertia of a hermitian matrix $A$ and denoted by $\inertia A = \{n_+,n_0,n_-\}$ e.g. 
+\[
+\inertia I_{2\times 2} = \{2,0,0\}\ \ , \inertia 0_{n\times n} = \{0,n,0\} \ \ ,\inertia \pmatr{1 &&\\&-1&\\&&-1} = \{1,0,2\}
+\]
+Specifically, $\nu(A) = n_-, \pi(A) = n_+, \zeta(A) = n_0$.
+\end{define}
+
+Recall that we have the following two main inequalities that are of interest by the IQC theorem;
+\begin{align}\label{eq:interlude1}
+\infint{\pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}^*\Pi(\iw)\pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}d\omega} &\succeq 0\\
+\label{eq:interlude2}
+\pmatr{I\\G(\iw)}^*\Pi(\iw)\pmatr{I\\G(\iw)} &\preceq -\epsilon I
+\end{align}
+
+These inequalities impose constraints on the inertia of the frequency-dependent multiplier. Consider the following 
+simple fact: let a multiplier $\Pi$ partitioned as
+\begin{equation}
+\Pi = \pmatr{\Pi_1&\Pi_2\\\Pi_2^* &\Pi_3}
+\label{eq:Pipartition}
+\end{equation}
+
+
+\begin{lem}\label{lem:negnag}
+The number of negative eigenvalues of $\Pi$ is greater then or equal to $\Pi_1$ 
+\end{lem}
+
+
+\begin{proof}
+Since
+\[
+\pmatr{I&0\\-\Pi_2^*\inv{\Pi_1} &I}\pmatr{\Pi_1&\Pi_2\\ \Pi_2^* &\Pi_3}
+\pmatr{I&-\inv{\Pi_1}\Pi_2\\0&I} = \pmatr{\Pi_1&0\\0 &\Pi_3-\Pi_2^*\inv{\Pi_1}\Pi_2}
+\]
+and since the number can only increase. 
+
+Here, we assumed that $\inv{\Pi_1}$ exists. If not, then, we can make it nonsingular without changing the number of 
+negative eigenvalues by adding a sufficiently small matrix, $\epsilon I$. Since we are not interested in the number 
+of zero eigenvalues, this operation causes no problem.
+\end{proof}
+
+
+\begin{lem}\label{lem:inertialemma} There exists an $X\in \mathbb{R}^{n\times m}$ such that 
+\begin{equation}
+\pmatr{I\\X^T}^T\Pi\pmatr{I\\X^T} \prec 0
+\label{eq:multinertia}
+\end{equation}
+
+if and only if $\Pi$ has at least $n$ negative eigenvalues.
+\end{lem}
+
+\begin{proof} ($\Rightarrow$) Complete the outer factors to a square matrix as
+\[
+P = \pmatr{I &0\\X^T &I}^T\Pi\pmatr{I &0\\X^T &I}
+\]
+and inertia is preserved i.e. $\inertia \Pi = \inertia P$. Note that $(1,1)$ block of $P$ is \eqref{eq:multinertia}. 
+Hence, from \Cref{lem:negnag}, we have, $n = \nu(P_{11})\leq \nu({P}) = \nu(\Pi)$.
+
+
+($\Leftarrow$) Assume $n+m \geq \nu(\Pi)\geq n$. Let $U = \pmatr{U_1\\U_2} \in\mathbb{R}^{\nu(\Pi)\times n}$ be a 
+matrix spanning the negative eigenspace where $U_1$ is square. If $U_1$ is invertible, then, $X^T = U_2\inv{U_1}$ 
+is a solution. Or we perturb with $\epsilon I$, and use $X^T= U_2\inv{(U_1+\epsilon I)}$. 
+\end{proof}
+Thus a quadratic form has to have at least as many negative eigenvalues as the outer factor rank to be negative definite. 
+Using this information and extending this result to a frequency-dependent case by a theorem that appeared in 
+\cite{megretskitreil}:
+
+\begin{thm}\label{thm:megretskitreil} Let $\phi(\iw)$ be a hermitian bounded measurable matrix-valued function. The following statements are equivalent:
+\begin{enumerate}
+	\item the functional 
+	\[
+	\sigma(f) = \int_{-\infty}^\infty{\hat{f}^*(\iw)\phi(\iw)\hat{f}(\iw)d\omega}
+	\]
+	is nonnegative for all $f\in\mathcal{L}_2^k(0,\infty)$. 
+	\item $\phi(\iw)\succeq 0$ almost everywhere for $\omega\in(0,\infty)$.
+\end{enumerate}
+\end{thm}
+\begin{proof}\parbox{0pt}{}\par
+
+$(2)\implies (1)$ is a direct consequence.
+
+
+$(1)\implies (2)$ The quadratic form $\sigma(f)$ is time-invariant on $\mathcal{L}_2(-\infty,\infty)$. If 
+	$\sigma\geq 0$ on $\mathcal{L}_2(0,\infty)$ then $\sigma\geq 0$ on $\mathcal{L}_2(t_0,\infty)$ for any $t_0>-\infty$.
+	Moreover, 
+	\[
+	\bigcup\limits_{t>-\infty}\mathcal{L}_2(t,\infty)
+	\]
+	is dense in $\mathcal{L}_2(-\infty,\infty)$ and $\sigma$ is continuous on $\mathcal{L}_2(-\infty,\infty)$. Therefore
+	$\sigma\geq 0$ on $\mathcal{L}_2(-\infty,\infty)$ and hence 2. holds.
+\end{proof}
+
+The next result from \cite{goh96} reveals the IQC multiplier structure for robustness tests. 
+
+\begin{thm} If a hermitian, bounded, matrix-valued, and invertible (on $i\Real_e$) multiplier $H$ satisfies the 
+IQC and the corresponding FDI \eqref{eq:interlude1} and \eqref{eq:interlude2} then there exists a matrix-valued, bounded and 
+invertible (on $i\Real_e$) $S$ such that 
+\[
+H(\iw) = S^*(\iw)\pmatr{-I_{n_p}&0\\0&I_{m_q}}S(\iw) \quad \forall\omega\in\Real_e
+\]
+\end{thm}
+\begin{proof} From \eqref{eq:interlude2} and \Cref{thm:megretskitreil} we can conclude that
+for all $\omega\in\Real_e$, $H(\iw)$ has at least $n_p$ negative eigenvalues. Conversely, from
+\eqref{eq:interlude1} and the nominal case we also see that $H_{22}$ is positive semi-definite. 
+Finally, from the invertibility of $H$ on the extended imaginary axis such a diagonalizing 
+congruence transformation with some $S$ always exists. 
+\end{proof}
 
 
 
@@ -521,21 +767,51 @@ up to the designer's scrutiny whether such result is acceptable or not.
 
 
 
-\section{Human as Uncertain Filter}
 
-As we have touched upon in \Cref{chap:litsurvey}, one can see the human action as a force input filtered through the
-arm dynamics. Before we start deriving the relevant models, a few remarks seems proper to state here. 
+%Consider the constant multiplier case given in \cite{carsten2} without proof. 
+%
+%\begin{lem}Let $Q$ be a nonsingular symmetric matrix and $\mathcal{S}$ a subspace (and $S\in\mathbb{R}^{n\times s}$ is being a basis 
+%of $\mathcal{S}$) with $\zeta(S^TQS) = 0$. Then, $\inertia(S^TQS)+\inertia(S_\perp^T\inv{Q}S_\perp) = \inertia(Q)$.
+%\end{lem} 
+%
+%
+%\begin{proof} Consider the following simple quadratic form,
+%\[
+%\pmatr{1\\0}^T\pmatr{0 &1\\1 &0}\pmatr{1\\0} = 0
+%\]
+%although the multiplier is invertible. The extra hypothesis $\zeta(S^TQS) = 0$  avoids such situations. Assume, $\inertia(Q)=\{p,0,n\}$
+%Consider the following
+%\begin{align}
+%\inertia \left(\pmatr{S^T\\I}Q\pmatr{S&I}\right) &= \inertia\pmatr{0 &0\\0&Q} = \{p,s,n\}\\
+%&= \inertia \pmatr{S^TQS &0\\0&Q - QS\inv{(S^TQS)}S^TQ}\\
+%&= \inertia \pmatr{S^TQS &0\\0&\inv{Q} - S\inv{(S^TQS)}S^T} = \{p,s,n\}\\
+%& \Longrightarrow \inertia\pmatr{S^TQS &0\\0&S_\perp^T\inv{Q}S_\perp} = \{p,0,n\} = \inertia(Q)
+%\end{align}
+%where we used the fact that 
+%\[
+%x^T\inv{Q}x = x^TS\inv{(S^TQS)}S^Tx
+%\]
+%can only be satisfied if $x$ has a nonzero component in the image of $S$, since $\text{ker}(Q)=\{0\}$. Hence, zero inertia is removed by $S_\perp$. 
+%\end{proof}
 
-As we have argued up to this point, passivity assumption on the human dynamics seems artificial, conservative and also
-the evidence that is brought up for justification for it is questionable. Therefore, we would like to change the human
-model or the source termination of the port with a refined impedance model, however, we have no substitute for such change. 
-
-This might seem awkward to state, especially after putting so much emphasis on this issue. 
-
-
-
-
-
+%
+%
+%
+%\section{Human as Uncertain Filter}
+%
+%As we have touched upon in \Cref{chap:litsurvey}, one can see the human action as a force input filtered through the
+%arm dynamics. Before we start deriving the relevant models, a few remarks seems proper to state here. 
+%
+%As we have argued up to this point, passivity assumption on the human dynamics seems artificial, conservative and also
+%the evidence that is brought up for justification for it is questionable. Therefore, we would like to change the human
+%model or the source termination of the port with a refined impedance model, however, we have no substitute for such change. 
+%
+%This might seem awkward to state, especially after putting so much emphasis on this issue. 
+%
+%
+%
+%
+%
 
 
 
