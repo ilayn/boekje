@@ -566,7 +566,11 @@ outer factors, similar to what we have shown in our analysis examples before, as
 M_1&M_2&&\\M^T_2&M_3&&\\\hline &&Q_p&S_p\\&&S_p^T&R_p
 \end{array}
 \right)
-\pmatr{\Psi_1(\iw)&\Psi_2(\iw)&&\\ \Psi_3(\iw)&\Psi_4(\iw)&&&\\\hline &&I&0\\&&0&I}
+\left(
+\begin{array}{cc|cc}
+	\Psi_1&\Psi_2&&\\ \Psi_3&\Psi_4&&\\\hline &&I&0\\&&0&I
+\end{array}
+\right)
 \left(
 \begin{array}{cc}
 	I &0\\
@@ -632,16 +636,17 @@ G_{py}\Psi_1^{-1}                  &G_{wy}       &0\\
 \end{equation}
 thus, the obstacle that needs to be avoided is to find a way to obtain an equivalent multiplier of the form
 \begin{align}
-P(\iw) &= \pmatr{\star}^*\pmatr{M_1&M_2\\M^T_2&M_3}\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)} \\
-&= \pmatr{\star}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}\\
+P(\iw) &= \pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*\pmatr{M_1&M_2\\M^T_2&M_3}\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)} \\
+&= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}\\
 &\mathrel{\reflectbox{$\coloneqq$}} \hat{P}(\iw)
 \end{align}
 where $\hat{\Psi}_1$ needs to biproper and bistable. This has been noticed in \cite{goh96,goh962} and also derived 
 in a completely state-space setting in \cite{veenmanIFAC}. Here the essential difficulty is that $\Psi_i$ are often 
 tall basis transfer matrices and are not invertible. Hence we look for square factorizations that are inherently 
 linked to J-spectral factorizations of quadratic forms. We will first take a detour on the structural properties 
-of the multipliers in general before we state the actual multiplier replacement. 
-\begin{define}[Inertia] The triple obtained by the enumeration of the number of the positive, zero and negative eigenvalues is said to be the inertia of a hermitian matrix $A$ and denoted by $\inertia A = \{n_+,n_0,n_-\}$ e.g. 
+of the multipliers in general before we state the actual multiplier replacement. The style is based on \cite{helmersson2}.
+\begin{define}[Inertia] The triple obtained by the enumeration of the number of the positive, zero and negative 
+eigenvalues is said to be the inertia of a hermitian matrix $A$ and denoted by $\inertia A = \{n_+,n_0,n_-\}$ e.g. 
 \[
 \inertia I_{2\times 2} = \{2,0,0\}\ \ , \inertia 0_{n\times n} = \{0,n,0\} \ \ ,\inertia \pmatr{1 &&\\&-1&\\&&-1} = \{1,0,2\}
 \]
@@ -681,10 +686,10 @@ negative eigenvalues by adding a sufficiently small matrix, $\epsilon I$. Since 
 of zero eigenvalues, this operation causes no problem.
 \end{proof}
 
-
-\begin{lem}\label{lem:inertialemma} There exists an $X\in \mathbb{R}^{n\times m}$ such that 
+Next, we show that the inertia is further constrained by the outer factor rank. 
+\begin{lem}\label{lem:inertialemma} For a hermitian matrix $\Pi$, there exists an $X\in \mathbb{R}^{m\times n}$ such that 
 \begin{equation}
-\pmatr{I\\X^T}^T\Pi\pmatr{I\\X^T} \prec 0
+\pmatr{I\\X}^T\Pi\pmatr{I\\X} \prec 0
 \label{eq:multinertia}
 \end{equation}
 
@@ -693,28 +698,30 @@ if and only if $\Pi$ has at least $n$ negative eigenvalues.
 
 \begin{proof} ($\Rightarrow$) Complete the outer factors to a square matrix as
 \[
-P = \pmatr{I &0\\X^T &I}^T\Pi\pmatr{I &0\\X^T &I}
+P = \pmatr{I &0\\X &I}^T\Pi\pmatr{I &0\\X &I}
 \]
 and inertia is preserved i.e. $\inertia \Pi = \inertia P$. Note that $(1,1)$ block of $P$ is \eqref{eq:multinertia}. 
 Hence, from \Cref{lem:negnag}, we have, $n = \nu(P_{11})\leq \nu({P}) = \nu(\Pi)$.
 
 
 ($\Leftarrow$) Assume $n+m \geq \nu(\Pi)\geq n$. Let $U = \pmatr{U_1\\U_2} \in\mathbb{R}^{\nu(\Pi)\times n}$ be a 
-matrix spanning the negative eigenspace where $U_1$ is square. If $U_1$ is invertible, then, $X^T = U_2\inv{U_1}$ 
-is a solution. Or we perturb with $\epsilon I$, and use $X^T= U_2\inv{(U_1+\epsilon I)}$. 
+matrix spanning the negative eigenspace where $U_1$ is square. If $U_1$ is invertible, then, $X = U_2\inv{U_1}$ 
+is a solution. Or we perturb with $\epsilon I$, and use $X= U_2\inv{(U_1+\epsilon I)}$. 
 \end{proof}
 Thus a quadratic form has to have at least as many negative eigenvalues as the outer factor rank to be negative definite. 
-Using this information and extending this result to a frequency-dependent case by a theorem that appeared in 
-\cite{megretskitreil}:
+Using this information makes it easier to state some conclusions about the inertia of a frequency-dependent multiplier. 
+Obviously we need to make sure that the inertia stays the same on the imaginary axis. Hence we can make use of a result 
+regarding the frequency-dependent case by the following (see \cite{megretskitreil} and references therein):
 
-\begin{thm}\label{thm:megretskitreil} Let $\phi(\iw)$ be a hermitian bounded measurable matrix-valued function. The following statements are equivalent:
+\begin{thm}\label{thm:megretskitreil} Let $\phi(\iw)$ be a hermitian bounded measurable matrix-valued function. 
+The following statements are equivalent:
 \begin{enumerate}
 	\item the functional 
 	\[
 	\sigma(f) = \int_{-\infty}^\infty{\hat{f}^*(\iw)\phi(\iw)\hat{f}(\iw)d\omega}
 	\]
 	is nonnegative for all $f\in\mathcal{L}_2^k(0,\infty)$. 
-	\item $\phi(\iw)\succeq 0$ almost everywhere for $\omega\in(0,\infty)$.
+	\item\label{thm:megretskitreilitemtwo} $\phi(\iw)\succeq 0$ almost everywhere for $\omega\in(0,\infty)$.
 \end{enumerate}
 \end{thm}
 \begin{proof}\parbox{0pt}{}\par
@@ -729,12 +736,12 @@ $(1)\implies (2)$ The quadratic form $\sigma(f)$ is time-invariant on $\mathcal{
 	\bigcup\limits_{t>-\infty}\mathcal{L}_2(t,\infty)
 	\]
 	is dense in $\mathcal{L}_2(-\infty,\infty)$ and $\sigma$ is continuous on $\mathcal{L}_2(-\infty,\infty)$. Therefore
-	$\sigma\geq 0$ on $\mathcal{L}_2(-\infty,\infty)$ and hence 2. holds.
+	$\sigma\geq 0$ on $\mathcal{L}_2(-\infty,\infty)$ and hence \cref{thm:megretskitreilitemtwo} holds.
 \end{proof}
 
 The next result from \cite{goh96} reveals the IQC multiplier structure for robustness tests. 
 
-\begin{thm} If a hermitian, bounded, matrix-valued, and invertible (on $i\Real_e$) multiplier $H$ satisfies the 
+\begin{thm}\label{thm:IQCinertia} If a hermitian, bounded, matrix-valued, and invertible (on $i\Real_e$) multiplier $H$ satisfies the 
 IQC and the corresponding FDI \eqref{eq:interlude1} and \eqref{eq:interlude2} then there exists a matrix-valued, bounded and 
 invertible (on $i\Real_e$) $S$ such that 
 \[
@@ -744,17 +751,199 @@ H(\iw) = S^*(\iw)\pmatr{-I_{n_p}&0\\0&I_{m_q}}S(\iw) \quad \forall\omega\in\Real
 \begin{proof} From \eqref{eq:interlude2} and \Cref{thm:megretskitreil} we can conclude that
 for all $\omega\in\Real_e$, $H(\iw)$ has at least $n_p$ negative eigenvalues. Conversely, from
 \eqref{eq:interlude1} and the nominal case we also see that $H_{22}$ is positive semi-definite. 
-Finally, from the invertibility of $H$ on the extended imaginary axis such a diagonalizing 
+Finally, from the invertibility of $H$ on the extended imaginary axis, such a diagonalizing 
 congruence transformation with some $S$ always exists. 
 \end{proof}
+With a slight abuse of the general signature matrix definition, which is a diagonal matrix with all entries on 
+the diagonal are either $1$ or $-1$, we use the following: 
+\begin{define} Let $M$ be an invertible, hermitian matrix with $\pi(M) = p,\nu(M)=n$. A diagonal matrix of 
+$J= \operatorname{diag}\{-I_n,I_p\}$ is said to be the signature matrix of $M$. 
+\end{define}
+When $\nu(M)\neq 0$ the type of factorizations given in \Cref{thm:IQCinertia} is known as \enquote{\emph{$J$-spectral 
+factorization}} and exact solvability conditions are derived which relate the solvability of a certain Riccati equation to the 
+existence of such factorizations (see, e.g.,\cite{ranautomatica}). However, to the best of our knowledge, there is no simple implementable result 
+that guarantees the solvability of such indefinite Riccati equations. Since we aim for an automated iteration 
+algorithm, we can not utilize these nice algebraic results. Additionally, there are also numerous generalizations, 
+nuances about the assumptions whether $(A,B)$ is just stabilizable or also controllable, whether $Q$ is indefinite 
+in general etc. in the previous theorem. However, these are not relevant here. Due to this missing technical step, 
+we make use of particular sign assumptions on the subblocks of the multiplier to perform partial factorizations and 
+then obtain an overall factorization in the suitable form with steps that have solutions guaranteed to exist. For 
+these steps, it suffices to use the standard spectral factorization results well-knwon from LQ-type problems. The 
+following is also from \cite{goh96}:
+\begin{thm} Let 
+\[
+H(s) \coloneqq \pmatr{H_{11}(s)&H_{12}(s)\\ H^*_{12}(s)&H_{22}(s)} \in\mathcal{RL}_\infty
+\]
+be a hermitian, bounded and invertible transfer matrix on the imaginary axis with $H_{22}(s)\succ 0$ on $i\Real_e$. 
+Then there exists a factorization of the form
+\[
+H(\iw) = S^*(\iw)J_HS(\iw) \quad \forall\omega\in\Real_e
+\]
+where
+\[
+S(s) \coloneqq \pmatr{R(s)&0\\ Q(s)&P(s)}
+\]
+with $P(s),R(s)\in\mathcal{RH}_\infty$ with stable inverses.
+\end{thm}
+
+\begin{proof} For the sake of brevity, we omit the frequency dependence from the notation of transfer matrices. First, 
+from the assumption $H_{22}\succ 0$ and \Cref{lem:negnag} we have 
+\begin{equation}
+H^{\vphantom{-1}}_{11} -H^{\vphantom{-1}}_{12}\inv{H_{22}}H_{12}^* \prec 0
+\label{eq:multschur}
+\end{equation}
+for all $\omega\in\Real_e$. We write
+\[
+H = \pmatr{H^{\vphantom{-1}}_{11} -H^{\vphantom{-1}}_{12}\inv{H_{22}}H_{12}^*&0\\ 0&0} + 
+\pmatr{H^{\vphantom{-1}}_{12}\\ I}\inv{H_{22}}\pmatr{H_{12}^* &I}
+\]
+Hence both $H_{22}$ and \eqref{eq:multschur} can be replaced with biproper, bistable spectral factors 
+which will be defined next. Let $\hat{P}$ denote the spectral factor of $H_{22} = \hat{P}^*\hat{P}$ and $R$ denote similarly
+that of \eqref{eq:multschur}. Then we have
+\begin{align*}
+H &= \pmatr{-R^*R&0\\0&0} + \pmatr{H_{12}\inv{\hat{P}}\\\hat{P}^*}\pmatr{{\hat{P}}^{-*}H_{12}&\hat{P}} \\
+&\reflectbox{$\coloneqq$} 
+\pmatr{-R^*R&0\\0&0}+\pmatr{Q^*\\P^*}\pmatr{Q^*\\P^*}^*\\
+&= \pmatr{R(s)&0\\ Q(s)&P(s)}^* \pmatr{-I&\\ &I}\pmatr{R(s)&0\\ Q(s)&P(s)}
+\end{align*}
+
+\end{proof}
+
+Notice that the claim is only valid on the imaginary axis. For factorizations with respect to other contours, see \cite{bart10}. 
+The assumption of $H_{22}\succ 0$ is a mild one since many of the practically relevant multipliers have this property. However, 
+passivity multipliers and some other shifted parameter intervals might have positive semi-definite block. In 
+this case either a different factorization is employed (e.g. \cite{goh962}) or the uncertainty channel is shifted until the desired 
+property is achieved.  
 
 
 
 
+Now we are at a point where we know the inertia properties of the multiplier and also we know that the
+inertia stays the same on the imaginary axis. Moreover, with certain inertia of the lower left block,
+we can turn back to our problem of finding a suitable replacement of the multiplier with a new one involving 
+invertible, biproper, and bistable factors. First let us state a classical and powerful result regarding the 
+transfer matrix factorization (see \cite[Thm. 13.19]{zhoubook},\cite[Thm. 7.3]{francis}, and \cite[Thm. 2]{youla}).
 
+\begin{thm}\label{thm:zhouspecfact}Let $A,B,Q,S,R$ be matrices of compatible dimensions such that $Q=Q^T$ and $R=R^T\succ 0$, with
+$(A,B)$ stabilizable. Suppose either one of the following assumptions is satisfied
+\begin{enumerate}[label=(A\arabic*)]
+	\item $A$ has no eigenvalues on the imaginary axis.
+	\item $Q$ is positive or negative semidefinite and $(A,Q)$ has no unobservable modes on the imaginary axis.
+\end{enumerate}
+Then,
+\begin{enumerate}[label=(\Roman*)] 
+\item The following are equivalent;
+  \begin{enumerate}[label=(\alph*)]
+		\item The hermitian matrix 
+		\[
+		\Phi(s) = \pmatr{\inv{(sI-A)}B\\ I}^*\pmatr{Q&S\\S^T&R}\pmatr{\inv{(sI-A)}B\\ I}
+		\]
+		satisfies $\Phi(\iw)\succ 0$ for all $\omega\in\Real_e$.
+		\item There exists a unique symmetric $X$ such that the matrix Riccati equation
+		\[
+		XA + A^TX - (XB+S)\inv{R}(XB+S)^T + Q = 0
+		\]
+		and $A-B\inv{R}(XB+S)^T$ is Hurwitz.
+		\item The Hamiltonian matrix 
+		\[
+		\pmatr{A-B\inv{R}S^T & -B\inv{R}B^T\\-(Q-S\inv{R}S^T) &-(A-B\inv{R}S^T)^T}
+		\]
+		has no eigenvalues on the imaginary axis. 
+		\end{enumerate}
+		\item The following statements are also equivalent:
+		\begin{enumerate}
+		\item[(d)] $\Phi(\iw) \succeq 0$ for all $\omega\in\Real_e$.
+		\item[(e)] There exists a unique symmetric $X$ such that 
+		\[
+		XA + A^TX - (XB+S)\inv{R}(XB+S)^T + Q = 0
+		\]
+		and $A-B\inv{R}(XB+S)^T$ has all its eigenvalues in the closed left-half plane.
+		\end{enumerate}
+\end{enumerate}
+Every such $\Phi$ has a spectral factorization $\Phi = \Phi_s^*\Phi_s$ where $\Phi_s,\inv{\Phi_s}\in\mathcal{RH}_\infty$. 
+A $\Phi_s$ is denoted as the spectral factor of $\Phi$. 
+\end{thm}
+In particular we are interested in the following corollary;
+\begin{coroll} Consider a square hermitian transfer matrix $G\in\mathcal{RL}_\infty^{\bullet\times\bullet}$ with its inverse
+$G^{-1}\in\mathcal{RL}_\infty^{\bullet\times\bullet}$ and $G(\infty)\succ 0$. Then, $G$ has a spectral factorization $G_s$ such that
+\[
+G = G_s^*G_s
+\]
+where $G_s,G_s^{-1}\in\mathcal{RH}_\infty^{\bullet\times\bullet}$.
+\end{coroll}
 
-
-
+Note that the system $G$ need not be obtained from a quadratic form as we will continue considering. However, via separating
+the stable and the unstable modes with a state transformation and from the hermitian property of $G$, we can obtain a particular 
+structure without loss of generality. The structure is actually simpler to demonstrate; since the LTI system interconnection 
+$y=G_1G_2 u$ can be realized as
+\begin{equation}
+\pmatr{\dot{x}\\y} = \pmatr{A_1 &B_1C_2 &B_1D_2\\0 &A_2 &B_2\\C_1 &D_1C_2 &D_1D_2}\pmatr{\dot{x}\\u},
+\end{equation}
+then any factorization $G = G_s^*G_s$ admits a realization of the form
+\begin{equation}
+G = G_s^*G_s = \left[
+\begin{array}{cc|c}
+-A_s^T &0 &0\\0 &A_s &B_s\\\hline -B_s^T &0 &0	
+\end{array}\right]+
+\left[
+\begin{array}{c}
+C_s^T \\ 0 \\\hline D_s^T
+\end{array}
+\right]
+\bigg[
+\begin{array}{cc|c}
+0 &C_s &D_s
+\end{array}
+\bigg]
+\end{equation}
+partitioned accordingly. Also we have $G(\infty)= D_s^TD_s$. For the computation of the spectral factors 
+consider the following tall multiplier that satisfies
+\[
+\Phi(\iw)^*M\Phi(\iw) \succ 0
+\]
+for all $\omega\in\Real_e$ as we had a few examples in \Cref{chap:analysis}. Using the minimal realization for $\Phi(s)$ we also have
+\begin{equation}
+\pmatr{B_{\Phi}^T(sI-A_{\Phi})^{-*}\\I}
+\pmatr{C_{\Phi}^TMC_{\Phi}&D_{\Phi}^TMC_{\Phi}\\C_{\Phi}^TMD_{\Phi}&D_{\Phi}^TMD_{\Phi}}
+\pmatr{(sI-A_{\Phi})^{-1}B_{\Phi}\\I}
+\label{eq:specfactshuffle}
+\end{equation} which is the desired form given in \Cref{thm:zhouspecfact}. Since we have omitted the proof, the relation with the 
+Riccati equation can be sketched using the LMI version of this constraint. Via KYP Lemma, this is equivalent to the existence 
+of a symmetric matrix $Z$ such that 
+\begin{equation}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}}^T
+\pmatr{0 &X &0\\X &0 &0\\0 &0 &M}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}} \succ 0
+\label{eq:specfactLMI}
+\end{equation}
+holds. This means the Algebraic Riccati Inequality, which is nothing but straightforward multiplication and a Schur complement
+thanks to $\Phi(\infty)=D^T_\Phi M D_\Phi\succ 0$, also holds:
+\begin{equation}
+XA_{\Phi} + A^T_{\Phi}X - (XB_{\Phi}+\underbracket{C_{\Phi}^TMD_\Phi}_S)\underbracket{\inv{(D^T_{\Phi}MD_{\Phi})}}_{\inv{R}}
+(XB_{\Phi}+C_{\Phi}^TMD_\Phi)^T+\underbracket{C^T_{\Phi}MC_{\Phi}}_Q \succ 0
+\label{eq:specfactARI}
+\end{equation}
+Thus the corresponding Riccati Equation 
+\begin{equation}
+XA_{\Phi} + A^T_{\Phi}X - (XB_{\Phi}+C_{\Phi}^TMD_\Phi)\inv{(D^T_{\Phi}MD_{\Phi})}
+(XB_{\Phi}+C_{\Phi}^TMD_\Phi)^T+C^T_{\Phi}MC_{\Phi} = 0
+\label{eq:specfactARI}
+\end{equation}
+has a unique stabilizing solution $X$ and 
+\[
+A_\Phi - B_\Phi\inv{(D^T_{\Phi}MD_{\Phi})}(XB_{\Phi}+C_{\Phi}^TMD_\Phi)^T
+\]
+is Hurwitz. Since $(D^T_{\Phi}MD_{\Phi})\succ 0$ we can replace this matrix with an arbitrary square factorization (square root,
+Cholesky etc.) $\hat{D}_\Phi^T\hat{D}_\Phi\succ 0$. Therefore, one possiblity of realization of the spectral factor $\Phi_s(s)$ is given by
+\[
+\Phi_s(s) = \left[
+\begin{array}{c|c}
+	A_\Phi &B_\Phi\\\hline
+	\hat{D}_\Phi^{-T}(XB_{\Phi}+C_{\Phi}^TMD_\Phi)^T&\hat{D}_\Phi
+\end{array}
+\right]
+\]
+such that $\Phi(s),\inv{\Phi}(s)\in\mathcal{RH}_\infty$.
 
 
 
