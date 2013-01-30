@@ -103,7 +103,7 @@ C_y & 0 & D_{wy}
 \label{eq:nominalclinc}
 \end{align}
 Here two-letter subscripts, $\cdot_{ab}$ denote the term that represents the contribution from input $a$ to output $b$ which hopefully gives some
-relief to the reader since the manupulations quickly get ugly. 
+relief to the reader since the manipulations quickly get ugly. 
 
 \begin{define}[Generalized Plant] The plant $G$ is said to be a generalized plant if there exists at least one controller 
 $K$ such that the interconnection of $G$ and $K$ is stable. Equivalently, $G$ is a generalized plant if $(A,B_u)$ is stabilizable
@@ -117,7 +117,7 @@ characterized by $P_p$. Before we state the nominal controller synthesis conditi
 Linearization Lemma which can be found in \cite{lmibook99}. It is also important to follow the rationale behind the arguments given
 in \cite{scherermulti} for general quadratic performance synthesis. 
 
-\begin{lem} Assume we are given with a quadratic form in which $A,S$ are constant matrices and $B(v),Q(v)$ and $R(v)\succeq 0$ are matrix functions 
+\begin{lem}\label{lem:linlemma} Assume we are given with a quadratic form in which $A,S$ are constant matrices and $B(v),Q(v)$ and $R(v)\succeq 0$ are matrix functions 
 of some decision variables denoted by $v$ such that
 \begin{equation}
 \pmatr{A\\B(v)}^T\pmatr{Q(v) &S\\S^T &R(v)}\pmatr{A\\B(v)} \prec 0
@@ -184,6 +184,7 @@ becomes
 \end{array}
 \right)
 \pmatr{I&0\\\mathbf{A}&\mathbf{B}\\\hline 0&I\\\mathbf{C}&\mathbf{D}} \prec 0
+\label{eq:synthnom}
 \end{equation}
 where boldface variables are defined as 
 \[
@@ -205,12 +206,13 @@ together with
 \end{equation}
 It's indeed not that easy to follow the inner workings of this transformation however after a tedious multiplication exercise
 it can be seen that the aforementioned bijective transformation does the job. Thus, boldface variables are now functions of 
-$X,Y,K,L,M,N$ matrices and moreover the constraint is once again an LMI. For stability characterization we also need 
-$\mathcal{X}\succ 0$ and using the same transformation $\mathcal{Y}^T\mathcal{X}\mathcal{Y}\succ 0$, we obtain
+$X,Y,K,L,M,N$ matrices and moreover the constraint is once again an LMI (after the application of \Cref{lem:linlemma}). For 
+stability characterization we also need $\mathcal{X}\succ 0$ and using the same transformation 
+$\mathcal{Y}^T\mathcal{X}\mathcal{Y}\succ 0$, we obtain
 \[
 \mathbf{X} \coloneqq \pmatr{X&I\\I&Y}\succ 0.
 \]
-Therefore, instead of BMIs we have obtained LMI conditions all involving boldface variables entering affinely. This set of varibles 
+Therefore, instead of BMIs we have obtained LMI conditions all involving boldface variables entering affinely. This set of variables 
 are typically denoted by $v=\{X,Y,K,L,M,N\}$. Unfortunately, $K(s)$ and $K$ creates a naming clash however we will not resolve this 
 to comply with the literature, instead we'll rely on the reader for the distinction and try to state whichever is meant in case of an
 ambiguity. 
@@ -228,7 +230,7 @@ variables $v$ such that
 \pmatr{I&0\\\mathbf{A}&\mathbf{B}\\\hline 0&I\\\mathbf{C}&\mathbf{D}} \prec 0
 \label{eq:nomsynthLMI}
 \end{equation}
-hold. Once a feasible solution is found, the controller can be obtained by first by finding arbitrary $U$ and $V$ matrices by 
+hold. Once a feasible solution is found by the aid of \Cref{lem:linlemma}, the controller can be obtained by first by finding arbitrary $U$ and $V$ matrices by 
 solving $I-XY= UV^T$ and then back substituting the variables into \eqref{eq:contmatvartrafo}
 \end{thm}
 
@@ -420,7 +422,7 @@ $\mathcal{X}$ and $P\in\mathbf{P}$ such that \eqref{eq:analysisLMI} hold.
 One can simply perform a line search for the largest possible $r\in[0,1]$ such that the conditions are numerically
 verified and $P_p$ is optimized. Then the resulting multiplier $P$ is fixed and we switch to the controller design step.
 
-\begin{thm}[Synthesis Step] Assume an uncertain LTI plant $G(s)$ given by \eqref{eq:uncclinc}
+\begin{thm}[Synthesis Step]\label{thm:synthesis} Assume an uncertain LTI plant $G(s)$ given by \eqref{eq:uncclinc}
 is given. There exist an LTI controller $K$ such that the closed loop is stable for all $\Delta\in r\bm{\Delta}$ and achieves 
 the performance level characterized by $P_p$ if there exist a set of variables $v=\{X,Y,K,L,M,N\}$ such that the linearized 
 version of the constraint (omitted for brevity)
@@ -461,9 +463,9 @@ observed that this might actually improve the conditioning of the LMI solution t
 
 \begin{rem}
 
-Note that same theorem can be formulated for all $\Delta\in\bm{\Delta}$ and a closed loop plant $\left((G\star K) (s) \right)(r)$
+Note that same theorem can be formulated for all $\Delta\in\bm{\Delta}$ and a closed loop plant $(G(r)\star K) (s)$,
 in other words we can also modify the plant information to scale the uncertainty by subsuming the $r$ parameter suitably into the 
-plant (for a simple case see \Cref{fig:uncscale}).
+plant.
 To demonstrate the numerical problem, we assume that the uncertainties are of unstructured LTI type and for simplicity assume constant multipliers. 
 For parametric uncertainties, it suffices to scale down the respective uncertainty channels for the scaling as shown in \Cref{fig:uncscale}. 
 
@@ -482,7 +484,7 @@ is recommended to scale the plant instead of the multipliers.
 
 \begin{figure}%
 \centering%
-\begin{tikzpicture}
+\begin{tikzpicture}[>=stealth]
 \node[draw,minimum size=7mm] (d) {$\Delta$};
 \node[draw,below = 1cm of d,minimum size=7mm] (g) {$G$};
 \draw[->] (g.150) -| ++(-8mm,8mm) node[draw,fill=white] {$r$} |- (d);
@@ -640,8 +642,8 @@ P(\iw) &= \pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*\pmatr{M_1&
 &= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}\\
 &\mathrel{\reflectbox{$\coloneqq$}} \hat{P}(\iw)
 \end{align}
-where $\hat{\Psi}_1$ needs to biproper and bistable. This has been noticed in \cite{goh96,goh962} and also derived 
-in a completely state-space setting in \cite{veenmanIFAC}. Here the essential difficulty is that $\Psi_i$ are often 
+where $\hat{\Psi}_1$ needs to biproper and bistable. This has been proposed in \cite{goh96,goh962} (see also
+\cite{veenmanIFAC} for state-space derivation). Here the essential difficulty is that $\Psi_i$ are often 
 tall basis transfer matrices and are not invertible. Hence we look for square factorizations that are inherently 
 linked to J-spectral factorizations of quadratic forms. We will first take a detour on the structural properties 
 of the multipliers in general before we state the actual multiplier replacement. The style is based on \cite{helmersson2}.
@@ -761,11 +763,12 @@ $J= \operatorname{diag}\{-I_n,I_p\}$ is said to be the signature matrix of $M$.
 \end{define}
 When $\nu(M)\neq 0$ the type of factorizations given in \Cref{thm:IQCinertia} is known as \enquote{\emph{$J$-spectral 
 factorization}} and exact solvability conditions are derived which relate the solvability of a certain Riccati equation to the 
-existence of such factorizations (see, e.g.,\cite{ranautomatica}). However, to the best of our knowledge, there is no simple implementable result 
-that guarantees the solvability of such indefinite Riccati equations. Since we aim for an automated iteration 
+existence of such factorizations (see, e.g.,\cite{ranautomatica}). However, to the best of our knowledge, there 
+is no simple implementable result that guarantees the solvability of such indefinite Riccati equations. 
+Since we aim for an automated iteration 
 algorithm, we can not utilize these nice algebraic results. Additionally, there are also numerous generalizations, 
 nuances about the assumptions whether $(A,B)$ is just stabilizable or also controllable, whether $Q$ is indefinite 
-in general etc. in the previous theorem. However, these are not relevant here. Due to this missing technical step, 
+in general etc (see \cite{kucera}) in the previous theorem. However, these are not relevant here. Due to this missing technical step, 
 we make use of particular sign assumptions on the subblocks of the multiplier to perform partial factorizations and 
 then obtain an overall factorization in the suitable form with steps that have solutions guaranteed to exist. For 
 these steps, it suffices to use the standard spectral factorization results well-knwon from LQ-type problems. The 
@@ -897,7 +900,7 @@ C_s^T \\ 0 \\\hline D_s^T
 \bigg]
 \end{equation}
 partitioned accordingly. Also we have $G(\infty)= D_s^TD_s$. For the computation of the spectral factors 
-consider the following tall multiplier that satisfies
+consider the following multiplier with tall outer factors that satisfies
 \[
 \Phi(\iw)^*M\Phi(\iw) \succ 0
 \]
@@ -907,9 +910,9 @@ for all $\omega\in\Real_e$ as we had a few examples in \Cref{chap:analysis}. Usi
 \pmatr{C_{\Phi}^TMC_{\Phi}&D_{\Phi}^TMC_{\Phi}\\C_{\Phi}^TMD_{\Phi}&D_{\Phi}^TMD_{\Phi}}
 \pmatr{(sI-A_{\Phi})^{-1}B_{\Phi}\\I}
 \label{eq:specfactshuffle}
-\end{equation} which is the desired form given in \Cref{thm:zhouspecfact}. Since we have omitted the proof, the relation with the 
+\end{equation} which is the desired form given in \Cref{thm:zhouspecfact}. Though we have omitted the proof, the relation with the 
 Riccati equation can be sketched using the LMI version of this constraint. Via KYP Lemma, this is equivalent to the existence 
-of a symmetric matrix $Z$ such that 
+of a symmetric matrix $X$ such that 
 \begin{equation}
 \pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}}^T
 \pmatr{0 &X &0\\X &0 &0\\0 &0 &M}
@@ -939,11 +942,229 @@ Cholesky etc.) $\hat{D}_\Phi^T\hat{D}_\Phi\succ 0$. Therefore, one possiblity of
 \Phi_s(s) = \left[
 \begin{array}{c|c}
 	A_\Phi &B_\Phi\\\hline
-	\hat{D}_\Phi^{-T}(XB_{\Phi}+C_{\Phi}^TMD_\Phi)^T&\hat{D}_\Phi
+	\hat{D}_\Phi^{\mathstrut -T}(XB_{\Phi}+C_{\Phi}^TMD_\Phi)^T&\hat{D}_\Phi
 \end{array}
 \right]
 \]
-such that $\Phi(s),\inv{\Phi}(s)\in\mathcal{RH}_\infty$.
+such that $\Phi(s),\inv{\Phi}(s)\in\mathcal{RH}_\infty$. 
+
+\begin{rem}
+We have to emphasize that it's the structure that matters and not 
+the method with which we arrive to the desired structure. For a particular custom multiplier, one can utilize other properties
+of the factorization. However, since many multipliers share the property of having $H_{22}\succ 0$ we use it as an assumption. 
+Therefore, there is nothing holistic about the methodolgy. As an example passivity multipliers that we have utilized before 
+can not be factorized using this argument. Hence, one can use the the results of \cite{goh962}.
+\end{rem}
+
+Now that we have given the basic idea behind the dynamic multiplier factorization, we have enough material to 
+describe the steps of the controller-multiplier iteration. 
+
+\subsubsection{The Pseudo-Code for Controller-Multiplier Iteration}
+The actual technical problems are all addressed above and can be found in the literature also cited above. However, 
+for the practitioners who are not interested in the proofs and other derivation related issues we provide a standalone 
+rundown of the controller-iteration steps. 
+
+
+\paragraph{Preliminary Step} Before starting the controller design, it is important to check a few often overlooked issues before
+starting the design iteration.
+\begin{itemize}
+	\item The plant $G$ is a generalized plant and, if any, the $D_{uy}$ block of the state-space representation is zeroed. After the
+	control design, the original controller can be recovered under the assumption that $(I-D_KD_{uy})^{-1}$ is nonsingular.
+	\item The performance weights are not too demanding i.e. high-performance nominal control design might have very little robustness
+	properties hence it's better to redesign the performance weights after looking at the robust controller obtained later. By doing
+	so one can see the effect of the weights by plotting the performance channel entries. 
+	\item The control channels are weighted, even slightly, to avoid the controller gains blow up when unconstrained by the LMI solvers.
+	This might not be relevant for the synthesis case however due to the non-convex nature of the iteration it's more likely to get a 
+	infeasible analysis certificate even though the synthesis step returns a feasible controller.
+	\item After the interconnection of the weights it is crucial that the state-space data is minimal and balanced. It also helps to
+	cleanup the numerical noise from the state-space matrices i.e. zeroing out the entries that are less than, say, $10^{-6}$. 
+\end{itemize}
+Then we are ready to obtain the first nominal controller that will allow us to start the iteration. 
+\paragraph{Initial Step} The initial step is designing \emph{any} controller that stabilizes the system and satisfies some performance
+specifications that can be described as a quadratic form. For the common transparency case, we can use the $\mathcal{H}_\infty$ norm
+of the force error and position error for the remote and local site. Then required conditions to be checked while minimizing $\gamma$
+is given by \Cref{thm:nomsynthLMI} for 
+\[
+P_p = \pmatr{-\gamma^2 I&\\&I}
+\]
+where $\gamma^2$ is inserted into another variable to make the condition affine. Then, using the factorization $I-XY=UV^T$ we obtain 
+$U$ and $V$. Then using these matrices we backsubstitute the $X,Y,K,L,M,N$ varibles to obtain the controller matrices. 
+Alternatively one can also utilize the results of \cite{gahapk} with a two step approach to solve the LMIs, first eliminating the 
+controller matrices from the LMI and obtain valid Lyapunov matrices then using these, solving the original LMI for the controller
+matrices. We reemphasize that the method from which we obtain the controller is irrelevant. One can also use the reduced order
+controller construction algorithm of \cite{helmerssontac}. It has been demonstrated that the resulting controller is numerically
+more well-conditioned. Moreover, it has been shown that the unconstrained parts of the problem can be identified which is a major
+issue in a MIMO setting.
+
+\paragraph{Analysis Step} Once we have obtained a nominally stabilizing controller, the nominal part of the uncertain closed loop 
+plant, $(G\star K)$, is obtained. Since this interconnection is for the full uncertainty size, we then parametrize the uncertainty 
+size and reflect it to the system as depicted in \Cref{fig:uncicparam}. This allows us to use the same multipliers without scaling
+with $r$, hence avoiding multipliying the decision variables with small numbers. Therefore, with the initial balanced and minimal
+realization of the plant such parameterization is relatively healthier than scaling the unknowns a priori. Another problem is to 
+strip down the $r$ value after a feasible multiplier is found (with spectral factorization in mind). Factorizing a small scalar
+from a matrix should be avoided.
+
+In summary, we use the parametrization of the dynamic multipliers
+\[
+\Pi(\iw) = \Psi^*(iw) M \Psi(\iw)
+\]
+Then, either in frequency domain or via minimal state-space representations, we form the system
+\[
+H_{aug} \coloneqq \pmatr{\Psi(\iw)&\\&I}\left(\begin{array}{cc}
+	I &0\\
+	\multicolumn{2}{c}{H_q}\\\hline
+	0& I\\
+	\multicolumn{2}{c}{H_z}
+\end{array}
+\right).
+\]
+Hence, we have the familiar FDI
+\[
+H_{aug}^*\pmatr{M&\\&P_p}H_{aug} \prec 0
+\]
+together with individual multiplier class inequalities e.g. positivity of $D$-scalings etc. Hence, along the lines of the examples 
+in \Cref{chap:analysis} and the conditions given above, the FDIs are converted to LMIs and solved for the performance optimization.
+
+\begin{rem}
+Once again, it's important to remind that the positivity of the involved Lyapunov certificates in the LMI set are not required in the 
+analysis, since all the systems are stable i.e. the closed loop is stabilized by $K(s)$ and the outer basis matrices live in 
+$\mathcal{RH}_\infty$, there is no need to enforce positivity constraints. Doing so would constrain the set of valid symmetric matrices
+significantly.
+\end{rem}
+
+
+\begin{figure}%
+\centering
+%\usetikzlibrary{shapes.arrows}
+\begin{tikzpicture}[>=stealth,
+myarrow/.style={draw,fill=gray,shape border uses incircle,
+                shape=single arrow,inner sep=4pt,single arrow head extend=1mm},
+myblock/.style={draw,minimum width=7.5mm,minimum height=8mm,inner sep=2pt}
+]
+\node[myblock] (plant) at (0,0) {$G\star K$};
+\node[myblock] (unc) at (0,1) {$0$};
+\draw[->] (plant.160) -| ++(-5mm,5mm) |- (unc.west);
+\draw[<-] (plant.20 ) -| ++( 5mm,5mm) |- (unc.east);
+\draw[->] (plant.-160)-- ++(-5mm,0mm) node[left] {$z$};
+\draw[<-] (plant.-20) -- ++( 5mm,0mm) node[right]{$w$};
+\node[myarrow] (a) at ([shift={(1cm,5mm)}]plant.east) {};
+\begin{scope}[shift={(3.5cm,0cm)}]
+\node[myblock] (plant) at (0,0) {$G\star K$};
+\node[myblock] (unc) at (0,1) {$r\Delta$};
+\draw[->] (plant.160) -| ++(-5mm,5mm) |- (unc.west);
+\draw[<-] (plant.20 ) -| ++( 5mm,5mm) |- (unc.east);
+\draw[->] (plant.-160)-- ++(-5mm,0mm);
+\draw[<-] (plant.-20) -- ++( 5mm,0mm);
+\end{scope}
+\node[myarrow] (a) at ([shift={(1.25cm,5mm)}]plant.east) {};
+\begin{scope}[shift={(7.5cm,0)}]
+\node[myblock] (plant) at (0,0) {$G\star K$};
+\node[myblock] (unc) at (0,1) {$\Delta$};
+\draw[->] (plant.160) -| ++(-5mm,5mm) |- (unc.west);
+\draw[<-] (plant.20 ) -| ++( 5mm,5mm) |- (unc.east);
+\draw[->] (plant.-160)-- ++(-5mm,0mm);
+\draw[<-] (plant.-20) -- ++( 5mm,0mm);
+\end{scope}
+\begin{scope}[shift={(0,-2.5cm)}]
+\node[myblock] (plant) at (0mm,5mm) {$G(0)\star K$};
+\draw[->] (plant.west)-- ++(-5mm,0mm);
+\draw[<-] (plant.east) -- ++( 5mm,0mm);
+\node[myarrow] (a) at ([shift={(8mm,0)}]plant.east) {};
+\begin{scope}[shift={(3.5cm,0cm)}]
+\node[myblock] (plant) at (0,0) {$G(r)\star K$};
+\node[myblock] (unc) at (0,1) {$\Delta$};
+\draw[->] (plant.160) -| ++(-5mm,5mm) |- (unc.west);
+\draw[<-] (plant.20 ) -| ++( 5mm,5mm) |- (unc.east);
+\draw[->] (plant.-160)-- ++(-5mm,0mm);
+\draw[<-] (plant.-20) -- ++( 5mm,0mm);
+\end{scope}
+\node[myarrow] (a) at ([shift={(1cm,5mm)}]plant.east) {};
+\begin{scope}[shift={(7.5cm,0)}]
+\node[myblock] (plant) at (0,0) {$G(1)\star K$};
+\node[myblock] (unc) at (0,1) {$\Delta$};
+\draw[->] (plant.160) -| ++(-5mm,5mm) |- (unc.west);
+\draw[<-] (plant.20 ) -| ++( 5mm,5mm) |- (unc.east);
+\draw[->] (plant.-160)-- ++(-5mm,0mm);
+\draw[<-] (plant.-20) -- ++( 5mm,0mm);
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\caption{Parametrization of the plant with uncertainty size}%
+\label{fig:uncicparam}%
+\end{figure}
+
+
+After the squaring the multipliers, we obtain the new augmented open loop plant by reshaping the augmented closed
+loop equations given by \eqref{eq:augplant}. Starting from an arbitrary $r\in[0,1]$ depending on the success/failure
+of the feasibility result, $r$ is increased/decreased, say via a bisection algorithm, until a particular $r^*_a$ is 
+achieved. 
+
+\paragraph{Synthesis Step} The multiplier-augmented new plant is subjected to the variable transformation 
+\enquote{controller $\to v$} is performed and then via \Cref{thm:synthesis} the LMIs are solved. The initial $r$ can 
+be taken as $r^*_a$ and the bisection is reduced to the interval $r\in[0.99r^*_a,1]$ such that if for some numerical
+reason $r^*_a$ is not feasible, a little play is introduced to relax the numerical conditioning. $0.99$ is based on our
+numerical experience. However, we have also seen improvement if this play value is a function of the iteration number. 
+In other words, in the early iterations the play value can be relaxed down to $0.95$ and then getting stricter as the 
+iteration progresses.
+
+Another important issue after the synthesis is that we have to treat carefully is the innocent looking $I-XY = UV^T$. The
+numerical noise contaminating $U,V$ entries plays a big role in obtaining healthy controller matrix data due to the 
+inverses of $U$ and $V$. The essential difficulty is the eigenvalues of $XY$ approaching to unity hence rendering the 
+matrix $I-XY$ badly conditioned with respect to inversion. Some optimization-based remedies regarding the LMI problem setup 
+are given in \cite{lmibook99} such that the resulting matrix eigenvalues are forced away from unity. However, even this is 
+established, it's not guaranteed that the resulting matrices $U,V$ would be free of problems. There are many possibilities 
+and in our opinion, a comprehensive code should check as many possibilities as possible. Although, this should be left 
+to numerical analysts, seemingly the easiest method is basing the matrices on $(I-XY)^{-1}= V^{-T}U^{-1}$ instead of 
+factorization and then inversion. We have implemented a simple two-stage validation scheme. First, we try the regular 
+factorize-invert method and clean up the matrices free from dangling tiny entries. Then closed loop is formed and stability 
+is checked. If the closed loop eigenvalues are sufficiently away from zero and the controller matrix entries are less than 
+some large number thenthe result is marked as a valid one. Otherwise, the inverse is factorized and same process is repeated
+with condition number checks etc. After this step the last known previous attempt is also recorded and if the next analysis 
+step can not improve the current controller is discarded and the last known attempt is utilized. Obviously, many other checks 
+should be implemented however it goes beyond the scope of this manuscript. 
+
+
+
+
+\begin{rem} It should be noted that balancing the plant data between the analysis and the synthesis steps lead to 
+worse numerical margins as one particular feasible result in one step tends to be infeasible in another step. We can speculate 
+that this type of modifications don't work (though theoretically should help) since the LMI solvers indeed push the 
+decision variables to such an extreme that slight changes in the constant part of the LMIs render the solutions 
+infeasible. Combined with the various factorizations etc. we have decided to not to modify the plant among the 
+iteration steps. However the remark for the initial balancing step is not affected and should be performed regardless 
+of this. It's unfortunately up to the designer to watch for very high-frequency behavior of the plant-controller
+interaction as this can affect the feasibility of the iteration. 
+\end{rem}
+
+\begin{rem} In the norm minimization cases for performance specification, e.g., $\mathcal{H}_\infty$ norm $\gamma$,
+it's very important to keep the norm constrained from above in a  rather stringent fashion. One can see that a single
+number to drive the whole optimization procedure, often involving hundreds of decision variables, is simply asking for 
+trouble. In practice, it's a good rule of thumb to set the upper bound norm for performance 5-10 times the nominal case
+performance. Otherwise, unrealistic, nonsensical $\gamma$ values in the order of $[10^3,10^4]$ or higher can be obtained
+resulting with seemingly valid controller matrices. Even if the result is numerically correct, those iterations should be
+discarded and a smaller $\gamma$ and/or smaller $r$ values should be assumed. Otherwise, either the next iteration or the
+discretized implementation are likely to suffer from unpredictable side-effects. If the robust performance $\gamma$ is 
+much larger than the nominal case then it might be a sign of a drastic qualitative change in the system properties and 
+thus it might help to shift the nominal case such that $\tilde{\Delta}=0$ corresponds to an uncertain plant already 
+closer to the problematic region in order to start with better robustness properties. 
+\end{rem}
+
+
+\paragraph{Termination Step} After the synthesis and analysis steps, the $r$ value typically gets saturated at some 
+particular $r^*$ or it starts to fluctuate around it. In case of such fluctuations, the algorithm should see whether
+the performance objective obtained at each step is close to each other. Otherwise it's a sign of a numerically invalid
+solution. One can either decrease the uncertainty size $r$ or constraint the performance objective further to force 
+each solution come closer. We have chosen another simple rule for the implementation:
+
+\begin{itemize}
+	\item After the synthesis step, check whether it's the first run of the iteration. If so, no convergence checks is
+	necessary.
+	\item Collect $r$ and $\gamma$ (both of analysis and synthesis steps) of the current iteration and compare it with 
+	the previous iteration. (Check if $r\approx 1$. If true, then compare only the performance.) Check if there is any 
+	significant (larger than some predefined value).
+	\item Check also whether analysis and synthesis $r$ and $\gamma$ values are close to each other. 
+	\item If all true terminate, otherwise continue. 
+\end{itemize}
 
 
 
@@ -951,7 +1172,24 @@ such that $\Phi(s),\inv{\Phi}(s)\in\mathcal{RH}_\infty$.
 
 
 
+\subsection{Closing Remarks}
+We need to emphasize that these numerical issues \emph{are} relevant for control theory and can not be belittled as 
+\enquote{mere implemetation details} as often treated in the 
+literature with an unjustified elitism. In fact it's quite the other way around however there is no need to digress 
+here. 
 
+Many problems similar to the ones mentioned above would be implicitly solved if better and customized control-oriented 
+solvers that take the numerical accuracy into account as much as the optimization objective, emerge in the future. 
+Especially, commercial software suites should be abandoned and more open-source free-software based solutions should be 
+developed as a community. The tools that contemporary control theorists are utilizing are mediocre and even worse this 
+simple fact goes unnoticed. Based on this observation we regret to assert that many results that appear in the literature
+are not tested properly under reasonable \emph{stress} and in fact most can not survive under numerical scrutiny. 
+Proving stability is not conclusive but a supportive part of the control engineering however much to our surprise 
+this is completely rejected in academic circles. 
+Therefore it is of utmost importance that the code/simulation/data that lead to the conclusions of the literature
+should be published without any exception. This would also help to ease the reviewing procedure as the reviewers would 
+get the chance to test out different plants etc. Iteratively, this would force the experts to pay attention to the 
+real control problems instead of intellectual but rather obscure skirmish of generalizations.
 
 
 

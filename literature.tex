@@ -8,16 +8,19 @@ if we just focus on the local and the remote devices that would be used for mani
 we see that they are, whether linear or nonlinear, motion-control systems with well-studied 
 properties. Hence, one can view the open-loop teleoperation as a system with a block 
 diagonal structure. However, unlike the typical motion-control systems, these two disjoint systems must be stabilized 
-simultaneously by the same controller. that is performing sufficiently in order to \enquote{fool} the user such that the user feels 
-a force feedback as if s/he is actually operating at the remote medium. We emphasize at this point that the 
-delayed/undelayed local control loops can be seen as the entries of a structured central controller. 
-Hence, the outputs of any of these system blocks become exogenous inputs of the other and these are regulated 
+simultaneously by the same controller, that is performing sufficiently in order to \enquote{fool} the user such that the user feels 
+a force feedback as if s/he is actually operating at the remote medium. We need to emphasize that the 
+delayed/undelayed local control loops can be seen as the entries of a structured central controller. Thus, there 
+is no reason to distinguish control methods at this point.  
+
+With this structure, the outputs of either of these subsystems become exogenous inputs of the other and these are regulated 
 by the to-be-designed controller. Therefore, it is this controller that makes a teleoperation system perform 
 adequately or, as in many cases, drive to instability.
 
 
 For example, in the case of the so-called free-air motion (i.e. the remote device is free to roam in the remote site), the human force input 
-to the local device and/or the position of the local device should be tracked by the remote device. In the case of a 
+to the local device and/or the position of the local device should\footnote{or better, that's what we believe today} 
+be tracked by the remote device. In the case of a 
 hard-contact of remote device with the environment, however, these inputs should be counteracted  if the force vector points into 
 the obstacle. Hence, the force signal is simultaneously tracked for mimicking the user motion and  
 is defied in case of a resisting force at the remote site. As if this is not challenging enough, 
@@ -57,7 +60,7 @@ ever-increasing computational power and the popularity of Virtual Reality (VR), 
 technology received more attention for a possible use in the space-, underwater-, and medical-related 
 tasks. Together with the advances in control theory and network theory (e.g. \cite{miyazaki,furuta}), 
 a more systematic control methodology is adopted. Especially, stability analysis results that can be 
-related to design guidelines (physical parameter bounds, bandwidth limitations etc.) are utilized
+related to design guidelines (physical parameter bounds, bandwidth limitations etc.) were utilized
 and limits of performance were explored. A particular phenomenon, namely the destabilizing effect 
 of the delays in the teleoperation, lead the experts of the field to delve more into the systematic 
 analysis tools and qualitative aspects of teleoperation. Especially, the use of the concepts; passivity, 
@@ -74,7 +77,10 @@ note that many parts of the bilateral teleoperation problem can be scrutinized u
 Hence, there is no shortage of techniques for which bilateral teleoperation problem is an ideal 
 test case. In this plethora of methods, for example, the variation of human and environment properties give 
 naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed under 
-switched control systems, jump control systems or constrained linear systems etc. Before we go into the 
+switched control systems, jump control systems or constrained linear systems etc. Thanks to these advances, 
+as we will elaborate later, the main unsolved problem is not a methodolgical one but a motivational one. In
+other words we are lacking a fundamental understanding of the problem not the solution methods in terms of 
+what the requirements are and what a good device is if compared to another. Before we go into the 
 details of the proposed methods of this thesis, let us sample a few important and successful approaches 
 reported so far together with their shortcomings if any. We emphasize that the literature covered here is 
 far from comprehensive and deliberately shaped with pragmatic intentions. Hence a large body of research is 
@@ -249,7 +255,7 @@ systems for bilateral teleoperation among many others.
 As mentioned above, network theory offers a great opportunity for modeling the teleoperation systems, or better, avoiding 
 the refined modeling. Still, to invoke the stability analysis and synthesis results of the network theory there is a need 
 to further distinguish $\Delta_s,\Delta_l$ from the universum of $1$-ports. Otherwise there is not much we can conclude 
-from such an interconnection, put differently, they can be any arbitrary model with arbitrary behavior set as long as they 
+from such an interconnection, put differently, they can be any arbitrary models with arbitrary behavior set as long as they 
 respect the port condition. This is obviously a crude approximation of the real physical interaction that teleoperation 
 systems exhibit. 
 
@@ -259,10 +265,10 @@ a typical energy dissipation problem.
 Hence the view of the designer is tuned to watch for the energy sources and interaction between two distant media. This approach 
 treats the human and the environment as passive $1$-port circuit elements with additional effort sources modeling the 
 intentional force input to the system. The controller(s) act as the energy regulator preventing excess energy generation 
-to avoid a possible instability. Moreover, as summarized in \Cref{chap:apdxnetwork} and in the analysis section, one can use the 
+to avoid a possible instability. Moreover, as summarized in \Cref{chap:apdxnetwork} and in \Cref{chap:analysis}, one can use the 
 network theory based conditions to assess the stability and performance conditions thanks to this hypothesis.
 
-This brings us to the discussion of the justification of such an assumption as it is generally not given in full generality in the
+This brings us to the discussion of the justification of the assumption as it is generally not given in full generality in the
 literature. If one scans through the literature about the passivity of human operators, it is the Hogan's paper \cite{hogan89}
 that is almost universally cited. The striking detail is, however, that Hogan never claims that the human hand/arm is a passive
 system. Instead he clearly shows that under certain conditions, human behavior is indistinguishable from that of a 
@@ -281,19 +287,18 @@ human arm is carefully tuned to preserve stability under the
 widest possible set of conditions.
 \end{quote}
 Moreover, the task that is given to human operators and analyzed afterwards, can be considered as a biased one because the success 
-of the test is related to passive behavior of the human. The task is, roughly speaking, holding a handle which is perturbed by random disturbances and 
-trying to keep the handle still at a predefined position on the 2D plane. Hence, the task is simply to mimic a passive 
-system. Had it been the case that the human would exhibit non-symmetric stiffness matrix, it would simply be a failure of the 
-test subject (regardless of the physical limitations of the human arm in general). Note that this 
-is a plausible situation for the rehabilitation tasks. The other possibility would then be that the test subject was unable to keep up 
-with the changes, or using the control theory jargon, the bandwidth of the subject was lower than the required agility to 
-perform the test adequately.  The well-known phenomenon due to such behavior is the \enquote{pilot induced oscillations} in which the pilot
-of an aircraft, while trying to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many distinct reasons 
-(the phase lag of the pilot, response time of the aircraft etc.). We refer to the interesting 
-report \cite{mcruer} for a more detailed exposition. Also, if for some reason, the task at hand is to prevent the system 
-to reach a steady state at a certain position and the perturbations are applied accordingly i.e., to create a virtual negative potential, 
-the results obtained from the experiments would most probably differ from that of \cite{mussa85}. Thus, it's emphasized here 
-that the passivity of the human is closely linked to the task requirements. 
+of the test is related to the passive behavior of the human. The task is, roughly speaking, holding a handle which is perturbed by 
+random disturbances and trying to keep the handle still at a predefined position on the 2D plane. Hence, the task is simply to mimic 
+a passive system. Had it been the case that the human would exhibit non-symmetric stiffness matrix, it would simply be a failure of 
+the test subject (regardless of the physical limitations of the human arm in general). Note that this is a plausible situation for 
+the rehabilitation tasks. The other possibility would then be that the test subject was unable to keep up with the changes, or using 
+the control theory jargon, the bandwidth of the subject was lower than the required agility to perform the test adequately. The 
+well-known phenomenon due to such behavior is the \enquote{pilot induced oscillations} in which the pilot of an aircraft, while trying 
+to stabilize the aircraft, via overcorrection inputs, destabilizes the system due to many distinct reasons (the phase lag of the 
+pilot, response time of the aircraft etc.). We refer to the interesting report \cite{mcruer} for a more detailed exposition. Also, 
+if for some reason, the task at hand is to prevent the system to reach a steady state at a certain position and the perturbations are 
+applied accordingly i.e., to create a virtual negative potential, the results obtained from the experiments would most probably differ 
+from that of \cite{mussa85}. Thus, it's emphasized here that the passivity of the human is closely linked to the task requirements. 
 
 
 \begin{rem}\label{rem:filament}
@@ -320,11 +325,11 @@ capture the natural properties human arm before the human correction intervenes.
 We believe that it is unaviodable to introduce some concepts from the muscle physiology in order to put Hogan's 
 argument into some mechanical engineering perspective. It is simply impossible for the author to form a detailed analysis, 
 however, mentioning the involved process via some mechanical analogies in order to relate the results of 
-Hogan and Mussa-Ivaldi seems feasible. This would emphasize the reason why we think that the common inference from their experiments 
-in the literature is not inline with the conclusions of these studies.
-We refer the reader to the physiology literature e.g., \cite{spudich,millman,offer,horowits,yildiz} and references therein for a full treatment. Hence, we 
-will only give a rough picture about the apparent behavior. Nevertheless the point that we want to emphasize is, fortunately, 
-not related to the inner workings of the human muscles.
+Hogan and Mussa-Ivaldi seems feasible. This would emphasize the reason why we think that the common inference 
+from their experiments in the literature is not inline with the conclusions of these studies. We refer the reader 
+to the physiology literature e.g., \cite{spudich,millman,offer,horowits,yildiz,geeves} and references therein for a full 
+treatment. Hence, we will only give a rough picture about the apparent behavior. Nevertheless the point that we want 
+to emphasize is, fortunately, not related to the inner workings of the human muscles.
 
 
 
@@ -347,6 +352,88 @@ not related to the inner workings of the human muscles.
 \label{fig:lit:muscle}%
 \end{figure}
 
+\begin{figure}%
+\centering%
+\begin{tikzpicture}
+\begin{scope}[]
+\begin{scope}[]
+\begin{scope}[rotate=90]
+\draw[domain=0.6*pi/3:6.5*pi/3,
+samples=50,draw=none,
+mark=o*,
+mark size=2mm,
+mark options={fill=white},
+mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] function{3*sin(t),0.1*sin(2*t)};
+\filldraw[fill=white] (tpt-49) ++(10:2mm) arc (110:40:2mm) arc (-40:156:2mm) arc (65:5:2mm) ;
+\fill (tpt-42) ++(150:2mm) arc (150:210:2mm) arc (330:30:2mm);
+\end{scope}
+\node[draw,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(2mm,-3.5mm)}]tpt-42) (myo) {};
+\node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
+\draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
+\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw (b) --  (actin.north west);
+\end{scope}
+\begin{scope}[yshift=-7cm]
+\begin{scope}[rotate=90]
+\draw[domain=0.6*pi/3:6.5*pi/3,
+samples=50,draw=none,
+mark=o*,
+mark size=2mm,
+mark options={fill=white},
+mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] function{3*sin(t),0.1*sin(2*t)};
+\filldraw[fill=white] (tpt-49) ++(10:2mm) arc (110:40:2mm) arc (-40:156:2mm) arc (65:5:2mm) ;
+\fill (tpt-42) ++(150:2mm) arc (150:210:2mm) arc (330:30:2mm);
+\end{scope}
+\node[draw,rotate=-20,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(2mm,-3.5mm)}]tpt-42) (myo) {};
+\node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
+\draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
+\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw (b) --  (actin.north west);
+\end{scope}
+\end{scope}
+
+\begin{scope}[xshift=7cm]
+\begin{scope}[]
+\begin{scope}[rotate=90]
+\draw[domain=0.6*pi/3:6.5*pi/3,
+samples=50,draw=none,
+mark=o*,
+mark size=2mm,
+mark options={fill=white},
+mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] function{3*sin(t),0.1*sin(2*t)};
+\filldraw[fill=white] (tpt-49) ++(10:2mm) arc (110:40:2mm) arc (-40:156:2mm) arc (65:5:2mm) ;
+\filldraw[fill=white] (tpt-42) ++(150:2mm) arc (150:210:2mm) arc (330:30:2mm);
+\end{scope}
+\node[draw,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(7mm,-3.5mm)}]tpt-42) (myo) {};
+\node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
+\draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
+\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw (b) --  (actin.north west);
+\end{scope}
+\begin{scope}[yshift=-7cm]
+\begin{scope}[rotate=90]
+\draw[domain=0.6*pi/3:6.5*pi/3,
+samples=50,draw=none,
+mark=o*,
+mark size=2mm,
+mark options={fill=white},
+mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] function{3*sin(t),0.1*sin(2*t)};
+\filldraw[fill=white] (tpt-49) ++(10:2mm) arc (110:40:2mm) arc (-40:156:2mm) arc (65:5:2mm) ;
+\filldraw[fill=white] (tpt-42) ++(150:2mm) arc (150:210:2mm) arc (330:30:2mm);
+\end{scope}
+\node[draw,rotate=-20,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(7mm,-3.5mm)}]tpt-42) (myo) {};
+\node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
+\draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
+\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw (b) --  (actin.north west);
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\caption{asdfasdf}%
+\label{fig:asdfasdf}%
+\end{figure}
+
+
 The skeletal muscle activation takes place via a process described by the \emph{sliding filaments model}. The muscles 
 consist of muscle fibers and muscle fibers are made up of \emph{myofibrils}. The myofibrils involve different types of thin 
 and thick filaments, mainly of the type \emph{actin}, \emph{myosin} and \emph{titin} filaments. The myosin filaments involve 
@@ -356,16 +443,15 @@ ATP is utilized. Hence, the muscle needs extra energy to relax which is the reas
 and some types of the muscle spasms when this additional energy source can not be provided or ATP can not bind to the 
 actin filament for some reason. 
 
-
-One can use an analogy between the mechanical pencil clutch and sliding filaments with the exception that the spring action 
-is absent in the muscle cell. In other words, when 
-pressed from the eraser head mechanical pencil stays open such that the graphite layer can slide freely until the eraser 
-cap is pulled back. Another important difference is that muscle behavior is not rachet-like but smooth due to the fact 
-that each cycle takes place independently. Thus, at each time instant, different myosin extensions can be found at 
-different phases of the cycle very much like a helical gear pair that are always in contact at one point. Using this 
-analogy, ATP molecules are used to open and to close the pencil clutch made up of myosin extensions and actin filament 
-is pushed forwards. Moreover, titin filaments can be thought as the connecting rod of the pencil from the cap to the clutch 
-which is mostly responsible for the passive elasticity of the muscles. 
+According to the articles given above, the muscle activation is analogous to a clock escapement mechanism \cite{headrick}. 
+But in our opinion, one can better use an analogy of a mechanical pencil clutch and sliding filaments with the exception that the spring action 
+is absent in the muscle cell. In other words, when pressed from the eraser head mechanical pencil stays open such that 
+the graphite layer can slide freely until the eraser cap is pulled back. Another important difference is that muscle 
+behavior is not rachet-like but smooth due to the fact that each cycle takes place independently. Thus, at each time 
+instant, different myosin extensions can be found at different phases of the cycle very much like a helical gear pair 
+that are always in contact at one point. Using this analogy, ATP molecules are used to open and to close the pencil clutch 
+made up of myosin extensions and actin filament is pushed forwards. Moreover, titin filaments can be thought as the 
+connecting rod of the pencil from the cap to the clutch which is mostly responsible for the passive elasticity of the muscles. 
 
 
 Note that binding or detachment of these extensions is also regulated by the $\mathrm{Ca}^{++}$ concentration in the muscle cell 

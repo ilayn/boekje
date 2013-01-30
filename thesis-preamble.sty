@@ -48,6 +48,8 @@
 \setsecheadstyle{\marginnum\secstyle}
 \setsubsecheadstyle{\marginnum\subsecstyle}
 \setsubsubsecheadstyle{\marginnum\subsubsecstyle}
+\setparaheadstyle{\normalfont\normalsize\scshape\addperiod}%
+
 
 \setsecnumformat{\unexpanded{%
   %\protected@xdef\@tempa{{\upshape\S\csname the#1\endcsname}}}}
@@ -55,7 +57,7 @@
 
 %%%%%
 
-\renewcommand\contentsname{Table in Contents}
+\renewcommand\contentsname{Table Of Contents}
 \nouppercaseheads
 
 \def\printtoctitle#1{\section*{#1}}
@@ -149,7 +151,9 @@
     mathtools,
     booktabs,
     colortbl,
-		enumitem
+		enumitem,
+		wrapfig,
+		kantlipsum % For dummy text generation
 }
 
 
@@ -179,13 +183,17 @@ binary-units = true
 
 
 \usetikzlibrary{arrows,
-                calc,%
+        calc,%
 				matrix,%
 				positioning,%
 				decorations.markings,%
 				patterns,
 				matrix,%
-                circuits.ee.IEC
+        circuits.ee.IEC,
+				shapes.arrows,
+				shapes.geometric,
+				plotmarks,
+				decorations.pathmorphing
 				}
 								
 \usepgfplotslibrary{units}
@@ -279,11 +287,11 @@ binary-units = true
 %\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 %\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
 
-%\usepackage{docmute}
+\usepackage{docmute}
 
 %%%%%%%%%%%%%%%%%%%%
 
-%% MATHS
+% MATHS
 %\RequirePackage{amsmath,amssymb,bm,cool,mathtools}%,fngp
 %\@ifpackageloaded{mathpazo}{\PassOptionsToPackage{mathpazo}{flexisym}}{}
 %\RequirePackage{breqn}
@@ -362,8 +370,8 @@ binary-units = true
 
 
 %%% LISTS
-\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\normalfont\itshape #1}
-\tightlists
+%\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\normalfont\itshape #1}
+%\tightlists
 
 
 \renewcommand\cftchapterfont{\scshape}
@@ -436,4 +444,12 @@ dup mul neg 1.003 exch exp 1 exch sub
 dup
 dup
 }
+\makeatletter
+\pgfdeclareplotmark{o*}
+{%
+\pgfcoordinate{tpt-\the\pgf@plot@mark@count}{\pgfpointorigin}
+  \pgfpathcircle{\pgfpointorigin}{\pgfplotmarksize}
+  \pgfusepathqfillstroke
+}
+\makeatother
 \usepgfplotslibrary{smithchart}
