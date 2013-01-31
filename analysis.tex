@@ -47,8 +47,7 @@ in order to indicate the travel direction which translates to a negative sign in
 \label{fig:2}
 \end{figure}
 
-It is realistic to include a comprehensive treatment of this huge body research, but for the 
-sake of completeness, we present the general methodology by sampling a few important special cases. 
+For the sake of completeness, we present the general methodology by sampling a few important special cases. 
 To begin with, consider the following reformulation of the conditions of the small-gain theorem:
 \begin{equation}
 \begin{aligned}
@@ -445,8 +444,9 @@ lozano, arcara, parkcho, aziminejad, leespong}). We refer to the survey article 
 for a detailed exposition of these methods. A great deal of research has been devoted to 
 delay robustness tests in robust control that are applicable to a wide class of teleoperation 
 systems. We also refer to \cite{richard} for a general treatment of the subject (e.g. based on 
-Lyapunov-Krasovskii functionals as utilized by \cite{delgado}) and to IQC based results as e.g. 
-in \cite{scorletti,junsafonov,kaorantzer,niculescu}. 
+Lyapunov-Krasovskii functionals as utilized by \cite{delgado1,delgadoisie}) and to IQC based results as e.g. 
+in \cite{scorletti,junsafonov,kaorantzer,niculescu} (In \cite{delgado2}, it has been reported that 
+the results of \cite{kaorantzer} is utilized however the conditions and the derivations are omitted). 
 
 Here, we consider constant but uncertain delays and the maximum delay duration is bounded 
 from above by $\bar{\tau} > 0$ seconds. We emphasize that it requires only a simple 
@@ -905,7 +905,7 @@ allows to easily show the equivalence of the small gain and passivity theorems t
 
 %===================================================================================
 \subsection{Regions in the Complex Plane}
-Using a similar mechanism to what is given above, one can also characterize different domains in the complex 
+Using a similar mechanism to what is given above, one can also characterize other domains in the complex 
 plane different than the whole right half plane as long as it can be represented (or covered with) with a 
 quadratic constraint. Thus, once a multiplier family is set, it's a matter of evaluating the respective FDI for the system
 at hand. For example, recently in \cite{jazayeri}, a vertical strip-like domain for one of the LTI uncertainties is 
@@ -1648,10 +1648,9 @@ the time-varying uncertaint parameter $k(t)\in[0,1000]\si{\newton\per\metre}$.
 
 
 In this chapter, we have investigated the analysis problem from a Integral Quad\-ratic Constraints (IQCs) perspective. 
-The content is mainly based on \cite{polattro}. At this point, we have to openly state a few points
-about the motivation of such use of these recent tools provided by the control
-theory. These points have often come up during the author's discussions held with experts, colleagues and
-practitioners.
+The content is mainly based on \cite{polattro}. We include a particular reasoning for the use of these recent tools 
+provided by the robust control theory. These points have often come up during the author's discussions held with 
+experts, colleagues and practitioners.
 
 First and foremost argument is on the comparison with other passivity-based techniques. As we sampled a few cases
 in this chapter, IQC tests are far more general than passivity-based analysis results since passivity is a 

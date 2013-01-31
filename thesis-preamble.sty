@@ -385,11 +385,12 @@ binary-units = true
 
 
 %======== Thm style declaration
-\newtheorem{thm}{Theorem}
+\newtheorem{thm}{Theorem}[chapter]
 \newtheorem{coroll}[thm]{Corollary}
-\newtheorem{define}{Definition}
+\newtheorem{define}[thm]{Definition}
 \newtheorem{lem}[thm]{Lemma}
-\newtheorem{rem}{Remark}
+\newtheorem{rem}[thm]{Remark}
+%\renewcommand{\thetheorem}{\arabic{chapter}.\arabic{theorem}}
 
 %======== Shorthand notation
 \newcommand{\Real}{\mathbb{R}}

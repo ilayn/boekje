@@ -2,9 +2,10 @@
 \label{chap:apdxnetwork}
 
 
-We present the often encountered concepts in the bilateral teleoperation studies in a rather abstract fashion. Our aim is to
-prepare the basis for the main arguments in the body of this thesis. Hence, the experts of the field can safely skip this appendix. 
-The aim is to run down the basic stability related concepts, hence many circuit theory preliminaries are omitted.
+We present the often encountered concepts in the bilateral teleoperation studies in a rather abstract fashion. Our goal is to
+include the referred network theoretical basics for the main argument in the body of this thesis. Hence, the experts of the field can 
+safely skip this appendix. The aim is to run down the basic stability related concepts, hence some circuit theory preliminaries 
+are omitted.
 
 \section{Terminology}
 When dealing with electrical circuits, often the engineering practice is to neglect any changes to the signal traveling through 
@@ -167,10 +168,10 @@ reason for the electrical analog of a mass (in the force-current context) is req
 (see \cite{smith} for the development of the exact mechanical analogue of a capacitor, \emph{the inerter} which is succesfully implemented by 
 McLaren Mercedes and Renault F1 teams and being used succesfully since 2005\footnote{According to the official statements.}). We will not 
 go into the details and and simply refer to \cite{willemsCSM} for a thorough analysis of the pitfalls and quite nonintuitive power/energy 
-results. Though, the inappropriateness of such view is brought to attention in numerous studies by Jan C. Willems and his 
-colleagues, we are obliged to use the input/output formulation as we have no results regarding the behavioral approach to bilateral 
-teleoperation systems (yet). However, we remind the reader that the potential of a behavioral modeling of teleoperation systems
-is just unavoidable. 
+results. Though, the inappropriateness of view of input/output formalism which is adopted also in this thesis is brought to attention in 
+numerous studies by Jan C. Willems and his colleagues, we are obliged to use the input/output formulation as we have no results 
+regarding the behavioral approach to bilateral teleoperation systems (yet). However, we remind the reader that the potential 
+of a behavioral modeling of teleoperation systems is just unavoidable. 
 \end{rem}
 
 
@@ -178,7 +179,7 @@ Since every two-terminal port can be characterized by two variables ( ``through'
 characterize the interconnected $n-$port networks as if one quantity is due to the other. This is done by imposing an artificial 
 causality scheme, two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
 (\cite{behavbook}). This is the simplest kind of input/output view of physical systems via treating one port variable as the 
-\emph{cause} and the other one as the \emph{effect} to this cause e.g. the current is due to the voltage drop across the terminals or 
+\emph{cause} and the other one as the \emph{effect} of this cause e.g. the current is due to the voltage drop across the terminals or 
 vice versa. 
 
 Depending on the choice of the free variables, the system can be expressed in terms of impedance, admittance 
@@ -214,7 +215,7 @@ In relation to teleoperation, the {blocks} $\Delta_s$ and $\Delta_l$ refer to th
 \section{Passivity Theorem}
 In this section passivity related important concepts are defined in a compact fashion. Nevertheless, the material given here 
 is well-known and can be found in many classical sources such as \cite{hillmoylan77,desvid,vdschaftbook}. We chose to 
-follow closely \cite{desvid} for the presentation style. 
+follow \cite{desvid} closely for the presentation style. 
 
 Let $V$ be a linear space equipped with a scalar product, $\mathcal{T}$ be the index set of time and $F$ be a class of functions 
 $x:\mathcal{T}\to V$.
@@ -310,8 +311,8 @@ Note that, in our context $u_1,u_2$ model the voluntary part of the human/en\-vi
 
 
 \begin{thm}Consider the well-posed feedback interconnection shown in \Cref{fig:apdx:passint} and 
-described by \Cref{eq:apdx:passint1,eq:apdx:passint2}. Assume that there exist constants $\gamma_1,\beta_1,
-\delta_1,\beta'_1,\epsilon_2,\beta'_2$ such that the following conditions hold
+described by \Cref{eq:apdx:passint1,eq:apdx:passint2}. Assume that there exist constants $\gamma_1$,$\beta_1$,
+$\delta_1$,$\beta'_1$,$\epsilon_2$,$\beta'_2$ such that the following conditions hold
 \begin{align}
 \norm{H_1x}_T &\leq \gamma_1\norm{x_T}+\beta_1\\
 \langle x,H_1x\rangle_T &\geq \delta_1\norm{x_T}^2+\beta'_1\\
@@ -336,11 +337,11 @@ and interconnected to passive LTI termination immitances as in \Cref{fig:portrep
 \begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:lit:llew2}\end{equation} and
 \begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:lit:llew3}\end{equation} 
 or
-\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\label{eq:lit:llew3p}\end{equation}
+\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\end{equation}%\label{eq:lit:llew3p}
 for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
 \end{thm}
 
-Similarly, as is for Llewellyn's stability conditions, it is straightforward to derive 
+As is the case for Llewellyn's stability conditions, it is straightforward to derive 
 unconditional stability {tests if} the network is represented by scattering parameters. 
 In what follows, we denote transformed passive LTI uncertainties with $\tilde{\Delta}_{s}, 
 \tilde{\Delta}_l$ which are unity gain bounded. The corresponding interconnection is 

@@ -345,16 +345,16 @@ to emphasize is, fortunately, not related to the inner workings of the human mus
 %\draw[fill] (-95:1.5) circle (0.15);
 %
 %\end{tikzpicture}
-\begin{figure}%
-\centering
-\includegraphics[width=0.7\columnwidth]{\impath/literature/muscleoffer}%
-\caption[Muscle activation mechanism]{Muscle activation mechanism (taken from \cite{offer}) Going to be drawn from scratch!!}%
-\label{fig:lit:muscle}%
-\end{figure}
+%\begin{figure}%
+%\centering
+%\includegraphics[width=0.7\columnwidth]{\impath/literature/muscleoffer}%
+%\caption[Muscle activation mechanism]{Muscle activation mechanism (taken from \cite{offer}) Going to be drawn from scratch!!}%
+%\label{fig:lit:muscle}%
+%\end{figure}
 
 \begin{figure}%
 \centering%
-\begin{tikzpicture}
+\begin{tikzpicture}[transform shape, scale=0.5,decoration={zigzag,amplitude=1pt,segment length=1mm}]
 \begin{scope}[]
 \begin{scope}[]
 \begin{scope}[rotate=90]
@@ -370,7 +370,7 @@ mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] 
 \node[draw,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(2mm,-3.5mm)}]tpt-42) (myo) {};
 \node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
 \draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
-\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw[decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
 \draw (b) --  (actin.north west);
 \end{scope}
 \begin{scope}[yshift=-7cm]
@@ -387,7 +387,7 @@ mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] 
 \node[draw,rotate=-20,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(2mm,-3.5mm)}]tpt-42) (myo) {};
 \node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
 \draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
-\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw[decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
 \draw (b) --  (actin.north west);
 \end{scope}
 \end{scope}
@@ -407,7 +407,7 @@ mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] 
 \node[draw,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(7mm,-3.5mm)}]tpt-42) (myo) {};
 \node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
 \draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
-\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw[decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
 \draw (b) --  (actin.north west);
 \end{scope}
 \begin{scope}[yshift=-7cm]
@@ -424,13 +424,13 @@ mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] 
 \node[draw,rotate=-20,anchor=west,shape=ellipse,ultra thick,minimum width=1cm] (a) at ([shift={(7mm,-3.5mm)}]tpt-42) (myo) {};
 \node[draw,minimum height=5cm,minimum width=7mm] (actin) at ([shift={(2.5cm,-2mm)}]tpt-46) {};
 \draw (myo.east) -- ($(myo.east)!0.5!(actin.north west)$) coordinate (a);
-\draw[decoration=zigzag,decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
+\draw[decorate] (a) -- ($(myo.east)!0.80!(actin.north west)$)coordinate (b);
 \draw (b) --  (actin.north west);
 \end{scope}
 \end{scope}
 \end{tikzpicture}
-\caption{asdfasdf}%
-\label{fig:asdfasdf}%
+\caption[Muscle activation mechanism]{Muscle activation mechanism (adapted from \cite{geeves})}%
+\label{fig:lit:muscle}%
 \end{figure}
 
 
@@ -441,54 +441,54 @@ extensions that can bind to the thin actin filaments. The relative motion of the
 extensions via ATP hydrolysis. Moreover, these extensions stay connected or disconnected to actin filament unless more 
 ATP is utilized. Hence, the muscle needs extra energy to relax which is the reason behind \enquote{\emph{rigor mortis}} 
 and some types of the muscle spasms when this additional energy source can not be provided or ATP can not bind to the 
-actin filament for some reason. 
-
-According to the articles given above, the muscle activation is analogous to a clock escapement mechanism \cite{headrick}. 
-But in our opinion, one can better use an analogy of a mechanical pencil clutch and sliding filaments with the exception that the spring action 
-is absent in the muscle cell. In other words, when pressed from the eraser head mechanical pencil stays open such that 
-the graphite layer can slide freely until the eraser cap is pulled back. Another important difference is that muscle 
-behavior is not rachet-like but smooth due to the fact that each cycle takes place independently. Thus, at each time 
-instant, different myosin extensions can be found at different phases of the cycle very much like a helical gear pair 
-that are always in contact at one point. Using this analogy, ATP molecules are used to open and to close the pencil clutch 
-made up of myosin extensions and actin filament is pushed forwards. Moreover, titin filaments can be thought as the 
-connecting rod of the pencil from the cap to the clutch which is mostly responsible for the passive elasticity of the muscles. 
+actin filament for some reason. Moreover, binding or detachment of these extensions is also regulated by the 
+$\mathrm{Ca}^{++},\mathrm{Mg}^{++}$ concentration in the muscle cell and controlled, eventually, by motor neurons using yet another 
+chemical trigger. 
 
 
-Note that binding or detachment of these extensions is also regulated by the $\mathrm{Ca}^{++}$ concentration in the muscle cell 
-and controlled, eventually, by motor neurons using yet another chemical trigger. For the sake of simplicity, we would call a muscle 
-cell activated if the myosin extensions are binded to actin filament.
+Therefore, the individual muscle activation at the basic level is analogous to a clock escapement mechanism \cite{headrick} 
+i.e. each time the lever arm pulls back a thread of the gear at each time and the cycle repeats the resulting relative motion is very much 
+like a graphite coming out of a mechanical pencil when pressed from the eraser cap. Obviously, muscle behavior is not rachet-like 
+but smooth. This is because each of these mechanism operate independently. Thus, at each time instant, different myosin extensions 
+can be found at different phases of the cycle very much like a helical gear pair that are always in contact at one point. 
+Using this analogy, ATP molecules are used to open and to close the pencil clutch made up of myosin extensions and actin filament 
+is pushed forwards. Moreover, titin filaments can be thought as the connecting rod of the pencil from the cap to the clutch which 
+is mostly responsible for the passive elasticity of the muscles. 
 
+In summary, the muscles have varying non/backdrivable configurations. Moreover, we can lock our muscles in place
+e.g., we can try to keep our arm at one position during drilling etc. to increase the precision. Then, the arm becomes
+a stiff object with inherent stiffness of the connection rod (titin), pencil clutch (myosin actin), muscle tendons and
+ various other involved processes resisting to the applied strain. 
 
 Coming back to our original discussion, the stiffness of the arm that has been the subject of the experiments mentioned 
-above is, again invoking the analogy, based on the closed clutch response of the arm. In other words, the brain activates a certain
-number of muscle cells at each limb and when a perturbation is applied what is measured is a cumulative spring-like behavior of the 
-titin filaments, muscle tendons, and the bindings resisting to the applied strain. This is related to the \enquote{human's restoring force}
-given in \Cref{rem:filament}. 
+above is, again invoking the analogy, based on the closed clutch response of the arm. In other words, what is measured is a cumulative 
+spring-like behavior of the arm that is actively controlled to be kept at a certain configuration. This is related to the \enquote{human's 
+restoring force} given in \Cref{rem:filament}. 
 
-Having a spring-like property naturally implies that the arm is passive. But the problem with this argument,as far as the author understands,
-is that there is no reason to assume that the human arm exhibits a symmetric positive definite matrix at each time instant for an arbitrary trajectory. 
-In fact, as shown clearly in \cite{mussa85}, the major eigenvector of the stiffness matrix varies both in terms of 
-direction and magnitude. Therefore, it might be possible to extract energy from the human arm with some particular 
-pathological trajectory. Just in the case of a frozen time analysis of a time-varying operator does not imply stability, the 
-conclusion is only valid for postural analysis at a fixed configuration of the human arm but not for an arm trajectory. 
+Having a spring-like property naturally implies that the arm is passive. But the problem with this argument, as far as 
+the author understands, is that there is no reason to assume that the human arm exhibits a symmetric positive definite 
+matrix at each time instant for an arbitrary trajectory. In fact, as shown clearly in \cite{mussa85}, the major eigenvector 
+of the stiffness matrix varies both in terms of direction and magnitude. Therefore, it might be possible to extract energy 
+from the human arm with some particular pathological trajectory. Just in the case of a frozen time analysis of a time-varying 
+operator does not imply stability, the conclusion is only valid for postural analysis at a fixed configuration of the human arm 
+but not for an arm trajectory. 
 
 Therefore, it is our belief that the assumption of human arm being a passive operator is not an experimentally validated one. 
  
 
 
-Since it is customary to include the passivity hypothesis in the literature, we will assume that it is so. The question of how, 
-then, a human can possibly move anything while remaining passive is one that makes the whole 
-story even more complicated. The voluntary input of the human is taken as an exogenous and state independent input to the system. 
-Hence, the human cognitive input is an additional but independent force source acting on the handle together with the passive 
-human arm immitance.
+Since it is customary to include the passivity hypothesis in the literature, let us invoke it here too for the sake of the argument. 
+The question of how, then, a human can possibly move anything while remaining passive is one that makes the whole story even more 
+complicated. The voluntary input of the human is taken as an exogenous and state independent input to the system. Hence, the human 
+cognitive input is an additional but independent force source acting on the handle together with the passive human arm immitance.
 
 
 The reader would spot that this is not inline with Hogan's remark since the activation state in the muscle cells should be altered in 
-order to apply force. Once again, invoking our pencil analogy, we have to initiate a super-fast push-pull action on the eraser cap 
-of the pencil. This would certainly alter the postural stiffness matrix but we have neither experience nor expertise to find out how. 
-But, to the best of our knowledge, this is not given in any teleoperation study. In other words, the answer to the question of whether 
-the human's restoring force would exhibit the same properties during the force exertion phase is not known to us. It has been also shown 
-that muscle force is also related to the muscle tension-length properties \cite{eltit} which we have not considered in our analogy.
+order to apply force.In other words, we need to alter the stiffness matrix of the arm to be able to move but we have neither experience 
+nor expertise to find out how. But, to the best of our knowledge, this is not given in any teleoperation study. In other words, the 
+answer to the question of whether the human's restoring force would exhibit the same properties during the force exertion phase is 
+not known to us. It has been also shown that muscle force is also related to the muscle tension-length properties \cite{eltit} 
+which we have not considered in our analogy.
 
 Therefore, we have to further separate the human force into two parts, namely, the active neuromuscular feedback force that keeps the 
 human arm passive and the voluntary and cognitive force input applied to the system. How this is usually performed is not clear in the 
@@ -667,7 +667,7 @@ terminations. The actuation of the railcar is taken as state-independent input t
 
 
 The passivity assumptions are not necessary for stability but only sufficient. Because there exist stable interconnections that involves nonpassive 
-subsystems. Hence, the conservatism brought in by passivity theorem is quite high (especially in the nonlinear case). Facetious as it 
+subsystems. In particular, the conservatism brought in by passivity theorem is arbitrarily high (especially in the nonlinear case). Facetious as it 
 may seem, the test also takes into account the port terminations shown in \Cref{fig:lit:train} for a table-top joystick. We have to emphasize that
 the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network. It's that conservative.
 
@@ -677,7 +677,7 @@ energy exchange. The performance specifications are very difficult to formulate 
 to integrate into the analysis and synthesis steps using only the inner product structure. As an 
 example, the signals that are not port variables such as position errors, and nonlinear effects 
 that are functions of these signals, can't be utilized easily in the performance specifications. 
-Same difficulty arises in the normed space structures though much can be achieved. Unfortunately,
+Same difficulty arises in the normed space structures though much more can be achieved. Similarly,
 much sought after $\LL_\infty$ methods are not mature enough to handle any practical system without 
 excessive conservatism. 
 
@@ -688,7 +688,7 @@ In this case the external or observable energy exchange based on the port variab
 the case of not touching at all (a small motion on the device). 
 
 
-When the network,human, and the environment models are assumed to be Linear Time Invariant (LTI), the frequency domain methods
+When the network, human, and the environment models are assumed to be Linear Time Invariant (LTI), the frequency domain methods
 allow us the analyze the teleoperation systems for stability and performance. The most common stabiliy analysis tool for such 
 models is the Llewellyn's stability criteria (also often called absolute stability theorem or unconditional stability theorem). 
 For linear networks, the following definitions seem to be used quite widely (modified from \cite{chen91}): 
@@ -708,9 +708,12 @@ The well known conditions for stability of a two-port network, formulated in \ci
 As shown in \cite{rollett}, the conditions stated in \Cref{thm:apdx:llw} are invariant under immitance substitution. This result forms the 
 basis for almost all passivity-based frequency domain bilateral teleoperation stability analysis approaches in the literature. 
 We would also derive this theorem from an IQC perspective and show that it is actually the passivity counterpart of the 
-of the $D$-scalings in the $\mu$-tools. Thanks to the frequency domain formulation, it is possible  to rewrite the condition 
-\eqref{eq:lit:llew3} as a fraction and see the problematic regions in which the fraction gets close to or crosses to the instability, 
-together with one of the conditions given in \eqref{eq:lit:llew2}. 
+of the $D$-scalings in the $\mu$-tools. This has been also derived in a scaled teleoperation context in \cite{poortenyokokohji}
+using only SSV arguments. 
+
+Thanks to the frequency domain formulation, it is possible  to rewrite the condition \eqref{eq:lit:llew3} as a fraction 
+and see the problematic regions in which the fraction gets close to or crosses to the instability, together with one of the 
+conditions given in \eqref{eq:lit:llew2}. 
 
 
 \begin{figure}%
@@ -837,7 +840,7 @@ M\"{o}bius group with $\circ$ operation). This is closely related to the stabili
 
 \begin{figure}%
 \centering
-\begin{tikzpicture}[scale=0.7]
+\begin{tikzpicture}[scale=0.6]
 \begin{smithchart}[show origin,
 axis background/.style={shading=eightball},
 no marks,
@@ -1010,7 +1013,7 @@ behaves aggresively in the hard contact case due to the overuse of control actio
 and generally results with kickback or the local device. Conversely, domination of the force gain results with chattering of 
 the remote device on the obstacle due to the discontinuous nature of the force reference signal if the user touches the handle 
 with just softly enough to sustain an oscillation. Therefore, not only the gains of the individual channels are hard to tune, but
-also relative magnitudes of the gains makes the tuning more tedious.
+also relative magnitudes of the gains makes the tuning more tedious. In practice, 
 
 \subsubsection{Force-Force+PERR}
 
@@ -1019,7 +1022,7 @@ position-force control architecture.
 \[
 \pmatr{F_l\\F_r} = \pmatr{K_{f1}(s)F_{env} \\ K(s) (x_l-x_r)+K_{f2}(s)F_{hum}}.
 \]
-Hence, the name a three-channel controller. This has been introduced in \cite{hashzaad1999} and also analyzed in CITE!.
+Hence, the name a three-channel controller. This has been introduced in \cite{hashzaad1999} and also analyzed in \cite{naerumhannaford}.
 
 \subsubsection{Lawrence Control Architecture}
 
@@ -1236,7 +1239,7 @@ and also could not do any modification on the delays. Quite the contrary, we hav
 the small-gain theorem to conclude stability in the face of $\Delta$. Therefore, we refrain from seeing 
 this method as a passification of the communication channel. It is certainly possible to reflect the transformation 
 on $\Delta$ and invoke an impedance matching argument but we think that this 
-only complicates the presentation since it's the change in the control action that stabilizes the loop, and not the 
+only complicates the presentation. Because it's the change in the control action that stabilizes the loop, and not the 
 change in the characteristics of the delay operator or making the communication line a lossless $LC$ line.
 We have to emphasize that this transformation does not guarantee stability if the original $P$ is not strictly passive.
 However if any other plant $\hat{P}$ from an arbitrary class of systems $X$ can be brought into a unity norm-bounded form 
@@ -1330,22 +1333,42 @@ and integrator reset etc. Some of these problems are addressed in \cite{kimhanna
 
 There are other approaches such as Energy Bounding Algorithm (EBA), \cite{kimryu,seokim}, sliding mode control, 
 \cite{parkcho,buttolo}, reset control, \cite{villaverdereset}, model predictive control \cite{bemporad,shengspong} 
-and many more which we will omit here since they 
-are not directly related to the model-based control design methods which we will also propose. 
+and many more which we will omit here. These studies also involve model-based control with varying dependence on 
+the model.
 
+It's our humble opinion, however, that a \enquote{one-size-fits-for-all} design toward operator- and task-aware 
+control laws without dedicated modeling and/or classification, seems very unlikely to produce a generally applicable 
+results with high-performance guarantees. Nevertheless, robust control at least addresses the conservatism reduction 
+in a systematic way, if there is no other way to model the teleoperation systems. Moreover, Linear Parameter Varying
+controllers are to the best of our knowledge not pursued to the extent the theory allows for yet.
 
-Once again this is a pragmatic choice and is intentional. We have not performed a rigorous comparison with any algorithm that is 
-skipped in this brief and biased survey. It's our humble opinion, however, that a \enquote{one-size-fits-for-all} design 
-toward operator- and task-aware control laws without dedicated modeling and/or classification, seems very 
-unlikely to produce a generally applicable results with high-performance guarantees. Nevertheless, robust 
-control at least addresses the conservatism reduction in a systematic way, if there is no other way to model the 
-teleoperation systems.
+Moreover, the proposed methods often avoid the discussion on how to tune the PID controllers for the local, remote,
+and the communication line. It's as if those details are easy to handle and the attention is shifted on the $n$-channel
+architecture. We have no evidence supporting this in the control design papers. Alternatively, very conservative 
+upper and lower bounds are given on the parameters of individual controllers and therefore the underlying 
+control architecture is extremely simple since otherwise the proposed methods suffer from exceeding complexity in 
+the derivations. This is yet another reason for why we have chosen IQC framework for robustness analysis and model-based control
+path in the first place.
+
+We cannot claim that we have surveyed the literature in this brief and biased survey in a comprehensive manner.
+The omission, as we have mentioned before, is a pragmatic choice. Though a body of research is left out (especially
+nonlinear methods) the covered part here is also a considerably large part. In the next chapter they are detailed 
+further. However, we have note that, most nonlinear methods are the counterparts of the linear passivity theorem 
+methods given here and they do not introduce a different look on the modeling and analysis problem per se. 
+Thus, the motivation holds for some of those nonlinear cases. 
+
+Moreover, the number of studies reported in the literature is rapidly increasing and quite difficult to follow 
+even under the guidance of at least two survey papers published recently \cite{hokayemspong,
+passenberg}. We have to point out that there is still no consensus on the simplest conventions and the results are 
+often very challenging to differentiate. Hence, there is a great need to have authoritative and comprehensive sources
+as the survey papers above don't go into the details. As a closing remark, we would like refer to the outstanding 
+survey of \cite{klomp} which provides also a comprehensive outlook to the teleoperation literature in a very detailed 
+fashion up to 2006. It should give the reader a good idea how involved and, as a subjective note, unnecessarily 
+complicated bilateral teleoperation literature is. 
+
 
 
 We have shown that most of the proposed methods in the literature use passivity or small-gain theorems  and 
 the involved mathematical operators are often indistinguishable from any other physical system. It's our belief that
 without any further refinements, all above methods can be shown to be, essentially, equivalent stability 
 characterizations as far as the practical implications are concerned.
-
-As a closing remark, we would like refer to the outstanding survey of \cite{klomp} which provides a comprehensive 
-outlook to the teleoperation literature.
