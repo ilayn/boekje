@@ -110,13 +110,13 @@ to the purpose of this chapter.
 \end{scope}
 \begin{scope}[shift={(1.4cm,-0.2cm)}]
 \draw (0,0) -- (0.9cm,0) (0.45,0) circle (1.5mm);
-\path [postaction={pattern=north west lines},fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);
+\path [fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);%postaction={pattern=north west lines},
 \draw[line width=1.5mm,round cap-round cap] (0.475cm,0.05cm) -- ++(110:7mm);
 \draw[line width=1mm,round cap-round cap] (0.475cm,0.05cm) ++(110:6.3mm) --++ (220:5mm);
 \end{scope}
 \begin{scope}[shift={(5.4cm,-0.2cm)},cm={-1,0,0,1,(0,0)},transform shape]
 \draw (0,0) -- (0.9cm,0) (0.45cm,0) circle (1.5mm);
-\path [postaction={pattern=north west lines},fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);
+\path [fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);%postaction={pattern=north west lines},
 \draw[line width=1.5mm,round cap-round cap] (0.475cm,0.05cm) -- ++(110:7mm);
 \draw[line width=1mm,round cap-round cap] (0.475cm,0.05cm) ++(110:6.3mm) --++ (220:5mm);
 \end{scope}
@@ -323,7 +323,7 @@ capture the natural properties human arm before the human correction intervenes.
 \end{rem}
 
 We believe that it is unaviodable to introduce some concepts from the muscle physiology in order to put Hogan's 
-argument into some mechanical engineering perspective. It is simply impossible for the author to form a detailed analysis, 
+argument into some mechanical engineering perspective. It is simply impossible for us to give a detailed analysis, 
 however, mentioning the involved process via some mechanical analogies in order to relate the results of 
 Hogan and Mussa-Ivaldi seems feasible. This would emphasize the reason why we think that the common inference 
 from their experiments in the literature is not inline with the conclusions of these studies. We refer the reader 
@@ -447,7 +447,7 @@ chemical trigger.
 
 
 Therefore, the individual muscle activation at the basic level is analogous to a clock escapement mechanism \cite{headrick} 
-i.e. each time the lever arm pulls back a thread of the gear at each time and the cycle repeats the resulting relative motion is very much 
+i.e. each time the lever arm pulls back a thread of the gear and the cycle repeats. The resulting relative motion is very much 
 like a graphite coming out of a mechanical pencil when pressed from the eraser cap. Obviously, muscle behavior is not rachet-like 
 but smooth. This is because each of these mechanism operate independently. Thus, at each time instant, different myosin extensions 
 can be found at different phases of the cycle very much like a helical gear pair that are always in contact at one point. 
@@ -461,12 +461,12 @@ a stiff object with inherent stiffness of the connection rod (titin), pencil clu
  various other involved processes resisting to the applied strain. 
 
 Coming back to our original discussion, the stiffness of the arm that has been the subject of the experiments mentioned 
-above is, again invoking the analogy, based on the closed clutch response of the arm. In other words, what is measured is a cumulative 
-spring-like behavior of the arm that is actively controlled to be kept at a certain configuration. This is related to the \enquote{human's 
-restoring force} given in \Cref{rem:filament}. 
+above is, again invoking the analogy, based on the closed clutch response of the arm. In other words, what is measured 
+is a cumulative spring-like behavior of the arm that is actively controlled to be kept at a certain configuration. This 
+is related to the \enquote{human's restoring force} given in \Cref{rem:filament}. 
 
 Having a spring-like property naturally implies that the arm is passive. But the problem with this argument, as far as 
-the author understands, is that there is no reason to assume that the human arm exhibits a symmetric positive definite 
+we understand, is that there is no reason to assume that the human arm exhibits a symmetric positive definite 
 matrix at each time instant for an arbitrary trajectory. In fact, as shown clearly in \cite{mussa85}, the major eigenvector 
 of the stiffness matrix varies both in terms of direction and magnitude. Therefore, it might be possible to extract energy 
 from the human arm with some particular pathological trajectory. Just in the case of a frozen time analysis of a time-varying 
@@ -508,7 +508,10 @@ In summary, the passivity of the human and the environment (virtual environment 
 only plausible in certain cases which should be verified nevertheless in order to assume that the corresponding mathematical models 
 are passive. Still, analysis and synthesis methods that invoke this assumption lead to many real-world implementations 
 with varying degrees of realism. We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools
-and does not validate the passivity hypotheses on the respective models.
+and does not validate the passivity hypotheses on the respective models. Many frequency-domain methods, which assume LTI terminations
+at both ends of the teleoperation network, are reported to achieve stable bilateral interaction in real setups. While impressive,
+this shouldn't have been possible had the tests had not been exceedingly conservative since the real setups involve hard-contacts and 
+time-varying systems. 
 
 
 A compact version of the argument above is given by Yokokohji and Yoshikawa in \cite{yokokohjiyoshikawa}: 
@@ -678,7 +681,7 @@ to integrate into the analysis and synthesis steps using only the inner product 
 example, the signals that are not port variables such as position errors, and nonlinear effects 
 that are functions of these signals, can't be utilized easily in the performance specifications. 
 Same difficulty arises in the normed space structures though much more can be achieved. Similarly,
-much sought after $\LL_\infty$ methods are not mature enough to handle any practical system without 
+peak-to-peak gain minimization methods are not mature enough to handle any practical system without 
 excessive conservatism. 
 
 
@@ -1329,30 +1332,110 @@ the delay problem in the Time Domain Passivity Control context can be found in \
 architecture is a PI controller, it also suffers from the same problems integral-action controllers suffer such as, wind-up
 and integrator reset etc. Some of these problems are addressed in \cite{kimhannaford}. 
 
+
+
+%
+%
+%
+%\section{Performance Objectives}
+%Bilateral teleoperation problem is probably one of the most difficult problems in the control field due to its 
+%subjective nature involving the human liking. However, to put it bluntly, the experts are not helping either. In 
+%other words, most of the \enquote{good performance} motivations come from the first principles, Newton's laws of 
+%motion, conservation of energy (but surprisingly avoiding conservation of momentum) etc. Some literature argue
+%that since most of the tools we, human operators, utilize are (almost-)lossless, say, a screwdriver or even a simple
+%stick, it's natural to seek for a passive bilateral teleoperation system that ideally behaves like a rigid
+%transmission mechanism. 
+%
+%Therefore, using a vision analogy, the better a system transmits the remote motion to the local site, the better
+%the system is. Hence the term \emph{transparency}. This is defined in \cite{lawrence,yokokohjiyoshikawa} independently. 
+%The notion of transparency is handled via three ideal response definitions in \cite{yokokohjiyoshikawa}. In terms 
+%of the signals involved a perfect transparent 2-port network admits the hybrid matrix 
+%\[
+%\pmatr{v_{human}\\f_{human}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
+%\]
+%If we wish to translate this into a control theoretical performance objective, we have two main 
+%options. First is minimizing the differences between the measured quantities such as forces, velocities, positions
+%etc. Second is to make our system behave like an ideal transparent system. Thus, we have
+%\[
+%\min_K \pmatr{f_{human}-f_{remote}\\f_{env}-f_{local}\\x_{local}-x_{remote}\\\vdots} 
+%\]
+%for all signals in some suitable space that we wish to consider. Note that, there is already $n$-channel controller
+%structure evident from these error signals.  Alternatively, using a suitable system norm and denoting the controlled 
+%$2$-port teleoperation system $N(K)$, the problem is 
+%\[
+%\min_K \abs{N(K) - \pmatr{0&I\\-I&0}}
+%\]
+%This is obviously intuitive and agrees with the underlying physics. Thus, one might argue that the global minimizer
+%of these optimization problems would lead to the best teleoperation system. However, there are two additional implicit 
+%assumptions made here. On one hand, it is assumed that there is a partial ordering, in other words, if $K_1$ has the cost 
+%$c_1$ and $K_2$ has the cost $c_2$ with $c_1<c_2$ then this implies that $K_1$ is better than $K_2$ which is not 
+%necessarily true or better, it holds only for some particular $K$'s that are close enough to the ideal case. It might 
+%happen that the cost function is not even continuous let alone being smooth e.g. the transparency is only achieved by 
+%the global minimizer $K^*$ and not with any other $K$. On the other hand, we don't have a metric for how much we need 
+%to get close to the ideal matrix. Let us first quote three very important questions posed from the seminal paper of Lawrence;
+%\begin{displayquote}[{\cite{lawrence}}][.]
+%In practice, perfectly transparent teleoperation will not be possible. So it makes sense to ask the following questions:
+%\begin{itemize}
+	%\item What degree of transparency is necessary to accomplish a given set of teleoperation tasks? 
+	%\item What degree of transparency is possible?
+	%\item What are suitable teleoperator architectures and control laws for achieving necessary or optimal transparency?
+%\end{itemize}
+%We focus on the second two questions in this paper. Instead of evaluating the performance of a specific teleoperation architecture,
+%as in [2], we seek to understand the fundamental limits of performance and design trade-offs of bilateral teleoperation in
+%general, without the constraints of a preconceived architecture
+%\end{displayquote}
+%In \cite{lawrence}, Lawrence then invokes the passivity assumption and then passivity theorem to arrive at structural 
+%properties of the controller $K$. Evidently, this allows for the back-substitution of the controller entries and solution
+%for the ideal case. Then the resulting controller is denoted with \enquote{\emph{Transparency Optimized Controller}}. 
+%It should be clear that this is the transparency definition form the passivity point of view and we refrain from iterating
+%what is given above. 
+%
+%Even so, we have to emphasize that we have not touched the most important question, that is the first of the three, rather 
+%we hope to achieve the required transparency levels just enough to fool the user. After so much time, this point is in our 
+%opinion simply discarded and many studies in the literature somewhat treats the conclusions of Lawrence in a different 
+%context than what has been given by Lawrence. As is for the case for the Hogan's paper on passivity, Lawrence never claims 
+%that this is a definite performance measure. Instead he clearly shows the implications that follow from such assumptions. 
+%
+%Recently, 
+%
+
+
+
+
+
+
 \subsection{Others}
+
+
+We have shown that most of the proposed methods in the literature use passivity or small-gain theorems  and 
+the involved mathematical operators are often indistinguishable from any other physical system. It's our belief that
+without any further refinements, all above methods can be shown to be, essentially, equivalent stability 
+characterizations as far as the practical implications are concerned.
 
 There are other approaches such as Energy Bounding Algorithm (EBA), \cite{kimryu,seokim}, sliding mode control, 
 \cite{parkcho,buttolo}, reset control, \cite{villaverdereset}, model predictive control \cite{bemporad,shengspong} 
-and many more which we will omit here. These studies also involve model-based control with varying dependence on 
-the model.
+and many more which we will omit here. These studies also involve model-based control techniques with varying degree 
+of dependence on the model.
+
+
+The proposed methods often avoid the discussion on how to tune the PID controllers for the local, remote,
+and the communication line. It's as if those details are easy to handle and the attention is shifted on the $n$-channel
+architecture. We have no evidence supporting this in the control design papers. Alternatively, very conservative 
+upper and lower bounds are given on the parameters of individual controllers and therefore the underlying 
+control architecture is extremely simple since otherwise the proposed methods suffer from exceeding complexity in 
+the derivations. This is yet another reason for why we have chosen IQC framework for robustness analysis and 
+model-based control path in the first place.
 
 It's our humble opinion, however, that a \enquote{one-size-fits-for-all} design toward operator- and task-aware 
 control laws without dedicated modeling and/or classification, seems very unlikely to produce a generally applicable 
 results with high-performance guarantees. Nevertheless, robust control at least addresses the conservatism reduction 
 in a systematic way, if there is no other way to model the teleoperation systems. Moreover, Linear Parameter Varying
-controllers are to the best of our knowledge not pursued to the extent the theory allows for yet.
+controllers are to the best of our knowledge not yet pursued to the extent the theory allows for.
 
-Moreover, the proposed methods often avoid the discussion on how to tune the PID controllers for the local, remote,
-and the communication line. It's as if those details are easy to handle and the attention is shifted on the $n$-channel
-architecture. We have no evidence supporting this in the control design papers. Alternatively, very conservative 
-upper and lower bounds are given on the parameters of individual controllers and therefore the underlying 
-control architecture is extremely simple since otherwise the proposed methods suffer from exceeding complexity in 
-the derivations. This is yet another reason for why we have chosen IQC framework for robustness analysis and model-based control
-path in the first place.
 
 We cannot claim that we have surveyed the literature in this brief and biased survey in a comprehensive manner.
 The omission, as we have mentioned before, is a pragmatic choice. Though a body of research is left out (especially
-nonlinear methods) the covered part here is also a considerably large part. In the next chapter they are detailed 
+nonlinear methods) the covered part here is also constitutes a significant volume and in the next chapter they are detailed 
 further. However, we have note that, most nonlinear methods are the counterparts of the linear passivity theorem 
 methods given here and they do not introduce a different look on the modeling and analysis problem per se. 
 Thus, the motivation holds for some of those nonlinear cases. 
@@ -1362,13 +1445,7 @@ even under the guidance of at least two survey papers published recently \cite{h
 passenberg}. We have to point out that there is still no consensus on the simplest conventions and the results are 
 often very challenging to differentiate. Hence, there is a great need to have authoritative and comprehensive sources
 as the survey papers above don't go into the details. As a closing remark, we would like refer to the outstanding 
-survey of \cite{klomp} which provides also a comprehensive outlook to the teleoperation literature in a very detailed 
+survey of \cite{klomp} which provides also a comprehensive outlook to the teleoperation literature in a relatively detailed 
 fashion up to 2006. It should give the reader a good idea how involved and, as a subjective note, unnecessarily 
 complicated bilateral teleoperation literature is. 
 
-
-
-We have shown that most of the proposed methods in the literature use passivity or small-gain theorems  and 
-the involved mathematical operators are often indistinguishable from any other physical system. It's our belief that
-without any further refinements, all above methods can be shown to be, essentially, equivalent stability 
-characterizations as far as the practical implications are concerned.

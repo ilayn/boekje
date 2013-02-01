@@ -23,6 +23,7 @@ robust control design method known, we resort back to a nonconvex multiplier/con
 the classical $\mu$-tools with the so-called $DK$-iteration. However, it has been recently shown that, a large class
 of robust control design problems are convex depending on the uncertainty contribution on certain entries of the plant 
 data, \cite{scherer2009}. 
+%\enlargethispage*{1.5\baselineskip}
 \subsection{Notation and Definitions}
 We start with state-space descriptions of systems in the following form 
 \begin{equation}
@@ -1169,27 +1170,24 @@ each solution come closer. We have chosen another simple rule for the implementa
 
 
 
-
-
-
-
-\subsection{Closing Remarks}
-We need to emphasize that these numerical issues \emph{are} relevant for control theory and can not be belittled as 
-\enquote{mere implemetation details} as often treated in the 
-literature with an unjustified elitism. In fact it's quite the other way around however there is no need to digress 
-here. 
-
-Many problems similar to the ones mentioned above would be implicitly solved if better and customized control-oriented 
-solvers that take the numerical accuracy into account as much as the optimization objective, emerge in the future. 
-Especially, commercial software suites should be abandoned and more open-source free-software based solutions should be 
-developed as a community. The tools that contemporary control theorists are utilizing are mediocre and even worse this 
-simple fact goes unnoticed. Based on this observation we regret to assert that many results that appear in the literature
-are not tested properly under reasonable \emph{stress} and in fact most can not survive under numerical scrutiny. 
-Proving stability is not conclusive but a supportive part of the control engineering however much to our surprise 
-this is completely rejected in academic circles. 
-Therefore it is of utmost importance that the code/simulation/data that lead to the conclusions of the literature
-should be published without any exception. This would also help to ease the reviewing procedure as the reviewers would 
-get the chance to test out different plants etc. Iteratively, this would force the experts to pay attention to the 
-real control problems instead of intellectual but rather obscure skirmish of generalizations.
-
+%
+%\subsection{Closing Remarks}
+%We need to emphasize that these numerical issues \emph{are} relevant for control theory and can not be belittled as 
+%\enquote{mere implemetation details} as often treated in the 
+%literature with an unjustified elitism. In fact it's quite the other way around however there is no need to digress 
+%here. 
+%
+%Many problems similar to the ones mentioned above would be implicitly solved if better and customized control-oriented 
+%solvers that take the numerical accuracy into account as much as the optimization objective, emerge in the future. 
+%Especially, commercial software suites should be abandoned and more open-source free-software based solutions should be 
+%developed as a community. The tools that contemporary control theorists are utilizing are mediocre and even worse this 
+%simple fact goes unnoticed. Based on this observation we regret to assert that many results that appear in the literature
+%are not tested properly under reasonable \emph{stress} and in fact most can not survive under numerical scrutiny. 
+%Proving stability is not conclusive but a supportive part of the control engineering however much to our surprise 
+%this is completely rejected in academic circles. 
+%Therefore it is of utmost importance that the code/simulation/data that lead to the conclusions of the literature
+%should be published without any exception. This would also help to ease the reviewing procedure as the reviewers would 
+%get the chance to test out different plants etc. Iteratively, this would force the experts to pay attention to the 
+%real control problems instead of intellectual but rather obscure skirmish of generalizations.
+%
 
