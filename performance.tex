@@ -1,0 +1,123 @@
+\chapter{Performance Objectives}
+\label{chap:perf}
+
+
+
+Bilateral teleoperation problem is probably one of the most difficult problems in the control field due to its 
+subjective nature involving the human comfort and liking. However, to put it bluntly, the experts are not helping 
+either. In other words, most of the \enquote{good performance} motivations come from the first principles. Some 
+literature argue that since most of the tools we, human operators, utilize are (almost-)lossless, say, a 
+screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system that 
+ideally behaves like a rigid transmission mechanism. 
+
+\section{Transparency}
+Using a vision analogy, the less distorted a system transmits the remote motion to the local site, the better
+the system is. Hence the term \emph{transparency}. This is defined in \cite{lawrence,yokokohjiyoshikawa} independently. 
+The notion of transparency is handled via three ideal response definitions in \cite{yokokohjiyoshikawa}. In terms 
+of the signals involved a perfect transparent 2-port network admits the hybrid matrix 
+\[
+\pmatr{v_{human}\\f_{human}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
+\]
+If we wish to translate this into a control theoretical performance objective, we have two main 
+options. First is minimizing the differences between the measured quantities such as forces, velocities, positions
+etc. Second is to make our system behave like an ideal transparent system. Thus, we have
+\[
+\min_K \pmatr{f_{human}-f_{remote}\\f_{env}-f_{local}\\x_{local}-x_{remote}\\\vdots} 
+\]
+for all signals in some suitable space that we wish to consider. Note that, there is already $n$-channel controller
+structure evident from these error signals.  Alternatively, using a suitable system norm and denoting the controlled 
+$2$-port teleoperation system $N(K)$, the problem is 
+\[
+\min_K \abs{N(K) - \pmatr{0&I\\-I&0}}
+\]
+This is obviously intuitive and agrees with the underlying physics. Thus, one might argue that the global minimizer
+of these optimization problems would lead to the best teleoperation system. However, there are two additional implicit 
+assumptions made here. On one hand, it is assumed that there is a partial ordering, in other words, if $K_1$ has the cost 
+$c_1$ and $K_2$ has the cost $c_2$ with $c_1<c_2$ then this implies that $K_1$ is better than $K_2$ which is not 
+necessarily true or better, it holds only for some particular $K$'s that are close enough to the ideal case. It might 
+happen that the cost function is not even continuous let alone being smooth e.g. the transparency is only achieved by 
+the global minimizer $K^*$ and not with any other $K$. On the other hand, we don't have a metric for how much we need 
+to get close to the ideal matrix. Let us first quote three very important questions posed from the seminal paper of Lawrence;
+\begin{displayquote}[{\cite{lawrence}}][.]
+In practice, perfectly transparent teleoperation will not be possible. So it makes sense to ask the following questions:
+\begin{itemize}
+	\item What degree of transparency is necessary to accomplish a given set of teleoperation tasks? 
+	\item What degree of transparency is possible?
+	\item What are suitable teleoperator architectures and control laws for achieving necessary or optimal transparency?
+\end{itemize}
+We focus on the second two questions in this paper. Instead of evaluating the performance of a specific teleoperation architecture,
+as in [2], we seek to understand the fundamental limits of performance and design trade-offs of bilateral teleoperation in
+general, without the constraints of a preconceived architecture
+\end{displayquote}
+In \cite{lawrence}, Lawrence then invokes the passivity assumption and then passivity theorem to arrive at structural 
+properties of the controller $K$. Evidently, this allows for the back-substitution of the controller entries and solution
+for the ideal case. Then the resulting controller is denoted with \enquote{\emph{Transparency Optimized Controller}}. In 
+control theoretical terminology, this amounts to a cross-coupling control action where the bilateral dynamical differences
+are canceled out and then single control channels are tuned to maximum performance bound to the stability constraints. It 
+should be clear that this is the transparency definition from a passivity-based point of view and we refrain from iterating 
+what is given in the previous chapter. 
+
+Even it is so, we have to emphasize that we have not touched the most important question, that is the first of the three, 
+rather we hope to achieve the required transparency levels just enough to fool the user. After two decades, this point is 
+in our opinion simply discarded and many studies in the literature somewhat treats the conclusions of Lawrence in a different 
+context than what has been given by Lawrence. As is for the case for the Hogan's paper on passivity, Lawrence never claims 
+that this is a definite performance measure. Instead he clearly shows the implications that follow from such assumptions. 
+
+
+Moreover, there are interesting studies inline with our claims about irrelevance of the remote media recreation in bilateral
+teleoperation problem. For example, \cite{kilchenman,wildenbeest} and a few other studies report that there is a saturation
+effect on how much realism that can be projected to the user. In other words, there is an inherent bandwidth limitation for 
+the realism increase such that beyond a certain band of frequency, the transparency does not increase significantly. Moreover, 
+in the case of shared control applications, it might happen that transparency is not needed at all. 
+
+
+
+\section{\texorpdfstring{$Z$}{Z}-width}
+
+In \cite{colgate4}, the performance of a haptic device is related to the dynamic range of impedances (hence the name $Z$) that
+the device can display to the user. In this context we have two extremes; on one hand we have purely the local device impedance 
+for the free-air motion and on the other hand we have the maximally stiff local device for the rigid and immobile obstacle collision. 
+Let $Z_f$, $Z_c$ denote these two distinct cases then the more pronounced the difference between these impedances, the more 
+capable the teleoperation system can reflect various impedances inbetween. Thus, we implicitly assume that the rigid contact 
+case and the free-air case are the extreme points of the uncertainty set and testing for these two cases are sufficient to 
+conclude that any impedance on the path from $Z_f$ to $Z_c$ is a valid impedance that can be displayed by the device. This
+in turn implies that there is an ordering in the uncertainty set from \enquote{big} to \enquote{small} etc. and moreover 
+the destabilizing uncertainty is at the boundary of the set such that these two extreme cases can vouch for stability over 
+the whole possible environments.
+
+Similar to what Lawrence has given, the authors also include a statement of purpose: 
+
+\begin{displayquote}[{\cite{colgate4}}][.]
+This paper will not address the psychophysics of what
+makes a virtual wall \enquote{feel good} except to say that one
+important factor seems to be dynamic range. An excellent
+article on this topic has recently been written by
+Rosenberg and Adelstein [11]\footnote{Reference \cite{rosenberg} of this thesis.}. 
+We will present instead
+some of our findings, both theoretical and experimental,
+concerning achievable dynamic range. In short, we will
+address the question of how to build a haptic interface
+capable of exhibiting a wide range of mechanical
+impedances while preserving a robust stability property
+\end{displayquote}
+
+
+Under these assumptions, via defining a functional to measure the distance between $Z_f$ and $Z_c$, we can assess the performance
+of different bilateral teleoperation devices. In \cite{goranthesis}, $Z$-width is defined as 
+\begin{equation}
+Z_{\text{width}} = \int_{\omega_0}^{\omega_1}{\abs{\log|Z_{\vphantom{f}c}(\iw)|-\log |Z_f(\iw)|}}d\omega
+\label{eq:zwidth}
+\end{equation}
+
+In both \cite{colgate4,goranthesis} no additional information is provided except general rules of thumb about device damping and other
+related issues. In general, the inherent local device damping reduces the gain of $Z_f$ or the maximum stiffness displayed by the 
+device increases the gain of $Z_c$ and hence the $Z_{\text{width}}$ increases.
+
+It should be noted that all frequency ranges are rather lumped into one scalar number and moreover, the impedance gain curves can
+cross each other (see \cite{goranthesis}) and might lead to an overly optimistic result. Similarly, resonance peaks and zeros of the
+involved operators can be smeared out if we solely rely on the functional. 
+
+Since $Z_f$ and $Z_c$ are functions of the environment impedance, one can only test 
+
+
+
