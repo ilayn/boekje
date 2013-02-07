@@ -663,7 +663,7 @@ the involved operators is strictly passive the teleoperation system is asymptoti
 \centering
 \includegraphics[width=0.6\columnwidth]{\impath/literature/train}%
 \caption[A transparent two-port network with passive terminations]{A transparent two-port network with passive 
-terminations. The actuation of the railcar is taken as state-independent input to the system. (Source: Fred Dean Jr., 
+terminations. The actuation of the railcar is taken as a state-independent input to the system. (Source: Fred Dean Jr., 
 \href{http://www.flickr.com/photos/be216cd1/5971825854/}{[Flickr:Fred Dean Jnr]})}%
 \label{fig:lit:train}%
 \end{figure}
@@ -672,7 +672,8 @@ terminations. The actuation of the railcar is taken as state-independent input t
 The passivity assumptions are not necessary for stability but only sufficient. Because there exist stable interconnections that involves nonpassive 
 subsystems. In particular, the conservatism brought in by passivity theorem is arbitrarily high (especially in the nonlinear case). Facetious as it 
 may seem, the test also takes into account the port terminations shown in \Cref{fig:lit:train} for a table-top joystick. We have to emphasize that
-the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network. It's that conservative.
+the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network with passive end terminations. Hence, a regular 
+passivity-based stability test includes those end terminations for a simple hand-held device. It's that conservative.
 
 
 The major disadvantage of the passivity methods is that the procedure is focused almost only on the 
@@ -1357,7 +1358,7 @@ architecture. We have no evidence supporting this in the control design papers. 
 upper and lower bounds are given on the parameters of individual controllers and therefore the underlying 
 control architecture is extremely simple since otherwise the proposed methods suffer from exceeding complexity in 
 the derivations. This is yet another reason for why we have chosen IQC framework for robustness analysis and 
-model-based control path in the first place.
+model-based control path in the first place. 
 
 It's our humble opinion, however, that a \enquote{one-size-fits-for-all} design toward operator- and task-aware 
 control laws without dedicated modeling and/or classification, seems very unlikely to produce a generally applicable 

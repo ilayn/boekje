@@ -2,15 +2,43 @@
 \label{chap:perf}
 
 
-
 Bilateral teleoperation problem is probably one of the most difficult problems in the control field due to its 
 subjective nature involving the human comfort and liking. However, to put it bluntly, the experts are not helping 
 either. In other words, most of the \enquote{good performance} motivations come from the first principles. Some 
 literature argue that since most of the tools we, human operators, utilize are (almost-)lossless, say, a 
 screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system that 
-ideally behaves like a rigid transmission mechanism. 
+ideally behaves like a rigid transmission mechanism. In general, there is no established consensus on what makes 
+a teleoperation system good. Quite the contrary, this question is openly and unambiguously avoided in some 
+well-known articles but some alternatives are proposed. Therefore their conclusions are merely the implications of 
+their initial hypothesis. However, the results that follow these publications do not take this crucial detail into account
+and proceed as if the performance objectives are indeed the ultimate goals. We have to claim that the motivation 
+of most of the studies given in the literature erroneously put emphasis on performance objectives that are at 
+best questionable. 
 
-\section{Transparency}
+On the other hand, there is a different school that focus only on stability of the teleoperation system in the 
+face of human, environment, communication line, quantization and many more uncertainty/perturbation sources. 
+Especially some nonlinear control studies do not even bother to define performance criteria. This view simply 
+regards the human and the environment as perturbations to be protected against for our precious robotic systems 
+and neglects the \enquote{\emph{reason d'etre}} of the very problem that is under consideration. In our opinion, 
+operator perception is the indispensable performance objective and can not be overlooked. More importantly, it is
+beyond the scope and expertise of control theory (though with certain overlap) to find the relevant 
+objectives. Other experts of the related fields need to contribute from a technological point of view in 
+contrast with a pure physiological point of view and, in fact, guide the control theorists and practicioners towards 
+the relevant issues. 
+
+We have the strong opinion that the contemporary bilateral teleoperation control results, including this thesis, 
+can not and thus should not claim a comprehensive understanding of a good and useful bilateral teleoperation 
+system. Because we just don't know, yet.
+
+\section{Types of Performance}
+
+In terms of the quality of the force-feedback, there are a few leading choices of methodological performance 
+definitions. The widely accepted so-called \enquote{transparency} stems from the ideal case of lossless, undistorted
+exact replica of the remote side physics at the local site. Hence our the ultimate goal is selected to be 
+faithfully representing the remote site motion and allowing the user intervene just as good as s/he is operating 
+directly at the remote site. 
+
+\subsection{Transparency}
 Using a vision analogy, the less distorted a system transmits the remote motion to the local site, the better
 the system is. Hence the term \emph{transparency}. This is defined in \cite{lawrence,yokokohjiyoshikawa} independently. 
 The notion of transparency is handled via three ideal response definitions in \cite{yokokohjiyoshikawa}. In terms 
@@ -72,7 +100,7 @@ in the case of shared control applications, it might happen that transparency is
 
 
 
-\section{\texorpdfstring{$Z$}{Z}-width}
+\subsection{\texorpdfstring{$Z$}{Z}-width}
 
 In \cite{colgate4}, the performance of a haptic device is related to the dynamic range of impedances (hence the name $Z$) that
 the device can display to the user. In this context we have two extremes; on one hand we have purely the local device impedance 
@@ -85,7 +113,7 @@ in turn implies that there is an ordering in the uncertainty set from \enquote{b
 the destabilizing uncertainty is at the boundary of the set such that these two extreme cases can vouch for stability over 
 the whole possible environments.
 
-Similar to what Lawrence has given, the authors also include a statement of purpose: 
+Similar to what Lawrence has given, the authors also include a clear statement of purpose: 
 
 \begin{displayquote}[{\cite{colgate4}}][.]
 This paper will not address the psychophysics of what
@@ -108,16 +136,192 @@ of different bilateral teleoperation devices. In \cite{goranthesis}, $Z$-width i
 Z_{\text{width}} = \int_{\omega_0}^{\omega_1}{\abs{\log|Z_{\vphantom{f}c}(\iw)|-\log |Z_f(\iw)|}}d\omega
 \label{eq:zwidth}
 \end{equation}
+or alternatively, a simulation/experiment-based method can be utilized as in \cite{weir}. 
 
-In both \cite{colgate4,goranthesis} no additional information is provided except general rules of thumb about device damping and other
+
+Note that this expression does not appear in \cite{colgate4} but in \cite{goranthesis,passenberg}. In both \cite{colgate4,
+goranthesis} no additional information is provided except some general rules of thumb about device damping and other
 related issues. In general, the inherent local device damping reduces the gain of $Z_f$ or the maximum stiffness displayed by the 
 device increases the gain of $Z_c$ and hence the $Z_{\text{width}}$ increases.
 
-It should be noted that all frequency ranges are rather lumped into one scalar number and moreover, the impedance gain curves can
+It should be noted that the differences at each frequency are lumped into one scalar number and moreover, the impedance gain curves can
 cross each other (see \cite{goranthesis}) and might lead to an overly optimistic result. Similarly, resonance peaks and zeros of the
-involved operators can be smeared out if we solely rely on the functional. 
+involved impedances can be smeared out if we solely rely on this functional. 
 
-Since $Z_f$ and $Z_c$ are functions of the environment impedance, one can only test 
+Since $Z_f$ and $Z_c$ are functions of the environment impedance, these curves can be obtained for one particular environment
+at a time. This also holds for the derivation of \cite{lawrence}. In \cite{goranthesis}, the difference  is evaluated for more 
+than one environment and then averaged out i.e. let $Z_{act}(Z_e)$ be the impedance displayed to the user in order to render 
+$Z_e$ on the local site. Then, for a particular controller, average $Z$-error to each candidate $Z_e$ is given by
+\begin{equation}
+Z_{avgerr} = \frac{1}{n}\sum_{i=1}^n{\left[
+    \frac{1}{\omega_{1i}-\omega_{0i}}\int_{\omega_0}^{\omega_1}{%
+                                     \abs{\log|(Z_{act}(Z_{ei}))(\iw)|-\log |Z_{ei}(\iw)|}}d\omega.
+                                     \right]}
+\label{eq:zdiff}
+\end{equation}
+This cost function is denoted by \enquote{\emph{Transparency Error}} or \enquote{\emph{Fidelity}}
+
+
+\subsection{Fidelity}
+In \cite{cavusoglu}, a variant of a transparency error is proposed to assess the performance. In this context, 
+the emphasis is on the variation of the environment impedance and the resulting effect on the displayed impedance. 
+Also the motivation is focused on the surgical procedures via bilateral teleoperation. If, for 
+example, the remote device slides over some tissue that involves a tumor or any other irregularity that would be felt
+if the same motion would have been performed directly by the surgeon, the better the nuances transmitted, the higher
+the fidelity. This performance objective is in a sense enforces the high frequency content of the information (closer
+to tactile bandwidth). It has been noted that the JND of \SIrange{14}{25}{\percent} for the relative compliance 
+of distinct surfaces goes under \SI{1}{\percent} for fast compliance variation detection via scanning a surface
+\cite{dhruvtendick}. Similar to the definitions given for transparency, the change of the displayed impedance 
+$Z_{disp}(Z_e)$ with respect to the change in the environment $Z_e$ can obtained via a straightforward calculation.
+
+
+Given the scalar complex LTI uncertainty block $\Delta$ and the LTI plant $G\in\mathcal{RH}_\infty^{2\times 2}$, 
+such that 
+\[
+\pmatr{q\\z} = G\pmatr{p\\w},
+\]
+the LFT interconnection of $\Delta-G$ is given by, 
+\[
+P = G_{22}+G_{21}\Delta\inv{(I-G_{11}\Delta)}G_{12}
+\]
+Here $P$ denotes the impedance seen by the operator, $G$ denotes the teleoperation system and $\Delta$ being the 
+environment impedance. Now define the derivative operation with respect to change in $\Delta$
+\[
+\frac{d}{d\Delta} P = \frac{G_{21}G_{12}}{(I-G_{11}\Delta)^2}.
+\]
+Then, though not pursued in \cite{cavusoglu}, this can, in turn, be rewritten as an LFT again;
+\[
+\pmatr{q_1\\q_2\\z} = \pmatr{2G_{11} &-G_{11} &1\\G_{11} &0 &0\\ 2G_{11}G_{12}G_{21} &-G_{11}G_{12}G_{21} &G_{12}G_{21}}\pmatr{p_1\\p_2\\w}
+\]
+and 
+\[
+\pmatr{w_1\\w_2} = \pmatr{\Delta &0\\0 &\Delta}\pmatr{z_1\\z_2}.
+\]
+
+
+This led to the authors defining a transparency-like performance objective using a rather subtle choice of system 
+$2$-norms. Let $G$ be a stable LTI system transfer function $G(s)$. Then 
+\[
+\norm{G}_2^2 \coloneqq \infint{\trace(G^*(\iw)G(\iw))}d\omega
+\] 
+The measure of fidelity is defined as the norm
+\[
+\norm{\left.W_s\frac{dP}{d\Delta}\right|_{\Delta_{enom}}}_2
+\]
+where $W_s$ is a typically low-pass type weighting function to emphasize the frequency band of interest. Therefore
+the synthesis problem is to find the optimizer, controller $K$ to the problem
+\[
+\sup_{\substack{\text{Stability}\\\text{Other Constraints}}}\inf_{\Delta_{ei}\in\bm{\Delta_e}}
+\norm{\left.W_s\frac{dP}{d\Delta}\right|_{\Delta_{ei}}}_2
+\]
+where $\Delta_{ei}$ are the worst case environments that are of interest. How to detect such 
+
+
+
+There are a few interpretations of this norm in the literature, mainly, the deterministic \enquote{area under the Bode
+Plot} interpretation i.e. energy of the impulse response for scalar case, and the stochastic \enquote{steady-state 
+white-noise-input response}. We are under the impression that the authors argue in the line of the former interpretation
+with a similar reasoning given in the $Z$-width discussion via an area computation. 
+
+
+Designing a robust controller while minimizing the $\mathcal{H}_2$ norm of an uncertain system in the face of a predefined 
+uncertainty set i.e. \enquote{Robust $\mathcal{H}_2$ Synthesis} problem has already recevied a lot of attention and 
+the results can be found in the literature, e.g., \cite{dullerud}. Hence, the problem definition in \cite{cavusoglu} is 
+in fact tractable which might be inline with the intuition reported about the convexity of the performance objective. However, 
+it's not clear to us why we choose the system $2$-norm for the performance cost. Additionally, the infimum needs to be 
+computed in the face of a set at infinitely many points hence an appropriate relaxation is required. This point is also not 
+given though a gridding approach might have been utilized in the numerical optimization procedure described in the paper.
+
+It is also not clear for which case we should utilize this performance objective. The initial difficulty is that all the 
+involved operators are LTI hence there is no time variation involved. The test reads as; we select an arbitrary element 
+in the predefined uncertainty set, say $\Delta_e$, and evaluate the derivative at $\Delta_e$. Hence, in some $\epsilon$-
+neighborhood of $\Delta_e\in\bm{\Delta_e}$ we can see the change in $P$. Thus, if the environment slightly off from our 
+nominal guess of the environment, this tells us how much fidelity measure would change. But the environment is still 
+assumed to be LTI.
+
+
+Note that, this does not imply that time-variations are taken into account. Suppose a particular admissible trajectory
+$\hat{\Delta}_e(t)$ in time is given such that $\hat{\Delta}_e(t_1)=\Delta_e$ i.e. its time-frozen LTI copy coincides 
+with the particular nominal environment model $\Delta_e$ and at some time instant $t_2$, it  coincides with another 
+LTI model $\mathring\Delta_e$ that is within some $\epsilon$-neighborhood of $\Delta_e$. Even if we achieve very good 
+fidelity properties evaluated at each $\Delta_e$ and a sequence of LTI model elements each being in the small neighborhood 
+of the other, this does not guarantee that we would have good fidelity for the trajectory $\hat{\Delta}_e$.
+
+
+\section{Closing Remarks and Discussion}
+There are a few other performance criteria reported in the literature. Consider the definition of the impedance seen by 
+the operator $P$ above. In \cite{katsura}, this term is divided into two individual terms, dnoted by 
+\enquote{reproducibility} and \enquote{operationality}. The idea is similar to a sensitivity/complementary sensitivity 
+function definitions. 
+
+In \cite{yokokohjiyoshikawa}, also an ideal responses is also partitioned into two parts and denoted by \enquote{index of 
+maneuverability} and, in essence, is similar to what is given above, hence omitted. 
+
+We refer to the survey papers \cite{hokayemspong,passenberg} for a general treatment and \cite{klomp,dennis} and references 
+therein for a more detailed overview about many variations in the literature.
+
+
+In summary, there is no general perfomance criteria that can lead to a dedicated control design procedure. The aforementioned 
+performance objectives always start from the direct manipulation case and assume a distance between the interacting parties.
+Then the implications of such hypotheses are pursued and some results are obtained. It might very well happen that all or none 
+of those conclusions are correct. Put better, these studies always try to remedy the distortion caused by splitting two 
+interacting bodies. Thus, the problem becomes too ambitious at the outset. Similar to the delay problem there is not much
+we can do about the distortion within the laws of physics. Moreover, as we have mentioned in the introduction, the problem is 
+exclusively about human perception and not related to the reconstruction of the remote scene. As long as we can \enquote{fool}
+the user for the sake of efficiency and operational comfort, we are done. 
+
+
+Based on our control design attempts, it seems that all the performance objectives above and also many motivational sections 
+in the papers describe a particular projection of a more general objective in terms of human perception. In \Cref{chap:application}, 
+we give the necessary details but by emphasizing one performance objective to the other one can obtain different controllers
+with varying perception for the user. 
+
+
+
+
+
+%
+%
+%
+%
+%
+%%\subsection{Matrix case: $\mathcal{F}(\Delta\star G) - \mathcal{F}(\Delta_0\star G) - L(H,\Delta_0)$}
+%\[
+%L(\Delta_0,H) = G_{21}\inv{(I-\Delta_0G_{11})}H\inv{(I-G_{11}\Delta_0)}G_{12}
+%\]
+%which, in turn, can be rewritten as
+%\begin{align*}\pmatr{z_4\\z_5\\z_6\\z_L}&= \pmatr{G_{11}&0&0&G_{12}\\0&G_{11}&G_{11}&0\\G_{11}&0&0&G_{12}\\0&G_{21}&G_{21}&0}
+%\pmatr{w_4\\w_5\\w_6\\w_L} \\
+%\pmatr{w_4\\w_5\\w_6} &= \pmatr{\Delta_0&&\\&\Delta_0&\\&&H}\pmatr{z_4\\z_5\\z_6}
+%\end{align*}
+%We have also, 
+%\[
+%\mathcal{F}(\Delta\star G)  = \mathcal{F}((\Delta_0+H)\star G)
+%\]
+%with the LFT representation,
+%\begin{align*}
+%\pmatr{z_1\\z_2\\z_{\Delta}}&= \pmatr{G_{11}&G_{11}&G_{12}\\G_{11}&G_{11}&G_{12}\\G_{21}&G_{21}&G_{22}}
+%\pmatr{w_1\\w_2\\w_{\Delta}} \\
+%\pmatr{w_1\\w_2} &= \pmatr{\Delta_0&\\&H}\pmatr{z_1\\z_2}
+%\end{align*}
+%and obviously, 
+%\begin{align*}
+%\pmatr{z_3\\z_{\Delta_0}}&= \pmatr{G_{11}&G_{12}\\G_{21}&G_{22}}
+%\pmatr{w_3\\w_{\Delta_0}} \\
+%w_3 &= \Delta_0 z_3\end{align*}
+%
+%We have, 
+%\[
+%w_{\Delta_0} = w_\Delta = w_L
+%\]
+%Then, the derivative can be written with $e = z_\Delta - z_{\Delta_0} - z_L$
+%\[
+%\pmatr{z_1\\z_2\\z_3\\z_4\\z_5\\z_6\\e} = 
+%\pmatr{G_{11}&G_{11}&0&0&0&0&G_{12}\\G_{11}&G_{11}&0&0&0&0&G_{12}\\&&G_{11}&&&&G_{12}\\&&&G_{11}&0&0&G_{12}\\&&&0&G_{11}&G_{11}&0\\}
+%\pmatr{w_1\\w_2\\w_3\\w_4\\w_5\\w_6\\w}
+%\]
+
+
 
 
 
