@@ -228,7 +228,10 @@ binary-units = true
     citestyle=numeric-comp,%
   ]{biblatex}
 
-\addbibresource{phdthesis.bib}
+
+\@ifpackageloaded{biblatex}{\addbibresource{phdthesis.bib}}{\bibliography{phdthesis}}
+
+%\addbibresource{phdthesis.bib}
 %\bibliography{phdthesis}
 
 \def\bibfont{\small}
