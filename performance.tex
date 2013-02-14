@@ -93,10 +93,10 @@ that this is a definite performance measure. Instead he clearly shows the implic
 
 
 Moreover, there are interesting studies inline with our claims about irrelevance of the remote media recreation in bilateral
-teleoperation problem. For example, \cite{kilchenman,wildenbeest} and a few other studies report that there is a saturation
+teleoperation problem. For example, \cite{kilchenman,wildenbeest,boessenkool} and a few other studies report that there is a saturation
 effect on how much realism that can be projected to the user. In other words, there is an inherent bandwidth limitation for 
 the realism increase such that beyond a certain band of frequency, the transparency does not increase significantly, possibly
-unless backep up by tactile feedback. Moreover, in the case of shared control applications, it might happen that transparency 
+unless backep up by tactile feedback. Even further, in the case of shared control applications, it might happen that transparency 
 is not needed at all. 
 
 
@@ -303,8 +303,8 @@ But two more recent experiences suggest that there must be more to the differenc
 The author goes on to list the involved hardware, the signal chain, and other relevant details about the mic set-up at both events.
 In the first event, a performer plays a piece through the listed hardware and is simultaneously recorded by the author. Then the recorded 
 version of the performance is played back to the same audience from the same hardware. In the second event, a nontrivial analog/
-digital hybrid device that is claimed to replicate the grand piano via sophisticated mechanisms. In both events, it has been noted 
-that though the reproduction quality is quite impressive for the audience, a certain liveness was missing.
+digital hybrid device supposedly replicates a grand piano via sophisticated mechanisms used to generate the sound. In both 
+events, it has been noted that though the reproduction quality is quite impressive for the audience, a certain liveness was missing.
 
 \begin{displayquote}
 So these days, I'm starting to feel that it is something that is never captured by recordings at all that ultimately defines the 
@@ -330,8 +330,8 @@ Obviously, these are all subjective opinions rather than rigorous scientific pro
 a user experience study. However, we have to remind that the audio technology is tremendously advanced if compared to haptics and 
 teleoperation. In fact, the comparison is not fair in the sense that bilateral teleoperation is not a true technology yet but rather 
 in its infancy. Still, after decades of improvements, the sound systems are not capable of producing a live sound, real enough to make 
-the listener immerse into. Nevertheless, the performance objectives that we have enumerated a few above claims to compete at the level
-of hi-fi systems which is simply too ambitious.
+the listener immerse into, though comes impressively close. Nevertheless, the performance objectives that we have enumerated a few above 
+claims to compete at the level of hi-fi systems which is simply too ambitious.
 
 Coming back to our discussion, in the light of our analogy, we think that the bilateral teleoperation literature is focused on finding
 the system that can deliver the \enquote{live sound} rather than a high quality \enquote{playback}. This holistic search is certainly
@@ -339,8 +339,8 @@ relevant to the field but it cannot serve as the justification as a driver of te
 dependence is already emphasized in many studies as an item of importance and a too general performance criterion would be very unlikely
 to serve as a general guideline. Though, we acknowledge the motivation behind the holistic approach and a truly transparent device 
 might be the ideal, we also believe that the timing and the feasibility of this approach needs to be modified. The immediate engineering 
-problems such as the communication delays and other \enquote{today} problems are the strong indicators of fact that such a goal cannot 
-be tackled prematurely. We can't overemphasize the fact that even the undelayed case remains unresolved let alone (time-varying 
+problems such as the communication delays and other \enquote{today} problems are the strong indicators of the fact that such a goal cannot 
+be tackled prematurely. We can't overemphasize the key issue; even the undelayed case remains unresolved let alone (time-varying 
 or constant) delayed case. 
 
 
@@ -373,86 +373,34 @@ Specific to the problem at hand, having a stable but poor-performing bilateral t
 unilateral teleoperation as the added-value of robotic manipulators are wasted with the inclusion of damping. 
 
 
+After using the audio analogy extensively, let us finish the alternative suggestions with the same analogy. As we have briefly mentioned
+the hi-fi loudspeakers involve different dedicated components for different frequency bands such as tweeters for high-frequency band,
+sub/woofers for the low frequency bands and occasionally mid-range speakers etc. with individual drivers. Now, obviously somatosensory
+system already involves of such sensors which is reported to be responsible for different frequency bands (see \Cref{chap:intro}).
+Hence, this already gives us a direct cue for separating the motion into different categories. 
+
+There has been quite a number of studies published on combining the tactile feedback with kinesthetic feedback such as \cite{kammermeier,
+kimcolgate,kyung,pacchierotti,meli} among many others and references therein. In many of these reports it has been clearly shown that 
+combining these modalities lead to substantial increase in human perception about the unstructured environment. Not only the motion but 
+also temperature can be transmitted via the tactile thermal actuators. Hence, different overloading of the vibrational patterns can also 
+be obtained if combined with different receptors and percetions. We have to underline that the studies mentioned above does not necessarily
+promote this idea for the control design but rather superimposing tactile and kinesthetic perception simultaneously. However, there is no
+apparent obstacle to use the same hardware for cooperative kinesthetic profiling. 
 
 
+Therefore, from a control design perspective this gives rise to a completely different type of performance objective that has no relation 
+with the immediate transparency requirements. In other words, the performance of the device is now comprised of the individual excitation 
+of the required human receptors. And this is inline with what we have touched in the introduction of this thesis. To the critical reader
+this might look like we are shifting the difficulties of the control design to the hardware design since the required devices are indeed
+nontrivial. We would argue that it is not the case. The required hardware already exists but used in a different context. We have performed 
+preliminary signal processing studies and there is no significant result that can be reported here. Nevertheless, we can speculate about 
+the links a solution along these lines can bring in to finalize this discussion. 
+
+Suppose local and remote media are interconnected to form a bilateral teleoperation system. 
 
 
-
-
-
-
-
-
-
-
-%
-%
-%In other words, if we aim for the ultimate goal directly then there is no 
-%need to consider the delay problem since we can expect that the communication technology would be advanced enough to circumvent these 
-%problems at the time we obtain perfect bilateral teleoperation in the undelayed case. Unfortunately, we are not even close to perfection
-%in the undelayed case. 
-%
-%
-%
-%As we mentioned before, transparency
-%and other criteria might still be true as they are to ideal teleoperation as live performance feeling is to audio. 
-
-
-
-
-
-%
-%Finally, based on our control design attempts given in \Cref{chap:application}, it seems that all performance objectives above 
-%describe a particular projection of a more general but yet unknown objective in terms of human perception. 
-%
-%
-%mphasizing one performance objective to the other one can obtain different controllers
-%with varying perception for the user. 
-%
-%
-
-
-
-%
-%
-%
-%
-%
-%%\subsection{Matrix case: $\mathcal{F}(\Delta\star G) - \mathcal{F}(\Delta_0\star G) - L(H,\Delta_0)$}
-%\[
-%L(\Delta_0,H) = G_{21}\inv{(I-\Delta_0G_{11})}H\inv{(I-G_{11}\Delta_0)}G_{12}
-%\]
-%which, in turn, can be rewritten as
-%\begin{align*}\pmatr{z_4\\z_5\\z_6\\z_L}&= \pmatr{G_{11}&0&0&G_{12}\\0&G_{11}&G_{11}&0\\G_{11}&0&0&G_{12}\\0&G_{21}&G_{21}&0}
-%\pmatr{w_4\\w_5\\w_6\\w_L} \\
-%\pmatr{w_4\\w_5\\w_6} &= \pmatr{\Delta_0&&\\&\Delta_0&\\&&H}\pmatr{z_4\\z_5\\z_6}
-%\end{align*}
-%We have also, 
-%\[
-%\mathcal{F}(\Delta\star G)  = \mathcal{F}((\Delta_0+H)\star G)
-%\]
-%with the LFT representation,
-%\begin{align*}
-%\pmatr{z_1\\z_2\\z_{\Delta}}&= \pmatr{G_{11}&G_{11}&G_{12}\\G_{11}&G_{11}&G_{12}\\G_{21}&G_{21}&G_{22}}
-%\pmatr{w_1\\w_2\\w_{\Delta}} \\
-%\pmatr{w_1\\w_2} &= \pmatr{\Delta_0&\\&H}\pmatr{z_1\\z_2}
-%\end{align*}
-%and obviously, 
-%\begin{align*}
-%\pmatr{z_3\\z_{\Delta_0}}&= \pmatr{G_{11}&G_{12}\\G_{21}&G_{22}}
-%\pmatr{w_3\\w_{\Delta_0}} \\
-%w_3 &= \Delta_0 z_3\end{align*}
-%
-%We have, 
-%\[
-%w_{\Delta_0} = w_\Delta = w_L
-%\]
-%Then, the derivative can be written with $e = z_\Delta - z_{\Delta_0} - z_L$
-%\[
-%\pmatr{z_1\\z_2\\z_3\\z_4\\z_5\\z_6\\e} = 
-%\pmatr{G_{11}&G_{11}&0&0&0&0&G_{12}\\G_{11}&G_{11}&0&0&0&0&G_{12}\\&&G_{11}&&&&G_{12}\\&&&G_{11}&0&0&G_{12}\\&&&0&G_{11}&G_{11}&0\\}
-%\pmatr{w_1\\w_2\\w_3\\w_4\\w_5\\w_6\\w}
-%\]
+Moreover, the human operator has access to the 
+visual information streaming from the remote location. Instead of a \enquote{\emph{physics}} matching, we instead encode the force 
 
 
 
