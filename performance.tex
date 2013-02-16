@@ -9,13 +9,13 @@ literature argue that since most of the tools we, human operators, utilize are (
 screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system that 
 ideally behaves like a rigid transmission mechanism. In general, there is no established consensus on what makes 
 a teleoperation system good. Quite the contrary, this question is openly and unambiguously avoided in some 
-well-known articles but some alternatives are proposed. Therefore their conclusions are merely the implications of 
-their initial hypothesis. However, the results that follow these publications do not take this crucial detail into account
-and proceed as if the performance objectives are indeed the ultimate goals. We have to claim that the motivation 
-of most of the studies given in the literature erroneously put emphasis on performance objectives that are at 
-best questionable. 
+well-known articles but some alternatives are proposed and rigorously pursued to the end. Therefore, their conclusions 
+are the implications of their initial hypotheses. However, the results that follow these publications do not take 
+this crucial detail into account and proceed as if the performance objectives are indeed the ultimate goals. 
+We have to claim that the motivation of most of the studies given in the literature erroneously put emphasis 
+on performance objectives that are at best questionable. 
 
-On the other hand, there is a different school that focus only on stability of the teleoperation system in the 
+On the other hand, there is a different school that focuses only on stability of the teleoperation system in the 
 face of human, environment, communication line, quantization and many more uncertainty/perturbation sources. 
 Especially some nonlinear control studies do not even bother to define performance criteria. This view simply 
 regards the human and the environment as perturbations to be protected against for our precious robotic systems 
@@ -34,7 +34,7 @@ system. Because we just don't know, yet.
 
 In terms of the quality of the force-feedback, there are a few leading choices of methodological performance 
 definitions. The widely accepted so-called \enquote{transparency} stems from the ideal case of lossless, undistorted
-exact replica of the remote side physics at the local site. Hence our the ultimate goal is selected to be 
+exact replica of the remote side physics at the local site. Hence the ultimate goal is selected to be 
 faithfully representing the remote site motion and allowing the user intervene just as good as s/he is operating 
 directly at the remote site. 
 
@@ -46,26 +46,27 @@ of the signals involved a perfect transparent 2-port network admits the hybrid m
 \[
 \pmatr{v_{human}\\f_{human}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
 \]
-If we wish to translate this into a control theoretical performance objective, we have two main 
-options. First is minimizing the differences between the measured quantities such as forces, velocities, positions
-etc. Second is to make our system behave like an ideal transparent system. Thus, we have
+If we wish to translate this into a control theoretical performance objective, we have mainly two options. First 
+is minimizing the differences between the measured quantities such as forces, velocities, positions etc. Second is 
+to make our system approach to an ideal transparent system as much as possible. Thus, we can use a performance index
 \[
 \min_K \pmatr{f_{human}-f_{remote}\\f_{env}-f_{local}\\x_{local}-x_{remote}\\\vdots} 
 \]
-for all signals in some suitable space that we wish to consider. Note that, there is already $n$-channel controller
+for the signals in some suitable space that we wish to consider. Note that, there is already $n$-channel controller
 structure evident from these error signals.  Alternatively, using a suitable system norm and denoting the controlled 
-$2$-port teleoperation system $N(K)$, the problem is 
+$2$-port teleoperation system $N(K)$, the problem becomes
 \[
-\min_K \abs{N(K) - \pmatr{0&I\\-I&0}}
+\min_K \abs{N(K) - \pmatr{0&I\\-I&0}}.
 \]
 This is obviously intuitive and agrees with the underlying physics. Thus, one might argue that the global minimizer
 of these optimization problems would lead to the best teleoperation system. However, there are two additional implicit 
 assumptions made here. On one hand, it is assumed that there is a partial ordering, in other words, if $K_1$ has the cost 
 $c_1$ and $K_2$ has the cost $c_2$ with $c_1<c_2$ then this implies that $K_1$ is better than $K_2$ which is not 
-necessarily true or better, it holds only for some particular $K$'s that are close enough to the ideal case. It might 
-happen that the cost function is not even continuous let alone being smooth e.g. the transparency is only achieved by 
-the global minimizer $K^*$ and not with any other $K$. On the other hand, we don't have a metric for how much we need 
-to get close to the ideal matrix. Let us first quote three very important questions posed from the seminal paper of Lawrence;
+necessarily true or better, it holds only for some particular $K$'s that are close enough to the ideal case and in general no
+such ordering can be expected by this performance index. It might happen that the cost function is not even continuous 
+let alone being smooth e.g. the transparency is only achieved by the global minimizer $K^*$ and not with any other $K$. 
+On the other hand, we don't have a metric for how much we need to get close to the ideal matrix. Let us first quote three 
+very important questions posed by Lawrence in his well-known paper;
 \begin{displayquote}[{\cite{lawrence}}][.]
 In practice, perfectly transparent teleoperation will not be possible. So it makes sense to ask the following questions:
 \begin{itemize}
@@ -82,21 +83,22 @@ properties of the controller $K$. Evidently, this allows for the back-substituti
 for the ideal case. Then the resulting controller is denoted with \enquote{\emph{Transparency Optimized Controller}}. In 
 control theoretical terminology, this amounts to a cross-coupling control action where the bilateral dynamical differences
 are canceled out and then SISO control channels are tuned to maximum performance bound to the stability constraints. It 
-should be clear that this is the transparency definition from a passivity-based point of view and we refrain from iterating 
+should be clear that this is the transparency from a passivity-based point of view and we refrain from iterating 
 what is given in the previous chapter. 
 
-Even it is so, we have to emphasize that we have not touched the most important question, that is the first of the three, 
-rather we hope to achieve the required transparency levels just enough to fool the user. After two decades, this point is 
-in our opinion simply discarded and many studies in the literature somewhat treats the conclusions of Lawrence in a different 
-context than what has been given by Lawrence. As is for the case for the Hogan's paper on passivity, Lawrence never claims 
-that this is a definite performance measure. Instead he clearly shows the implications that follow from such assumptions. 
+Even if we accept it to be the distinguishing performance criterion, we have to emphasize that we have not touched the most 
+important question, that is the first of the three, rather we hope to achieve the required transparency levels just enough 
+to fool the user. After two decades, this point is in our opinion simply discarded and many studies in the literature somewhat 
+treats the conclusions of Lawrence in a different context than what has been given by Lawrence. As is for the case for the 
+Hogan's paper on passivity, Lawrence never claims that this is a definite performance measure. Instead he clearly shows the 
+implications that follow from such assumptions. 
 
 
 Moreover, there are interesting studies inline with our claims about irrelevance of the remote media recreation in bilateral
 teleoperation problem. For example, \cite{kilchenman,wildenbeest,boessenkool} and a few other studies report that there is a saturation
 effect on how much realism that can be projected to the user. In other words, there is an inherent bandwidth limitation for 
 the realism increase such that beyond a certain band of frequency, the transparency does not increase significantly, possibly
-unless backep up by tactile feedback. Even further, in the case of shared control applications, it might happen that transparency 
+unless backed up by tactile feedback. Even further, in the case of shared control applications, it might happen that transparency 
 is not needed at all. 
 
 
@@ -143,14 +145,14 @@ Z_{\text{width}} = \int_{\omega_0}^{\omega_1}{\abs{\log|Z_{\vphantom{f}c}(\iw)|-
 or alternatively, a simulation/experiment-based method can be utilized as in \cite{weir}. 
 
 
-Note that this expression does not appear in \cite{colgate4} but in \cite{goranthesis,passenberg}. In both \cite{colgate4,
-goranthesis} no additional information is provided except some general rules of thumb about device damping and other
-related issues. In general, the inherent local device damping reduces the gain of $Z_f$ or the maximum stiffness displayed by the 
-device increases the gain of $Z_c$ and hence the $Z_{\text{width}}$ increases.
+Note that \eqref{eq:zwidth} does not appear in the original paper \cite{colgate4} but proposed in \cite{goranthesis,passenberg} 
+though we can see neither the reasoning behind this expression nor how it constitutes a comparative quantity. In both 
+\cite{colgate4,goranthesis} no additional information is provided except some general rules of thumb about device 
+damping and other related issues. 
 
-It should be noted that the differences at each frequency are lumped into one scalar number and moreover, the impedance gain curves can
-cross each other (see \cite{goranthesis}) and might lead to an overly optimistic result. Similarly, resonance peaks and zeros of the
-involved impedances can be smeared out if we solely rely on this functional. 
+It should be noted that the differences at each frequency are lumped into one scalar number and moreover, the impedance 
+gain curves can cross each other (see \cite{goranthesis}) and might lead to an overly optimistic result. Similarly, 
+resonance peaks and zeros of the involved impedances can be smeared out if we solely rely on this functional. 
 
 Since $Z_f$ and $Z_c$ are functions of the environment impedance, these curves can be obtained for one particular environment
 at a time. This also holds for the derivation of \cite{lawrence}. In \cite{goranthesis}, the difference  is evaluated for more 
@@ -163,7 +165,8 @@ Z_{avgerr} = \frac{1}{n}\sum_{i=1}^n{\left[
                                      \right]}
 \label{eq:zdiff}
 \end{equation}
-This cost function is denoted by \enquote{\emph{Transparency Error}} or \enquote{\emph{Fidelity}}
+This cost function is denoted by \enquote{\emph{Transparency Error}} or \enquote{\emph{Fidelity}}.We refer to \cite{weir} 
+for a more detailed discussion. 
 
 
 \subsection{Fidelity}
@@ -202,11 +205,9 @@ and
 \pmatr{p_1\\p_2} = \pmatr{\Delta &0\\0 &\Delta}\pmatr{q_1\\q_2}.
 \]
 
-Note that the matrix case follows a similar but more involved computation via defining a G\^{a}teaux differential.
-
-
-This led to the authors defining a transparency-like performance objective using a rather subtle choice of system 
-$2$-norms. Let $G$ be a stable LTI system with transfer matrix $G(s)$. Then 
+Note that the matrix case follows a similar but more involved computation. This led to the authors defining 
+a transparency-like performance objective using a rather subtle choice of system $2$-norms. Let $G$ be a 
+stable LTI system with transfer matrix $G(s)$. Then 
 \[
 \norm{G}_2^2 \coloneqq \infint{\trace(G^*(\iw)G(\iw))}d\omega
 \] 
@@ -379,8 +380,8 @@ unilateral teleoperation as the added-value of robotic manipulators are wasted w
 
 After using the audio analogy extensively, let us finish the alternative suggestions with the same analogy. As we have briefly mentioned
 the hi-fi loudspeakers involve different dedicated components for different frequency bands such as tweeters for high-frequency band,
-sub/woofers for the low frequency bands and occasionally mid-range speakers etc. with individual drivers. Even different components are 
-utilized, the resulting harmony of these components lead to a very satisfactory listening experince if compared to a generic single driver
+sub/woofers for the low frequency bands and occasionally mid-range speakers etc. with individual drivers. Even though different components are 
+utilized, the resulting harmony of these components lead to a very satisfactory listening experince if compared to generic single driver
 louspeakers. Now, obviously somatosensory system already involves of such sensors which is reported to be responsible for different 
 frequency bands (see \Cref{chap:intro}). Hence, this already gives us a direct cue for separating the motion into different categories 
 in terms of the frequency/amplitude content. We don't have a working methodology yet however we would like to include our reasoning here
