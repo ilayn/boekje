@@ -355,37 +355,47 @@ Similarly, TVs and other futuristic vision technologies are following the same t
 with these, bilateral teleoperation definitions are nothing but academic stability problem exercises. Moreover, as we show in the next
 chapter, these problems are, whether linear or nonlinear, no different than the mainstream control problems in disguise. Therefore, we
 can not yet argue about a dedicated stability and a performance problem for bilateral teleoperation. This is the reason why we have 
-chosen a significantly advanced methodology and applied to the bilateral teleoperation problem. This does not imply that we have offered
-an alternative, in fact, quite the contrary, our goal is to make it obvious that the studies so far can be subsumed into the mainstream 
-control theory research and there is no benefit to keep the seemingly specialized terminology of the field. 
+chosen a significantly advanced methodology again from mainstream control theory and applied to the bilateral teleoperation problem. 
+This does not imply that we have offered an alternative, in fact, quite the contrary, our goal is to make it obvious that the studies 
+so far can be subsumed into the mainstream control theory research and there is no benefit to keep the seemingly specialized terminology 
+of the field. However, we have shown that if the problem is in fact a special case of a general control problem there is no need to use
+the outdated methodologies while important advances are reported in the literature in the past two decades over the small-gain/passivity
+based results. 
 
 
 
-A search over the number of studies in the literature published in the 2000's to date with \enquote{bilateral teleoperation} and \enquote{delay} 
-as keywords gives hundreds of results. Yet we have no clear understanding of why these devices are unstable. We can pinpoint different effects 
-depending on whether we look at it from an energy exchange/passivity point of view or from sensitivity function-based analysis. But this
-does not help us to prioritize certain design aspects of a high-performance system. It's very difficult to follow the train-of-thought
+A search over the number of studies in the literature published in the 2000's to date with \enquote{bilateral teleoperation} and 
+\enquote{delay} as keywords gives hundreds of results. Yet we have no clear understanding of why these devices are unstable. We 
+can pinpoint different effects depending on whether we look at it from an energy exchange/passivity point of view or from 
+sensitivity function-based analysis. But this does not help us to prioritize certain design aspects of a high-performance system
+and unfortunately we have to assume a few questionable hypotheses along the way. It's very difficult to follow the train-of-thought
 often given in the literature as we first define the ultimate performance of a teleoperation system then we openly accept the fact that
 this is not achievable, however, we, in turn, don't modify our performance criteria and then completely neglect the issue. Finally we 
 convert the problem into a stability of some interconnected devices with a great uncertainty associated with them and then, in the majority
-of the cases inject damping to the hardware which detoriates not only the relative performance but usability of the device as a whole.
+of the cases inject damping to the hardware which deteriorates not only the relative performance but usability of the device as a whole.
 Specific to the problem at hand, having a stable but poor-performing bilateral teleoperation has less functionality than that of a 
 unilateral teleoperation as the added-value of robotic manipulators are wasted with the inclusion of damping. 
 
 
 After using the audio analogy extensively, let us finish the alternative suggestions with the same analogy. As we have briefly mentioned
 the hi-fi loudspeakers involve different dedicated components for different frequency bands such as tweeters for high-frequency band,
-sub/woofers for the low frequency bands and occasionally mid-range speakers etc. with individual drivers. Now, obviously somatosensory
-system already involves of such sensors which is reported to be responsible for different frequency bands (see \Cref{chap:intro}).
-Hence, this already gives us a direct cue for separating the motion into different categories. 
+sub/woofers for the low frequency bands and occasionally mid-range speakers etc. with individual drivers. Even different components are 
+utilized, the resulting harmony of these components lead to a very satisfactory listening experince if compared to a generic single driver
+louspeakers. Now, obviously somatosensory system already involves of such sensors which is reported to be responsible for different 
+frequency bands (see \Cref{chap:intro}). Hence, this already gives us a direct cue for separating the motion into different categories 
+in terms of the frequency/amplitude content. We don't have a working methodology yet however we would like to include our reasoning here
+for comparison. 
+
+
 
 There has been quite a number of studies published on combining the tactile feedback with kinesthetic feedback such as \cite{kammermeier,
 kimcolgate,kyung,pacchierotti,meli} among many others and references therein. In many of these reports it has been clearly shown that 
 combining these modalities lead to substantial increase in human perception about the unstructured environment. Not only the motion but 
 also temperature can be transmitted via the tactile thermal actuators. Hence, different overloading of the vibrational patterns can also 
-be obtained if combined with different receptors and percetions. We have to underline that the studies mentioned above does not necessarily
-promote this idea for the control design but rather superimposing tactile and kinesthetic perception simultaneously. However, there is no
-apparent obstacle to use the same hardware for cooperative kinesthetic profiling. 
+be obtained. We have to underline that the studies mentioned above does not necessarily promote our reasoning for the control design but 
+rather superimposing tactile and kinesthetic perception simultaneously. However, there is no apparent obstacle to use the same hardware 
+for cooperative kinesthetic profiling. 
+
 
 
 Therefore, from a control design perspective this gives rise to a completely different type of performance objective that has no relation 
@@ -396,13 +406,34 @@ nontrivial. We would argue that it is not the case. The required hardware alread
 preliminary signal processing studies and there is no significant result that can be reported here. Nevertheless, we can speculate about 
 the links a solution along these lines can bring in to finalize this discussion. 
 
-Suppose local and remote media are interconnected to form a bilateral teleoperation system. 
+
+The immediate possibilities are to separate either the amplitude or the frequency content of the force signal for playback. In the frequency
+case; instead of a \enquote{\emph{physics}} matching goal, we instead encode the force signal to be similar to an audio signal. Then, the 
+bilateral teleoperation system goal is to playback the measured force pattern with different components simultaneously. This has been pursued for 
+pre-recorded signals in \cite{kuchenbecker} within the concept of \enquote{Event-based} haptics. The authors do not use measured 
+signals but material contact signals from a contact-bank or look-up table but an increase of perception quality is noted. If we can achieve this separation, 
+we have the option to separate the bandwidth of different components and hence making the performance specifications much more 
+relaxed if compared to one device-the whole frequency spectrum strategy. Moreover, the high frequency contact information can be shifted 
+to the \enquote{tweeter} of the device and this makes the low frequency force playback much easier. The low-bandwidth transmission is already 
+well-studied and within reach of the current technology. Hence, a standalone high frequency action can be added on top of the perception 
+which would otherwise lead to a deteriorated performance if pursued with the same device. A hard contact can still be displayed with a 
+rather compliant \enquote{sub/woofer} and an agile stiff tweeter. Moreover, a stiff wall can possibly be rendered up to the perception 
+threshold via it's Fourier components in other words, a hard contact perception might be achieved with a combination of mid-high frequency
+vibrations contingent upon the task requirements. The force signal can be transmitted and decomposed into frequency band at the local site
+or directly decomposed and sent over different channels with different line. This might even encapsulate the Model-mediated teleoperation-like
+fast/slow bus discrimination without the need of recreating a proxy virtual environment update (See e.g. \cite{mitraniemeyer}). Moreover, this 
+solution already embodies an inherent robustness to packet losses and similar artifacts as we have no obligation to match the physics any more. 
+We conjecture that this would not jeopardize the stability but will make the sensation only deteriorate as we would expect from a noisy telephone 
+conversation. 
 
 
-Moreover, the human operator has access to the 
-visual information streaming from the remote location. Instead of a \enquote{\emph{physics}} matching, we instead encode the force 
+It can be argued whether this would lead to a faithful representation of the remote location and we can directly see that the answer is no. 
+However, we are trying to remove precisely that requirement and put a device-dependent varying degree of realism instead of working for 
+stability and neglecting performance. 
 
 
-
+Without any further evidence, there is not much we can extrapolate hence we will leave this discussion to a future work. In what follows
+we will instead use a typical force error/position error minimization based control design and show that at least we can achieve good 
+robustness properties for a large class of uncertainties due to human/environment dynamics with relatively high performance. 
 
 
