@@ -1,8 +1,75 @@
 \chapter{Modeling and Controller Design for the TU/e \texorpdfstring{$1$}{1}-DoF System}
 \label{chap:application}
+In this chapter, the synthesis conditions of the previous chapter is applied to a $1$-DOF experimental setup. Different
+uncertainty structures are considered and compared. 
 
+
+\begin{figure}%
+\centering
+\includegraphics[width=0.6\columnwidth]{\impath/application/hendrix1dof}%
+\caption[TU/e $1$-DoF Experimental Setup]{TU/e $1$-DoF Experimental Setup (image is from \cite{hendrix})}%
+\label{fig:app:onedof}%
+\end{figure}
 
 \section{The experimental setup}
+At the Control Systems Technology department of Eindhoven University of Technology, a 1-Degree-of-Freedom prototype has been realized 
+within the project of constructing a 5-DoF haptics local device for robotically assisted eye surgery(\cite{hendrix}). The setup is shown 
+in \Cref{fig:app:onedof}. The actuation is provided to a capstan drive via a DC servo motor Maxon RE 35 which is connected to a statically 
+balanced circular strip plate. This piece is also connected to an inner segment via elastic elements and the relative motion of these 
+pieces make it possible to obtain a force measurement. An additional linear piece attached to the inner segment for handling the device. 
+Due to the capstan mechanism, there is a rotational reduction of $i=\frac{1}{10}$. The system consists of four major inertial components; 
+the motor and the encoder, outer strip segment, inner segment and the linear end-effector. The physical values are given in 
+\Cref{tab:app:values}. The system can be approximated by the block diagram depicted in \Cref{fig:app:blodia}.
+
+
+\begin{table}%
+\caption{Physical Values of the Experimental Setup}
+\centering
+\begin{tabular}{l S l S}
+\toprule
+\multicolumn{2}{c}{Inertia \si{\kilo\gram\meter\squared}} &\multicolumn{2}{c}{Stiffness \si{\newton\meter\per\radian}}\\
+\midrule
+$J_{mot+enc}$   &7.0e-6  &$k_{mot}$   &1.5e2\\
+$J_{pulley}$    &4.6e-7  &$k_{wire}$  &2.9e3\\
+$J_{outer}$     &2.7e-4  &$k_{ts}$    &3.5e3\\
+$J_{inner+end}$ &4.4e-4  &$k_{mot,b}$ &7.9e3\\
+\bottomrule
+\end{tabular}
+\label{tab:app:values}
+\end{table}
+
+\begin{figure}[b]%
+\centering
+\begin{tikzpicture}[spring/.style={decoration={coil,pre length=#1,post length=#1,amplitude=1mm,segment length=1mm},decorate},
+blodia/.style={draw,minimum height=1cm,minimum width=1.5cm},
+scale=0.6,transform shape]
+\coordinate (o) at (0,0);
+\node[blodia] (pulley) at (-2cm,-2cm) {$J_{pulley}$};
+\node[blodia,left= 2cm of pulley] (motenc) {$J_{mot+enc}$};
+\node[blodia,anchor=west] (outer) at (4.0cm,1cm) {$J_{outer}$};
+\node[blodia,right= 2cm of outer] (inner) {$J_{inner+ee}$};
+\draw[spring=3mm] (motenc) -- (pulley)node[pos=0.5,above=3mm] {$k_{mot}$};
+\draw (pulley) -| (o|-outer);
+\draw[spring=3mm] (o|-outer) --++(2cm,0cm)node[pos=0.5,above=3mm] {$k_{mot,b}$} coordinate (temp);
+\draw[spring=3mm] (temp) --(outer) node[pos=0.5,above=3mm] {$k_{wire}$};
+\draw[spring=3mm] (outer) --(inner) node[pos=0.5,above=3mm] {$k_{ts}$};
+\draw (o)--++(150:3mm)--++(-90:3mm) -- cycle;
+\foreach\x in{-1,...,4}\draw[ultra thin] (150:3mm)++(0,-\x mm) --++(120:1.5mm);
+\draw(150:3mm)++(0,2 mm) --++(0,-6.5mm);
+\node (i) at (.6cm,0) {$i=\frac{1}{10}$};
+\fill (o) circle (1.5pt);
+\draw[-stealth] (motenc.west) |- ([yshift=5mm]motenc.north) node[above left] {$u(t)$};
+\draw[-stealth] (motenc.west) |- ([yshift=-5mm]motenc.south) node[below left] {$\varphi(t)$};
+\end{tikzpicture}
+\caption[Simplified block diagram of the experimental setup ]{Simplified block diagram of the experimental setup (Adapted from \cite{hendrix})}%
+\label{fig:app:blodia}%
+\end{figure}
+
+The mathematical model of each device is given by:
+
+\begin{align}
+asd
+\end{align}
 
 
 
