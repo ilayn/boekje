@@ -7,7 +7,7 @@ uncertainty structures are considered and compared.
 \begin{figure}%
 \centering
 \includegraphics[width=0.6\columnwidth]{\impath/application/hendrix1dof}%
-\caption[TU/e $1$-DoF Experimental Setup]{TU/e $1$-DoF Experimental Setup (image is from \cite{hendrix})}%
+\caption[TU/e $1$-DoF Experimental Setup]{TU/e $1$-DoF Experimental Setup (Image is taken from \cite{hendrix})}%
 \label{fig:app:onedof}%
 \end{figure}
 
@@ -20,8 +20,6 @@ pieces make it possible to obtain a force measurement. An additional linear piec
 Due to the capstan mechanism, there is a rotational reduction of $i=\frac{1}{10}$. The system consists of four major inertial components; 
 the motor and the encoder, outer strip segment, inner segment and the linear end-effector. The physical values are given in 
 \Cref{tab:app:values}. The system can be approximated by the block diagram depicted in \Cref{fig:app:blodia}.
-
-
 \begin{table}%
 \caption{Physical Values of the Experimental Setup}
 \centering
@@ -37,7 +35,6 @@ $J_{inner+end}$ &4.4e-4  &$k_{mot,b}$ &7.9e3\\
 \end{tabular}
 \label{tab:app:values}
 \end{table}
-
 \begin{figure}[b]%
 \centering
 \begin{tikzpicture}[spring/.style={decoration={coil,pre length=#1,post length=#1,amplitude=1mm,segment length=1mm},decorate},
@@ -64,18 +61,70 @@ scale=0.6,transform shape]
 \caption[Simplified block diagram of the experimental setup ]{Simplified block diagram of the experimental setup (Adapted from \cite{hendrix})}%
 \label{fig:app:blodia}%
 \end{figure}
-
-The mathematical model of each device is given by:
-
+If we enumerate all the blocks from left to right, starting from one to four, then the mathematical model of each device is given by:
 \begin{align}
-asd
+\frac{J_1}{i} \ddot{x}_1           &= \frac{u}{i} - \frac{k_1}{i}(x_1 - x_2)\\
+\frac{J_2}{i} \ddot{x}_2 &= \frac{k_1}{i}(x_1 - x_2)-k_c(ix_2-x_3)\\
+J_3 \ddot{x}_3           &= k_c(ix_2-x_3) - k_4(x_3-x_4)\\
+J_4 \ddot{x}_4           &= k_4(x_3-x_4)
 \end{align}
+where $k_c = \inv{(\frac{1}{k_{wire}}+\frac{1}{k_{mot,b}})}$ and $u$ is the motor input. The system response is shown in 
+\Cref{fig:app:modfrf}. The identification and the model verification is also provided in \cite{hendrix}. Based on the 
+frequency response data, we have also added damping to the model artificially both to improve the numerical properties 
+of the model and also match the physical setup. The damping coefficients to each spring element/group is given in \Cref{%
+tab:app:damp}. Note that up to the first zero of the system, same behavior can be represented with a second order transfer
+function 
+\[
+\tilde{G}(s) = \frac{1}{0.0015s^2 + 0.00287s + 0.25}.
+\]
+
+This has been exploited in 
+
+
+\begin{table}%
+\caption{The additional damping coefficients that are included in the model.}
+\centering
+\begin{tabular}{l S}
+\toprule
+\multicolumn{2}{c}{Damping \si[per-mode=fraction]{\newton\meter\per\radian\second}}\\
+\midrule
+$b_{mot}$   & 1.8e-3\\
+$b_{wire+mot,b}$  & 1.0e-5\\
+$b_{ts}$    & 1.0e-3\\
+\bottomrule
+\end{tabular}
+\label{tab:app:damp}
+\end{table}
 
 
 
+\begin{figure}[b]%
+\centering
+\begin{tikzpicture}
+	\begin{loglogaxis}[
+	enlargelimits=false,
+	grid=both,
+	width=0.8\textwidth,height=5cm,
+	ymin=5e-6,
+	yticklabel={\pgfmathprintnumber[fixed]{\tick}},
+	xlabel= Frequency,
+	ylabel= Magnitude,
+	x unit=\si{\hertz},
+	y unit=\si{\decibel},
+	log basis y=10,
+  yticklabel={\pgfmathparse{20*(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
+	]
+		\addplot[red,thick] table[x=freq,y=resp1] {plotdata/figappmodfrf.txt};
+		\addplot[blue,dashed] table[x=freq,y=resp2] {plotdata/figappmodfrf.txt};
+		\addlegendentry[font=\tiny,align=left,anchor=west]{Motor $\rightarrow$ Encoder}
+		\addlegendentry[font=\tiny,align=left,anchor=west]{Motor $\rightarrow$ End Effector}
+	\end{loglogaxis}
+\end{tikzpicture}
+\caption{The frequency response of the hypothetical models from the motor actuation to the position measurements.}%
+\label{fig:app:modfrf}%
+\end{figure}
 
-%
-%
+
 %Consider the constant multiplier case given in \cite{carsten2} without proof. 
 %
 %\begin{lem}Let $Q$ be a nonsingular symmetric matrix and $\mathcal{S}$ a subspace (and $S\in\mathbb{R}^{n\times s}$ is being a basis 

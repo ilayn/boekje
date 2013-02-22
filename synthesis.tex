@@ -477,7 +477,7 @@ Out of our test experience, we have found out that reflecting the scaling to the
 this is the numerical noise introduced when $r$ is small in the early iteration steps. Notice how the square of $r$ drives the $Q$ block to zero
 if $0<r\ll 1$. In case of a feasible multiplier is found, this multiplier should be stripped off from $r$ since it will be again used in the 
 controller step, but due to the numerical inaccuracies wild changes are possible and usually the resulting multiplier information is contaminated. 
-We have found out\footnote{Initially suggested by C\'esar Lop\'ez during the experiments.} that we have more freedom in the scaled plant case since
+We have found out\footnote{Initially suggested by C\'esar L\'opez during the experiments.} that we have more freedom in the scaled plant case since
 one can decrease the bad effect of small numbers via balanced realizations, cleaning up the state-space matrices etc. Moreover as we show later,
 in the frequency dependent multiplier case, $r$ variable becomes garbled in the factorizations, minimal realizations etc. Hence, in this work, it 
 is recommended to scale the plant instead of the multipliers.
