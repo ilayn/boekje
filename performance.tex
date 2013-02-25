@@ -4,27 +4,28 @@
 
 Bilateral teleoperation problem is probably one of the most difficult problems in the control field due to its 
 subjective nature involving the human comfort and liking. However, to put it bluntly, the experts are not helping 
-either. In other words, most of the \enquote{good performance} motivations come from the first principle modeling. 
-Some literature argue that since most of the tools we, human operators, utilize are (almost-)lossless, say, a 
+either. In other words, most of the \enquote{good performance} motivations come from the first principle modeling
+but not from the users. 
+Some literature argue that since most of the tools we utilize are (almost-)lossless, say, a 
 screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system that 
 ideally behaves like a rigid transmission mechanism. In general, there is no established consensus on what makes 
 a teleoperation system good. Quite the contrary, this question is openly and unambiguously avoided in some 
-well-known articles but some alternatives are proposed and rigorously pursued to the end. Therefore, their conclusions 
-are the implications of their initial hypotheses. However, the results that follow these publications do not take 
-this crucial detail into account and proceed as if the performance objectives are indeed the ultimate goals. 
-We have to claim that the motivation of most of the studies given in the literature erroneously put emphasis 
-on performance objectives that are at best questionable. 
+well-known articles instead some possibilities are proposed and rigorously pursued to the end. Therefore, the conclusions 
+that these studies obtain are the implications of their initial hypotheses. However, the studies that follow these 
+publications do not take this crucial detail into account and proceed as if the performance objectives are 
+indeed the ultimate goals. We have to claim that the motivation of most of the studies given in the literature 
+erroneously put emphasis on performance objectives that are at best questionable. 
 
 On the other hand, there is a different school that focuses only on stability of the teleoperation system in the 
 face of human, environment, communication line, quantization and many more uncertainty/perturbation sources. 
 Especially some nonlinear control studies do not even bother to define performance criteria. This view simply 
-regards the human and the environment as perturbations to be protected against for our precious robotic systems 
-and neglects the \enquote{\emph{reason d'etre}} of the very problem that is under consideration. In our opinion, 
-operator perception is the indispensable performance objective and can not be overlooked. More importantly, it is
-beyond the scope and expertise of control theory (though with certain overlap) to find the relevant 
+regards the human/environment as perturbations for our precious robotic systems and neglects the \enquote{\emph{%
+reason d'etre}} of the very problem that is under consideration. In our opinion, operator perception is the 
+indispensable performance objective and can not be overlooked. But it is also very difficult to quantify. More 
+importantly, it is beyond the scope and expertise of control theory (though with certain overlap) to find the relevant 
 objectives. Other experts of the related fields need to contribute from a technological point of view in 
-contrast with a pure physiological point of view and, in fact, guide the control theorists and practicioners towards 
-the relevant issues. 
+contrast with a pure physiological point of view and, in fact,  should guide the control theorists and practitioners 
+towards the relevant issues. 
 
 We have the strong opinion that the contemporary bilateral teleoperation control results, including this thesis, 
 can not and thus should not claim a comprehensive understanding of a good and useful bilateral teleoperation 
@@ -39,22 +40,25 @@ faithfully representing the remote site motion and allowing the user intervene j
 directly at the remote site. 
 
 \subsection{Transparency}
-Using a vision analogy, the less distorted a system transmits the remote motion to the local site, the better
-the system is. Hence the term \emph{transparency}. This is defined in \cite{lawrence,yokokohjiyoshikawa} independently. 
-The notion of transparency is handled via three ideal response definitions in \cite{yokokohjiyoshikawa}. In terms 
-of the signals involved a perfect transparent 2-port network admits the hybrid matrix 
+Typically, we classify materials as opaque or transparent based on how we can see through an item made up of that 
+particular material. If we simply replace the act of seeing the other side with touching the remote location, the 
+less distorted a system transmits the remote motion to the local site, the transparent the system is. Hence the 
+term \emph{transparency}. This is defined in \cite{lawrence,yokokohjiyoshikawa} independently. The notion of 
+transparency is of three ideal response definitions in \cite{yokokohjiyoshikawa}. Resuming the notation from 
+\Cref{chap:litsurvey}, a perfect or ideal transparent 2-port network admits the hybrid matrix 
 \[
 \pmatr{v_{human}\\f_{human}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
 \]
-If we wish to translate this into a control theoretical performance objective, we have mainly two options. First 
-is minimizing the differences between the measured quantities such as forces, velocities, positions etc. Second is 
-to make our system approach to an ideal transparent system as much as possible. Thus, we can use a performance index
+If we wish to translate this into a control theoretical performance objective, we have essentially have two options. 
+First option is minimizing the differences between the measured quantities such as force errors, velocity errors etc. 
+Second option is to make our system behave like an ideal transparent system as much as possible. If we use the notation
+$N$ for the overall controlled teleoperation system model with the controller $K$, we can use a performance index
 \[
-\min_K \pmatr{f_{human}-f_{remote}\\f_{env}-f_{local}\\x_{local}-x_{remote}\\\vdots} 
+\min_K \abs{\pmatr{f_{human}-f_{remote}\\f_{env}-f_{local}\\x_{local}-x_{remote}\\\vdots}} 
 \]
-for the signals in some suitable space that we wish to consider. Note that, there is already $n$-channel controller
-structure evident from these error signals.  Alternatively, using a suitable system norm and denoting the controlled 
-$2$-port teleoperation system $N(K)$, the problem becomes
+for the signals in some suitable space that we wish to consider. Note that, there is already an $n$-channel controller
+structure visible. Alternatively, using a suitable system norm and denoting the controlled $2$-port teleoperation 
+system $N(K)$, the problem becomes
 \[
 \min_K \abs{N(K) - \pmatr{0&I\\-I&0}}.
 \]
@@ -62,7 +66,7 @@ This is obviously intuitive and agrees with the underlying physics. Thus, one mi
 of these optimization problems would lead to the best teleoperation system. However, there are two additional implicit 
 assumptions made here. On one hand, it is assumed that there is a partial ordering, in other words, if $K_1$ has the cost 
 $c_1$ and $K_2$ has the cost $c_2$ with $c_1<c_2$ then this implies that $K_1$ is better than $K_2$ which is not 
-necessarily true or better, it holds only for some particular $K$'s that are close enough to the ideal case and in general no
+necessarily true, or better, it possibly holds only for some particular $K$'s that are close enough to the ideal case and in general no
 such ordering can be expected by this performance index. It might happen that the cost function is not even continuous 
 let alone being smooth e.g. the transparency is only achieved by the global minimizer $K^*$ and not with any other $K$. 
 On the other hand, we don't have a metric for how much we need to get close to the ideal matrix. Let us first quote three 
@@ -257,7 +261,7 @@ might confuse the user.
 
 \section{Closing Remarks and Discussion}
 There are a few other performance criteria reported in the literature. Consider the definition of the impedance seen by 
-the operator $P$ above. In \cite{katsura}, this term is divided into two individual terms, denoted by 
+the operator $P$ above. In \cite{iida,katsura}, this term is divided into two individual terms, denoted by 
 \enquote{reproducibility} and \enquote{operationality}. The idea is similar to a sensitivity/complementary sensitivity 
 function definitions. 
 

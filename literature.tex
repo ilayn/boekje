@@ -2,32 +2,32 @@
 
 \chapter{A Brief and Opinionated Literature Survey}\label{chap:litsurvey}
 
-The teleoperation systems are structurally interesting and equally challenging 
+Teleoperation systems are structurally simple, two connected robotic manipulators, but equally challenging 
 systems. This is especially true from a system theoretical point of view. As an example, 
 if we just focus on the local and the remote devices that would be used for manipulation, 
 we see that they are, whether linear or nonlinear, motion-control systems with well-studied 
 properties. Hence, one can view the open-loop teleoperation as a system with a block 
-diagonal structure. However, unlike the typical motion-control systems, these two disjoint systems must be stabilized 
-simultaneously by the same controller, that is performing sufficiently in order to \enquote{fool} the user such that the user feels 
-a force feedback as if s/he is actually operating at the remote medium. We need to emphasize that the 
-delayed/undelayed local control loops can be seen as the entries of a structured central controller. Thus, there 
-is no reason to distinguish control methods at this point.  
+diagonal structure. However, unlike the typical motion-control systems, these two disjoint 
+systems must be stabilized simultaneously by the same controller\footnote{We need to emphasize 
+that the delayed/undelayed local control loops can be seen as the entries of a structured 
+central controller. Thus, there is no reason to distinguish local control methods at this 
+point.}, that is performing sufficiently in order to \enquote{fool} the user such that the 
+user feels a force feedback as if s/he is actually operating at the remote medium. With this 
+structure, the outputs of either of these subsystems become exogenous inputs of the other 
+and these are regulated by the to-be-designed controller. Therefore, it is this controller 
+that makes a teleoperation system perform adequately or, as in many cases, drive to instability.
 
-With this structure, the outputs of either of these subsystems become exogenous inputs of the other and these are regulated 
-by the to-be-designed controller. Therefore, it is this controller that makes a teleoperation system perform 
-adequately or, as in many cases, drive to instability.
 
-
-For example, in the case of the so-called free-air motion (i.e. the remote device is free to roam in the remote site), the human force input 
-to the local device and/or the position of the local device should\footnote{or better, that's what we believe today} 
+For example, in the case of the so-called free-air motion, i.e. the remote device is free to roam in the remote site, the human force input 
+to the local device and/or the position of the local device should\footnote{Or better, that's what we believe today} 
 be tracked by the remote device. In the case of a 
-hard-contact of remote device with the environment, however, these inputs should be counteracted  if the force vector points into 
+hard-contact of the remote device with the environment, however, these inputs should be counteracted  if the force vector points into 
 the obstacle. Hence, the force signal is simultaneously tracked for mimicking the user motion and  
 is defied in case of a resisting force at the remote site. As if this is not challenging enough, 
 when the user suddenly decides to release the local device, this resistance should die out as soon as possible, 
-preventing a kickback. To sample the artificial nature of such behavior, consider a user who leans to a wall located at 
-position $x_0\!\!\uparrow$, applying a horizontal force and then retreating after some time. It is not expected 
-that the wall continues to push the user even after the user has the position $x<x_0$. This is not only unrealistic
+preventing a kickback. To sample the artificial nature of such a behavior, consider a user who leans to a wall located at 
+position $x_0$ and beyond, applying a horizontal force and then retreating after some time. It is not expected 
+that the wall continues to push the user even after the user has the position $x<x_0$. Such behavior would not only be unrealistic
 but also misleading as it can be confused with a sticky surface as far as the immersion is concerned. There are many other 
 scenarios that would further complicate the requirements but, in short, the user and the environment properties 
 are time-varying and make it difficult to design a straightforward control law such that these and many other details are 
@@ -50,7 +50,7 @@ are a subset of the general performance requirements of the bilateral teleoperat
 
 The inception of the bilateral teleoperation technology is often attributed to the work 
 of Raymond Goertz in Argonne National Laboratories, \cite{goertz} (In \cite{basanezsuarez}, 
-it's traced back to Nikola Tesla and, in \cite{sheridan89}, even some 16th century tools are accepted as precursors 
+it is traced back to Nikola Tesla and, in \cite{sheridan89}, even some 16th century tools are accepted as precursors 
 of the contemporary  teleoperation). The main motivation of Goertz' work (similarly later in Europe 
 by Vertut \cite{vertutcoiffet}) was handling and manipulating nuclear material, thus the very 
 first teleoperators were purely mechanical to cope with the hostile environment conditions. Though not much 
@@ -59,17 +59,17 @@ and a large body of research was reported until the 1980s. In that decade, with 
 ever-increasing computational power and the popularity of Virtual Reality (VR), teleoperation 
 technology received more attention for a possible use in the space-, underwater-, and medical-related 
 tasks. Together with the advances in control theory and network theory (e.g. \cite{miyazaki,furuta}), 
-a more systematic control methodology is adopted. Especially, stability analysis results that can be 
+a more systematic control methodology has been adopted. Especially, stability analysis results that can be 
 related to design guidelines (physical parameter bounds, bandwidth limitations etc.) were utilized
 and limits of performance were explored. A particular phenomenon, namely the destabilizing effect 
 of the delays in the teleoperation, lead the experts of the field to delve more into the systematic 
-analysis tools and qualitative aspects of teleoperation. Especially, the use of the concepts; passivity, 
-scattering transformations, and wave variables have become the standard methods of analysis and synthesis
+analysis tools and qualitative aspects of teleoperation. Especially, the use of the concepts, passivity, 
+scattering transformations, and wave variables has become the standard methods of analysis and synthesis
 (see, e.g., \cite{hannaford89,andersonspong,nieslotine}). We will start to summarize the advances from this 
 point as this thesis is precisely built on top these systematic analysis and synthesis results gathered in 
 the last two decades. However, the reader is refered to \cite{hokayemspong,burdea}, 
 and \cite{sheridan89} for a more detailed overview including other practical aspects of teleoperation analysis and 
-the hardware developments with a more historical perspective which we will omit here. 
+the hardware developments with a more historical perspective which will be omitted here. 
 
 
 As we keep on narrowing down our focus to the control theoretical parts of this challenging problem, we have to 
@@ -79,13 +79,14 @@ test case. In this plethora of methods, for example, the variation of human and 
 naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed under 
 switched control systems, jump control systems or constrained linear systems etc. Thanks to these advances, 
 as we will elaborate later, the main unsolved problem is not a methodolgical one but a motivational one. In
-other words we are lacking a fundamental understanding of the problem not the solution methods in terms of 
-what the requirements are and what a good device is if compared to another. Before we go into the 
-details of the proposed methods of this thesis, let us sample a few important and successful approaches 
-reported so far together with their shortcomings if any. We emphasize that the literature covered here is 
-far from comprehensive and deliberately shaped with pragmatic intentions. Hence a large body of research is 
-left out. This is certainly not due to their lack of thoroughness or else, but simply due to the irrelevance 
-to the purpose of this chapter.
+other words we are lacking not the solution methods but rather a fundamental understanding of the problem in terms of 
+what the requirements are and what a good device is if compared to another. Let us sample a few important and 
+successful approaches reported so far together with their shortcomings if any. We emphasize that the literature 
+covered here is far from comprehensive and deliberately shaped with pragmatic intentions. Hence a large body of 
+research is left out. This is certainly not due to their lack of thoroughness or else, but simply due to the irrelevance 
+to the purpose of this chapter. In general, the methods that are left out either don't define a performance
+objective or only focus on the particular detail about bilateral teleoperation instead of the human perception. 
+This choice should be more apparent after \Cref{chap:perf}.
 
 
 \begin{figure}%
@@ -166,7 +167,7 @@ Today, the quoted convenience also applies to almost all physical systems i.e. o
 computational packages. Yet, it's a de facto standard to use the circuit modeling while the teleoperation devices are mostly 
 mechanical. Hence, it's not clear whether the benefit of such an artificial step still exists. Once the system is represented 
 by a mathematical model, as it is demonstrated in the later sections, the mechanical/electrical analogy is, roughly, an equivalence
-based on the resulting model and works in the electrical$\to$mechanical direction too. Therefore, the 
+based on the resulting model and works in the \enquote{electrical to mechanical} direction too. Therefore, the 
 circuit based modeling is merely a convention rather than a requirement.
 
 \subsection{Two-port Modeling of Teleoperation Systems}
@@ -185,8 +186,8 @@ interacting \enquote{black boxes} (See \Cref{fig:portrep}).
 \begin{rem} We should emphasize here that in this context, the energy exchange is used as a gauge of a potentially unstable behavior. 
 The motivation relies on the fact that in order to classify a system as an unstable one, the system should exhibit unstable
 behavior at its port(s) and to exhibit such behavior additional energy is needed. Hence if all the components are incapable
-of contributing energy in the loop, finite energy excitations will be eventually decay and the system would reach to its steady state
-after a transient response\footnote{For the sake of brevity, eigenvalues on the imaginary axis or limit cycles are left out at this point.}. 
+of contributing energy in the loop, finite energy excitations will eventually decay and the system would reach its steady state
+after a transient response\footnote{For the sake of brevity, marginal stability or limit cycle concepts are left out at this point.}. 
 As one can directly identify, this is simply the rough sketch of the celebrated passivity theorem. Based 
 on this argument, there is a recurring theme in the literature that a teleoperation system should be passive in order to have a stable 
 interconnection. As we will mention later, this is due to the hypothesis that end terminations are also passive. However, in a few 
@@ -254,18 +255,21 @@ systems for bilateral teleoperation among many others.
 
 As mentioned above, network theory offers a great opportunity for modeling the teleoperation systems, or better, avoiding 
 the refined modeling. Still, to invoke the stability analysis and synthesis results of the network theory there is a need 
-to further distinguish $\Delta_s,\Delta_l$ from the universum of $1$-ports. Otherwise there is not much we can conclude 
-from such an interconnection, put differently, they can be any arbitrary models with arbitrary behavior set as long as they 
+to distinguish $\Delta_s,\Delta_l$ further in the universum of $1$-ports. Otherwise there is not much we can conclude 
+from such an interconnection since they can be any arbitrary model with arbitrary behavior set as long as they 
 respect the port condition. This is obviously a crude approximation of the real physical interaction that teleoperation 
 systems exhibit. 
 
 In teleoperation and haptics literature, it is customary to assume the load and the source terminations as \enquote{passive}
 mathematical operators (see \Cref{chap:apdxnetwork}). Starting with this hypothesis, the stability problem can be converted to 
-a typical energy dissipation problem. 
-Hence the view of the designer is tuned to watch for the energy sources and interaction between two distant media. This approach 
-treats the human and the environment as passive $1$-port circuit elements with additional effort sources modeling the 
-intentional force input to the system. The controller(s) act as the energy regulator preventing excess energy generation 
-to avoid a possible instability. Moreover, as summarized in \Cref{chap:apdxnetwork} and in \Cref{chap:analysis}, one can use the 
+a typical energy dissipation problem. Hence the view of the designer is tuned to watch for the energy sources and interaction 
+between two distant media. This approach treats the human and the environment as passive $1$-port circuit elements with 
+additional effort sources modeling the intentional force input to the system. The controller(s) act as the energy regulator 
+preventing excess energy generation to avoid a possible instability even in the cases where extra energy does not endanger 
+stability or in fact needed by the user to accomplish certain task or stabilize the system. 
+
+
+Additionally, as summarized in \Cref{chap:apdxnetwork} and in \Cref{chap:analysis}, one can use the 
 network theory based conditions to assess the stability and performance conditions thanks to this hypothesis.
 
 This brings us to the discussion of the justification of the assumption as it is generally not given in full generality in the
@@ -332,31 +336,11 @@ treatment. Hence, we will only give a rough picture about the apparent behavior.
 to emphasize is, fortunately, not related to the inner workings of the human muscles.
 
 
-
-%\begin{tikzpicture}
-%\draw (-110:2) circle (1);
-%\draw[double=gray,double distance=10,line cap=round] (0,0) -- (-95:1.5);
-%\fill[red,rotate=30] (-5:0.9) -- ++(170:0.5) -- (-60:0.2) arc (-60:-200:0.2) --++(80:0.3) -- (117.5:0.9) arc (117.5:-5:0.9) -- cycle;
-%\fill(0,0) circle (0.15);
-%\fill[purple!45,rotate=30] [rounded corners=0.5pt] 
-%(120:1) -- (120:0.5) arc(120:-7.5:0.5) -- (-7.5:1) arc (-7.5:0:1.2) 
-%\foreach \x in {0,20,...,100}{-- (\x+2.5:1.2)   arc (\x+2.5:\x+10:1.2)  -- (\x+12.5:1)  arc (\x+13.5:\x+20:1.2)};
-%\draw[dashdotted] (155:1.1) arc (155:15:1.1);
-%\draw[fill] (-95:1.5) circle (0.15);
-%
-%\end{tikzpicture}
-%\begin{figure}%
-%\centering
-%\includegraphics[width=0.7\columnwidth]{\impath/literature/muscleoffer}%
-%\caption[Muscle activation mechanism]{Muscle activation mechanism (taken from \cite{offer}) Going to be drawn from scratch!!}%
-%\label{fig:lit:muscle}%
-%\end{figure}
-
 \begin{figure}%
 \centering%
 \begin{tikzpicture}[transform shape, scale=0.5,decoration={zigzag,amplitude=1pt,segment length=1mm}]
-\begin{scope}[]
-\begin{scope}[]
+\begin{scope}
+\begin{scope}
 \begin{scope}[rotate=90]
 \draw[domain=0.6*pi/3:6.5*pi/3,
 samples=50,draw=none,
@@ -393,7 +377,7 @@ mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] 
 \end{scope}
 
 \begin{scope}[xshift=7cm]
-\begin{scope}[]
+\begin{scope}
 \begin{scope}[rotate=90]
 \draw[domain=0.6*pi/3:6.5*pi/3,
 samples=50,draw=none,
@@ -467,7 +451,7 @@ is related to the \enquote{human's restoring force} given in \Cref{rem:filament}
 
 Having a spring-like property naturally implies that the arm is passive. But the problem with this argument, as far as 
 we understand, is that there is no reason to assume that the human arm exhibits a symmetric positive definite 
-matrix at each time instant for an arbitrary trajectory. In fact, as shown clearly in \cite{mussa85}, the major eigenvector 
+stiffness matrix at each time instant for an arbitrary trajectory. In fact, as shown clearly in \cite{mussa85}, the major eigenvector 
 of the stiffness matrix varies both in terms of direction and magnitude. Therefore, it might be possible to extract energy 
 from the human arm with some particular pathological trajectory. Just in the case of a frozen time analysis of a time-varying 
 operator does not imply stability, the conclusion is only valid for postural analysis at a fixed configuration of the human arm 
@@ -480,14 +464,58 @@ Therefore, it is our belief that the assumption of human arm being a passive ope
 Since it is customary to include the passivity hypothesis in the literature, let us invoke it here too for the sake of the argument. 
 The question of how, then, a human can possibly move anything while remaining passive is one that makes the whole story even more 
 complicated. The voluntary input of the human is taken as an exogenous and state independent input to the system. Hence, the human 
-cognitive input is an additional but independent force source acting on the handle together with the passive human arm immitance.
+cognitive input is an additional but independent force source acting on the handle together with the passive human arm immitance 
+as depicted in \Cref{fig:lit:stateindep}.
 
-
-The reader would spot that this is not inline with Hogan's remark since the activation state in the muscle cells should be altered in 
-order to apply force.In other words, we need to alter the stiffness matrix of the arm to be able to move but we have neither experience 
-nor expertise to find out how. But, to the best of our knowledge, this is not given in any teleoperation study. In other words, the 
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\tikzstyle{spring}=[thick,decorate,decoration={coil,pre length=0.3cm,post length=0.3cm,segment length=1mm,amplitude=2mm}]
+\tikzstyle{damper}=[thick,decoration={markings,  
+  mark connection node=dmp,
+  mark=at position 0.5 with 
+  {
+    \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+    \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+    \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+  }
+}, decorate]
+\draw (-5mm,10mm) arc (120:240:1.7mm) 
+                  arc (140:240:2mm) 
+                  arc(140:230:2mm) 
+                  arc(150:230:1.7mm) 
+                  to[out=-20,in=190] ++(1.3cm,1mm) 
+                  to[out=-5,in=200] ++(3cm,-1mm) 
+                  coordinate (kose);
+\coordinate (ustkose) at ([yshift=10mm]kose);
+\draw (kose) .. controls +(60:2mm)  and +(-60:2mm) .. ++(0,5mm) coordinate (orta); 
+\filldraw[pattern=north east lines]  
+(orta) .. controls +(120:3mm) and +(190:2mm) .. (ustkose) 
+       .. controls +(-10:2mm) and +(60:3mm) .. (orta);
+\draw (ustkose) to[in=-15,out=160] ++(-3cm,1mm) 
+                to[in=20,out=170] 
+                coordinate [pos=0.6](b) 
+                coordinate [pos=0.8](a) (-5mm,10mm);
+\fill[gray] (a) |- ++(2mm,15mm) -|(b);
+\draw[-DIN,ultra thick] ([shift={(2mm,10mm)}]a) -- ++(-2cm,0) node[above,midway] {$F_{exo}$};
+\coordinate  (yay) at ([shift={(5mm,5mm)}]orta);
+\coordinate  (damp) at ([shift={(5mm,-5mm)}]orta);
+\coordinate (duvar) at ([shift={(2cm,0)}]orta);
+\draw[thick] (orta) -| (yay) (orta) -| (damp) ([yshift=7mm]duvar) |-(-1cm,-5mm);
+\fill[pattern=north east lines] ([yshift=7mm]duvar) |-(-1cm,-5mm) --++(0,-2mm) -| ([shift={(2mm,7mm)}]duvar);
+\draw[spring] (yay) -- ++(15mm,0);
+\draw[damper] (damp) -- ++(15mm,0);
+\end{tikzpicture}
+\caption[A pictorial representation of the state independent human force input]%
+{A pictorial representation of the state independent human force input. By state dependence, we mean that the
+vector $F_{exo}$ is completely decoupled from the arm characteristics and can be taken as a genuine exogenous input.}%
+\label{fig:lit:stateindep}%
+\end{figure}
+The reader would spot that this is not inline with Hogan's remark since the activation state in the muscles should be altered in 
+order to apply force.In other words, we need to alter the stiffness matrix of the arm to be able to move but, to the best of our 
+knowledge, this is not given in any teleoperation study. In other words, the 
 answer to the question of whether the human's restoring force would exhibit the same properties during the force exertion phase is 
-not known to us. It has been also shown that muscle force is also related to the muscle tension-length properties \cite{eltit} 
+not known to us. It has been also shown that applied force is also related to the muscle tension-length properties \cite{eltit} 
 which we have not considered in our analogy.
 
 Therefore, we have to further separate the human force into two parts, namely, the active neuromuscular feedback force that keeps the 

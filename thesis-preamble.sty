@@ -196,8 +196,9 @@ binary-units = true
 				plotmarks,
 				decorations.pathmorphing
 				}
-								
-\usepgfplotslibrary{units}
+\usepgfplotslibrary{smithchart,units}
+
+
 \RequirePackage{csquotes}
 %\MakeOuterQuote{''}
 
@@ -373,11 +374,6 @@ binary-units = true
 
 
 
-%%% LISTS
-%\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\normalfont\itshape #1}
-%\tightlists
-
-
 \renewcommand\cftchapterfont{\scshape}
 \renewcommand\cftsectionfont{\normalfont}
 \renewcommand\cftsubsectionfont{\itshape\small}
@@ -457,5 +453,30 @@ dup
   \pgfpathcircle{\pgfpointorigin}{\pgfplotmarksize}
   \pgfusepathqfillstroke
 }
+
+% http://tex.stackexchange.com/questions/52786/din-conform-arrowheads-and-hatching-in-tikz
+\pgfarrowsdeclare{DIN}{DIN}
+{
+  \pgfutil@tempdima=0.5pt%
+  \advance\pgfutil@tempdima by.25\pgflinewidth%
+  \pgfutil@tempdimb=7.29\pgfutil@tempdima\advance\pgfutil@tempdimb by.5\pgflinewidth%
+  \pgfarrowsleftextend{+-\pgfutil@tempdimb}
+  \pgfutil@tempdimb=.5\pgfutil@tempdima\advance\pgfutil@tempdimb by1.6\pgflinewidth%
+  \pgfarrowsrightextend{+\pgfutil@tempdimb}
+}
+{
+  \pgfutil@tempdima=0.5pt%
+  \advance\pgfutil@tempdima by.25\pgflinewidth%
+  \pgfsetdash{}{+0pt}
+  \pgfsetmiterjoin
+  \pgfpathmoveto{\pgfpointadd{\pgfqpoint{0.5\pgfutil@tempdima}{0pt}}{\pgfqpoint{-4mm}{0.5mm}}}
+  \pgfpathlineto{\pgfqpoint{0.5\pgfutil@tempdima}{0\pgfutil@tempdima}}
+  \pgfpathlineto{\pgfpointadd{\pgfqpoint{0.5\pgfutil@tempdima}{0pt}}{\pgfqpoint{-4mm}{-0.5mm}}}
+  \pgfpathclose
+  \pgfusepathqfillstroke
+}
+\pgfarrowsdeclarereversed{DIN reversed}{DIN reversed}{DIN}{DIN}
 \makeatother
-\usepgfplotslibrary{smithchart}
+
+
+
