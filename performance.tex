@@ -47,16 +47,16 @@ term \emph{transparency}. This is defined in \cite{lawrence,yokokohjiyoshikawa} 
 transparency is of three ideal response definitions in \cite{yokokohjiyoshikawa}. Resuming the notation from 
 \Cref{chap:litsurvey}, a perfect or ideal transparent 2-port network admits the hybrid matrix 
 \[
-\pmatr{v_{human}\\f_{human}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
+\pmatr{v_{hum}\\f_{hum}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
 \]
 If we wish to translate this into a control theoretical performance objective, we have essentially have two options. 
 First option is minimizing the differences between the measured quantities such as force errors, velocity errors etc. 
-Second option is to make our system behave like an ideal transparent system as much as possible. If we use the notation
+Second option is to make our system behave like an ideal transparent system as much as possible. If we use 
 $N$ for the overall controlled teleoperation system model with the controller $K$, we can use a performance index
 \[
-\min_K \abs{\pmatr{f_{human}-f_{remote}\\f_{env}-f_{local}\\x_{local}-x_{remote}\\\vdots}} 
+\min_K \abs{\pmatr{f_{hum}-F_{r}\\f_{env}-F_{l}\\x_{loc}-x_{rem}\\\vdots}} 
 \]
-for the signals in some suitable space that we wish to consider. Note that, there is already an $n$-channel controller
+for the signals in some suitable space that we wish to consider. In addition to the Note that, there is already an $n$-channel controller
 structure visible. Alternatively, using a suitable system norm and denoting the controlled $2$-port teleoperation 
 system $N(K)$, the problem becomes
 \[
@@ -186,17 +186,13 @@ of distinct surfaces goes under \SI{1}{\percent} for fast compliance variation d
 $Z_{disp}(Z_e)$ with respect to the change in the environment $Z_e$ can obtained via a straightforward calculation.
 
 
-Given the scalar complex LTI uncertainty block $\Delta$ and the LTI plant $G\in\mathcal{RH}_\infty^{2\times 2}$, 
-such that 
-\[
-\pmatr{q\\z} = G\pmatr{p\\w},
-\]
-the LFT interconnection of $\Delta-G$ is given by, 
+Consider again the system interconnection as depicted in \Cref{fig:nom_net}. Given the scalar complex LTI uncertainty block 
+$\Delta$ and the LTI plant $G\in\mathcal{RH}_\infty^{2\times 2}$. The upper LFT interconnection of $\Delta-G$ is given by, 
 \[
 P = G_{22}+G_{21}\Delta\inv{(I-G_{11}\Delta)}G_{12}
 \]
-Here $P$ denotes the impedance seen by the operator, $G$ denotes the teleoperation system and $\Delta$ being the 
-environment impedance. Now, under the well-posedness assumption, define the derivative operation with respect to change in $\Delta$
+Here $P$ denotes the impedance seen by the operator (the environment), $G$ denotes the teleoperation system and $\Delta$ being the 
+environment (operator) impedance. Now, under the well-posedness assumption, define the derivative operation with respect to change in $\Delta$
 \[
 \frac{d}{d\Delta} P = \frac{G_{21}G_{12}}{(I-G_{11}\Delta)^2}.
 \]
@@ -237,10 +233,10 @@ with a similar reasoning given in the $Z$-width discussion via an area computati
 Designing a robust controller while minimizing the $\mathcal{H}_2$ norm of an uncertain system in the face of a predefined 
 uncertainty set i.e. \enquote{Robust $\mathcal{H}_2$ Synthesis} problem has already recevied a lot of attention and 
 the results can be found in the literature, e.g., \cite{dullerud}. Hence, the problem definition in \cite{cavusoglu} is 
-in fact tractable which might be inline with the intuition reported about the convexity of the performance objective. However, 
-it's not clear to us why we choose the system $2$-norm for the performance cost. Additionally, the infimum needs to be 
-computed in the face of a set at infinitely many points hence an appropriate relaxation is required. This point is also not 
-given though a gridding approach might have been utilized in the numerical optimization procedure described in the paper.
+in fact tractable. However, it's not clear to us why we choose the system $2$-norm for the performance cost. Additionally, 
+the infimum needs to be computed in the face of a set of infinitely many points hence an appropriate relaxation is required. 
+This point is also not given though a gridding approach seems to be utilized in the numerical optimization procedure 
+described in the paper.
 
 It is also not clear for which case we should utilize this performance objective. The initial difficulty is that all the 
 involved operators are LTI hence there is no time variation involved. The test reads as; we select an arbitrary element 
@@ -273,11 +269,12 @@ therein for a more detailed overview about many variations in the literature.
 
 
 In summary, there is no general perfomance criteria that can lead to a dedicated control design procedure. The aforementioned 
-performance objectives always start from the direct manipulation case and assume a distance between the interacting parties.
+performance objectives always start from the direct manipulation case and assume a distance between the interacting bodies.
 Then the implications of such hypotheses are pursued and some results are obtained. It might very well happen that all or none 
 of those conclusions are correct. Put better, these studies always try to remedy the distortion caused by splitting two 
 interacting bodies. Thus, the goal becomes too ambitious at the outset. Similar to the delay problem there is not much
-we can do about the distortion within the laws of physics. In fact, even the slightest delay can destabilize the system. 
+we can do about the distortion within the laws of physics. In fact, even the slightest delay can destabilize the system which 
+is again an indicator of the fragility of the problem formulation. 
 Thus, we can speculate that by doing so, we create a stability problem that we should not have had in the first place. Moreover, 
 as we have mentioned in the introduction, the problem is exclusively about human perception and not related to the reconstruction 
 of the remote scene. As long as we can \enquote{fool} the user for the sake of efficiency and operational comfort, we are done. 
@@ -299,7 +296,7 @@ I went on to conjecture that the act of recording inevitably diminishes the dyna
 shift from the inevitable cascade of high-pass filters that the signal encounters on its passage from recording microphone to 
 playback loudspeakers smears the transients that, live, the listener perceives in all their spiky glory. And as a high-pass filter 
 is never encountered with live acoustic music, that's where the essential difference must lie, I concluded, quoting Kalman Rubinson 
-(who had not yet joined the magazine's team of reviewers) that \enquote{Something in Nature abhors a capacitor.}
+(...) that \enquote{Something in Nature abhors a capacitor.}
 
 But two more recent experiences suggest that there must be more to the difference than the presence of unnatural high-pass filters. 
 (...)
@@ -335,8 +332,8 @@ Obviously, these are all subjective opinions rather than rigorous scientific pro
 a user experience study. However, we have to remind that the audio technology is tremendously advanced if compared to haptics and 
 teleoperation. In fact, the comparison is not fair in the sense that bilateral teleoperation is not a true technology yet but rather 
 in its infancy. Still, after decades of improvements, the sound systems are not capable of producing a live sound, real enough to make 
-the listener immerse into, though comes impressively close. Nevertheless, the performance objectives that we have enumerated a few above 
-claims to compete at the level of hi-fi systems which is simply too ambitious.
+the listener immerse into, though come impressively close. Nevertheless, the performance objective studies that we have enumerated a 
+few above claim to compete at the level of hi-fi systems which is simply too ambitious.
 
 Coming back to our discussion, in the light of our analogy, we think that the bilateral teleoperation literature is focused on finding
 the system that can deliver the \enquote{live sound} rather than a high quality \enquote{playback}. This holistic search is certainly
@@ -344,28 +341,28 @@ relevant to the field but it cannot serve as the justification as a driver of te
 dependence is already emphasized in many studies as an item of importance and a too general performance criterion would be very unlikely
 to serve as a general guideline. Though, we acknowledge the motivation behind the holistic approach and a truly transparent device 
 might be the ideal, we also believe that the timing and the feasibility of this approach needs to be modified. The immediate engineering 
-problems such as the communication delays and other \enquote{today} problems are the strong indicators of the fact that such a goal cannot 
-be tackled prematurely. We can't overemphasize the key issue; even the undelayed case remains unresolved let alone (time-varying 
-or constant) delayed case. 
+problems such as the communication delays and other contemporary technological problems are the strong indicators of the fact that such 
+a goal cannot be tackled prematurely. We can't overemphasize the key issue; even the undelayed case remains unresolved let alone 
+(time-varying or constant) delayed case. 
 
 
 Again from our analogy, it took decades for the hi-fi systems to reach to the current level to claim that
 a search for the live sound is justified. The sound reconstruction task is divided into components such as amplifiers, pre-amplifiers, 
 direct digital-to-analog converters etc. for the signal conditioning and similarly the sound regeneration is also divided into active-passive 
 loudspeakers with having dedicated single or multiple tweeters, sub-woofers etc. Only then the community is convinced that the hardware 
-is not the problem\footnote{We also
-have to state that there is an additional compulsive habit of overemphasizing the component quality such as the transmission cables etc. 
+is not the problem\footnote{We also have to state that there is an additional compulsive habit of overemphasizing the component quality such as the transmission cables etc. 
 Hence, we can observe a trend among hi-fi enthusiasts of picking up artifacts that are impossible to be audible or simply don't exist.}.
 Similarly, TVs and other futuristic vision technologies are following the same trend for the ultimate vision quality. However, if compared 
 with these, bilateral teleoperation definitions are nothing but academic stability problem exercises. Moreover, as we show in the next
 chapter, these problems are, whether linear or nonlinear, no different than the mainstream control problems in disguise. Therefore, we
-can not yet argue about a dedicated stability and a performance problem for bilateral teleoperation. This is the reason why we have 
-chosen a significantly advanced methodology again from mainstream control theory and applied to the bilateral teleoperation problem. 
-This does not imply that we have offered an alternative, in fact, quite the contrary, our goal is to make it obvious that the studies 
-so far can be subsumed into the mainstream control theory research and there is no benefit to keep the seemingly specialized terminology 
-of the field. However, we have shown that if the problem is in fact a special case of a general control problem there is no need to use
-the outdated methodologies while important advances are reported in the literature in the past two decades over the small-gain/passivity
-based results. 
+can not yet argue about a dedicated stability and a performance problem for bilateral teleoperation. 
+
+This is the reason why we have chosen a significantly advanced methodology, again from mainstream control theory, and applied 
+to the bilateral teleoperation problem. This does not imply that we have offered a valid alternative, in fact, quite to the contrary, our goal 
+is to make it obvious that the studies so far can be subsumed into a general and widely used methodology and there is no benefit of 
+the current specialization of the field. However, we have shown that if the problem is in fact a special case of a general control problem 
+there is no need to use the outdated versions of the techniques proposed in the control literature while important advances are reported 
+in the literature in the past two decades over the small-gain/passivity theorem-based results. 
 
 
 
@@ -385,8 +382,8 @@ unilateral teleoperation as the added-value of robotic manipulators are wasted w
 After using the audio analogy extensively, let us finish the alternative suggestions with the same analogy. As we have briefly mentioned
 the hi-fi loudspeakers involve different dedicated components for different frequency bands such as tweeters for high-frequency band,
 sub/woofers for the low frequency bands and occasionally mid-range speakers etc. with individual drivers. Even though different components are 
-utilized, the resulting harmony of these components lead to a very satisfactory listening experince if compared to generic single driver
-louspeakers. Now, obviously somatosensory system already involves of such sensors which is reported to be responsible for different 
+utilized, the resulting harmony of these components lead to a very satisfactory listening experience if compared to generic single driver
+loudspeakers. Now, obviously somatosensory system already involves of such sensors which is reported to be responsible for different 
 frequency bands (see \Cref{chap:intro}). Hence, this already gives us a direct cue for separating the motion into different categories 
 in terms of the frequency/amplitude content. We don't have a working methodology yet however we would like to include our reasoning here
 for comparison. 
