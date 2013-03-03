@@ -49,14 +49,14 @@ transparency is of three ideal response definitions in \cite{yokokohjiyoshikawa}
 \[
 \pmatr{v_{hum}\\f_{hum}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
 \]
-If we wish to translate this into a control theoretical performance objective, we have essentially have two options. 
+If we wish to translate this into a control theoretical performance objective, we have essentially two options. 
 First option is minimizing the differences between the measured quantities such as force errors, velocity errors etc. 
 Second option is to make our system behave like an ideal transparent system as much as possible. If we use 
 $N$ for the overall controlled teleoperation system model with the controller $K$, we can use a performance index
 \[
 \min_K \abs{\pmatr{f_{hum}-F_{r}\\f_{env}-F_{l}\\x_{loc}-x_{rem}\\\vdots}} 
 \]
-for the signals in some suitable space that we wish to consider. In addition to the Note that, there is already an $n$-channel controller
+for the signals in some suitable space that we wish to consider. Note that, there is already an $n$-channel controller
 structure visible. Alternatively, using a suitable system norm and denoting the controlled $2$-port teleoperation 
 system $N(K)$, the problem becomes
 \[
@@ -86,9 +86,10 @@ In \cite{lawrence}, Lawrence then invokes the passivity assumption and then pass
 properties of the controller $K$. Evidently, this allows for the back-substitution of the controller entries and solution
 for the ideal case. Then the resulting controller is denoted with \enquote{\emph{Transparency Optimized Controller}}. In 
 control theoretical terminology, this amounts to a cross-coupling control action where the bilateral dynamical differences
-are canceled out and then SISO control channels are tuned to maximum performance bound to the stability constraints. It 
-should be clear that this is the transparency from a passivity-based point of view and we refrain from iterating 
-what is given in the previous chapter. 
+are canceled out and then SISO control channels are tuned to maximum performance bound to the stability constraints. 
+
+%It should be clear that this is the transparency optimization from a passivity-based point of view and we refrain from iterating 
+%what is given in the previous chapter. 
 
 Even if we accept it to be the distinguishing performance criterion, we have to emphasize that we have not touched the most 
 important question, that is the first of the three, rather we hope to achieve the required transparency levels just enough 

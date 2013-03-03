@@ -18,7 +18,8 @@ and these are regulated by the to-be-designed controller. Therefore, it is this 
 that makes a teleoperation system perform adequately or, as in many cases, drive to instability.
 
 
-For example, in the case of the so-called free-air motion, i.e. the remote device is free to roam in the remote site, the human force input 
+For example, in the case of the so-called free-air motion, i.e. the remote device is free to roam in the remote site, the human force 
+input 
 to the local device and/or the position of the local device should\footnote{Or better, that's what we believe today} 
 be tracked by the remote device. In the case of a 
 hard-contact of the remote device with the environment, however, these inputs should be counteracted  if the force vector points into 
@@ -63,7 +64,7 @@ a more systematic control methodology has been adopted. Especially, stability an
 related to design guidelines (physical parameter bounds, bandwidth limitations etc.) were utilized
 and limits of performance were explored. A particular phenomenon, namely the destabilizing effect 
 of the delays in the teleoperation, lead the experts of the field to delve more into the systematic 
-analysis tools and qualitative aspects of teleoperation. Especially, the use of the concepts, passivity, 
+analysis tools and qualitative aspects of teleoperation. Especially, the use of the concepts such as, passivity, 
 scattering transformations, and wave variables has become the standard methods of analysis and synthesis
 (see, e.g., \cite{hannaford89,andersonspong,nieslotine}). We will start to summarize the advances from this 
 point as this thesis is precisely built on top these systematic analysis and synthesis results gathered in 
@@ -86,7 +87,7 @@ covered here is far from comprehensive and deliberately shaped with pragmatic in
 research is left out. This is certainly not due to their lack of thoroughness or else, but simply due to the irrelevance 
 to the purpose of this chapter. In general, the methods that are left out either don't define a performance
 objective or only focus on the particular detail about bilateral teleoperation instead of the human perception. 
-This choice should be more apparent after \Cref{chap:perf}.
+The reasoning behind this choice should be more apparent after \Cref{chap:perf}.
 
 
 \begin{figure}%
@@ -138,7 +139,8 @@ This choice should be more apparent after \Cref{chap:perf}.
 \end{scope}
 \begin{scope}[shift={(6.8cm,0.5cm)},scale=0.8]
 \draw[fill] (0.5mm,0.5cm) rectangle (0.49cm,0.6cm);
-\draw[fill,postaction={pattern=north west lines,pattern color=white}] (0.2cm,0.5cm) -- ++ (0,-0.4cm) -- ++ (-45:1mm) --++(45:1mm) --++ (0,0.4cm) --cycle;
+\draw[fill,postaction={pattern=north west lines,pattern color=white}] (0.2cm,0.5cm) -- ++ (0,-0.4cm) -- ++ (-45:1mm) --++(45:1mm) --++ (0,
+0.4cm) --cycle;
 \end{scope}
 
 \end{tikzpicture}
@@ -149,7 +151,8 @@ This choice should be more apparent after \Cref{chap:perf}.
 
 \section{Modeling of Bilateral Teleoperation Systems}\label{sec:litchapmodeling}
 
-The dominating modeling paradigm of bilateral teleoperation systems is the two-port network approach. Consider the following quote from 1989:
+The dominating modeling paradigm of bilateral teleoperation systems is the two-port network approach. Consider the following quote from 
+1989:
 \begin{displayquote}[{\cite{hannaford89}}][.]
 %In this paper, development of the analytical framework is complemented by modeling of an actual teleoperator system.
 The modeling approach is to transform the teleoperation system model into an electrical circuit and simulate it using
@@ -161,7 +164,8 @@ SPICE, the electronic circuit simulation program developed at UC Berkeley
 As seen from Hannaford's motivation, the computer-based simulation tools are used extensively since then. Arguably
 this is one of the main reasons why network based electrical circuit based modeling dominated the teleoperation literature. 
 Reinforced with the circuit simulation tools, experts of the field started to construct analogies that go beyond
-a mere mechanical-electrical system analogy. Arguably, the most prominent concept borrowed from these analogies is the two-port network 
+a mere mechanical-electrical system analogy. Consequently, the most prominent concept borrowed from these analogies is the two-port 
+network 
 view of the bilateral teleoperation systems. The reader is referred to \Cref{chap:apdxnetwork} for a short recap of network theory.
 Today, the quoted convenience also applies to almost all physical systems i.e. one can simulate arbitrary models via many 
 computational packages. Yet, it's a de facto standard to use the circuit modeling while the teleoperation devices are mostly 
@@ -175,7 +179,8 @@ circuit based modeling is merely a convention rather than a requirement.
 In the teleoperation context, if one uses the \enquote{load-source} analogy for the manipulated environment 
 and the human, then the system models all the bilateral interaction between the load and the source 
 ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via their input/output 
-(or external) properties i.e. across variable/through variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/linearity
+(or external) properties i.e. across variable/through variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/
+linearity
 properties of the components are not relevant at the outset if we are only interested in energy exchange which is the basis
 of the so-called Time-Domain Passivity Methods \cite{hannafordryu} which we will mention later in this chapter. Thus, 
 the user, the control system, the environment, the remote and local devices and communication delays are seen as 
@@ -527,7 +532,8 @@ references therein.
 This ambiguity becomes much more important since the control oriented focus of this thesis necessitates that we concentrate on
 worst cases rather than the experiments performed within the cognitive range of human operators. In other words, we are interested in
 the cases where things go wrong due to many other various reasons, sampling disturbances, measurement noises, directionality etc. Therefore
-it cannot be a satisfactory argument if stability depends on the user's neuromuscular feedback or simply user's stabilization capabilities. 
+it cannot be a satisfactory argument if stability depends on the user's neuromuscular feedback or simply user's stabilization 
+capabilities. 
 In order to use the bilateral teleoperation devices in real-life cases, stability should be addressed regardless of human actions. Hogan's 
 findings are not sufficient for supporting the passivity assumption often found in the literature. 
 
@@ -664,14 +670,17 @@ this is where the network theory stands out as a complete tool for analysis and 
 via the celebrated hypothesis that human and the environment models are passive.  
 
 The common terminology for stability is somewhat different than that of the contemporary control theory as \emph{nominal stability} 
-is used for the stability properties of isolated two disjoint media and when the interaction is setup between these two media the closed-loop 
+is used for the stability properties of isolated two disjoint media and when the interaction is setup between these two media the closed-
+loop 
 stability problem is called \emph{coupled stability}. To the best of our knowledge, this terminology is introduced in 
 \cite{colgatehogan88} hence we refer to this paper (or Colgate's thesis \cite{colgatephd}) for a more detailed motivation. 
 
 
 It's also worth mentioning that the passivity and stability is used often interchangeably and also usually referred to the classical texts
-\cite{haykin,mitra69,chen91} for the precise definitions. Hence, there is a little guesswork required to classify the stability definitions given in the
-literature. The important distinguishing point is that the marginal stability is often accepted in the definition of stability results since
+\cite{haykin,mitra69,chen91} for the precise definitions. Hence, there is a little guesswork required to classify the stability 
+definitions given in the
+literature. The important distinguishing point is that the marginal stability is often accepted in the definition of stability results 
+since
 it arises frequently in lossless (hence passive) models where energy conservation is assumed. However, the analysis results often 
 rely on such assumptions do not guarantee asymptotic interconnection stability but only lead to certain passivity 
 properties of the interconnection (see \cite[Thm. 6.1]{khalil} and \cite[Sec. V]{lawrence} for the discussion on strict passivity).  
@@ -683,8 +692,10 @@ the nonlinear counterparts of the results are also available in the literature a
 \begin{thm} The negative feedback connection of two passive systems is passive. The negative feedback connection of a passive system with
 a strictly passive system is asymptotically stable.\end{thm}
 
-Note that, this result is valid for both nonlinear and linear systems. Invoking the theorem twice on the teleoperation system allows us to conclude that,
-under the passivity assumption of the human and the environment, if the two-port is  passive then the interconnection is passive. Moreover, if any of 
+Note that, this result is valid for both nonlinear and linear systems. Invoking the theorem twice on the teleoperation system allows us 
+to conclude that,
+under the passivity assumption of the human and the environment, if the two-port is  passive then the interconnection is passive. 
+Moreover, if any of 
 the involved operators is strictly passive the teleoperation system is asymptotically stable. 
 
 \begin{figure}%
@@ -697,10 +708,14 @@ terminations. The actuation of the railcar is taken as a state-independent input
 \end{figure}
 
 
-The passivity assumptions are not necessary for stability but only sufficient. Because there exist stable interconnections that involves nonpassive 
-subsystems. In particular, the conservatism brought in by passivity theorem is arbitrarily high (especially in the nonlinear case). Facetious as it 
-may seem, the test also takes into account the port terminations shown in \Cref{fig:lit:train} for a table-top joystick. We have to emphasize that
-the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network with passive end terminations. Hence, a regular 
+The passivity assumptions are not necessary for stability but only sufficient. Because there exist stable interconnections that involves 
+nonpassive 
+subsystems. In particular, the conservatism brought in by passivity theorem is arbitrarily high (especially in the nonlinear case). 
+Facetious as it 
+may seem, the test also takes into account the port terminations shown in \Cref{fig:lit:train} for a table-top joystick. We have to 
+emphasize that
+the three-carriage railcar with two cabs, is a valid, almost perfectly transparent two-port network with passive end terminations. Hence, 
+a regular 
 passivity-based stability test includes those end terminations for a simple hand-held device. It's that conservative.
 
 
@@ -714,9 +729,12 @@ peak-to-peak gain minimization methods are not mature enough to handle any pract
 excessive conservatism. 
 
 
-Another disadvantage is that the power- or the energy-based analysis, due to the inner-product structure, can not distinguish the individual 
-signal properties. Consider the ideal case where the human and the local device is pushing each other and cancelling each other's contribution. 
-In this case the external or observable energy exchange based on the port variables is zero (negligible) which can not be distinguished from 
+Another disadvantage is that the power- or the energy-based analysis, due to the inner-product structure, can not distinguish the 
+individual 
+signal properties. Consider the ideal case where the human and the local device is pushing each other and cancelling each other's 
+contribution. 
+In this case the external or observable energy exchange based on the port variables is zero (negligible) which can not be distinguished 
+from 
 the case of not touching at all (a small motion on the device). 
 
 
@@ -725,7 +743,8 @@ allow us the analyze the teleoperation systems for stability and performance. Th
 models is the Llewellyn's stability criteria (also often called absolute stability theorem or unconditional stability theorem). 
 For linear networks, the following definitions seem to be used quite widely (modified from \cite{chen91}): 
 
-\begin{define}[Potential Instability at $\iw_0$] A two-port network is said to be potentially unstable at $\iw_0$ on the real frequency axis, 
+\begin{define}[Potential Instability at $\iw_0$] A two-port network is said to be potentially unstable at $\iw_0$ on the real frequency 
+axis, 
 if there exist two passive one-port immitances that, when terminated at the ports, produce a persisting natural frequency at $\iw_0$.   
 \end{define}
 
@@ -841,7 +860,8 @@ a block diagram. Assume a proper positive real LTI SISO system $G(s)$ and let th
 standard manipulation, we obtain a feedback interconnection that leads to the mapping
 \[
 W(G(s)) = \frac{G(s)-1}{G(s)+1} = -1 + \frac{2G(s)}{G(s)+1} \Longrightarrow 
-\begin{tikzpicture}[baseline=(g.center),scale=0.5,transform shape,every node/.style={draw,minimum size=1cm},every path/.style={->},>=stealth]
+\begin{tikzpicture}[baseline=(g.center),scale=0.5,transform shape,every node/.style={draw,minimum size=1cm},every path/.style={->},>=
+stealth]
 \node[draw] (g) at (0,0) {$G$};
 \node[draw,left=1cm of g] (s1) {$\sqrt{2}$};
 \node[draw,right=1cm of g] (s2) {$\sqrt{2}$};
@@ -865,7 +885,8 @@ is a matter of convention and provides symmetry in the block diagrams. Also we h
 (W\circ W \circ W) (G) &= \frac{-1}{W(G)},\\
 (W\circ W \circ W \circ W) (G) &= G\\
 \end{align*}
-which is nothing but the $90^\circ$ clock-wise rotations of the Riemann sphere about the axis parallel to the imaginary axis ($W$ is an element of 
+which is nothing but the $90^\circ$ clock-wise rotations of the Riemann sphere about the axis parallel to the imaginary axis ($W$ is an 
+element of 
 M\"{o}bius group with $\circ$ operation). This is closely related to the stability parameter of Edwards and Sinsky (\cite{edsin}). 
 
 
@@ -1134,7 +1155,8 @@ Starred signals are the exogenous force inputs by the human/environment}%
 \end{figure}
 
 
-Instead of such classification, one can directly start with a MIMO control structure while keeping the control problem formulation fixed. For this purpose, consider the 
+Instead of such classification, one can directly start with a MIMO control structure while keeping the control problem formulation fixed. 
+For this purpose, consider the 
 control mapping $K:\Real^{n_1}\times\Real^{n_2}\times\Real^3\times\Real^3\to \Real^{m_1}\times\Real^{m_2}$ from the 
 measurements to the local and remote control actions via 
 \begin{equation}
@@ -1258,8 +1280,10 @@ $W(P)$ and obtain
 W(P) = (P-I)\inv{(P+1)} &= \bmatr{G-I & 0\\0 &-H-I}\inv{\bmatr{G+I & 0\\0 &-H+I}}\\ &= \bmatr{W(G) &\\&W(-H)}
 \end{align}
 
-This constitutes as a simple justification of the common \enquote{left} and \enquote{right} scattering transformation of the port terminations, leaving 
-the delay operators in the \enquote{hybrid} structure untouched in the two port network terminology. Note that, we have only applied the mapping $W$ to $P$ and 
+This constitutes as a simple justification of the common \enquote{left} and \enquote{right} scattering transformation of the port 
+terminations, leaving 
+the delay operators in the \enquote{hybrid} structure untouched in the two port network terminology. Note that, we have only applied the 
+mapping $W$ to $P$ and 
 there is no inverse mapping to \enquote{undo} this in the loop. Technically speaking, this is not precisely a loop transformation 
 but actually a change to the system structure via control action. The block diagrams that we have presented earlier is precisely 
 achieved by the use of a feedforward/feedback control law, which can be represented by \Cref{eq:lit:MIMOcont}, to create this 
@@ -1334,7 +1358,8 @@ PC can be implemented in series or parallel to the port.
 \node[draw,minimum size=1.5cm] (n) {$N$};
 \draw (n.140) -- +(-2cm,0)  (n.-140) -- +(-2cm,0);
 \draw ([xshift=-1cm]n.140) -- ++(0,-2mm) node[draw,anchor=north,inner sep=2pt] (a) {$\alpha$};
-\draw (a) -- ++(0,-3mm) node [shift={(-1mm,0cm)},anchor=east,rotate=90,shape=var make contact IEC,minimum width=3mm,minimum height=2mm,draw] (s) {};
+\draw (a) -- ++(0,-3mm) node [shift={(-1mm,0cm)},anchor=east,rotate=90,shape=var make contact IEC,minimum width=3mm,minimum height=2mm
+,draw] (s) {};
 \draw (s) -- (s|- n.-140);
 \node[scale=0.5,minimum height=3mm,minimum width=7mm,draw] at ([xshift=-8mm]s) (r) {$PO$};
 \draw[densely dashed] (r) -- ([xshift=2mm]s.south);

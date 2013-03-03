@@ -924,8 +924,9 @@ show that these constraints characterize the domain
 \[
 \{z\in\mathbb{C}: -a \leq \Re{z} \leq b \text{ for }a,b>0\}.
 \]
-Hence, after introducing dynamic multipliers and scaling the overall multiplier with the corresponding $\lambda$ of $\Delta_s$,
-the stability condition can be posed as for all $\omega\in\Real_e$ the existence of $\lambda_1(\omega),\lambda_2(\omega)>0$ such that
+Hence, via introducing dynamic multipliers and scaling the overall multiplier with the corresponding $\lambda$ of $\Delta_s$,
+the stability condition is equivalent to, for each $\omega\in\Real_e$ the existence of $\lambda_1(\omega),\lambda_2(\omega)>0$ 
+such that
 \begin{equation}
 \pmatr{1 &0\\0 &1\\\hline-N_{11} &-N_{12}\\-N_{21} &-N_{22}}^*
 \left(\begin{array}{cc|cc}
@@ -944,16 +945,32 @@ holds. By carrying out the multiplication, we obtain
 \star                                              &-2(\lambda_1 -\lambda_2)R_{22}+(\lambda_1 a+\lambda_2 b)\abs{N_{22}}^2
 }\prec 0.
 \]
+%\[
+%\pmatr{
+%-2R_{11} + \lambda_1 a\abs{N_{21}}^2 & -N_{12} -(\lambda_1 -\lambda_2)N_{21}^*+\lambda_1 aN_{21}^*N_{22}\\
+%\star                                              &-2(\lambda_1 -\lambda_2)R_{22}+\lambda_1 a\abs{N_{22}}^2
+%}\prec
+%\lambda_2 b
+%\pmatr{
+%N_{21}^*\\N_{22}^*
+%}
+%\pmatr{
+%N_{21}^*\\N_{22}^*
+%}^*.
+%\]
 
+%If we compare this with the derived conditions in \cite{jazayeri}, we can see that their results don't involve any $b$ terms. Hence, 
+%contrary to the claim, those results can be, at best, sufficient since their test only deals with the first part of the constraint, namely 
+%$-a\leq \operatorname{Re}({\Delta_l})$. Still we cannot see the actual problematic step as we cannot reproduce their conditions by leaving out 
+%the constraint involving $b$ term. Nevertheless, their first remark in \cite[Theorem 3]{jazayeri} is not correct. The upper bound 
+%on the real part of the uncertainty certainly plays a role and can not be omitted in the necessity direction in their proof which is omitted 
+%in their paper. In other words two uncertainty operators with $\operatorname{Re}{\Delta}\leq b (\geq b)$ for some frequencies respectively,
+%can not be distinguished and this possibility already contradicts with the necessity of the test since both will be evaluated on the 
+%basis of parameter $a$ and regardless of $b$. 
 
-If we compare this with the derived conditions in \cite{jazayeri}, we can see that their results don't involve any $b$ terms. Hence, 
-contrary to the claim, those results can be, at best, sufficient since their test only deals with the first part of the constraint, namely 
-$-a\leq \operatorname{Re}({\Delta_l})$. Still we cannot see the actual problematic step as we cannot reproduce their conditions by leaving out 
-the constraint involving $b$ term. Nevertheless, their first remark in \cite[Theorem 3]{jazayeri} is not correct. The upper bound 
-on the real part of the uncertainty certainly plays a role and can not be omitted in the necessity direction in their proof which is omitted 
-in their paper. In other words two uncertainty operators with $\operatorname{Re}{\Delta}\leq b (\geq b)$ for some frequencies respectively,
-can not be distinguished and this possibility already contradicts with the necessity of the test since both will be evaluated on the 
-basis of parameter $a$ and regardless of $b$. 
+If compared to the results of \cite{jazayeri}, terms involving the bound $b$ don't vanish. In fact, the authors prove the test for a half-plane defined 
+as $\left\{z\in\Complex|\Re{z}\geq a\right\}$ instead of a strip and the necessity direction of the proof is omitted. Hence, the upper 
+bound on the real part of the uncertainty is not taken into account. Thus, their result is similar to the condition given in \Cref{thm:desvidpass}.
 
 Moreover, as is the case for the previous examples, one can impose these constraints and possibly more on both the human and the environment 
 uncertainties, without invoking the passivity theorem explicitly, in a few steps instead of deriving standalone conditions for each individual case.

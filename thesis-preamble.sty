@@ -204,8 +204,8 @@ binary-units = true
 
 
 
-%\RequirePackage[font={small}]{caption}
-%\captionsetup[table]{position=top}
+\RequirePackage{caption}
+\captionsetup[table]{position=top}
 
 
 
@@ -221,20 +221,16 @@ binary-units = true
     backref,%
     sortcites,%
     date=short,%
-    %bibencoding=inputenc,%
     maxnames=5,%
     minnames=2,%
     firstinits=true,%
-    %sorting=nyt,%
     bibstyle=numeric,%
     citestyle=numeric-comp,%
+		%style=ieee
   ]{biblatex}
 
 
 \@ifpackageloaded{biblatex}{\addbibresource{phdthesis.bib}}{\bibliography{phdthesis}}
-
-%\addbibresource{phdthesis.bib}
-%\bibliography{phdthesis}
 
 \def\bibfont{\small}
 \AtEveryBibitem{%
