@@ -2,7 +2,11 @@
 \label{chap:analysis}
 
 This chapter is based mainly on our publication \cite{polattro} which is partially presented at 
-\cite{polatACC11,polatIFAC11,polatWH11}. 
+\cite{polatACC11,polatIFAC11,polatWH11}. We introduce the IQC analysis framework to unify frequency 
+based analysis results while preserving the exactness of the conditions or if any without introducing extra 
+conservatism . Via numerical case studies, we show that the results are precisely the same with those of the 
+techniques available in the literature. Therefore, we prove that there is no fundamental reason to use a 
+specialized terminology and set of techniques out of the mainstream robust control theory.
 
 
 \section{Quadratic Forms for Stability Analysis}
@@ -80,7 +84,7 @@ under negative feedback. See \cite{safonov} for a lucid ``topological seperation
 stability tests fall under this particular {scenario based on the so-called static (frequency-independent) multipliers 
 which, therefore, presents} a significantly unified methodology.
 
-If $\Delta$ admits a diagonal structure [as in \Cref{fig:portrep}], it is well known that the small-gain theorem 
+If $\Delta$ admits a diagonal structure (as in \Cref{fig:portrep}), it is well known that the small-gain theorem 
 and passivity theorem are conservative. A natural generalization toward a tighter analysis test is using a frequency-dependent 
 $\Pi$ matrix, {which can be interpreted as} adding dynamics to the multiplier. Two prominent examples of 
 interest are the celebrated upper bound computations for $\mu$ or $\kappa_m$ in robust control theory and, as we will 
@@ -1511,14 +1515,14 @@ substantially reduces the conservatism as is visible in the plot.
 
 
 In the literature, one often encounters PID-based controller
-architectures which makes it possible to analyze the effect
+architectures which make it possible to analyze the effect
 of variations in the controller gains onto the performance of
 the teleoperation system. In our set-up, we can attribute the increase of performance to the
 increase of $\mu K_f$ due to the simplicity of the system structure.
 If moving towards more complicated controller architectures,
 such clear relations are not expected to be valid any more.
 This precludes obtaining graphical or analytical stability and
-performance tests with robustness guarantees. As we show in \cref{chap:synth},
+performance tests with robustness guarantees. As we show in \Cref{chap:synth},
  IQC framework allows the incorporation of a performance channel and to develop
 robust performance analysis tests, very much along the same
 lines as discussed for stability in this chapter. Such formulations
@@ -1538,26 +1542,26 @@ this opens the way for model based controller synthesis.
 % Plot data
 %==============================================================
 \pgfplotstableread{
-tau	k1	k2	k4	k10	k100	kcomp
-0.01	0.1069	0.0699	0.0525	0.044		0.0422	0.0409
-0.015	0.0854	0.0549	0.0401	0.0321	0.0286	0.0274
-0.02	0.0711	0.0452	0.0325	0.0253	0.0216	0.0198
-0.025	0.0609	0.0384	0.0273	0.0209	0.0174	0.0149
-0.03	0.0533	0.0333	0.0235	0.0177	0.0145	0.0117
-0.035	0.0473	0.0295	0.0206	0.0154	0.0125	0.0095
-0.04	0.0426	0.0264	0.0184	0.0137	0.0109	0.0078
-0.045	0.0387	0.024		0.0166	0.0123	0.0097	0.0066
-0.05	0.0355	0.0219	0.0151	0.0111	0.0088	0.0058
-0.055	0.0328	0.0202	0.0139	0.0102	0.008		0.0050
-0.06	0.0304	0.0187	0.0128	0.0094	0.0073	0.0044
-0.065	0.0284	0.0174	0.0119	0.0087	0.0068	0.0039
-0.07	0.0266	0.0163	0.0112	0.0081	0.0063	0.0034
-0.075	0.025		0.0153	0.0105	0.0076	0.0059	0.0031
-0.08	0.0236	0.0145	0.0099	0.0071	0.0055	0.0028
-0.085	0.0224	0.0137	0.0093	0.0067	0.0052	0.0026
-0.09	0.0213	0.013		0.0088	0.0064	0.0049	0.0025
-0.095	0.0203	0.0124	0.0084	0.006		0.0046	0.0023
-0.1		0.0193	0.0118	0.008		0.0057	0.0044	0.0021
+tau k1 k2 k4 k10 k100 kcomp
+0.01     0.1069   0.0699   0.0525   0.044    0.0422   0.0409
+0.015    0.0854   0.0549   0.0401   0.0321   0.0286   0.0274
+0.02     0.0711   0.0452   0.0325   0.0253   0.0216   0.0198
+0.025    0.0609   0.0384   0.0273   0.0209   0.0174   0.0149
+0.03     0.0533   0.0333   0.0235   0.0177   0.0145   0.0117
+0.035    0.0473   0.0295   0.0206   0.0154   0.0125   0.0095
+0.04     0.0426   0.0264   0.0184   0.0137   0.0109   0.0078
+0.045    0.0387   0.0240   0.0166   0.0123   0.0097   0.0066
+0.05     0.0355   0.0219   0.0151   0.0111   0.0088   0.0058
+0.055    0.0328   0.0202   0.0139   0.0102   0.0080   0.0050
+0.06     0.0304   0.0187   0.0128   0.0094   0.0073   0.0044
+0.065    0.0284   0.0174   0.0119   0.0087   0.0068   0.0039
+0.07     0.0266   0.0163   0.0112   0.0081   0.0063   0.0034
+0.075    0.0250   0.0153   0.0105   0.0076   0.0059   0.0031
+0.08     0.0236   0.0145   0.0099   0.0071   0.0055   0.0028
+0.085    0.0224   0.0137   0.0093   0.0067   0.0052   0.0026
+0.09     0.0213   0.0130   0.0088   0.0064   0.0049   0.0025
+0.095    0.0203   0.0124   0.0084   0.0060   0.0046   0.0023
+0.1      0.0193   0.0118   0.0080   0.0057   0.0044   0.0021
 }\delaystifftbl %
 %==============================================================
 %==============================================================
@@ -1565,7 +1569,7 @@ tau	k1	k2	k4	k10	k100	kcomp
 \begin{tikzpicture}[scale=0.6]
 \begin{axis}[%
 grid=both,%
-change x base,
+%change x base,
 xmin=0.01,xmax = 0.1,%
 ymin=0,ymax=0.045,%
 %width=8cm,
@@ -1574,8 +1578,8 @@ no markers,
 xlabel=$\bar{\tau}$,ylabel={Lower bound on $\mu K_f$},%
 %ylabel style={text width=2cm,align=center},
 x unit = \si{\second},%x SI prefix = milli,
-yticklabel style={/pgf/number format/.cd,fixed,precision=3},
-xticklabel style={/pgf/number format/.cd,fixed,precision=2}]
+yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=3},
+xticklabel style={/pgf/number format/fixed,/pgf/number format/precision=2}]
 \addplot[black,ultra thick,smooth] table[x=tau,y=kcomp] {\delaystifftbl};
 \end{axis}
 \end{tikzpicture}

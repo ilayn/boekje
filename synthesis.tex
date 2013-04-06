@@ -363,7 +363,7 @@ important to note that, the scaling needs not to be a simple scalar $r\in[0,1]$ 
 implicitly assumed and rarely mentioned. However the notation $r\Delta$ should be taken conceptually. As an example, 
 the delay uncertainty cannot be scaled with $re^{-s\tau}$ for any $r\in[0,1]$ since it would scale the unit-circle. In fact what we want to scale 
 is the $\tau$ variable as $e^{-sr\tau}$ such that when $r=0$ we have $e^0=1$ i.e. a non-delayed line and for $r=1$ we have $e^{-s\tau}$ i.e. full 
-duration of the maximum allowed delay. Similarly, for the saturation and dead-zone nonlinearities are examples of such nontrivial scaling cases. Hence, 
+duration of the maximum allowed delay. Similarly, saturation and dead-zone nonlinearities are examples of such nontrivial scaling cases. Hence, 
 the star-shapedness in this context becomes a parametrization of the size of the uncertainty from the nominal case to the full-sized uncertainty. 
 Nevertheless most uncertainty types are amenable to scaling with $r$-multiplication hence there is no need to invent yet another
 notation for an already complicated procedure. Therefore, every uncertainty needs to be scaled in a customized way but for notational convenience we will 
@@ -391,7 +391,7 @@ K:\mathcal{L}_{2e}^{m_y}\to\mathcal{L}_{2e}^{n_u},
 \]
 such that the nominal closed loop plant $G_{nom}\star K\in\mathcal{RH}_\infty^{m_z\times n_w}$ where 
 \[
-G_{nom}(s) = \pmatr{0_{(m_z+m_y)\times m_q} &I_{m_z+m_y}}G(s)\pmatr{0_{n_p\times(n_w+n_u)}\\I_{n_w+n_u}}. 
+G_{nom}(s) = 0_{n_p\times m_q}\star G = \pmatr{0_{(m_z+m_y)\times m_q} &I_{m_z+m_y}}G(s)\pmatr{0_{n_p\times(n_w+n_u)}\\I_{n_w+n_u}}. 
 \]
 Additionally $\mathbf{P}$ denotes the set of all suitable multipliers that all $\Delta\in\bm{\Delta}$ satisfy the 
 quadratic constraint.
@@ -477,8 +477,8 @@ Out of our test experience, we have found out that reflecting the scaling to the
 this is the numerical noise introduced when $r$ is small in the early iteration steps. Notice how the square of $r$ drives the $Q$ block to zero
 if $0<r\ll 1$. In case of a feasible multiplier is found, this multiplier should be stripped off from $r$ since it will be again used in the 
 controller step, but due to the numerical inaccuracies wild changes are possible and usually the resulting multiplier information is contaminated. 
-We have found out\footnote{Initially suggested by C\'esar L\'opez during the experiments.} that we have more freedom in the scaled plant case since
-one can decrease the bad effect of small numbers via balanced realizations, cleaning up the state-space matrices etc. Moreover as we show later,
+We have found out that we have more freedom in the scaled plant case since
+one can decrease the bad effect of small numbers via balanced realizations, cleaning up the state-space matrices etc. Moreover, as we show later,
 in the frequency dependent multiplier case, $r$ variable becomes garbled in the factorizations, minimal realizations etc. Hence, in this work, it 
 is recommended to scale the plant instead of the multipliers.
 \end{rem}
@@ -646,7 +646,7 @@ P(\iw) &= \pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*\pmatr{M_1&
 where $\hat{\Psi}_1$ needs to biproper and bistable. This has been proposed in \cite{goh96,goh962} (see also
 \cite{veenmanIFAC} for state-space derivation). Here the essential difficulty is that $\Psi_i$ are often 
 tall basis transfer matrices and are not invertible. Hence we look for square factorizations that are inherently 
-linked to J-spectral factorizations of quadratic forms. We will first take a detour on the structural properties 
+linked to $J$-spectral factorizations of quadratic forms. We will first take a detour on the structural properties 
 of the multipliers in general before we state the actual multiplier replacement. The style is based on \cite{helmersson2}.
 \begin{define}[Inertia] The triple obtained by the enumeration of the number of the positive, zero and negative 
 eigenvalues is said to be the inertia of a hermitian matrix $A$ and denoted by $\inertia A = \{n_+,n_0,n_-\}$ e.g. 
