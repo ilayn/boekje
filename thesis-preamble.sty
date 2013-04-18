@@ -1,6 +1,6 @@
 %!TEX root = thesis.tex
 \ProvidesPackage{thesis-preamble}
-
+\PassOptionsToPackage{x11names}{xcolor}
 %%%%%%%%%%%%%%%%%%%%%
 %! MEMOIR CUSTOMISE
 %
@@ -126,16 +126,26 @@
 \captionsetup{font={small}}
 \captionsetup[table]{position=top}
 
-%% Hyperref
+
+\DeclareCaptionLabelFormat{andtable}{#1\space#2 \& \tablename\space\thetable}
+
+%==================================================================
+%++++++++++++++++++++++++ Hyperref ++++++++++++++++++++++++++++++++
+%==================================================================
+
 \RequirePackage[ocgcolorlinks,%
-								breaklinks,%
-								plainpages=false,%
-								pdfpagelabels,%
-								linktocpage]{hyperref}
-\AtBeginDocument{\hypersetup{pdfauthor={\@author},pdftitle={\@title}}}
+                breaklinks,%
+                plainpages=false,%
+                pdfpagelabels,%
+                linktocpage]{hyperref}
 
 
+%\g@addto@macro{\UrlBreaks}{\UrlOrds}
 
+
+%==================================================================
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%==================================================================
 
 
 
@@ -151,10 +161,10 @@
     mathtools,
     booktabs,
     colortbl,
-		enumitem,
-		wrapfig,
-		multirow,
-		kantlipsum % For dummy text generation
+    enumitem,
+    wrapfig,
+    multirow,
+    kantlipsum % For dummy text generation
 }
 
 
@@ -176,27 +186,32 @@ binary-units = true
 \definecolor{darkgreen}{rgb}{0,0.4,0}
 \definecolor{darkblue}{rgb}{0,0,0.4}
 \hypersetup{
-  linkcolor=darkred,%
-	citecolor=darkblue,%
-	filecolor=black,%
-	urlcolor=black%
+linkcolor=darkred,%
+citecolor=darkblue,%
+filecolor=black,%
+urlcolor=black,%
+pdfauthor={İlhan Polat},%
+pdftitle={Model-Based Robust Control of Bilateral Teleoperation Systems}%
 }
 
 
 \usetikzlibrary{arrows,
         calc,%
-				matrix,%
-				positioning,%
-				decorations.markings,%
-				patterns,
-				matrix,%
+		matrix,%
+		positioning,%
+		decorations.markings,%
+		patterns,
+		matrix,%
         circuits.ee.IEC,
-				shapes.arrows,
-				shapes.geometric,
-				plotmarks,
-				decorations.pathmorphing
-				}
-\usepgfplotslibrary{smithchart,units}
+		shapes.arrows,
+		shapes.geometric,
+		plotmarks,
+		decorations.pathmorphing
+		}
+\usepgfplotslibrary{
+        smithchart,
+        units
+        }
 
 
 \RequirePackage{csquotes}
@@ -288,7 +303,7 @@ binary-units = true
 %\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 %\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
 
-\usepackage{docmute}
+%\Requirepackage{docmute}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -418,23 +433,23 @@ binary-units = true
 \providecommand{\norm}[1]{\displaystyle \left\| #1 \right\|}
 \renewcommand{\Re}[1]{\operatorname{Re}\left\{ #1 \right\}}
 \renewcommand{\Im}[1]{\operatorname{Im}\left\{ #1 \right\}}
-
+    
 %==================================================
 % ==== A style definition used in some Tikz-picture
 %==================================================
 \tikzset{ssmatrix/.style={matrix of math nodes,
-													left delimiter={[},
-													right delimiter={]},
-													ampersand replacement=\&,
-													nodes={
-																outer sep=0,
-																inner sep=0.2ex,
-																font=\footnotesize
-																},
-													inner sep=0,
-													outer sep=0,
-													every left delimiter/.style={xshift=0.1ex},
-													every right delimiter/.style={xshift=-0.1ex}}
+                        left delimiter={[},
+                        right delimiter={]},
+                        ampersand replacement=\&,
+                        nodes={
+                        			outer sep=0,
+                        			inner sep=0.2ex,
+                        			font=\footnotesize
+                        			},
+                        inner sep=0,
+                        outer sep=0,
+                        every left delimiter/.style={xshift=0.1ex},
+                        every right delimiter/.style={xshift=-0.1ex}}
 }
 
 \pgfdeclarefunctionalshading{eightball}{\pgfpointorigin}{\pgfpoint{100bp}{100bp}}{}{
@@ -444,7 +459,8 @@ dup mul neg 1.003 exch exp 1 exch sub
 dup
 dup
 }
-\makeatletter
+
+
 \pgfdeclareplotmark{o*}
 {%
 \pgfcoordinate{tpt-\the\pgf@plot@mark@count}{\pgfpointorigin}
@@ -474,7 +490,7 @@ dup
   \pgfusepathqfillstroke
 }
 \pgfarrowsdeclarereversed{DIN reversed}{DIN reversed}{DIN}{DIN}
-\makeatother
+
 
 
 

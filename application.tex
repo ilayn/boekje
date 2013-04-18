@@ -1,8 +1,7 @@
-\chapter{Modeling and Controller Design for the TU/e \texorpdfstring{$1$}{1}-DoF System}
+\chapter{Controller Design for the TU/e \texorpdfstring{$1$}{1}-DoF System}
 \label{chap:application}
 In this chapter, the synthesis conditions of the previous chapter is applied to a $1$-DOF experimental setup. Different
 uncertainty structures are considered and compared. 
-
 
 \begin{figure}%
 \centering
@@ -127,8 +126,13 @@ function
 \tilde{G}(s) = \frac{1}{0.0015s^2 + 0.00287s + 0.25}.
 \]
 This simplification is used in \cite{cesarACC,cesarSYROCO} and the resulting controllers which are based on this model are 
-experimentally implemented. Due to the low-frequency action, it is not expected that this simplification causes any problems. 
-Nevertheless we will utilize the full model here. 
+experimentally implemented. Due to the low-frequency nature of the task, this simplification did not cause any problems 
+during the experiments. 
+
+We nevertheless present the full model LFT interconnection structure but in the controller design case only the simplified 
+model is used. 
+
+
 
 \subsection{Incorporating the human dynamics}
 To be able to model both cases of \enquote{user holding/released the device} and \enquote{remote device is in free-air/contact} 
@@ -299,11 +303,11 @@ or sudden release from a constraint, say, sliding over an edge. The uncertainty 
 \[
 q = k_e x_4, p = \delta_{k_e} q.
 \]
-The environment uncertainty is selected as a time-varying parameter $k_e\SIrange{0}{3000}{\newton\meter\per\radian}$ to model 
+The environment uncertainty is selected as a time-varying parameter $k_e\in[0,3000]$ \si{\newton\meter\per\radian} to model 
 the relatively high stiff contacts.
 
 
-\section{The Generalized Plant Model}
+\subsection{The Generalized Plant Model}
 Combining the both device models, we can then define the performance channels. For the force tracking we select the error of 
 the force measurements to be minimized. For the position tracking we select the devices' encoder reading difference to be 
 minimized. We also penalize the actuator outouts to make the numerical optimization problem healthier. We will further emphasize 
@@ -323,7 +327,7 @@ G \coloneqq \left[
 \label{eq:app:genplantsymb}
 \end{equation}
 with particular entries are defined as the following; let $e_\frac{i}{8}$ denote the 
-$i$\textsuperscript{th} column if the $8\times 8$ identity matrix,
+$i$\textsuperscript{th} column of the $8\times 8$ identity matrix,
 \[
 \begin{array}{rl}
 A      &= I_2\otimes\hat{A}  \\
@@ -357,32 +361,510 @@ Thus, we have obtained a plant-uncertainty interconnection $\Delta-G$ where
 \]
 such that $\delta_{m_h},\delta_{b_h},\delta_{k_h},\delta_{k_e}\in[0,2]$ for all $t>0$.
 
-\subsection{Input/Output Weights Selection}
-Once we obtain the generalized plant, the performance channels are weighted to emphasize the frequency band of 
-interest.
-
-\subsubsection{Input Weight}
-The human force is modeled as an external input to the system and without a weight it is only assumed to be a 
-finite energy signal with no additional constraints. However, we are aware of the fact that the frequency 
-spectrum of the human input is negligible beyond \SI{\approx 10}{\hertz}. Similarly the environment force spectrum
-is also not relevant since the environment uncertainty models the spring action up to \SI{3000}{\newton\meter\per\radian}.
-Thus, both channels are prefiltered with low-pass filters to constrain the possible inputs.
+%\subsection{Input/Output Weights Selection}
+%Once we obtain the generalized plant, the performance channels are weighted to emphasize the frequency band of 
+%interest.
 %
-\[
-W_f = \frac{20\pi}{s+20\pi}
-\]
-
-
-\subsubsection{Output Weights}
-The position tracking error spectrum is nominally limited to the external inputs to the system since the position change
-is due to the human and environment forces acting on the system. For an additional safety factor, we choose the bandwidth
-of the filter to be around \SI{100}{\hertz}. 
+%\subsubsection{Input Weight}
+%The human force is modeled as an external input to the system and without a weight it is only assumed to be a 
+%finite energy signal with no additional constraints. However, we are aware of the fact that the frequency 
+%spectrum of the human input is negligible beyond \SI{\approx 10}{\hertz}. Similarly the environment force spectrum
+%is also not relevant since the environment uncertainty models the spring action up to \SI{3000}{\newton\meter\per\radian}.
+%Thus, both channels are prefiltered with low-pass filters to constrain the possible inputs.
+%%
+%\[
+%W_f = \frac{20\pi}{s+20\pi}
+%\]
 %
+%
+%\subsubsection{Output Weights}
+%The position tracking error spectrum is nominally limited to the external inputs to the system since the position change
+%is due to the human and environment forces acting on the system. For an additional safety factor, we choose the bandwidth
+%of the filter to be around \SI{100}{\hertz}. 
+%%
+%\[
+%W_{pos} = \frac{2\cdot10^4\pi}{s^2 + 180\pi s+2\cdot10^4}
+%\]
+%
+
+
+
+\subsection{Simplified System Model}
+In the previous publications, \cite{cesarACC,cesarSYROCO} the simplified model is utilized while capturing the essential 
+complications making the problem substantially simpler. We have followed the same idea by adopting the scheme depicted in 
+\Cref{fig:app:simpdiag}. In this simplified model, the dynamics of the devices are lumped into second-order mass-spring-damper 
+models and the human/environment dynamics are interconnected directly to the corresponding device models. 
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.4\linewidth}
+\centering
+\begin{tikzpicture}[>=latex,scale=0.85,transform shape]
+\node[draw,inner xsep=4mm,inner ysep=2mm] (op) at (0,1.5) {Operator};
+\node[draw] (mas) at (0,0) {$\displaystyle \frac{1}{m_ms^2+b_ms+k_m}$};
+\node[circle,draw,inner sep=2pt] (sum) at ([xshift=6mm]mas.east) {};
+\draw[->] (op) -| (sum);
+\draw[<-] (mas) -- (sum);
+\draw[->] ([yshift=-5mm]sum.south) node[below](fm){$f_m$}-- (sum);
+\draw[->] (op-|sum) -- ++(0,5mm)node[left] {$f_h$};
+\draw[->] (mas.west) -| ++(-5mm,5mm) |- (op);
+\node (xm) at ([xshift=-5mm]mas.west|-fm) {$x_m$};
+\draw[->] (mas) -|(xm);
+\end{tikzpicture}
+\caption{}
+\label{fig:app:simpdiaga}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.4\linewidth}
+\centering
+\begin{tikzpicture}[>=latex,scale=0.85,transform shape]
+\node[draw,inner xsep=4mm,inner ysep=2mm] (op) at (0,1.5) {Environment\vphantom{p}};
+\node[draw] (mas) at (0,0) {$\displaystyle \frac{1}{m_ss^2+b_ss+k_s}$};
+\node[circle,draw,inner sep=2pt] (sum) at ([xshift=6mm]mas.east) {};
+\draw[->] (op) -| (sum);
+\draw[<-] (mas) -- (sum);
+\draw[->] ([yshift=-5mm]sum.south) node[below](fm){$f_s$}-- (sum);
+\draw[->] (op-|sum) -- ++(0,5mm)node[left] {$f_e$};
+\draw[->] (mas.west) -| ++(-5mm,5mm) |- (op);
+\node (xm) at ([xshift=-5mm]mas.west|-fm) {$x_s$};
+\draw[->] (mas) -|(xm);
+\node (min) at ([shift={(-1mm,1.2mm)}]sum.150) {$\scriptstyle -$};
+\end{tikzpicture}
+\caption{}
+\label{fig:app:simpdiagb}
+\end{subfigure}
+\caption{Diagram of (a) operator/master device and (b) environment/slave device.}
+\label{fig:app:simpdiag}
+\end{figure}
+
+For the performance objectives, it has been selected to minimize the position error $x_m-x_s$ and 
+the force error $f_h-f_e$, as opposed to minimizing $f_h-f_s$ and $f_e-f_m$ independently. In other words
+it is the interaction forces we desire to match but not the individual force reference signals at each side. 
+However, this has an inherent well-posedness problem when the user releases the device. As can be seen in 
+\Cref{fig:app:design1}, when the user dynamics are absent there is no control authority left to influence 
+$f_h$ (and $f_e$ too due to the same reasoning). Therefore, the system (control design problem) is analytically 
+uncontrollable (infeasible) for the full uncertainty region. However this can be avoided by allowing for 
+slight tolerances to account for the modeling imperfections and to avoid this analytical pathology. 
+
+The reason for this artificial problem is the over-simplification of the model since in the original model 
+the force sensor is not collocated with the human input. The force measurements are in fact obtained 
+via the relative motion of the outer and inner segments as we have modeled above. However, before we discard 
+this modeling approach, we would like to emphasize that the device is not ideally free from any friction and 
+measurement uncertainties. Thus even untouched the model still involves joint and cable frictions and unmodeled
+inertial asymmetries which can be lumped into the human dynamics. Therefore, all these hard-to-model effects 
+can be reflected to the already uncertain human model. As a practical example, the friction of the device can 
+be attributed to the damping uncertainty of the human model. Hence, one can always assume that a minimal 
+interaction with the human is always present even though this minimal interaction might be due to the angular 
+inertia, friction etc. 
+
+In the sequel, we will design three controllers with different uncertainty class assumptions. The first two 
+cases will be using fixed mass and damping coefficients in the \Cref{fig:app:design1}. 
+
+\section{Three Controller Design Cases}
+
+
+
+\begin{figure}%
+\begin{subfigure}[b]{.45\linewidth}
+\centering
+\begin{tikzpicture}[>=latex,mygain/.style={isosceles triangle,draw,
+shape border rotate=180,
+isosceles triangle apex angle=60,
+inner sep=0,minimum height=7mm},myinteg/.style={draw,minimum height=9mm},
+sum/.style={circle,draw,inner sep=2pt},scale=0.87,transform shape,mygainrev/.style={mygain,mygain,shape border rotate=0},
+scale=0.75]
+\draw[dotted] (-0.5cm,-0.5cm) rectangle (7.5cm,2.6cm);
+\draw[dotted] (-0.5cm,5.5cm) rectangle (7.5cm,2.8cm);
+\node[myinteg] (integ1) at (1cm,2cm) {$\frac{1}{s}$};
+\node[myinteg,right= 1cm of integ1] (integ2) {$\frac{1}{s}$};
+\node[mygain,right= 1cm of integ2] (ms) {$\frac{1}{m_s}$};
+\draw[->] (ms) -- (integ2) node[near start,above]{$\ddot{x}_s$} coordinate[midway] (cs1);
+\draw[->] (integ2) -- (integ1) node[near start,above]{$\dot{x}_s$} coordinate[midway] (c12);
+\draw[->] (integ1) -- ++(-1.2cm,0) node[near start,above]{$x_s$}coordinate[midway] (c2);
+\node[mygainrev,above=13mm of ms.west,anchor=west] (me){$m_e$};
+\node[mygainrev,above=20mm of integ2.west,anchor=west] (be){$b_e$};
+\node[mygainrev,above=27mm of integ1.west,anchor=west,fill=blue!20] (ke){$k_e$};
+\node[mygainrev,below=10mm of integ2.west,anchor=west] (bs){$b_s$};
+\node[mygainrev,below=17mm of integ1.west,anchor=west] (ks){$k_s$};
+\node[sum] (mssum) at ([xshift=1cm]ms.east) {};
+\node[sum] (envsum) at (be-|mssum) {};
+\node[sum] (slasum) at (bs-|mssum) {};
+\node[sum,right= 1cm of envsum] (fesum) {};
+\node[sum,right= 1cm of mssum] (fssum)  {};
+\draw[->] (cs1) |- (me);\draw[->] (c12) |- (be);\draw[->] (c2)  |- (ke);
+\draw[->] (c12) |- (bs);\draw[->] (c2)  |- (ks);\draw[->] (me)  -| (envsum);
+\draw[->] (be) -- (envsum);\draw[->] (ke) -|(envsum);\draw[->] (envsum) -- (fesum);
+\draw[->] (bs) -- (slasum);\draw[->] (ks) -| (slasum);\draw[->](slasum) -- (mssum);
+\draw[->] (mssum)--(ms);\draw[->] (fssum)--(mssum);\draw[->](fesum)--(fssum);
+\draw[<-] (fesum) --++(5mm,0) node[above] {$f_e^*$};
+\draw[->] (fesum) |- ++(5mm,-10mm) node[above] {$f_e$};
+\draw[<-] (fssum) --++(0,-8mm) node[below] {$f_s$};
+\node at (6.3cm,-0.2cm) {Slave Device} node at (6.3cm,5.2cm){Environment};
+\node (min1) at ([shift={(-1mm,-1.2mm)}]mssum.200) {$\scriptstyle -$};
+\node (min2) at ([shift={(-1mm,1.2mm)}]fssum.150) {$\scriptstyle -$};
+\node[dashed,draw,minimum size=1.1cm,label={15:$\Delta_e$}] at (ke) {};
+\end{tikzpicture}
+\caption{Block diagram representation of the environment/slave device pair.}%
+\label{fig:app:design1a}%
+\end{subfigure}\hfill%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}[>=latex,
+mygain/.style={isosceles triangle,draw,shape border rotate=180,isosceles triangle apex angle=60,inner sep=0,minimum height=7mm},
+myinteg/.style={draw,minimum height=9mm},
+sum/.style={circle,draw,inner sep=2pt},
+mygainrev/.style={mygain,mygain,shape border rotate=0},
+scale=0.6525,transform shape
+]
+\draw[dotted] (-0.5cm,-0.5cm) rectangle (9.1cm,2.6cm);
+\draw[dotted] (-0.5cm,5.5cm) rectangle (9.1cm,2.8cm);
+\node[myinteg] (integ1) at (1cm,2cm) {$\frac{1}{s}$};
+\node[myinteg,right= 1cm of integ1] (integ2) {$\frac{1}{s}$};
+\node[mygain,right= 1cm of integ2] (ms) {$\frac{1}{m_m}$};
+\draw[->] (ms) -- (integ2) node[near start,above]{$\ddot{x}_m$} coordinate[midway] (cs1);
+\draw[->] (integ2) -- (integ1) node[near start,above]{$\dot{x}_m$} coordinate[midway] (c12);
+\draw[->] (integ1) -- ++(-1.2cm,0) node[near start,above]{$x_m$}coordinate[midway] (c2);
+\node[mygainrev,above=13mm of ms.west,anchor=west] (me){$m_h$};
+\node[mygainrev,above=20mm of integ2.west,anchor=west] (be){$b_h$};
+\node[mygainrev,above=27mm of integ1.west,anchor=west,fill=blue!20] (ke){$k_h$};
+\node[mygainrev,below=10mm of integ2.west,anchor=west] (bs){$b_m$};
+\node[mygainrev,below=17mm of integ1.west,anchor=west] (ks){$k_m$};
+\node[sum] (mssum) at ([xshift=1cm]ms.east) {};
+\node[sum] (envsum) at ([xshift=-1cm]be-|mssum) {};
+\node[sum] (slasum) at (bs-|mssum) {};
+\node[sum,right= 3.5cm of envsum] (fesum) {};
+\node[sum,right= 2.5cm of mssum] (fssum)  {};
+\draw[->] (cs1) |- (me);\draw[->] (c12) |- (be);\draw[->] (c2)  |- (ke);
+\draw[->] (c12) |- (bs);\draw[->] (c2)  |- (ks);\draw[->] (me)  -| (envsum);
+\draw[->] (be) -- (envsum);\draw[->] (ke) -|(envsum);
+\draw[->] (bs) -- (slasum);\draw[->] (ks) -| (slasum);\draw[->](slasum) -- (mssum);
+\draw[->] (mssum)--(ms);\draw[->] (fssum)--(mssum);\draw[->](fesum)--(fssum);
+\draw[<-] (fesum) --++(5mm,0) node[above] {$f_h^*$};
+\draw[->] (fesum) |- ++(5mm,-10mm) node[above] {$f_h$};
+\draw[<-] (fssum) --++(0,-8mm) node[below] {$f_m$};
+\node at (7.8cm,-0.2cm) {Master Device} node at (7.8cm,5.2cm){Operator};
+\node (min1) at ([shift={(-1mm,-1.2mm)}]mssum.200) {$\scriptstyle -$};
+\node (min2) at ([shift={(-1mm,1.2mm)}]fssum.150) {$\scriptstyle -$};	
+\node[draw] (filter) at ($(envsum)!0.5!(fesum)$)
+%{$\frac{\frac{s}{\omega_{zh}}+1}{\frac{s^2}{\omega_{ph}^2}+2z_{ph}\frac{s}{\omega_{ph}}+1}$};
+{$Q_h(s)$};
+\draw[->] (filter) -- (fesum);\draw[->] (envsum) -- (filter);
+\node[dashed,draw,minimum size=1.1cm,label={15:$\Delta_h$}] at (ke) {};
+\end{tikzpicture}
+\caption{Block diagram representation of the operator/master device pair.}%
+\label{fig:app:design1b}%
+\end{subfigure}
+\caption{The robust control design for only having the human/environment stiffness coefficients as uncertainties.}
+\label{fig:app:design1}
+\end{figure}
+
+
+\subsection{Uncertain Plant with Arbitrarily Fast Time-Varying Stiffness Coefficients}
+
+We start with designing a robust controller for an uncertain plant in which only the stiffness elements of the
+human and the environment models are taken as arbitrarily fast varying real parametric uncertainties. Thus, the
+involved multipliers with respect to these uncertainties are taken as full block multipliers i.e. 
 \[
-W_{pos} = \frac{2\cdot10^4\pi}{s^2 + 180\pi s+2\cdot10^4}
+\pmatr{\delta_h &\\ &\delta_e\\\hline 1 &0\\0&1}^T
+\left(
+\begin{array}{c|c}
+	Q &S\\\hline S^T &R
+\end{array}
+\right)
+\pmatr{\delta_h &\\ &\delta_e\\\hline 1 &0\\0&1} \succeq 0
 \]
+for all $\delta_h\in[0,\bar{\delta}_h]\si{\newton\per\meter}$ and $\delta_e\in[0,\bar{\delta}_e]\si{\newton\per\meter}$. 
+By enforcing the constraint $Q\prec 0$ (and since zero uncertainty enforces $R\succeq 0$) it is sufficient to guarantee the 
+constraint over the whole parameter box by just checking at the corners of the hyperrectangle set $[0,\bar{\delta}_h]\times
+[0,\bar{\delta}_e]$. The environment is assumed to be a single spring and the human damping and the mass values are assumed 
+to be the halves of the maximum values identified by the experiments.
+
+\pgfplotstableread{
+ra ga rs gs
+         0         0    0.5000    1.3275
+    0.5233    9.5627    0.5223    2.4174
+    0.8324   10.0000    0.8316    4.3356
+    0.9996    7.0881    0.9898    5.3318
+    0.9999    5.2762    1.0000    4.8267
+    1.0000    4.8224    1.0000    4.7487
+    1.0000    4.7457    0.9997    4.7189
+    0.9999    4.7187    1.0000    4.7027
+    1.0000    4.7021    0.9959    4.6823
+    0.9999    4.6801    1.0000    4.6787
+}\designonedata
+
+\begin{figure}%
+\raisebox{.3cm}{\begin{minipage}{.35\textwidth}
+\pgfplotstabletypeset[
+every head row/.style={before row={%
+    \toprule
+    \multicolumn{2}{c}{Analysis} & \multicolumn{2}{c}{Synthesis}\\
+    },
+    after row=\midrule,
+},
+every last row/.style={
+    after row=\bottomrule
+},
+columns/ra/.style ={column name={$r_a$},fixed,zerofill,precision=2},
+columns/ga/.style ={column name={$\gamma_a$},fixed,precision=2},
+columns/rs/.style ={column name={$r_s$},fixed,zerofill,precision=2},
+columns/gs/.style ={column name={$\gamma_s$},fixed,precision=2},
+]\designonedata
+\end{minipage}}
+\captionlistentry[table]{$D$-$K$ iteration progress}
+%
+%
+\hfill
+\begin{minipage}{.63\textwidth}
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[width=5.8cm,height=3.8cm,xmajorgrids,ylabel={$r_a$,$r_s$},
+scale only axis,xmin=0.8,xmax=6.1,axis y line*=left,
+legend style={at={(axis description cs: 0.97,0.76)},anchor=east}
+]
+\addplot+[mark=o,mark options = {solid,thin},SlateBlue2] table[x expr=\coordindex+1,y=ra] {\designonedata};
+\addlegendentry{$r_a$}
+\addplot+[mark=o,thin] table[x expr=\coordindex+1,y=rs] {\designonedata};\addlegendentry{$r_s$}
+\end{axis}
+\begin{axis}[scale only axis,xmin=0.8,xmax=6.1,width=5.8cm,height=3.8cm,
+axis y line*=right,ylabel={$\gamma_a$,$\gamma_s$},
+axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
+anchor=near ticklabel,rotate=90,text opacity=0.5},
+y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
+]
+\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designonedata};\addlegendentry{$\gamma_a$}
+\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designonedata};\addlegendentry{$\gamma_s$}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\captionsetup{labelformat=andtable}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\label{fig:tab:design1}
+\end{figure}
+
+
+Then using the synthesis results from the previous chapter, we design a controller with the iteration steps given in 
+\Cref{fig:tab:design1}. The maximum and the minimum singular values of the controller are shown in  \Cref{fig:app:ksigma1}.
+Notice that, even though the iterations lead to full uncertainty case $r=1$, due to the performance mismatch the iteration 
+is continued until an agreement up to some precision is achieved. 
+
+\subsection{Uncertain Plant with Time-Varying Stiffness Coefficients with Bounded Rate of Variation}
+
+After achieving robust stability with the first design, we then consider the fact that we are aware of additional bounds on 
+the rate of variations of the model parameters for the human hand. First of all we can safely assume that the human can not 
+exert full grasp force instantaneously though it can happen pretty fast. We have assumed that the human can grasp the handle 
+and fully squeeze in about half a second. Therefore, assuming that the human stiffness coefficient is differentiable, the 
+maximum values for the stiffness coefficient can be achieved in half a second and hence ${\displaystyle\max_{t>0}}\abs{\dot{k}_h(t)}\leq 
+2\overline{k}_h$. 
+
+Using the multiplier structure given in \Cref{sec:tvrovsec}, with basis function 
+\[
+\Phi(s) = \pmatr{1\\\frac{1}{s+1}}
+\]
+we utilize the following multiplier structure
+\[\renewcommand*{\arraystretch}{0.8}
+\setlength{\arraycolsep}{.5\arraycolsep}
+\Pi(\iw) = \pmatr{\star}^*\left(
+\begin{array}{cc|c|cc|c}
+	-D_1 & & &&&\\
+    &-D_2&&&&\\\hline
+    &&Q&&&S\\\hline
+    &&&D_1&&\\
+    &&&&D_2&\\\hline
+    &&S&&&R
+\end{array}
+\right)
+\left(\begin{array}{cc|c|cc|c}
+	\Phi(\iw) &\Phi_c(\iw)&&&\\
+    0&I&&&&\\\hline
+    &&1&&&\\\hline
+    &&&\Phi(\iw)&&\\
+    &&&\Phi_b(\iw)&&\\\hline
+    &&&&&1
+    \end{array}
+    \right)
+\]
+we obtain lower worst case $\mathcal{L}_2$ gains as shown in the \Cref{fig:tab:design2d1}. To demonstrate the conservatism 
+reduction via increasing the basis length in the IQC multiplier parametrization we use the basis length $d=2$, i.e.,
+\[
+\Phi(s) = \pmatr{1\\\frac{1}{s+1}\\\frac{1}{(s+1)^2}}
+\]
+and we obtain better results which are given in \Cref{fig:tab:design2d2}. Increasing the length further does not contribute to 
+significant changes hence even with the relatively short basis lengths we arrive at improved results. The improvements are not 
+only in terms of the resulting worst case $\mathcal{L}_2$ gains which tell very little if not any about the real-time implementation 
+performance. We show that the improvement is also visible in the experiments shown in the next section. 
+
+
+\pgfplotstableread{
+ra ga rs gs
+     0         0    0.2000    1.3294
+0.1988    1.8272    0.1973    1.5588
+0.3156    1.8610    0.3125    1.6971
+0.8274    4.2413    0.8194    2.5392
+0.9771    3.0788    0.9693    2.7080
+0.9999    2.8015    0.9950    2.7255
+0.9999    2.7399    1.0000    2.7296
+0.9913    2.7094    0.9839    2.6928
+1.0000    2.7275    1.0000    2.7182
+1.0000    2.7155    1.0000    2.7158
+}\designtwodataone
+
+\pgfplotstableread{
+ra ga rs gs
+     0      0 0.2000 1.3294
+0.3640 2.4951 0.3606 2.0441
+0.3605 1.9420 0.7753 3.0894
+0.9395 3.3509 0.9435 2.7859
+0.9394 2.7155 0.9352 2.4746
+0.9918 2.6563 0.9895 2.5527
+0.9991 2.5825 0.9992 2.5639
+0.9999 2.5645 1.0000 2.5631
+1.0000 2.5618 1.0000 2.5619
+}\designtwodatadtwo
+
+
+\begin{figure}%
+\raisebox{.3cm}{\begin{minipage}{.35\textwidth}
+\pgfplotstabletypeset[
+every head row/.style={before row={%
+    \toprule
+    \multicolumn{2}{c}{Analysis} & \multicolumn{2}{c}{Synthesis}\\
+    },
+    after row=\midrule,
+},
+every last row/.style={
+    after row=\bottomrule
+},
+columns/ra/.style ={column name={$r_a$},fixed,zerofill,precision=2},
+columns/ga/.style ={column name={$\gamma_a$},fixed,precision=2},
+columns/rs/.style ={column name={$r_s$},fixed,zerofill,precision=2},
+columns/gs/.style ={column name={$\gamma_s$},fixed,precision=2},
+]\designtwodataone
+\end{minipage}}
+\captionlistentry[table]{$D$-$K$ iteration progress for Case 2 $d=1$}
+%
+%
+\hfill
+\begin{minipage}{.63\textwidth}
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[width=5.8cm,height=3.8cm,xmajorgrids,ylabel={$r_a$,$r_s$},
+scale only axis,xmin=0.8,xmax=10.1,axis y line*=left,
+legend style={at={(axis description cs: 0.97,0.76)},anchor=east}
+]
+\addplot+[mark=o,mark options = {solid,thin},SlateBlue2] table[x expr=\coordindex+1,y=ra] {\designtwodataone};
+\addlegendentry{$r_a$}
+\addplot+[mark=o,thin] table[x expr=\coordindex+1,y=rs] {\designtwodataone};\addlegendentry{$r_s$}
+\end{axis}
+\begin{axis}[scale only axis,xmin=0.8,xmax=10.1,width=5.8cm,height=3.8cm,
+axis y line*=right,ylabel={$\gamma_a$,$\gamma_s$},
+axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
+anchor=near ticklabel,rotate=90,text opacity=0.5},
+y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
+]
+\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designtwodataone};\addlegendentry{$\gamma_a$}
+\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designtwodataone};\addlegendentry{$\gamma_s$}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\captionsetup{labelformat=andtable}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\label{fig:tab:design2d1}
+\end{figure}
+
+
+\begin{figure}%
+\raisebox{.3cm}{\begin{minipage}{.35\textwidth}
+\pgfplotstabletypeset[
+every head row/.style={before row={%
+    \toprule
+    \multicolumn{2}{c}{Analysis} & \multicolumn{2}{c}{Synthesis}\\
+    },
+    after row=\midrule,
+},
+every last row/.style={
+    after row=\bottomrule
+},
+columns/ra/.style ={column name={$r_a$},fixed,zerofill,precision=2},
+columns/ga/.style ={column name={$\gamma_a$},fixed,precision=2},
+columns/rs/.style ={column name={$r_s$},fixed,zerofill,precision=2},
+columns/gs/.style ={column name={$\gamma_s$},fixed,precision=2},
+]\designtwodatadtwo
+\end{minipage}}
+\captionlistentry[table]{$D$-$K$ iteration progress for Case 2 with $d=2$}
+%
+%
+\hfill
+\begin{minipage}{.63\textwidth}
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[width=5.8cm,height=3.8cm,xmajorgrids,ylabel={$r_a$,$r_s$},
+scale only axis,xmin=0.8,xmax=10.1,axis y line*=left,
+legend style={at={(axis description cs: 0.97,0.5)},anchor=east}
+]
+\addplot+[mark=o,mark options = {solid,thin},SlateBlue2] table[x expr=\coordindex+1,y=ra] {\designtwodatadtwo};
+\addlegendentry{$r_a$}
+\addplot+[mark=o,thin] table[x expr=\coordindex+1,y=rs] {\designtwodatadtwo};\addlegendentry{$r_s$}
+\end{axis}
+\begin{axis}[scale only axis,xmin=0.8,xmax=10.1,width=5.8cm,height=3.8cm,
+axis y line*=right,ylabel={$\gamma_a$,$\gamma_s$},
+axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
+anchor=near ticklabel,rotate=90,text opacity=0.5},
+y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
+]
+\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designtwodatadtwo};\addlegendentry{$\gamma_a$}
+\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designtwodatadtwo};\addlegendentry{$\gamma_s$}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\captionsetup{labelformat=andtable}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\label{fig:tab:design2d2}
+\end{figure}
+
+
+\subsection{Uncertain Plant with a More Complicated Human Model}
+
+In this test case, we treat the mass-spring-damper parameters of the human model as slowly varying uncertainties 
+together with arbitrarily fast varying environment stiffness coefficient uncertainty. 
 
 
 
 
+
+%
+%\begin{figure}%
+%\centering
+%\begin{tikzpicture}
+	%\begin{loglogaxis}[
+	%%enlargelimits=false,
+	%grid=both,
+	%width=0.6\textwidth,height=3cm,
+	%xmin=0.01,xmax=4e4,
+	%yticklabel={\pgfmathprintnumber[fixed]{\tick}},
+	%xlabel= Frequency,
+	%ylabel= Magnitude,
+	%x unit=\si{\radian\per\second},
+	%y unit=\si{\decibel},
+	%log basis y=10,
+  %yticklabel={\pgfmathparse{20*(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
+	%]
+		%\addplot[red,thick] table[x=freq,y=ks1] {plotdata/caseoneksigma.txt};
+		%\addplot[blue,dashed] table[x=freq,y=ks2] {plotdata/caseoneksigma.txt};
+	%\end{loglogaxis}
+%\end{tikzpicture}
+%\caption{The maximum and minimum singular values of the controller for the first design case with constant multipliers.}%
+%\label{fig:app:ksigma1}%
+%\end{figure}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 
