@@ -19,8 +19,9 @@ and these are regulated by the to-be-designed controller. Therefore, it is this 
 that makes a teleoperation system perform adequately or, as in many cases, drive to instability.
 
 
-For example, in the case of the so-called free-air motion, i.e. the remote device is free to roam in the remote site, the human force 
-input to the local device and/or the position of the local device should\footnote{Or better, that's what we believe today} 
+For example, in the case of the so-called \emph{free-air motion}, i.e., the remote device is free 
+to roam in the remote site, the human force input to the local device and/or the position of the 
+local device should\footnote{Or better, that's what we believe today.} 
 be tracked by the remote device. In the case of a hard-contact of the remote device with the environment, however, 
 these inputs should be counteracted if the force vector points into the obstacle. Hence, the force signal is 
 simultaneously tracked for mimicking the user motion and is defied in case of a resisting force at the remote 
@@ -37,7 +38,7 @@ are handled properly, and more importantly, simultaneously.
 
 With this short motivation, we can safely claim that looking at the overall system as a typical motion control 
 system is not sufficient in terms of complexity (though necessary). In general, motion tracking specifications 
-are a subset of the general performance requirements of bilateral teleoperation systems. 
+constitute a subset of the general performance requirements of bilateral teleoperation systems. 
 
 %\begin{rem}
 %A similar line of reasoning has been given in \cite{buergerhogan1}. But for reasons that are 
@@ -66,8 +67,12 @@ and limits of performance were explored. A particular phenomenon, namely the des
 of the delays in the teleoperation, lead the experts of the field to delve more into the systematic 
 analysis tools and qualitative aspects of teleoperation. Especially, the use of the concepts such as, 
 \enquote{passivity}, \enquote{scattering transformations}, and \enquote{wave variables} has become the 
-standard methods of analysis and synthesis (see, e.g., \cite{hannaford89,andersonspong,nieslotine}). We 
-will start to summarize the advances from this point as this thesis is precisely built on top these systematic 
+standard methods of analysis and synthesis (see, e.g., \cite{hannaford89,andersonspong,nieslotine}). 
+Arguably, this point is where bilateral teleoperation branched off from the general control theory
+and became a specialized area of research, specifically dealing with a particular problem that is still
+a matter of unresolved debate, as we touch upon later in this chapter.
+
+We start to summarize the advances from this point as this thesis is precisely built on top these systematic 
 analysis and synthesis results gathered in the last two decades. However, the reader is refered to 
 \cite{hokayemspong,burdea}, and \cite{sheridan89} for a more detailed overview including other practical 
 aspects of teleoperation analysis and the hardware developments with a more historical perspective which 
@@ -80,10 +85,12 @@ Hence, there is no shortage of techniques for which the bilateral teleoperation 
 test case. In this plethora of methods, for example, the variation of human and environment properties give 
 naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed by viewing it
 as switched control systems, jump control systems or constrained linear systems etc. Thanks to these advances, 
-as we will elaborate later, the main unsolved problem is not a methodolgical one but a motivational one. In
+as we elaborate, the main unsolved problem is not a methodolgical one but a motivational one. In
 other words we are lacking not the solution methods but rather a fundamental understanding of the problem in terms of 
 what the requirements are and what a good device is if compared to another. Let us sample a few important and 
-successful approaches reported so far together with their shortcomings if any. We emphasize that the literature 
+successful approaches reported so far together with their shortcomings if any. 
+
+We emphasize that the literature 
 covered here is far from comprehensive and deliberately shaped with pragmatic intentions. Hence a large body of 
 research is left out. This is certainly not due to their lack of thoroughness or else, but simply due to the irrelevance 
 for the purpose of this chapter. In general, the methods that are left out either don't define a performance
@@ -177,26 +184,28 @@ circuit based modeling approach is merely a convention rather than a requirement
 In the teleoperation context, if one uses the \enquote{load-source} analogy for the manipulated environment 
 and the human, then the system models all the bilateral interaction between the load and the source 
 ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via their input/output 
-(or external) properties, i.e., across variable/through variable relations (e.g. force/velocity, voltage/current etc.). Also, the non/
-linearity properties of the components are not relevant at the outset if we are only interested in energy exchange, which is the basis
-of the so-called Time-Domain Passivity Methods \cite{hannafordryu} which we will mention later in this chapter. Thus, 
+(or external) properties, i.e., across variable/through variable relations (e.g. force/velocity, voltage/current etc.). Also, the 
+non/linearity properties of the components are not relevant at the outset if we are only interested in energy exchange, which is the basis
+of the so-called Time-Domain Passivity Methods \cite{hannafordryu} which we also mention later in this chapter. Thus, 
 the user, the control system, the environment, the remote and local devices and the communication delays are seen as 
 $1$- and $2$-ports exchanging energy in time. Since the external behavior of the ports can be characterized completely by the 
 current and the voltage drop across the terminals, it is indeed very convenient to model these components with electrical ports as 
 interacting \enquote{black boxes} (See \Cref{fig:portrep}).
 
-\begin{rem} We should emphasize here that, in this context, the energy exchange is used as a gauge of a potentially unstable behavior. 
-The motivation relies on the fact that in order to classify a system as an unstable one, the system should exhibit unstable
-behavior at its port(s) and to exhibit such behavior additional energy is needed. Hence if all the components are incapable
-of contributing energy in the loop, finite energy excitations will eventually decay and the system would reach its steady state
-after a transient response\footnote{For the sake of brevity, marginal stability or limit cycle concepts are left out at this point.}. 
-As one can directly identify, this is simply the rough sketch of the celebrated passivity theorem. Based 
-on this argument, there is a recurring theme in the literature that a teleoperation system should be passive in order to have a stable 
-interconnection. As we will mention later, this is due to the hypothesis that end terminations are also passive. However, in a few 
-studies, this is mistakenly taken as a sufficient and necessary condition for stability and hence creates quite some confusion for the non-experts 
-of the field. Passivity is not an essential feature of the teleoperation systems but only a convenient shortcut for deriving interconnection stability
-conditions. We should iterate that stability is the top-priority objective and does not require passivity by any means even if we do guarantee stability 
-by rendering the sub-components passive. 
+\begin{rem} We should emphasize here that, in this context, the energy exchange is used as a gauge of a 
+potentially unstable behavior. The motivation relies on the fact that in order to classify a system as an 
+unstable one, the system should exhibit unstable behavior at its port(s) and to exhibit such behavior 
+additional energy is needed. Hence if all the components are incapable of contributing energy in the loop, 
+finite energy excitations will eventually decay and the system would reach its steady state after a transient 
+response\footnote{For the sake of brevity, marginal stability or limit cycle concepts are left out at this 
+point.}. As one can directly identify, this is simply the rough sketch of the celebrated passivity theorem. 
+Based on this argument, there is a recurring theme in the literature that a teleoperation system should be 
+passive in order to have a stable interconnection. This is due to the hypothesis that end terminations are 
+also passive. However, in a few studies, this is mistakenly taken as a sufficient and necessary condition 
+for stability and hence creates quite some confusion for the non-experts of the field. Passivity is not an 
+essential feature of the teleoperation systems but only a convenient shortcut for deriving interconnection 
+stability conditions. We should iterate that stability is the top-priority objective and does not require 
+passivity by any means even if we do guarantee stability by rendering the sub-components passive. 
 \end{rem}
 
 \begin{figure}
@@ -258,10 +267,10 @@ systems for bilateral teleoperation, among many others.
 
 As mentioned above, network theory offers a great opportunity for modeling teleoperation systems, or better, avoiding 
 a refined modeling. Still, to invoke the stability analysis and synthesis results of network theory, there is a need 
-to distinguish $\Delta_s,\Delta_l$ further in the universum of $1$-ports. Otherwise there is not much we can conclude 
-from such an interconnection since they can be any arbitrary model with arbitrary behavior set as long as they 
-respect the port condition. This is obviously a crude approximation of the real physical interaction that teleoperation 
-systems exhibit. 
+to distinguish $\Delta_s,\Delta_l$ further in the universum of $1$-ports. Otherwise, with no additional assumptions
+there is not much we can conclude from such an interconnection since they can be any arbitrary model with arbitrary 
+behavior set as long as they respect the port condition. This is obviously a crude approximation of the real physical 
+interaction that teleoperation systems exhibit. 
 
 In the teleoperation and haptics literature, it is customary to assume the load and the source terminations as \enquote{passive}
 mathematical operators (see \Cref{chap:apdxnetwork}). Starting with this hypothesis, the stability problem can be converted to 
@@ -278,20 +287,16 @@ network theory based conditions to assess the stability and performance conditio
 This brings us to the discussion of the justification of the assumption as it is generally not given in full generality in the
 literature. If one scans through the literature about the passivity of human operators, it is the Hogan's paper \cite{hogan89}
 that is almost universally cited. The striking detail is, however, that Hogan never claims that the human hand/arm is a passive
-system. Instead he clearly shows that under certain conditions, human behavior is indistinguishable from that of a 
+system. Instead he clearly shows that under very specific conditions, human behavior is indistinguishable from that of a 
 passive system: 
 \begin{quote}
 Thus, despite the fact that the
-limb is actively controlled by neuro-muscular feedback, its apparent
-stiffness is equivalent to that of a completely passive
-system. In the light of Colgate's recent proof [3]\footnote{Reference 
-\cite{colgatehogan88} of this thesis.} that an
-apparently passive impedance is the necessary and sufficient
-condition for a stable actively-controlled system to remain stable
-on contact with an arbitrary passive environment, this
-experimental result strongly suggests that neural feedback in the
-human arm is carefully tuned to preserve stability under the
-widest possible set of conditions.
+limb is actively controlled by neuro-muscular feedback, its apparent stiffness is equivalent to that of a completely passive
+system. In the light of Colgate's recent proof [3]\footnote{Reference \cite{colgatehogan88} of this thesis. However exactness 
+of stability characterization for LTI intereconnections was already well-known even at the time of writing.} that an apparently 
+passive impedance is the necessary and sufficient condition for a stable actively-controlled system to remain stable on contact 
+with an arbitrary passive environment, this experimental result strongly suggests that neural feedback in the human arm is carefully 
+tuned to preserve stability under the widest possible set of conditions.
 \end{quote}
 Moreover, the task reported in the paper that is given to human operators and analyzed afterwards, can be considered as a biased one because the success 
 of the test is related to the passive behavior of the human. The task is, roughly speaking, holding a handle which is perturbed by 
@@ -460,7 +465,7 @@ of the stiffness matrix varies both in terms of direction and magnitude. Therefo
 from the human arm with some particular pathological trajectory. Just in the case of a frozen time analysis of a time-varying 
 operator does not imply stability, the conclusion is only valid for postural analysis at a fixed configuration of the human arm 
 but not for an arm trajectory. 
-
+\newpage
 \emph{Therefore, it is our belief that the assumption of human arm being a passive system is not an experimentally validated one 
 for most teleoperation tasks.}
  
@@ -620,7 +625,7 @@ M(\Delta_1)\ddot{x} + B(\Delta_2)\dot{x} + K(\Delta_3)x = F_h -F_m
 \] 
 where $F_h,F_m$ denote the human force and the force feedback inputs, respectively. Then choosing a multiplicative or additive uncertainty 
 structure and via basic linear fractional transformations, the signal relations are converted to the interconnection shown in 
-\Cref{fig:lit:figunc}. The arrows are deliberately left out as it's up to the designer to get different immitance models.
+\Cref{fig:lit:figunc}. The arrows are deliberately left out as it is up to the designer to get different immitance models.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
@@ -638,7 +643,7 @@ structure and via basic linear fractional transformations, the signal relations 
 Many studies have appeared in the literature regarding such modeling and the majority of these assume a 
 mechanical model of order from two to five. Note that this is an assumption made a priori and only applies 
 to the specific task performed by the human in the experiment from which the frequency response data is 
-collected. The commonly utilized models, unfortunately most of them are being for fixed postural arm 
+collected. The commonly utilized models, unfortunately most given for the fixed postural arm 
 configuration can be found in \cite{kazeroonitsay,tsujigoto,kosuge,colgate1,speich,fucavus,buergerhogan1,leungfa,
 husalculoewen,andrifour,laroche}. Obtaining these measurements are time-consuming and difficult to parameterize. For this reason, although
 the results along this direction are scarce, they are, as in the passivity case, very valuable. 
@@ -661,7 +666,7 @@ many of the aforementioned effects, but the results are prospective and yet to b
 
 The stability analysis is one of the major problems in designing stable yet high-performance teleoperation 
 systems. It's often not feasible to manually tune some local controllers and make test subjects use it in order to verify the
-design specifications. Moreover, relying only on the experiments, one can miss an important destabilizing scenario if the field 
+design specifications. Moreover, by relying only on the experiments, one can miss an important destabilizing scenario if the field 
 experiments do not cover that particular case. Hence, an a priori certificate of stability is much sought after. The stability 
 analysis can also give some guidelines about the parameter selection in the hardware design phase and can lead to minimized 
 design iterations. Therefore, having a realistic stability test is essential in building these systems. 
@@ -678,11 +683,12 @@ loop stability problem is called \emph{coupled stability}. To the best of our kn
 
 It's also worth mentioning that the passivity and stability is used often interchangeably and also usually referred 
 to the classical texts \cite{haykin,mitra69,chen91} for the precise definitions. Hence, there is a little guesswork 
-required to classify the stability definitions given in the literature. The important distinguishing point is that 
-marginal stability is often accepted in the definition of stability results since it arises frequently in lossless 
-(hence passive) models where energy conservation is assumed. However, the analysis results that rely on such assumptions 
-do not guarantee asymptotic interconnection stability, but only lead to certain passivity properties of the interconnection 
-(see \cite[Thm. 6.1]{khalil} and \cite[Sec. V]{lawrence} for the discussion on strict passivity).  
+required to classify the stability definitions given in the literature in order to locate which version is meant. 
+The important distinguishing point is that marginal stability is often accepted in the definition of stability results 
+since it arises frequently in lossless (hence passive) models where energy conservation is assumed. However, the analysis 
+results that rely on such assumptions do not guarantee asymptotic interconnection stability, but only lead to certain 
+passivity properties of the interconnection (see \cite[Thm. 6.1]{khalil} and \cite[Sec. V]{lawrence} for the discussion 
+on strict passivity).  
 
 As given in \Cref{sec:litchapmodeling}, the passivity property is crucial to many studies in the literature. The direct 
 physical interpretation of the abstract concepts gives even more appeal to such energy book-keeping methods. Another 
@@ -843,8 +849,7 @@ norm structure provided that the signal space is suitable for such operation.}, 
 or the wave variables methods is to map the closed right half plane to the closed unit disk via a special case of bijective M\"{o}bius 
 (or linear fractional or bilinear) transformation: 
 \begin{equation}
-W:[0,\infty]\times i[-\infty,\infty] \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\, ,\, W(z) 
-= \frac{z-1}{z+1}
+W: \Complex_+\cup \Complex_0 \mapsto \left\{ z\in\Complex \mid \abs{z} \leq 1 \right\}\, ,\, W(z) = \frac{z-1}{z+1}
 \label{eq:lit:smith}
 \end{equation}
 
@@ -878,8 +883,16 @@ W(G(s)) = \frac{G(s)-1}{G(s)+1} = -1 + \frac{2G(s)}{G(s)+1} \Longrightarrow
 \end{equation}
 Simply following the signal paths, we also see that the input/output relation becomes
 \[
-\tilde{y}\coloneqq \sqrt{2}(-u + y) = W(G(s))\tilde{u}\coloneqq W(G(s))\sqrt{2}(u+y).
+\tilde{y}\coloneqq W(G(s))\tilde{u}.
 \]
+where 
+\begin{equation}
+\pmatr{\tilde{y}\\\tilde{u}} = \sqrt{2}\pmatr{-1 &1\\1 &1}\pmatr{u\\y}
+\label{eq:scatrafo}
+\end{equation}
+
+Note that, physical realization of this transformation requires a simple feedforward and 
+a feedback control action to which typically referred with \emph{\enquote{Wave encoding}}. 
 Often these variables are normalized with $\sqrt{2}$ at the outset. The seperation of $\sqrt{2}$ 
 blocks is a matter of convention and provides symmetry in the block diagrams. Also we have, 
 \begin{align*}
@@ -887,9 +900,10 @@ blocks is a matter of convention and provides symmetry in the block diagrams. Al
 (W\circ W \circ W) (G) &= \frac{-1}{W(G)},\\
 (W\circ W \circ W \circ W) (G) &= G\\
 \end{align*}
-which shows the effect of but the $90^\circ$ clock-wise rotations of the Riemann sphere about the axis parallel to the 
-imaginary axis ($W$ is an element of M\"{o}bius group with $\circ$ operation). This stereographic projection idea is also
-the main idea behind the derivation of the stability parameter of Edwards and Sinsky (\cite{edsin}). 
+which shows the effect of the $90^\circ$ clock-wise rotations of the Riemann sphere about the axis 
+parallel to the imaginary axis ($W$ is an element of M\"{o}bius group with $\circ$ operation). This 
+stereographic projection idea is also the main idea behind the derivation of the stability parameter 
+of Edwards and Sinsky (\cite{edsin}).
 
 
 \begin{figure}%
@@ -936,7 +950,8 @@ $W$. The simplest way to obtain a mapping $\hat{W}$ is to follow the block diagr
 \[
 \hat{W}(z) = -\frac{z+1}{z-1} = -\frac{1}{W(z)}
 \]
-The negative sign usually does not show up in the formulations in the literature because the passive interconnections 
+which is nothing but the inverse of the relation \eqref{eq:scatrafo}. The negative sign usually does not show up in 
+the formulations in the literature because the passive interconnections 
 require a sign change in the loop to indicate the \enquote{from} and \enquote{to} ports. A more detailed derivation
 is given in \cite{colgate3}. Also note that a positive real transfer matrix, when negated, has its Nyquist curve 
 confined to the close left half plane (anti-positive real) which is equivalent to a $180^\circ$ rotation or application
@@ -991,7 +1006,7 @@ We don't need to track the points individually as we are only interested in the 
 under these transformations. 
 
 
-Therefore when we connect a passive operator to a small-gain operator, nither small-gain nor passivity theorem
+Therefore when we connect a passive operator to a small-gain operator, neither small-gain nor passivity theorem
 can be applied directly since each operator is not in the class of the other operator. In other words, delay 
 uncertainty does not satisfy the norm constraint $\|W(e^{-\iw t})\|_\infty \leq 1$ to invoke the small-gain 
 theorem in the transformed coordinates. Had it been the case that the uncertainty was bounded by one, then it 
@@ -1006,7 +1021,7 @@ applied in the face of delay uncertainty.
 \subsubsection{Delay is Small-Gain}
 Another possibility is to utilize the simple fact that the delay operator is gain-bounded and obtain the 
 generalized plant by pulling out the uncertainty out of the loop. Obviously, this would be a very crude
-characterization of the unit circle since as unit disk is used as the uncertainty instead. However, as 
+characterization of the unit circle since a unit disk is used as the uncertainty instead. However, as 
 we show later, wave variables/scattering transformations directly use this conservative formulation to 
 model the delay in the stabilization of the loop.
 
@@ -1184,7 +1199,7 @@ nodes={minimum width=1cm}
 \label{eq:lit:MIMOcont}
 \end{equation}
 where $m_1,m_2$ denote the actuation inputs with overactuated robotic manipulators in mind. The grayed entries are 
-the control subcomponents that works on the variables sent over the network. If we recap the architectures above 
+the control subcomponents that work on the variables sent over the network. If we recap the architectures above 
 with this notation, they can be represented as
 \[
 K_{PERR} = \bmatr{
@@ -1292,7 +1307,7 @@ of the port terminations, leaving the delay operators in the \enquote{hybrid} st
 terminology. Note that, we have only applied the mapping $W$ to $P$ and there is no inverse mapping to \enquote{undo} 
 this in the loop. Technically speaking, this is not precisely a complete loop transformation since we have applied $W$
 to system $P$ but not to the delay block $\Delta$. Thus, the additional feedback and feedforward branches together with 
-the $sqrt{2}$ gains shown in \eqref{eq:wavetrafo} constitutes a genuine controller. In other words, the transformation 
+the $\sqrt{2}$ gains shown in \eqref{eq:wavetrafo} constitutes a genuine controller. In other words, the transformation 
 block diagram is precisely achieved by the use of a feedforward/feedback control law, which can be represented by 
 \Cref{eq:lit:MIMOcont}. The explicit derivation of the wave variable controller entries, in terms of a MIMO controller, 
 is given in \cite{christiansson2008}. One can also verify that the control law given in \cite{andersonspong} can be 

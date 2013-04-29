@@ -193,6 +193,7 @@ as Rotational Mechanical Components}
 $m_h$ & $[0,0.53]$ &\si{\kilo\gram\meter\squared\per\radian}\\
 $b_h$ & $[0,8.58]$ &\si{\newton\meter\second\per\radian}\\
 $k_h$ & $[0,994.2]$ &\si{\newton\meter\per\radian}\\
+$k_e$ & $[0,3000]$ &\si{\newton\meter\per\radian}\\
 \bottomrule
 \end{tabular}
 \label{tab:app:humparam}
@@ -356,10 +357,11 @@ C_z = \pmatr{e_\frac{1}{8}^T &-e_\frac{1}{8}^T\\k_3(e_\frac{3}{8} -e_\frac{4}{8}
 D_{py} = 0, D_{wy} = 0
 \]
 Thus, we have obtained a plant-uncertainty interconnection $\Delta-G$ where 
-\[
+\begin{equation}
 \Delta\coloneqq \pmatr{\delta_{m_h}&&&\\&\delta_{b_h}&&\\&&\delta_{k_h}&\\&&&\delta_{k_e}}
-\]
-such that $\delta_{m_h},\delta_{b_h},\delta_{k_h},\delta_{k_e}\in[0,2]$ for all $t>0$.
+\label{eq:realisticunc}
+\end{equation}
+
 
 %\subsection{Input/Output Weights Selection}
 %Once we obtain the generalized plant, the performance channels are weighted to emphasize the frequency band of 
@@ -458,7 +460,7 @@ interaction with the human is always present even though this minimal interactio
 inertia, friction etc. 
 
 In the sequel, we will design three controllers with different uncertainty class assumptions. The first two 
-cases will be using fixed mass and damping coefficients in the \Cref{fig:app:design1}. 
+cases will be using fixed mass and damping coefficients depicted in \Cref{fig:app:design1}. 
 
 \section{Three Controller Design Cases}
 
@@ -643,10 +645,18 @@ y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0
 \end{figure}
 
 
+%===============================
+% Empty table variable 
+%===============================
+\let\designdataone\empty
+%===============================
+%===============================
+%===============================
+
+
 Then using the synthesis results from the previous chapter, we design a controller with the iteration steps given in 
-\Cref{fig:tab:design1}. The maximum and the minimum singular values of the controller are shown in  \Cref{fig:app:ksigma1}.
-Notice that, even though the iterations lead to full uncertainty case $r=1$, due to the performance mismatch the iteration 
-is continued until an agreement up to some precision is achieved. 
+\Cref{fig:tab:design1}. Notice that, even though the iterations lead to full uncertainty case $r=1$, due to the performance 
+mismatch the iteration is continued until an agreement up to some precision is achieved. 
 
 \subsection{Uncertain Plant with Time-Varying Stiffness Coefficients with Bounded Rate of Variation}
 
@@ -657,11 +667,11 @@ and fully squeeze in about half a second. Therefore, assuming that the human sti
 maximum values for the stiffness coefficient can be achieved in half a second and hence ${\displaystyle\max_{t>0}}\abs{\dot{k}_h(t)}\leq 
 2\overline{k}_h$. 
 
-Using the multiplier structure given in \Cref{sec:tvrovsec}, with basis function 
+Using the multiplier structure given in \Cref{sec:tvrovsec} for the slowly varying parameter, with basis function 
 \[
 \Phi(s) = \pmatr{1\\\frac{1}{s+1}}
 \]
-we utilize the following multiplier structure
+we have the following multiplier for the control design;
 \[\renewcommand*{\arraystretch}{0.8}
 \setlength{\arraycolsep}{.5\arraycolsep}
 \Pi(\iw) = \pmatr{\star}^*\left(
@@ -684,15 +694,23 @@ we utilize the following multiplier structure
     \end{array}
     \right)
 \]
-we obtain lower worst case $\mathcal{L}_2$ gains as shown in the \Cref{fig:tab:design2d1}. To demonstrate the conservatism 
-reduction via increasing the basis length in the IQC multiplier parametrization we use the basis length $d=2$, i.e.,
+where $\Phi^*(\iw)D_1\Phi(\iw)> 0$ for all $\omega\in\Realext$, $D_2\succ 0$, $Q<0$ and 
+\[
+\pmatr{k_e\\1}^T\pmatr{Q &S\\S&R}\pmatr{k_e\\1}>0.
+\] 
+for $k_e\in\{0,3000\}$. 
+
+
+We have obtained lower worst-case $\mathcal{L}_2$ gains as shown in the \Cref{fig:tab:design2d1} with the simplest basis functions
+of order one. Further, to demonstrate the conservatism reduction via increasing the basis length in the IQC multiplier parametrization,
+ we use the basis length $d=2$, i.e.,
 \[
 \Phi(s) = \pmatr{1\\\frac{1}{s+1}\\\frac{1}{(s+1)^2}}
 \]
 and we obtain better results which are given in \Cref{fig:tab:design2d2}. Increasing the length further does not contribute to 
-significant changes hence even with the relatively short basis lengths we arrive at improved results. The improvements are not 
-only in terms of the resulting worst case $\mathcal{L}_2$ gains which tell very little if not any about the real-time implementation 
-performance. We show that the improvement is also visible in the experiments shown in the next section. 
+significant changes hence even with the relatively short basis lengths we arrive at improved results. We validate the improvement 
+through experiments given in the next section since the resulting worst-case $\mathcal{L}_2$ gains tell very little, if any, about 
+the real-time implementation performance. 
 
 
 \pgfplotstableread{
@@ -823,16 +841,253 @@ y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0
 \end{figure}
 
 
+%===============================
+% Empty table variables 
+%===============================
+\let\designtwodataone\empty
+\let\designtwodatadtwo\empty
+%===============================
+%===============================
+%===============================
+
+
 \subsection{Uncertain Plant with a More Complicated Human Model}
 
 In this test case, we treat the mass-spring-damper parameters of the human model as slowly varying uncertainties 
-together with arbitrarily fast varying environment stiffness coefficient uncertainty. 
+together with arbitrarily fast varying environment stiffness coefficient uncertainty. In this case, we use three
+dynamic multiplier blocks and a static multipliers for the overall design. Therefore the uncertainty set is 
+significantly larger than the previous cases. The motivation for such complication is to be able to compare 
+whether a reduced mass argument would hold and provide better performance than this more realistic but at 
+the same time significantly more conservative design. Thus the $P-\Delta$ interconnection is modeled as 
+\[
+\pmatr{q\\z\\y}= P \pmatr{p\\w\\u}, p=\Delta q
+\]
+where the uncertainty $\Delta$ is given by \Cref{eq:realisticunc}. 
+
+In this control design problem, we start by assuming the nominal case to be $P_{nom} = P\star 0.5\Delta$. This due to 
+the fact we have mentioned previously that the model loses the observability at the zero uncertainty case. Hence, we assume
+that the uncertainty blocks assume the mid values of their corresponding intervals and we try to increase the set size 
+by expanding towards both ends simultaneously. Thus, for the uncertainty operator
+\[
+\Delta:\Real_+ \to [0,\overline{m_h}]\times[0,\overline{b_h}]\times[0,\overline{k_h}]\times[0,\overline{m_e}]
+\]
+we define the scaled uncertainty operator
+\[
+\Delta_s:\Real_+ \to [0,2]\times[0,2]\times[0,2]\times[0,2]
+\]
+where
+\[
+\Delta(t)=\pmatr{\delta_{\vphantom{b}m_h}(t)&&&\\&\delta_{b_h}(t)&&\\&&\delta_{k_h}(t)&\\&&&\delta_{k_e}(t)} = \Delta_s(t) T = T \Delta_s(t)
+\]
+for all $t>0$ with $T=\diag{\frac{\overline{m_h}}{2},\frac{\overline{b_h}}{2},\frac{\overline{k_h}}{2},\frac{\overline{k_e}}{2}}$. Then, we simply rewrite
+\[
+\Delta_s = \Delta_{ss} + I_4
+\]
+with $\Delta_{ss}:\Real_+ \to [-1,1]\times[-1,1]\times[-1,1]\times[-1,1]$. Then by absorbing the unity feedback path into the plant we obtain
+$P_{nom}$. Due to this centering operation, we obtain the robustness and performance certificates in the original parameter interval
+\[
+\delta_i = \left[\frac{1-r}{2},\frac{1+r}{2}\right]\, , \, i\in\{m_h,b_h,k_h,k_e\}
+\]
+for any $r$ that leads to a feasible LMI solution. The resulting evolution of the controller multiplier iteration 
+is given in \Cref{fig:tab:design3}. As we have expected, towards the end of the uncertainty ranges, the performance gets worse 
+with each slight increase of $r$ scaling. The iteration is terminated manually since the performance indicator $\gamma$ was 
+around 100 which is a nonsensical value if compared to the previous design cases where it was smaller more than an order of
+magnitude. 
+
+The figure also provides us an opportunity to demonstrate the variable bounding implementation that we have described in the 
+previous chapter. In \Cref{fig:tab:design3}, one can see that the $\gamma$ increase has step-like behavior. This is due to 
+our implementation of testing the progress of previous iterations. If at some point the progress is negligible, the algorithm 
+progressively gives away from performance to increase the admissible uncertainty set size. We can also see that for a minute 
+change in $r$, we give away a lot of performance. With the resulting $r=0.84$, we obtain robustness in the face of \SIrange{8}%
+{92}{\percent} of the original uncertain parameter intervals. 
 
 
 
+
+
+
+\pgfplotstableread{
+ra ga rs gs
+0.000000 00.0000 0.100000 00.8795
+0.382568 17.3596 0.681637 26.4212
+0.693762 22.2234 0.747892 25.7290
+0.745087 24.1068 0.761019 26.3953
+0.761953 26.3331 0.763813 26.4563
+0.763813 26.4107 0.762918 25.8991
+0.765185 26.4243 0.764886 26.2449
+0.765345 26.3149 0.764448 25.9370
+0.760148 24.6187 0.740551 20.1519
+0.775516 38.2721 0.788669 38.1431
+0.788669 37.9311 0.791558 38.6870
+0.791558 38.6105 0.791558 38.3626
+0.791965 38.6842 0.791965 38.6600
+0.806644 59.2553 0.815708 59.7738
+0.815708 59.4265 0.817148 59.7163
+0.816892 58.9885 0.817608 59.4108
+0.823664 79.1170 0.829519 79.8401
+0.826667 74.0585 0.836146 78.5704
+0.837106 80.4485 0.837425 80.4743
+0.837425 80.2096 0.837425 80.2443
+0.840039 90.8990 0.840351 90.7903
+0.840351 90.3736 0.839367 87.5047
+0.840308 90.9550 0.840308 90.8393
+0.842101 98.6612 0.842409 99.4791
+0.842409 99.0330 0.842409 99.0657
+0.842409 98.6436 0.842409 98.7992
+}\designthree
+
+
+\begin{figure}%
+\begin{minipage}{.35\textwidth}
+\tiny\scriptsize
+\pgfplotstabletypeset[
+every head row/.style={before row={%
+    \toprule
+    \multicolumn{2}{c}{Analysis} & \multicolumn{2}{c}{Synthesis}\\
+    },
+    after row=\midrule,
+},
+every last row/.style={
+    after row=\bottomrule
+},
+columns/ra/.style ={column name={$r_a$},fixed,zerofill,precision=2},
+columns/ga/.style ={column name={$\gamma_a$},fixed,precision=2},
+columns/rs/.style ={column name={$r_s$},fixed,zerofill,precision=2},
+columns/gs/.style ={column name={$\gamma_s$},fixed,precision=2},
+]\designthree
+\end{minipage}
+\captionlistentry[table]{$D$-$K$ iteration progress for Case 2 with $d=2$}
+%
+%
+\hfill
+\begin{minipage}{.63\textwidth}
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[width=5.8cm,height=6.8cm,xmajorgrids,ylabel={$r_a$,$r_s$},
+scale only axis,xmin=0.8,xmax=26.1,axis y line*=left,
+legend style={at={(axis description cs: 0.97,0.5)},anchor=east}
+]
+\addplot+[mark=o,mark options = {solid,thin},SlateBlue2] table[x expr=\coordindex+1,y=ra] {\designthree};
+\addlegendentry{$r_a$}
+\addplot+[mark=o,thin] table[x expr=\coordindex+1,y=rs] {\designthree};\addlegendentry{$r_s$}
+\end{axis}
+\begin{axis}[scale only axis,xmin=0.8,xmax=26.1,width=5.8cm,height=6.8cm,
+axis y line*=right,ylabel={$\gamma_a$,$\gamma_s$},
+axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
+anchor=near ticklabel,rotate=90,text opacity=0.5},
+y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
+]
+\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designthree};\addlegendentry{$\gamma_a$}
+\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designthree};\addlegendentry{$\gamma_s$}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\captionsetup{labelformat=andtable}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\label{fig:tab:design3}
+\end{figure}
+
+%===============================
+% Empty table variable
+%===============================
+\let\designthree\empty
+%===============================
+%===============================
+%===============================
+
+
+
+\section{Controller Comparison}
+
+In this section we will refer to the designed controllers by $C_1,C_{21},C_{22},C_3$. First, the frequency domian properties 
+are listed in \Cref{fig:app:contredmass,fig:app:incr}. 
+
+\begin{sidewaysfigure}
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+    enlarge y limits,
+    no markers,
+    group style={
+      {group size=4 by 2},
+      yticklabels at=edge left,
+      xticklabels at=edge bottom
+    },
+    height=4cm,
+    width=0.25\textheight,
+    ymode=log,
+    xmode=log,
+    xmax=9500,
+    xmin=0.005,
+    ymin=0.5,
+    grid=both,
+    cycle list name=linestyles*
+    %legend entries={{$d=0$},{$d=1$},{$d=1$}}
+]
+    \pgfplotsforeachungrouped \xind in {1,2}{
+    \xdef\myx{\xind}
+        \pgfplotsforeachungrouped \yind in {1,...,4}{
+        \xdef\myxy{\myx\yind}
+            \nextgroupplot
+            \pgfplotsforeachungrouped\z in {0,...,2}{
+                \begingroup\xdef\temp{\endgroup\noexpand\addplot+[] table[x=f,y=k\myxy] {plotdata/krobd\z.dat};}\temp%
+            }
+        }
+    }
+    \end{groupplot}
+\end{tikzpicture}
+\caption{The frequency domain data of the controllers designed for fixed human mass parameter. Solid: $C_1$, dashed: $C_{21}$, dash-dotted: $C_{22}$}%
+\label{fig:app:contredmass}%
+\end{sidewaysfigure}
 
 
 %
+\begin{sidewaysfigure}
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+    no markers,
+    group style={
+      {group size=4 by 2},
+      yticklabels at=edge left,
+      xticklabels at=edge bottom
+    },
+    height=5cm,
+    width=0.25\textwidth,
+    ymode=log,
+    xmode=log,
+    xmax=1000,
+    grid=both,
+    cycle list name=linestyles*
+]
+    \pgfplotsforeachungrouped \xind in {1,2}{
+    \xdef\myx{\xind}
+        \pgfplotsforeachungrouped\yind in {1,...,4}{
+        \xdef\myxy{\myx\yind}
+        \nextgroupplot
+            \pgfplotsforeachungrouped\z in {1500,3600,6500,8100,10000}{
+            \begingroup\edef\temp{\endgroup\noexpand\addplot+[] table[x=f,y=k\myxy] {plotdata/krobd111g\z.dat};}\temp%
+            }
+        }
+    }
+    \end{groupplot}
+\end{tikzpicture}
+\caption{The designed controller $C_3$ frequency domain data as the uncertainty size $r$ increases. Solid: $r=0.80$, dashed: $r=0.815$, dash-dotted: $r=0.84$,dash-dot-dotted: $r=0.8425$}%
+\label{fig:app:incr}%
+\end{sidewaysfigure}
+
+
+
+\newpage
+
+\parbox[c][6cm][c]{\textwidth}{\LARGE
+\centering
+The remaining part of this chapter \\
+is not included in this draft. Missing a few experimental plots and interpretations.
+Approx. 5 more pages to come.
+} 
+
+
 %\begin{figure}%
 %\centering
 %\begin{tikzpicture}
@@ -856,15 +1111,5 @@ together with arbitrarily fast varying environment stiffness coefficient uncerta
 %\caption{The maximum and minimum singular values of the controller for the first design case with constant multipliers.}%
 %\label{fig:app:ksigma1}%
 %\end{figure}
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
+
 

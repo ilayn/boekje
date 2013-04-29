@@ -10,8 +10,9 @@ Some literature argue that since most of the tools we utilize are (almost-)lossl
 screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system that 
 ideally behaves like a rigid transmission mechanism. In general, there is no established consensus on what makes 
 a teleoperation system \enquote{good}. Quite the contrary, this question is openly and unambiguously avoided in some 
-well-known articles instead some possibilities are proposed and rigorously pursued to the end. Therefore, the conclusions 
-that these studies obtain are the implications of their initial hypotheses. However, the studies that follow these 
+well-known articles. Instead some possibilities are proposed and rigorously pursued to the end without a rigorous
+performance validation. Therefore, the conclusions 
+that these studies arrive at are the implications of their initial hypotheses. However, the studies that follow these 
 publications do not take this crucial detail into account and proceed as if the performance objectives are 
 indeed the ultimate goals. We have to claim that the motivation of most of the studies given in the literature 
 erroneously put emphasis on performance objectives that are at best questionable. 
@@ -27,8 +28,8 @@ objectives. Other experts of the related fields need to contribute from a techno
 contrast with a pure physiological point of view and, in fact,  should guide the control theorists and practitioners 
 towards the relevant issues. 
 
-We have the strong opinion that the contemporary bilateral teleoperation control results, including this thesis, 
-can not and thus should not claim a comprehensive understanding of a good and useful bilateral teleoperation 
+We strongly believe that the contemporary bilateral teleoperation control results, including this thesis, 
+cannot and thus should not claim a comprehensive understanding of a good and useful bilateral teleoperation 
 system. Because we just don't know, yet.
 
 \section{Types of Performance}
@@ -68,9 +69,8 @@ of these optimization problems would lead to the best teleoperation system. Howe
 assumptions made here. On one hand, it is assumed that there is a partial ordering, in other words, if $K_1$ has the cost 
 $c_1$ and $K_2$ has the cost $c_2$ with $c_1<c_2$ then this implies that $K_1$ is better than $K_2$ which is not 
 necessarily true, or better, it might hold only for some particular $K$'s. In general no such ordering can be expected from 
-this performance index. Moreover, it's not easy to search for such $K$ since the cost function to be minimized is not 
-guaranteed to be continuous or smooth etc. As we have observed in the literature, almost every transparency optimized
-control selects the full performance first hence assuming the global minimizer and then tries to stabilize the system 
+this performance index. Moreover, it's not easy to search for such $K$. As we have observed in the literature, almost every transparency optimized
+control method selects the full performance first hence assuming the global minimizer and then tries to stabilize the system 
 in the face of those performance specifications. Obviously after adding dampers or other dissipative elements the system 
 is no longer a transparent teleoperation system. 
 
@@ -98,7 +98,7 @@ are canceled out and then SISO control channels are tuned to maximum performance
 
 Even if we accept it to be the distinguishing performance criterion, we have to emphasize that we have not touched the most 
 important question, that is the first of the three, rather we hope to achieve the required transparency levels just enough 
-to fool the user. After two decades, this point is in our opinion simply discarded and many studies in the literature somewhat 
+to fool the user. After two decades, this point is simply discarded and many studies in the literature somewhat 
 treats the conclusions of Lawrence in a different context than what has been given by Lawrence. As is for the case for 
 Hogan's paper on passivity, Lawrence never claims that this is a definite performance measure. Instead he clearly shows the 
 implications that follow from such assumptions. 
@@ -118,20 +118,20 @@ is not needed at all.
 In \cite{colgate4}, the performance of a haptic device is related to the dynamic range of impedances (hence the name $Z$) that
 the device can display to the user. In this context we have two extremes; on one hand we have purely the local device impedance 
 for the free-air motion and on the other hand we have the maximally stiff local device for the rigid and immobile obstacle collision. 
-Let $Z_f$, $Z_c$ denote these two distinct cases then the more pronounced the difference between these impedances, the more 
+Let $Z_f$, $Z_c$ denote these two distinct cases. Then the more pronounced the difference between these impedances, the more 
 capable the teleoperation system can reflect various impedances inbetween. Thus, we implicitly assume that the rigid contact 
 case and the free-air case are the extreme points of the uncertainty set and testing for these two cases are sufficient to 
 conclude that any impedance on the path from $Z_f$ to $Z_c$ is a valid impedance that can be displayed by the device. This
 in turn implies that there is an ordering in the uncertainty set from \enquote{big} to \enquote{small} etc. and moreover 
 the destabilizing uncertainty is at the boundary of the set such that these two extreme cases can vouch for stability over 
-the whole possible environments. We are not fully convinced that this should be the case for all possible environment 
+the whole possible environments. We are not convinced that this should be the case for all possible environment 
 scenarios. A particular subset of second-order mass-spring-damper models of environments can be shown to be compatible 
 with this claim if passivity theorem is used. However, when combined with other uncertain blocks in the loop we do not see
 how the argument follows. Note that it is well-known in the robust control literature that a destabilizing uncertainty need
-not to be living on the boundary of the uncertainty set. Therefore, either by gridding the uncertainty set, the stability 
-guarantee has to be obtained via testing the conditions on a high number of points or a specific relaxation on the constraints 
-need to be imposed such that testing the conditions on finitely many (and computationally tractable) number of points implies 
-stability over the whole uncertainty set.
+not to be living on the boundary of the uncertainty set. Therefore, either by gridding the uncertainty set and testing the 
+stability conditions on a large number of points or by a specific relaxation on the constraints conditions should be 
+translated to finitely many (and computationally tractable) number of points stability is guaranteed over the whole 
+uncertainty set.
 
 Similar to what Lawrence has given, the authors also include a clear statement of purpose: 
 
@@ -179,16 +179,16 @@ Z_{avgerr} = \frac{1}{n}\sum_{j=1}^n{\left[
                                      \right]}
 \label{eq:zdiff}
 \end{equation}
-This cost function is denoted by \enquote{\emph{Transparency Error}} or \enquote{\emph{Fidelity}}.We refer to \cite{weir} 
+This cost function is denoted by \enquote{\emph{Transparency Error}} or \enquote{\emph{Fidelity}}. We refer to \cite{weir} 
 for a more detailed discussion. 
 
 
-\subsection{Fidelity}
+\subsection{Fidelity}\label{sec:perf:fidelity}
 In \cite{cavusoglu}, a variant of a transparency error is proposed to assess the performance. In this context, 
 the emphasis is on the variation of the environment impedance and the resulting effect on the displayed impedance. 
 Also the motivation is focused on the surgical procedures via bilateral teleoperation. If, for 
 example, the remote device slides over some tissue that involves a tumor or any other irregularity that would be felt
-if the same motion would have been performed directly by the surgeon, the better the nuances transmitted, the higher
+had the same motion performed directly by the surgeon, the better the nuances transmitted, the higher
 the fidelity. This performance objective, in a sense, enforces the high frequency content of the information (closer
 to tactile bandwidth). It has been noted that the Just Noticable Difference (JND) of \SIrange{14}{25}{\percent} for 
 distinguishing relative compliance of similar surfaces goes under \SI{1}{\percent} for rapid compliance variation detection 
@@ -208,15 +208,15 @@ environment (operator) impedance. Now, under the well-posedness assumption, defi
 \]
 Then, though not pursued in \cite{cavusoglu}, this can, in turn, be rewritten as an LFT again;
 \[
-\pmatr{q_1\\q_2\\z} = \pmatr{2G_{11} &-G_{11} &1\\G_{11} &0 &0\\ 2G_{11}G_{12}G_{21} &-G_{11}G_{12}G_{21} &G_{12}G_{21}}\pmatr{p_1\\p_2\\w}
+\pmatr{q_1\\q_2\\z} = \pmatr{2&1\\1&0\\2G_{12}G_{21}&2G_{12}G_{21}}\pmatr{G_{11}&0&0\\0&-G_{11}&1} \pmatr{p_1\\p_2\\w}
 \]
 and 
 \[
 \pmatr{p_1\\p_2} = \pmatr{\Delta &0\\0 &\Delta}\pmatr{q_1\\q_2}.
 \]
 
-Note that the matrix case follows a similar but more involved computation moreover one can recognize the familier
-plant-uncertainty representaion clearer without any complication. This led to the authors of \cite{cavusoglu} 
+Note that the matrix case follows a similar but more involved computation. Moreover one can recognize the familiar
+plant-uncertainty representation clearer without any complication. This led to the authors of \cite{cavusoglu} 
 defining a transparency-like performance objective using a rather subtle choice of system $2$-norms. Let $G$ be a 
 stable LTI system with transfer matrix $G(s)$. Then 
 \[
@@ -282,10 +282,10 @@ therein for a more detailed overview about many variations in the literature.
 In summary, there are no general perfomance criteria that can lead to a dedicated control design procedure. The aforementioned 
 performance objectives always start from the direct manipulation case and assume a distance between the interacting bodies.
 Then the implications of such hypotheses are pursued and some results are obtained. It might very well happen that all or none 
-of those conclusions are correct. Put better, these studies always try to remedy the distortion caused by splitting two 
-interacting bodies. Thus, the goal becomes too ambitious at the outset. Similar to the delay problem there is not much
-we can do about the distortion within the laws of physics. In fact, even the slightest delay can destabilize the system which 
-is again an indicator of the fragility of the problem formulation. 
+of those conclusions are correct. Put better, these studies always try to remedy the distortion caused by the split of two 
+interacting bodies i.e. teleoperation. Thus, the goal becomes too ambitious at the outset. Similar to the delay phenomenon, 
+there is not much we can do about the distortion within the laws of physics. In fact, even the slightest delay can destabilize 
+the system which is again an indicator of the fragility of the problem formulation. 
 Thus, we can speculate that by doing so, we create a stability problem that we should not have had in the first place. Moreover, 
 as we have mentioned in the introduction, the problem is exclusively about human perception and is not related to the reconstruction 
 of the remote scene. As long as we can \enquote{fool} the user for the sake of efficiency and operational comfort, we are done. 
@@ -344,7 +344,8 @@ a user experience study. However, we have to remind that the audio technology is
 teleoperation. In fact, the comparison is not fair in the sense that bilateral teleoperation is not a true technology yet but rather 
 in its infancy. Still, after decades of improvements, the sound systems are not capable of producing a live sound, real enough to make 
 the listener immerse into, though come impressively close. Nevertheless, the performance objective studies that we have enumerated a 
-few above claim to compete at the level of hi-fi systems which is simply too ambitious.
+few above claim to compete at the level of hi-fi systems which is simply too ambitious. The reader should also keep in mind that 
+the sound technology is unilateral and there is no interaction with the loudspeaker though still lacking the sufficient realism. 
 
 Coming back to our discussion, in the light of our analogy, we think that the bilateral teleoperation literature is focused on finding
 the system that can deliver the \enquote{live sound} rather than a high quality \enquote{playback}. This holistic search is certainly
@@ -430,7 +431,8 @@ relaxed if compared to one device-the whole frequency spectrum strategy. Moreove
 to the \enquote{tweeter} of the device and this makes the low frequency force playback much easier. The low-bandwidth transmission is already 
 well-studied and within reach of the current technology. Hence, a standalone high frequency action can be added on top of the perception 
 which would otherwise lead to a deteriorated performance if pursued with the same device. A hard contact can still be displayed with a 
-rather compliant \enquote{sub/woofer} and an agile stiff tweeter. Moreover, a stiff wall can possibly be rendered up to the perception 
+relatively compliant \enquote{sub/woofer} and an agile stiff tweeter. Note that we are good at capturing the relative changes but not very good at 
+perceiving the low end of the spectrum (see \Cref{sec:perf:fidelity}). Moreover, a stiff wall can possibly be rendered up to the perception 
 threshold via it's Fourier components in other words, a hard contact perception might be achieved with a combination of mid-high frequency
 vibrations contingent upon the task requirements. The force signal can be transmitted and decomposed into frequency band at the local site
 or directly decomposed and sent over different channels with different line. This might even encapsulate the Model-mediated teleoperation-like

@@ -7,15 +7,15 @@ options are obtained. Moreover, the shortcomings of the classical results and th
 seen. 
 
 Hence, we can proceed with the controller design problem and obtain controllers using the results for IQC synthesis
-literature. Since the results here can be considered as established, we adopt \enquote{a running example} type of style 
-instead of repeating already available results in the literature with theorems and proofs enumerated after one another.
+literature. Since the results here can be considered as established, we adopt a \enquote{running example} type of style 
+instead of repeating already available results in the literature with theorems and proofs enumerated one after another.
 
 \section{Robust Controller Design using IQCs}
 LMI-based control synthesis methods are in general nonconvex and even the existence of a possible convexification step 
 is not known. The $\mu$-synthesis and Lyapunov-based synthesis methods are the two main venues of obtaining conditions
 for the design of a robust controller. 
 
-Clearly, this problem is not much different for IQC synthesis which is closely related to $\mu$
+Clearly, the situation is not much different for IQC synthesis which is closely related to $\mu$-
 tools. As we have shown in \cref{chap:analysis}, the dynamic multipliers are of the most importance when it comes to 
 reducing the conservatism involved in the frequency-domain stability analysis techniques. However including dynamics 
 to the multipliers makes the problem harder for the robust control synthesis problem. Since there is no known convex 
@@ -168,13 +168,13 @@ where $\bullet$ denotes the entries that we are not interested in. Also using th
 \]
 Then by a congruence transformation the analysis LMI
 \[
-\pmatr{Y&0\\0&I}^T\pmatr{I&0\\\mathcal{A}&\mathcal{B}\\\hline 0&I\\\mathcal{C}&\mathcal{D}}^T
+\pmatr{\mathcal{Y}&0\\0&I}^T\pmatr{I&0\\\mathcal{A}&\mathcal{B}\\\hline 0&I\\\mathcal{C}&\mathcal{D}}^T
 \left(
 \begin{array}{cc|c}
 	0&\mathcal{X}&0\\\mathcal{X}&0&0\\\hline 0&0&P_p
 \end{array}
 \right)
-\pmatr{I&0\\\mathcal{A}&\mathcal{B}\\\hline 0&I\\\mathcal{C}&\mathcal{D}}\pmatr{Y&0\\0&I}\prec 0
+\pmatr{I&0\\\mathcal{A}&\mathcal{B}\\\hline 0&I\\\mathcal{C}&\mathcal{D}}\pmatr{\mathcal{Y}&0\\0&I}\prec 0
 \]
 becomes
 \begin{equation}
@@ -205,7 +205,7 @@ together with
 \pmatr{V^T&0\\C_yY&I}+\pmatr{XAY&0\\0&0}
 \label{eq:contmatvartrafo}
 \end{equation}
-It's indeed not that easy to follow the inner workings of this transformation however after a tedious multiplication exercise
+It is indeed not that easy to follow the inner workings of this transformation however after a tedious multiplication exercise
 it can be seen that the aforementioned bijective transformation does the job. Thus, boldface variables are now functions of 
 $X,Y,K,L,M,N$ matrices and moreover the constraint is once again an LMI (after the application of \Cref{lem:linlemma}). For 
 stability characterization we also need $\mathcal{X}\succ 0$ and using the same transformation 
@@ -458,7 +458,7 @@ Proofs of both theorems are given in \cite{lmibook99} in detail.
 
 Again, in this step we optimize over $P_p$ while performing a line search over $r$. Theoretically, since the analysis result
 is feasible for some $r_a$, the controller step should at least give a feasible result for $r=r_a$ and possibly larger values
-should also return feasible results. However, numerically it's not the case. One might step down a little to actually obtain 
+should also return feasible results. However, numerically it is not the case. One might step down a little to actually obtain 
 feasible results. In our cases, we allowed the maximum retreat value to be the $0.99r$ of the previous step. We have also 
 observed that this might actually improve the conditioning of the LMI solution though by no means guaranteed. 
 
@@ -637,7 +637,7 @@ G_{py}\Psi_1^{-1}                  &G_{wy}       &0\\
 }
 \label{eq:augplant}
 \end{equation}
-thus, the obstacle that needs to be avoided is to find a way to obtain an equivalent multiplier of the form
+thus, the obstacle needs to be avoided via finding a way to obtain an equivalent multiplier of the form
 \begin{align}
 P(\iw) &= \pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*\pmatr{M_1&M_2\\M^T_2&M_3}\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)} \\
 &= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}\\
@@ -672,7 +672,7 @@ simple fact: let a multiplier $\Pi$ partitioned as
 
 
 \begin{lem}\label{lem:negnag}
-The number of negative eigenvalues of $\Pi$ is greater then or equal to $\Pi_1$ 
+The number of negative eigenvalues of $\Pi$ is greater than or equal to that of $\Pi_1$.
 \end{lem}
 
 
@@ -711,7 +711,8 @@ Hence, from \Cref{lem:negnag}, we have, $n = \nu(P_{11})\leq \nu({P}) = \nu(\Pi)
 matrix spanning the negative eigenspace where $U_1$ is square. If $U_1$ is invertible, then, $X = U_2\inv{U_1}$ 
 is a solution. Or we perturb with $\epsilon I$, and use $X= U_2\inv{(U_1+\epsilon I)}$. 
 \end{proof}
-Thus a quadratic form has to have at least as many negative eigenvalues as the outer factor rank to be negative definite. 
+Thus a quadratic form has to have at least as many negative eigenvalues as the outer factor rank to be negative definite
+since the quadratic form must be negative definite on the image of outer factor. 
 Using this information makes it easier to state some conclusions about the inertia of a frequency-dependent multiplier. 
 Obviously we need to make sure that the inertia stays the same on the imaginary axis. Hence we can make use of a result 
 regarding the frequency-dependent case by the following (see \cite{megretskitreil} and references therein):
@@ -946,10 +947,11 @@ is no simple implementable result that guarantees the solvability of such indefi
 Since we aim for an automated iteration 
 algorithm, we can not utilize these nice algebraic results. Additionally, there are also numerous generalizations, 
 nuances about the assumptions whether $(A,B)$ is just stabilizable or also controllable, whether $Q$ is indefinite 
-in general etc (see \cite{kucera}) in the previous theorem. However, these are not relevant here. Due to this missing technical step, 
+in general etc (see \cite{kucera}) in the previous theorem. However, these are not relevant here as they still do not provide 
+conditions for which the Riccati equation always has a solution. Due to this missing technical step, 
 we make use of particular sign assumptions on the subblocks of the multiplier to perform partial factorizations and 
 then obtain an overall factorization in the suitable form with steps that have solutions guaranteed to exist. For 
-these steps, it suffices to use the standard spectral factorization results well-knwon from LQ-type problems.
+these steps, it suffices to use the standard spectral factorization results well-known from LQ-type problems.
 \begin{rem}
 We have to emphasize that it's the structure that matters and not 
 the method with which we arrive to the desired structure. For a particular custom multiplier, one can utilize other properties
@@ -1102,14 +1104,14 @@ of the feasibility result, $r$ is increased/decreased, say via a bisection algor
 achieved. 
 
 \paragraph{Synthesis Step} The multiplier-augmented new plant is subjected to the variable transformation 
-\enquote{controller $\to v$} is performed and then via \Cref{thm:synthesis} the LMIs are solved. The initial $r$ can 
+\enquote{controller $\to v$}. Then via \Cref{thm:synthesis} the LMIs are solved. The initial $r$ can 
 be taken as $r^*_a$ and the bisection is reduced to the interval $r\in[0.99r^*_a,1]$ such that if for some numerical
 reason $r^*_a$ is not feasible, a little play is introduced to relax the numerical conditioning. $0.99$ is based on our
 numerical experience. However, we have also seen improvement if this play value is a function of the iteration number. 
 In other words, in the early iterations the play value can be relaxed down to $0.95$ and then getting stricter as the 
 iteration progresses.
 
-Another important issue after the synthesis is that we have to treat carefully is the innocent looking $I-XY = UV^T$. The
+Another important issue after the synthesis is that we have to treat carefully the innocent looking $I-XY = UV^T$. The
 numerical noise contaminating $U,V$ entries plays a big role in obtaining healthy controller matrix data due to the 
 inverses of $U$ and $V$. The essential difficulty is the eigenvalues of $XY$ approaching to unity hence rendering the 
 matrix $I-XY$ badly conditioned with respect to inversion. Some optimization-based remedies regarding the LMI problem setup 
@@ -1120,7 +1122,7 @@ to numerical analysts, seemingly the easiest method is basing the matrices on $(
 factorization and then inversion. We have implemented a simple two-stage validation scheme. First, we try the regular 
 factorize-invert method and clean up the matrices free from dangling tiny entries. Then closed loop is formed and stability 
 is checked. If the closed loop eigenvalues are sufficiently away from zero and the controller matrix entries are less than 
-some large number thenthe result is marked as a valid one. Otherwise, the inverse is factorized and same process is repeated
+some large number then the result is marked as a valid one. Otherwise, the inverse is factorized and same process is repeated
 with condition number checks etc. After this step the last known previous attempt is also recorded and if the next analysis 
 step can not improve the current controller is discarded and the last known attempt is utilized. Obviously, many other checks 
 should be implemented however it goes beyond the scope of this manuscript. 
@@ -1128,7 +1130,7 @@ should be implemented however it goes beyond the scope of this manuscript.
 
 
 
-\begin{rem} It should be noted that balancing the plant data between the analysis and the synthesis steps lead to 
+\begin{rem} It should be noted that balancing the plant data between the analysis and the synthesis steps leads to 
 worse numerical margins as one particular feasible result in one step tends to be infeasible in another step. We can speculate 
 that this type of modifications don't work (though theoretically should help) since the LMI solvers indeed push the 
 decision variables to such an extreme that slight changes in the constant part of the LMIs render the solutions 
@@ -1159,11 +1161,11 @@ solution. One can either decrease the uncertainty size $r$ or constraint the per
 each solution come closer. We have chosen another simple rule for the implementation:
 
 \begin{itemize}
-	\item After the synthesis step, check whether it's the first run of the iteration. If so, no convergence checks is
+	\item After the synthesis step, check whether it's the first run of the iteration. If so, no convergence check is
 	necessary.
 	\item Collect $r$ and $\gamma$ (both of analysis and synthesis steps) of the current iteration and compare it with 
 	the previous iteration. (Check if $r\approx 1$. If true, then compare only the performance.) Check if there is any 
-	significant (larger than some predefined value).
+	significant progress has been recorded (larger than some predefined value).
 	\item Check also whether analysis and synthesis $r$ and $\gamma$ values are close to each other. 
 	\item If all true terminate, otherwise continue. 
 \end{itemize}
