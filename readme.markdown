@@ -2,8 +2,9 @@
 
 This is my thesis. It is an academic study. Actually a very opinionated study.
 In fact it is a very very very opinionated study and I don't care too much 
-about what you think of it. Because most of it has been distilled from reading 
-lots of junk papers. 
+about what you think of it. Because most of the opinions stated here have been 
+distilled from reading lots of junk papers. So they are not just personal frustrations 
+but actual arguments.
 
 Since it is an academic research it has been made open. The actual technical code 
 is not provided because it is being ported to Python as a complete toolbox. I have 
@@ -25,4 +26,5 @@ accomplished. Do whatever you want, I will be happy to see the academic life rot
 -----
  
 Ilhan Polat
+
 April 2013
