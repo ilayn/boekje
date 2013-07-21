@@ -2,42 +2,35 @@
 \label{chap:apdxnetwork}
 
 
-We present the often encountered concepts in the bilateral teleoperation studies in a rather abstract fashion. Our goal is to
-include the referred network theoretical basics for the main argument in the body of this thesis. Hence, the experts of the field can 
-safely skip this appendix. The aim is to run down the basic stability related concepts, hence some circuit theory preliminaries 
-are omitted.
+In this appendix, we provide a collection of basic network theory concepts for the convenience of the nonexperts of the field, 
+to be used as a quick reference while we discuss the tools used in the bilateral teleoperation studies. Our focus would be on 
+interconnections and stability of these interconnections hence circuit theory preliminaries and physics of the components are omitted.
 
 \section{Terminology}
-When dealing with electrical circuits, often the engineering practice is to neglect any changes to the signal traveling through 
-a wire from location $A$ to $B$ if the distortion from various sources
-%\begin{itemize}
-	%\item the length of the path between $A$ and $B$
-    %\item the conduction properties of the medium
-    %\item the energy disspation along the path
-    %\item the wave propagation speed compared to the speed of light
-%\end{itemize}
-is negligible. This allows us to use the abstraction in block diagrams and calculations that point
-$A$ and $B$ have the same measurable characteristics through time. This is typically shown with a 
-straight line connecting $A$ and $B$. The interpretation is that $A$ and $B$ share the same variables of 
-interest on that line. Therefore, $A$ and $B$ are said to be interconnected terminals connected by a wire. 
-Clearly creating terminals are as simple as cutting the connection arbitrarily on a path. Often, we define 
-hypothetical terminals as if there were distinct points on the circuit and we have connected them artificially. 
+We start with ideal circuits for which the external influences such as the magnetic interference, temperature gradient as well as 
+internal characteristics such the conductor element length and resistance etc. are negligible. Hence a signal traveling through a 
+conducting medium between location $A$ and $B$ distorted i.e., if an arbitrary property of the signal at any point between and 
+including $A$ and $B$ is measured, we obtain the same results. This allows us to use the simplifications in block diagrams and 
+calculations that point $A$ and $B$ have the same measurable characteristics through time. This is typically shown with a path 
+connecting $A$ and $B$. The interpretation is that $A$ and $B$ and also every other point on that path share the same variables 
+of interest on that line. Therefore, $A$ and $B$ are said to be interconnected terminals connected by a \enquote{wire}. Clearly 
+creating terminals are as simple as cutting the connection arbitrarily on this path. Often, we define hypothetical terminals as 
+if there were distinct points on the circuit and we have connected them artificially. 
 
-Hence, following Jan C. Willems' formulation for a systematic definition of terminals and ports in \cite{willemsCSM}; 
-an electrical circuit is a device, a black box, with wires so-called terminals
-through which the circuit can interact with its surroundings. In electrical circuits, the interaction takes place
-via the electrical voltage drop across the terminals and the electrical current that flows through the black box.
-Therefore each terminal admits two real variables attached to it, the potential and the current. Conventionally, 
-the current is denoted with a positive number when it flows into the circuit. Thus, an interconnection is connecting
-a wire from terminal $A$ of the black box $(1)$ to $B$ of $(2)$ enforcing the following to hold
+Following Jan C. Willems' formulation for a systematic definition of terminals and ports in \cite{willemsCSM}; an electrical 
+circuit is a device, a black box, with wires so-called terminals through which the circuit can interact with its surroundings. 
+In electrical circuits, the interaction takes place via the electrical voltage drop across the terminals and the electrical 
+current that flows through the black box. Therefore each terminal admits two real variables attached to it, the potential and 
+the current. Conventionally, the current is denoted with a positive number when it flows into the circuit. Thus, an 
+interconnection is connecting a wire from terminal $A$ of the black box $(x)$ to $B$ of $(y)$ enforcing the following to hold
 \[
 V_A = V_B \quad \text{and} \quad I_A=-I_B
 \]
-Then, we can look at the resulting interconnected system (3) as (1) and (2) combined and exhibiting the same
-phenomenon at their terminals $A$ and $B$. 
+Then, we can look at the resulting interconnected system $(z)$ as $(x)$ and $(y)$ combined and exhibiting the same phenomenon 
+at their terminals $A$ and $B$. 
 
 The collection of physically attainable phenomena are abstracted with the notion of the behavior set (\cite{behavbook}):
-Consider a circuit with N terminals. Let $\mathcal{B}\subseteq (\Real^N\times\Real^N)^\Real$ denote the behavior set 
+Consider a circuit with $N$ terminals. Let $\mathcal{B}\subseteq (\Real^N\times\Real^N)^\Real$ denote the behavior set 
 that is defined as the set of all admissible potential and current trajectories compatible with the network architecture 
 at each terminal. Here $(\Real^N\times\Real^N)^\Real$ denotes 
 the set of all maps $f: \Real\to\Real^N\times\Real^N$ e.g. each terminal voltage and current evolution through time 
@@ -51,22 +44,22 @@ it implies that there exists an initial condition $(V(0),I(0))$ such that $(V,I)
 (with a particular external excitation sequence if present).
 
 
-Assuming a conservative magnetic field, a circuit obeys the well-known Kirchhoff voltage and current laws compactly described 
-as 
+Assuming a conservative magnetic field, a circuit can be modeled via the well-known Kirchhoff voltage and current laws 
+compactly described as 
 \begin{align}
 (V,I)\in\mathcal{B} &\implies (V+\alpha\mathbb{1},I)\in\mathcal{B} \quad \forall \alpha\in\Real^\Real \tag{KVL}\\
 (V,I)\in\mathcal{B} &\implies \sum_{k=1}^N{I_k}=\mathbb{1}^TI=0 \tag{KCL}
 \end{align}
 where $\mathbb{1}$ denotes a vector with all entries are equal to $1$ whose size is clear from the context.
 
-Let, $P \subseteq \{1,\ldots,N\}$ denote an $m-$tuple selection of indices out of $N$ terminals of a circuit. Then, terminals
+Let, $P \subseteq \{1,\ldots,N\}$ denote an $m$-tuple selection of indices out of $N$ terminals of a circuit. Then, terminals
 $P_i$ for all $i\in P$ are said to form a port if 
 \[
 (V,I)\in\mathcal{B} \implies p^TI=0 \tag{Port KCL}
 \]
-where $p$ is a vector with $k-$th entry being $1$ if $k\in P$ and $0$ otherwise. This is nothing but a reformulation of the well-known 
+where $p$ is a vector with $k$th entry being $1$ if $k\in P$ and $0$ otherwise. This is nothing but a reformulation of the well-known 
 port condition from circuit theory. Thus, we can also define a port as the set of terminals that satisfy port KCL. Given a port with 
-$n-$terminals with $V,I$ denoting the through and across variables, the instantaneous power is given by 
+$n$-terminals with $V,I$ denoting the through and across variables, the instantaneous power is given by 
 \[
 P = \sum_{k=1}^n{V_k(t)I_k(t)}
 \]
@@ -162,22 +155,22 @@ allowed to interact with its surroundings via ``ports". In our context, load ref
 the source is the human exploring the environment from a distance via the teleoperation system.
 
 \begin{rem}
-We have to note that, in this formulation, a single mass can not be interpreted as a port: The mass does not satisfy the 
-port KCL unless it is thought to be applying an opposite force to a fixed inertial frame at a distance. This is the underlying
-reason for the electrical analog of a mass (in the force-current context) is required to be a \emph{grounded} capacitor 
-(see \cite{smith} for the development of the exact mechanical analogue of a capacitor, \emph{the inerter} which is succesfully implemented by 
-McLaren Mercedes and Renault F1 teams and being used succesfully since 2005\footnote{According to the official statements.}). We will not 
-go into the details and and simply refer to \cite{willemsCSM} for a thorough analysis of the pitfalls and quite nonintuitive power/energy 
-results. Though, the inappropriateness of view of input/output formalism which is adopted also in this thesis is brought to attention in 
-numerous studies by Jan C. Willems and his colleagues, we are obliged to use the input/output formulation as we have no results 
-regarding the behavioral approach to bilateral teleoperation systems (yet). However, we remind the reader that the potential 
-of a behavioral modeling of teleoperation systems is just unavoidable. 
+We have to note that, in this formulation, a single mass can not be modeled as a $1$-port; mass does not satisfy the 
+port KCL unless it is thought to be applying an opposite force to a fixed inertial frame at a distance. This is why the electrical analog 
+of a mass (in the force-current context) is required to be a \emph{grounded} capacitor. The interested reader is referred to \cite{smith} 
+for the interesting story of the development of an exact mechanical analogue of a capacitor, \emph{the inerter} which is succesfully implemented by 
+McLaren Mercedes and Renault F1 teams and being used since 2005\footnote{According to the official statements.}. We also refer to 
+\cite{willemsCSM} for a comprehensive analysis together with the common pitfalls and nonintuitive power/energy results. Though, 
+the inappropriateness of view of input/output formalism which is adopted also in this thesis is brought to attention in numerous 
+studies by Jan C. Willems and his colleagues, we are obliged to use the input/output formulation as we have no results regarding 
+the behavioral approach to bilateral teleoperation systems (yet). However, the potential of a behavioral modeling of teleoperation 
+systems is unavoidable if the engineer insists on \enquote{physics matching} as the performance objective covered in \Cref{chap:perf}.
 \end{rem}
 
 
 Since every two-terminal port can be characterized by two variables ( ``through'' and ``across'' quantities), it is possible to 
-characterize the interconnected $n-$port networks as if one quantity is due to the other. This is done by imposing an artificial 
-causality scheme, two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
+characterize the interconnected $n$-port networks as if one quantity is due to the other. This is done by imposing an artificial 
+causality scheme; two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
 (\cite{behavbook}). This is the simplest kind of input/output view of physical systems via treating one port variable as the 
 \emph{cause} and the other one as the \emph{effect} of this cause e.g. the current is due to the voltage drop across the terminals or 
 vice versa. 
@@ -198,7 +191,9 @@ obtaining one representation from another is possible by a combination of the fo
 \end{align*}
 In the latter operation it is assumed that the inverse exists. The existence of inverses are limiting the realizability
 of networks as impedance or admittance matrices. Moreover, in \cite{andersonHmat}, it has been shown that a hybrid matrix
-realization is always possible regardless. This is yet another artifact of input/output formulation. 
+realization is always possible regardless. This is yet another artifact of input/output formulation. However, since we are 
+interested in the asymptotical stability of the complete interconnection including the nominal stability, such problematic 
+cases are not within the scope of the practical interest. 
 
 
 
@@ -354,8 +349,7 @@ $q = S p$, $p=\tilde{\Delta} q$ i.e.
 \underbracket[0.2pt]{\pmatr{\tilde{\Delta}_s&0\\0&\tilde{\Delta}_l}}_{\tilde{\Delta}} \pmatr{q_1\\q_2}.
 \label{eq:rolic}
 \end{equation}
-Rollett's conditions (\cite{stern,rollett,kurokawa}) for stability are then
-formulated as follows: 
+Rollett's conditions (\cite{stern,rollett,kurokawa}) for stability are then formulated as follows: 
 
 \begin{thm} Consider the same network given in Llewellyn's criteria which is represented in scattering parameters.
 The interconnection is stable if and only if the inequality 
@@ -375,6 +369,6 @@ In \cite{edsin}, Edwards and Sinsky reduced Rollet's conditions to a single quan
 for being greater than unity for all $\omega\in\Realext$. 
  \begin{thm} Verifying Rollet's conditions is equivalent to verifying the single condition
 \[
-\mu\coloneqq \frac{1-\abs{S_{11}}^2}{\abs{S_{22}-S_{11}^*\Delta}+\abs{S_{12}S_{21}}} > 1\qquad \forall \omega\in\Realext.
+\mu\coloneqq \frac{1-\abs{S_{11}}^2}{\abs{S_{22}-S_{11}^*\nabla}+\abs{S_{12}S_{21}}} > 1\qquad \forall \omega\in\Realext.
 \]
 \end{thm}

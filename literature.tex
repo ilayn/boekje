@@ -183,14 +183,16 @@ circuit based modeling approach is merely a convention rather than a requirement
 
 In the teleoperation context, if one uses the \enquote{load-source} analogy for the manipulated environment 
 and the human, then the system models all the bilateral interaction between the load and the source 
-ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via their input/output 
-(or external) properties, i.e., across variable/through variable relations (e.g. force/velocity, voltage/current etc.). Also, the 
-non/linearity properties of the components are not relevant at the outset if we are only interested in energy exchange, which is the basis
-of the so-called Time-Domain Passivity Methods \cite{hannafordryu} which we also mention later in this chapter. Thus, 
-the user, the control system, the environment, the remote and local devices and the communication delays are seen as 
-$1$- and $2$-ports exchanging energy in time. Since the external behavior of the ports can be characterized completely by the 
-current and the voltage drop across the terminals, it is indeed very convenient to model these components with electrical ports as 
-interacting \enquote{black boxes} (See \Cref{fig:portrep}).
+ports (as in \Cref{fig:portrep}). This modeling view is quite powerful since the components are described via 
+their input/output (or external) properties, i.e., across variable/through variable relations (e.g. force/velocity, 
+voltage/current etc.). Also, the non/linearity properties of the components are not relevant at the outset if we 
+are only interested in energy exchange, which is the basis of the so-called Time-Domain Passivity Methods 
+\cite{hannafordryu} which we also mention later in this chapter. Thus, the user, the control system, the 
+environment, the remote and local devices and the communication delays are seen as $1$- and $2$-ports exchanging 
+energy in time. Since the external behavior of the ports can be characterized completely by the power variables 
+associated with the terminals, e.g., voltage drop across the terminals and current flowing through them, it is 
+indeed very convenient to model these components with electrical ports as interacting \enquote{black boxes} 
+(See \Cref{fig:portrep}).
 
 \begin{rem} We should emphasize here that, in this context, the energy exchange is used as a gauge of a 
 potentially unstable behavior. The motivation relies on the fact that in order to classify a system as an 
@@ -465,8 +467,8 @@ of the stiffness matrix varies both in terms of direction and magnitude. Therefo
 from the human arm with some particular pathological trajectory. Just in the case of a frozen time analysis of a time-varying 
 operator does not imply stability, the conclusion is only valid for postural analysis at a fixed configuration of the human arm 
 but not for an arm trajectory. 
-\newpage
-\emph{Therefore, it is our belief that the assumption of human arm being a passive system is not an experimentally validated one 
+
+\textbf{Therefore, it is our belief that the assumption of human arm being a passive system is not an experimentally validated one 
 for most teleoperation tasks.}
  
 
@@ -747,17 +749,13 @@ allow us the analyze the teleoperation systems for stability and performance. Th
 models is the Llewellyn's stability criteria (also often called absolute stability theorem or unconditional stability theorem). 
 For linear networks, the following definitions seem to be used quite widely (modified from \cite{chen91}): 
 
-\begin{define}[Potential Instability at $\iw_0$] A two-port network is said to be potentially unstable at 
-$\omega_0$, if there exist two passive one-port immitances that, when terminated at the ports, produce a 
-persisting natural frequency at $\omega_0$.
+\begin{define}[Potential Instability] A two-port network is said to be potentially unstable if there exist two passive one-port 
+immitances that, when terminated at the ports, produce a persisting natural frequency.
 \end{define}
 
-\begin{define}[Absolute Stability at $\iw_0$] A two-port network is said to be absolutely stable at 
-$\omega_0$, if it is not potentially unstable at $\omega_0$.
+\begin{define}[Absolute Stability at $\iw_0$] A two-port network is said to be absolutely stable if it is not potentially unstable.
 \end{define}
 
-Note that when the models are assumed to be LTI, then the absolute stability theorem is an exact 
-stability characterization. 
 
 \subsection{Llewellyn Stability Criteria}\label{sec:llewellyn}
 The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, 

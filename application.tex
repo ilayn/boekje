@@ -127,10 +127,12 @@ function
 \]
 This simplification is used in \cite{cesarACC,cesarSYROCO} and the resulting controllers which are based on this model are 
 experimentally implemented. Due to the low-frequency nature of the task, this simplification did not cause any problems 
-during the experiments. 
+during the experiments.
 
-We nevertheless present the full model LFT interconnection structure but in the controller design case only the simplified 
-model is used. 
+We nevertheless present the full model LFT interconnection structure but in the controller design cases only the simplified 
+model is used. This is due to the fact that the system is altered significantly (e.g., the steel cables are replaced by plastic 
+and the housing of the shafts are not in the optimal condition etc.) from its original construction. Hence, we have
+used a simple model obtained from identification experiments.
 
 
 
@@ -204,13 +206,18 @@ Next, we obtain the LFT interconnection of the uncertain model. We first write d
 (J_4+m_h)\ddot{x}_4 = k_3(x_3-x_4) + b_3(\dot{x}_3-\dot{x}_4) - k_hx_4 - b_h\dot{x}_4 -f_h
 \]
 and hence
-\begin{align*}
-\ddot{x}_4 &= \inv{(J_4 + m_h)}\left(k_3(x_3-x_4) + b_3(\dot{x}_3-\dot{x}_4) - k_hx_4 - b_h\dot{x}_4 -f_h\right)\\
-           &= \underbracket{
+\[%\begin{align*}
+\ddot{x}_4 = \inv{(J_4 + m_h)}\left(k_3(x_3-x_4) + b_3(\dot{x}_3-\dot{x}_4) - k_hx_4 - b_h\dot{x}_4 -f_h\right)
+\]\[
+           = {%\underbracket
                             \left(\frac{1}{J_4} - \frac{1}{J_4}\frac{m_h}{J_4}\inv{\left(1+\frac{m_h}{J_4}\right)}\right)%
-                            }_{\delta_{m_h}{\displaystyle\star}\pmatr{-\frac{m_h}{2J_4}&\frac{m_h}{2J_4}\\-\frac{1}{J_4}&\frac{1}{J_4}}}%
-        \left(k_3(x_3-x_4) + b_3(\dot{x}_3-\dot{x}_4) - k_hx_4 - b_h\dot{x}_4 -f_h\right)
-\end{align*}
+                            }%
+        \left(k_3(x_3-x_4) + b_3(\dot{x}_3-\dot{x}_4) - k_hx_4 - b_h\dot{x}_4 -f_h\right).
+\]%\end{align*}
+The first term in the second equality can be shown to be 
+\[
+\delta_{m_h}{\displaystyle\star}\pmatr{-\frac{m_h}{2J_4}&\frac{m_h}{2J_4}\\-\frac{1}{J_4}&\frac{1}{J_4}}
+\]
 with $\delta_{m_h}(t)\in[0,2]$ for all $t>0$. Then, labeling the remaining uncertain terms with uncertainty outputs we have
 \begin{align}
 \ddot{x}_4 &= \frac{1}{J_4}\bigg(k_3(x_3-x_4) + b_3(\dot{x}_3-\dot{x}_4) - \frac{m_h}{2J_4}p_1 - p_2 - p_3 -f_h\bigg)\\
@@ -279,8 +286,7 @@ where
 \hat D_{uq} = \pmatr{0\\0\\0},
 \label{eq:rotmodelCq}
 \end{multline}
-The remote device is simply another copy of the local device, hence shares the same structure given by
-\eqref{eq:prestateequations1},\eqref{eq:prestateequations2}. The position measurements are done at the 
+The position measurements are done at the 
 motor location with an encoder and the force measurements are based on the relative motion of the $J_{inner+ee}$ and
 $J_{outer}$ since the elasticity of the coupling is known. This leads to the following measurement channel structure:
 \begin{multline}
@@ -290,13 +296,13 @@ $J_{outer}$ since the elasticity of the coupling is known. This leads to the fol
 },\\ 
 \hat D_{py} = \pmatr{0 &0 &0\\0&0&0},
 \hat D_{wy} = \pmatr{0\\0\\0}, 
-\hat D_{uq} = \pmatr{0\\0\\0},
+\hat D_{uy} = \pmatr{0\\0\\0},
 \label{eq:rotmodelCy}
 \end{multline}
 
 \subsection{Incorporating the environment dynamics}
-
-For the remote device, we only consider a spring with time-varying characteristics however it can also be assumed to admit 
+The remote device is simply another copy of the local device, hence shares the same structure given by
+\eqref{eq:prestateequations1},\eqref{eq:prestateequations2}. For the remote device, we only consider a spring with time-varying characteristics however it can also be assumed to admit 
 a more detailed structure similar to the human dynamics. It's relatively simpler to obtain the LFT interconnection since we 
 can simply remove the $\delta_{m_e},\delta_{b_e}$ uncertainty channels such that only the environment stiffness coefficient
 remains uncertain. We will assume that the environment stiffness can change arbitrarily fast in order to model hard contacts
@@ -403,7 +409,7 @@ models and the human/environment dynamics are interconnected directly to the cor
 \centering
 \begin{tikzpicture}[>=latex,scale=0.85,transform shape]
 \node[draw,inner xsep=4mm,inner ysep=2mm] (op) at (0,1.5) {Operator};
-\node[draw] (mas) at (0,0) {$\displaystyle \frac{1}{m_ms^2+b_ms+k_m}$};
+\node[draw] (mas) at (0,0) {Master Device};
 \node[circle,draw,inner sep=2pt] (sum) at ([xshift=6mm]mas.east) {};
 \draw[->] (op) -| (sum);
 \draw[<-] (mas) -- (sum);
@@ -996,11 +1002,100 @@ y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0
 %===============================
 
 
-
 \section{Controller Comparison}
 
-In this section we will refer to the designed controllers by $C_1,C_{21},C_{22},C_3$. First, the frequency domian properties 
-are listed in \Cref{fig:app:contredmass,fig:app:incr}. 
+In this section we will refer to the designed controllers by $C_1,C_{2},C_3$. First, the frequency domian properties 
+are listed in \Cref{fig:app:contredmass,fig:app:incr}. In order to make the time domain responses more meaningful, we first 
+define a few motion profiles.
+
+
+
+\begin{description}[leftmargin=!,labelwidth=3.5cm]
+  \item[Free air] This describes the case where the operator holds the local device handle with arbitrary grip tension and moves the local 
+                  device up and down such that the remote device tracks the motion. The remote device is not in contact with any obstacle
+                  throughout the motion. 
+  \item[Soft Spring Contact ] This describes the case where the operator holds the handle with a certain grip tension and moves the local 
+                              device down into the spring such that the remote device squeezes a soft spring ($\approx$.
+  \item[Hard Spring Contact] This describes the case where the operator holds the handle with a certain grip tension and moves the local 
+                              device down into the spring such that the remote device squeezes hard spring.
+  \item[Rigid Contact] This describes the case where the operator tries to push the handle with a certain grip tension down 
+                       such that the remote device is pressed against a rigid object.
+  \item[Contact Tapping] This describes the case where the operator taps the handle with the index finger while the remote device 
+                         comes into contact with an obstacle (spring or rigid) as a result of the tapping to test abrupt changes 
+                         from free air to contact scenario.
+  \item[Contact Slide] This describes the case while the operator tries to push down the local device handle during the remote device
+                       is in contact with an obstacle (spring or rigid). Thus the operator is being resisted by the local device. Then
+                       the obstacle in the remote environment is pulled out manually such that a sudden change in the environment from
+                       contact to free air scenario is tested.
+\end{description}
+
+The experiments are performed with the same device at one shot with an arbitrary combination of motion profiles listed above. Due to the
+proximity switches, the workspace is limited to $\approx \SIrange{-35}{35}{\degree}$ where \SI{0}{\degree} denotes the horizontal 
+configuration of the device handle. Hence, the contact slide motion is done rather carefully as we needed to stop before the device trips
+the switch which in turn stops the data streaming. Moreover, there are also hard-coded rate limiters for safe operation such that if the 
+device handle angular velocity exceeds a threshold the device turns off the drives and disconnects (similarly the data stream is stopped). 
+Hence, the rigid contact motion is carried out with caution. Though the responses are stable throughout the rigid contact, the controller is 
+aggressive enough to trip the rate-limiters hence causes abrupt data stream in the case of a particular contact tapping. In fact when tapping 
+approaches \emph{striking with the finger} ($\approx \SI{1.5}{\meter\per\second}$ fingertip speed at around \SI{4.7}{\hertz}) the instantaneous
+rebound speed of the remote device on the obstacle trips the drive. Since our goal is to present the motion at one shot in order to demonstrate 
+the robustness against time-variations, the contact tapping profile is carried out with a predefined force limit in mind. 
+
+
+It should be noted that none of the controllers have been designed to cope with completely rigid objects. In other words, we did not 
+incorporate the unilateral constraint case (rigid contact) into account. Not only we lack the proper framework with adequate flexibility to handle such 
+cases with performance specifications\footnote{Contrary to the claims that can be found elsewhere in the constrained non/linear system 
+literature}, it is also an unrealistic goal at the outset. As we will show the problem is not essentially a state-constraint problem but 
+rather the inherent stiffness modes of the devices that are excited in the rigid contact case. 
+
+\subsection{Full Experiment Motion}
+
+In each controller test, a right-handed male operator tried out the different scenarios listed above in about $1$-$2$ minute. The resulting overall
+datastream is shown in \Cref{fig:app:design1overall,fig:app:design2overall,fig:app:design3overall}. One can 
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld2.dat};
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld2.dat};
+    \end{axis}
+%\draw[-stealth] node[append after command={(a) -- (2,3.5)}] (a) at (-1,3) {Free Air};
+\end{tikzpicture}
+\caption{Design 1 with arbitrary fast varying stiffness parameters and fixed mass and damping coefficient.}%
+\label{fig:app:design1overall}%
+\end{figure}
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld1.dat};
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld1.dat};
+    \end{axis}
+%\draw[-stealth] node[append after command={(a) -- (2,3.5)}] (a) at (-1,3) {Free Air};
+\end{tikzpicture}
+\caption{Design 2 with slowly varying human model stiffness parameter and fixed mass and damping coefficient.}%
+\label{fig:app:design2overall}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld0.dat};
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld0.dat};
+    \end{axis}
+%\draw[-stealth] node[append after command={(a) -- (2,3.5)}] (a) at (-1,3) {Free Air};
+\end{tikzpicture}
+\caption{Design 3 with slowly varying human model parameters.}%
+\label{fig:app:design3overall}%
+\end{figure}
+
+due to the fact that a rigid contact with a relatively tighter grip clamps the device. 
+
+
+
 
 \begin{sidewaysfigure}
 \centering
@@ -1015,12 +1110,12 @@ are listed in \Cref{fig:app:contredmass,fig:app:incr}.
     },
     height=4cm,
     width=0.25\textheight,
-    ymode=log,
+    %ymode=log,
     xmode=log,
     xmax=9500,
     xmin=0.005,
     ymin=0.5,
-    grid=both,
+    grid=major,
     cycle list name=linestyles*
     %legend entries={{$d=0$},{$d=1$},{$d=1$}}
 ]
@@ -1030,13 +1125,13 @@ are listed in \Cref{fig:app:contredmass,fig:app:incr}.
         \xdef\myxy{\myx\yind}
             \nextgroupplot
             \pgfplotsforeachungrouped\z in {0,...,2}{
-                \begingroup\xdef\temp{\endgroup\noexpand\addplot+[] table[x=f,y=k\myxy] {plotdata/krobd\z.dat};}\temp%
+                \begingroup\xdef\temp{\endgroup\noexpand\addplot+[] table[x=f,y expr={20*log10(\noexpand\thisrow{k\myxy})}] {plotdata/krobd\z.dat};}\temp%
             }
         }
     }
     \end{groupplot}
 \end{tikzpicture}
-\caption{The frequency domain data of the controllers designed for fixed human mass parameter. Solid: $C_1$, dashed: $C_{21}$, dash-dotted: $C_{22}$}%
+\caption{The frequency domain data of the controllers designed for fixed human mass parameter. Solid: $C_1$, dashed: $C_2$, dash-dotted: $C_3$}%
 \label{fig:app:contredmass}%
 \end{sidewaysfigure}
 
@@ -1076,40 +1171,28 @@ are listed in \Cref{fig:app:contredmass,fig:app:incr}.
 \label{fig:app:incr}%
 \end{sidewaysfigure}
 
-
-
-\newpage
-
-\parbox[c][6cm][c]{\textwidth}{\LARGE
+\begin{figure}%
 \centering
-The remaining part of this chapter \\
-is not included in this draft. Missing a few experimental plots and interpretations.
-Approx. 5 more pages to come.
-} 
-
-
-%\begin{figure}%
-%\centering
-%\begin{tikzpicture}
-	%\begin{loglogaxis}[
-	%%enlargelimits=false,
-	%grid=both,
-	%width=0.6\textwidth,height=3cm,
-	%xmin=0.01,xmax=4e4,
-	%yticklabel={\pgfmathprintnumber[fixed]{\tick}},
-	%xlabel= Frequency,
-	%ylabel= Magnitude,
-	%x unit=\si{\radian\per\second},
-	%y unit=\si{\decibel},
-	%log basis y=10,
-  %yticklabel={\pgfmathparse{20*(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
-	%]
-		%\addplot[red,thick] table[x=freq,y=ks1] {plotdata/caseoneksigma.txt};
-		%\addplot[blue,dashed] table[x=freq,y=ks2] {plotdata/caseoneksigma.txt};
-	%\end{loglogaxis}
-%\end{tikzpicture}
-%\caption{The maximum and minimum singular values of the controller for the first design case with constant multipliers.}%
-%\label{fig:app:ksigma1}%
-%\end{figure}
+\begin{tikzpicture}
+	\begin{loglogaxis}[
+	%enlargelimits=false,
+	grid=both,
+	width=0.6\textwidth,height=3cm,
+	xmin=0.01,xmax=4e4,
+	yticklabel={\pgfmathprintnumber[fixed]{\tick}},
+	xlabel= Frequency,
+	ylabel= Magnitude,
+	x unit=\si{\radian\per\second},
+	y unit=\si{\decibel},
+	log basis y=10,
+  yticklabel={\pgfmathparse{20*(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
+	]
+		\addplot[red,thick] table[x=freq,y=ks1] {plotdata/caseoneksigma.txt};
+		\addplot[blue,dashed] table[x=freq,y=ks2] {plotdata/caseoneksigma.txt};
+	\end{loglogaxis}
+\end{tikzpicture}
+\caption{The maximum and minimum singular values of the controller for the first design case with constant multipliers.}%
+\label{fig:app:ksigma1}%
+\end{figure}
 
 

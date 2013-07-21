@@ -1,6 +1,31 @@
 %!TEX root = thesis.tex
 \ProvidesPackage{thesis-preamble}
-\PassOptionsToPackage{x11names}{xcolor}
+\PassOptionsToPackage{x11names}{xcolor} % Why is this here? Fix it later!!
+% ====================================================================
+% =========================FONTSPEC and FONTS ========================
+% ====================================================================
+\RequirePackage[sc,osf]{mathpazo}  % for math
+\RequirePackage{lmodern}            % for sensible sans and tt font
+%\RequirePackage{unicode-math}
+\RequirePackage{fontspec}
+\setmainfont[Ligatures=TeX,%
+             Numbers=OldStyle%
+            ]{TeX Gyre Pagella}   %
+%\setmathfont[math-style=ISO,
+             %bold-style=ISO,
+             %vargreek-shape=TeX
+             %]{TeX Gyre Pagella Math}
+\RequirePackage{microtype}        % for everything beautiful
+%\linespread{1.1}                 % Palatino leading, why I'll never understand
+\frenchspacing
+\normalfont
+% ====================================================================
+% ====================================================================
+% ====================================================================
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%
 %! MEMOIR CUSTOMISE
 %
@@ -34,12 +59,7 @@
 
 
 %%% SECTIONS
-\newcommand\marginnum[2]{%
-  \noindent
-  \let\@tempa\relax
-  \savebox\@tempboxa{#2}%
-  %\null\marginpar{#1\@tempa}%
-  #1\@tempa\quad#2}
+\newcommand\marginnum[2]{\noindent\let\@tempa\relax\savebox\@tempboxa{#2}#1\@tempa\quad#2}
 
 \def\secstyle{\centering\scshape}
 \def\subsecstyle{\centering\itshape}
@@ -66,24 +86,12 @@
 
 % Page headers
 \setlength{\headheight}{\baselineskip}
-%\advance\headwidth by \textwidth + \marginparsep + 0.5\marginparwidth
 \makepagestyle{phdstayla}
 \makepsmarks{phdstayla}{%
-  \let\@mkboth\markboth%
-  \def\chaptermark##1{%
-    \markboth{%
-      \if@mainmatter
-        \textsc{Chapter \thechapter:} %
-      \fi
-      ##1}{##1}}%
-  \def\sectionmark##1{%
-    \markright{%
-      \if@mainmatter
-        \textsc{\thesection:} %
-      \fi
-      ##1}}}
-%\makerunningwidth{phdstayla}{\headwidth}
-%\makeheadposition{phdstayla}{flushleft}{flushright}{}{}
+    \let\@mkboth\markboth%
+    \def\chaptermark##1{\markboth{\if@mainmatter\textsc{Chapter \thechapter:}\fi##1}{##1}}%
+  \def\sectionmark##1{\markright{\if@mainmatter\textsc{\thesection:}\fi##1}}
+}
 \makeevenhead{phdstayla}{\thesispage}{}{\small\leftmark}
 \makeoddhead{phdstayla} {\small\rightmark}{}{\thesispage}
 \makeevenfoot{phdstayla}{}{}{}
@@ -95,40 +103,29 @@
 
 
 %% Symmetric ragged commands
-\newcommand\IfOddPage{%
-  \checkoddpage
-  \ifoddpage\expandafter\@firstoftwo
-  \else\expandafter\@secondoftwo\fi}
+\newcommand\IfOddPage{\checkoddpage\ifoddpage\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
 \newcommand\raggedout{\IfOddPage\raggedright\raggedleft}
 \newcommand\raggedin{\IfOddPage\raggedleft\raggedright}
 
-
-
-
-
 %%% PACKAGES
-\RequirePackage[T1]{fontenc}         % sane font encoding
-\RequirePackage{lmodern}        % for sensible sans and tt font
-\RequirePackage[sc,osf]{mathpazo}    % for math
-\RequirePackage{microtype}
-\RequirePackage[utf8]{inputenc}      % sane input encoding
-\linespread{1.1}                     % Palatino needs more leading
-\frenchspacing
-\normalfont
 
 
-
-
+% ==============================
+% ==============================
+% Free from memoir redefinitions
 \let\subcaption\undefined
 \let\subfloat\undefined
 \let\subfigure\undefined
+
 \RequirePackage{subcaption}
 \captionsetup{font={small}}
 \captionsetup[table]{position=top}
-
-
 \DeclareCaptionLabelFormat{andtable}{#1\space#2 \& \tablename\space\thetable}
+% ==============================
+% ==============================
 
+
+% Enter monster
 %==================================================================
 %++++++++++++++++++++++++ Hyperref ++++++++++++++++++++++++++++++++
 %==================================================================
@@ -146,7 +143,7 @@
 %==================================================================
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %==================================================================
-
+% Exit monster
 
 
 \RequirePackage{
@@ -156,7 +153,7 @@
     amsthm,
     tikz,     % Requires at least v2.10 !!
     bm,       %
-    pgfplots, % Requires at least v1.5.1 !!
+    pgfplots, % Requires at least v1.8 !!
     pgfplotstable,
     mathtools,
     booktabs,
@@ -169,30 +166,37 @@
 }
 
 
-\pgfplotsset{compat=newest}
+\pgfplotsset{compat=1.8}
 
-
+%==================================================================
+%++++++++++++++++++++++++ siunitx +++++++++++++++++++++++++++++++++
+%==================================================================
 \RequirePackage{siunitx}
 \sisetup{mode = math,
-open-bracket={[},close-bracket={]},
-per-mode=symbol,
-range-units=brackets,
-range-phrase={,},
-binary-units = true
+         open-bracket={[},
+         close-bracket={]},
+         per-mode=symbol,
+         range-units=brackets,
+         range-phrase={,},
+         binary-units = true
 }
+%==================================================================
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%==================================================================
 
 
 
 \definecolor{darkred}{rgb}{0.4,0,0}
 \definecolor{darkgreen}{rgb}{0,0.4,0}
 \definecolor{darkblue}{rgb}{0,0,0.4}
+
 \hypersetup{
 linkcolor=darkred,%
 citecolor=darkblue,%
 filecolor=black,%
 urlcolor=black,%
 pdfauthor={İlhan Polat},%
-pdftitle={Model-Based Robust Control of Bilateral Teleoperation Systems}%
+pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs}%
 }
 
 
@@ -207,7 +211,8 @@ pdftitle={Model-Based Robust Control of Bilateral Teleoperation Systems}%
 		shapes.arrows,
 		shapes.geometric,
 		plotmarks,
-		decorations.pathmorphing
+		decorations.pathmorphing,
+        spy
 		}
 \usepgfplotslibrary{
         smithchart,
@@ -296,33 +301,8 @@ pdftitle={Model-Based Robust Control of Bilateral Teleoperation Systems}%
     }
     }
     
-
-
-
-%\ExecuteBibliographyOptions{doi=false}
-%\newbibmacro{string+doi}[1]{%
-  %\iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
-%\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
-%\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
-
-%\Requirepackage{docmute}
-
-%%%%%%%%%%%%%%%%%%%%
-
-% MATHS
-%\RequirePackage{amsmath,amssymb,bm,cool,mathtools}%,fngp
-%\@ifpackageloaded{mathpazo}{\PassOptionsToPackage{mathpazo}{flexisym}}{}
-%\RequirePackage{breqn}
-%\setkeys{breqn}{labelprefix=eq:}
-
-%%%%%%%%%%%%%%%%%
 %%% FIGURES
-
-
-%\let\subfloat\subbottom
-
 \def\impath{images/}
-
 %\newcommand\grf[2][]{\includegraphics[#1]{\impath #2}}
 
 
@@ -374,7 +354,7 @@ pdftitle={Model-Based Robust Control of Bilateral Teleoperation Systems}%
 
 
 
-%\RequirePackage[open,openlevel=4]{bookmark}
+
 \RequirePackage{cleveref}
 \Crefname{secinapp}{Appendix}{Appendices}
 \Crefname{thm}{Theorem}{Theorems}

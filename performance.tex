@@ -4,18 +4,19 @@
 
 Bilateral teleoperation problem is probably one of the most difficult problems in the control field due to its 
 subjective nature involving the human comfort and liking. However, to put it bluntly, the experts are not helping 
-either. In other words, most of the \enquote{good performance} motivations come from the first principle modeling
-but not from the users. 
+either. In other words, most of the \enquote{good performance} motivations come out of modeling first-principles 
+but not out of the user experience. 
 Some literature argue that since most of the tools we utilize are (almost-)lossless, say, a 
-screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system that 
-ideally behaves like a rigid transmission mechanism. In general, there is no established consensus on what makes 
-a teleoperation system \enquote{good}. Quite the contrary, this question is openly and unambiguously avoided in some 
-well-known articles. Instead some possibilities are proposed and rigorously pursued to the end without a rigorous
-performance validation. Therefore, the conclusions 
-that these studies arrive at are the implications of their initial hypotheses. However, the studies that follow these 
-publications do not take this crucial detail into account and proceed as if the performance objectives are 
-indeed the ultimate goals. We have to claim that the motivation of most of the studies given in the literature 
-erroneously put emphasis on performance objectives that are at best questionable. 
+screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system (though if we
+insist on this analogy a lossless system should be sought after) that ideally behaves like a rigid transmission mechanism. 
+In general, there is no established consensus on what makes a teleoperation system \enquote{good}. Quite the contrary, 
+this question is openly and unambiguously avoided in some well-acknowledged articles. Instead some possibilities are 
+proposed and rigorously pursued to the end without actually validating if these possibilities reflect our intention. 
+Therefore, the conclusions that these studies arrive at are the implications of their initial hypotheses. However, 
+the studies that follow these publications do not take this crucial detail into account and proceed as if these 
+performance objectives are indeed the ultimate goals. We have to claim that the motivation of most of the studies 
+given in the literature erroneously put emphasis on performance objectives that are at best suggestions and often 
+questionable. 
 
 On the other hand, there is a different school that focuses only on stability of the teleoperation system in the 
 face of human, environment, communication line, quantization and many more uncertainty/perturbation sources. 
@@ -26,7 +27,8 @@ indispensable performance objective and can not be overlooked. But it is also ve
 importantly, it is beyond the scope and expertise of control theory (though with certain overlap) to find the relevant 
 objectives. Other experts of the related fields need to contribute from a technological point of view in 
 contrast with a pure physiological point of view and, in fact,  should guide the control theorists and practitioners 
-towards the relevant issues. 
+towards the relevant issues. This lack of performance specifications is the main reason why we have left out a considerable 
+body of research out in our literature survey.
 
 We strongly believe that the contemporary bilateral teleoperation control results, including this thesis, 
 cannot and thus should not claim a comprehensive understanding of a good and useful bilateral teleoperation 
@@ -72,10 +74,11 @@ necessarily true, or better, it might hold only for some particular $K$'s. In ge
 this performance index. Moreover, it's not easy to search for such $K$. As we have observed in the literature, almost every transparency optimized
 control method selects the full performance first hence assuming the global minimizer and then tries to stabilize the system 
 in the face of those performance specifications. Obviously after adding dampers or other dissipative elements the system 
-is no longer a transparent teleoperation system. 
+is no longer a transparent teleoperation system and moreover we don't have a way to measure how much we are off from the 
+initial perfectly transparent system since we only know what is ideal. 
 
 On the other hand, we do not have a metric for how much we need to get close to the ideal matrix. Let us first quote three 
-very important questions posed by Lawrence in his well-known paper;
+very important questions posed by Lawrence in his well-known paper \cite{lawrence};
 \begin{displayquote}[{\cite{lawrence}}][.]
 In practice, perfectly transparent teleoperation will not be possible. So it makes sense to ask the following questions:
 \begin{itemize}
@@ -87,7 +90,7 @@ We focus on the second two questions in this paper. Instead of evaluating the pe
 as in [2], we seek to understand the fundamental limits of performance and design trade-offs of bilateral teleoperation in
 general, without the constraints of a preconceived architecture
 \end{displayquote}
-In \cite{lawrence}, Lawrence then invokes the passivity assumption and hence the passivity theorem is utilized to arrive at structural 
+Lawrence then invokes the passivity assumption and hence the passivity theorem is utilized to arrive at structural 
 properties of the controller $K$. Evidently, this allows for the back-substitution of the controller entries and solution
 for the ideal case. Then the resulting controller is denoted with \enquote{\emph{Transparency Optimized Controller}}. In 
 control theoretical terminology, this amounts to a cross-coupling control action where the bilateral dynamical differences
@@ -396,7 +399,7 @@ the hi-fi loudspeakers involve different dedicated components for different freq
 sub/woofers for the low frequency bands and occasionally mid-range speakers etc. with individual drivers. Even though different components are 
 utilized, the resulting harmony of these components leads to a very satisfactory listening experience if compared to generic single driver
 loudspeakers. Now, obviously somatosensory system already involves of such sensors which is reported to be responsible for different 
-frequency bands (see \Cref{chap:intro}). Hence, this already gives us a direct cue for separating the motion into different categories 
+frequency bands (see \Cref{chap:apdxphysio}). Hence, this already gives us a direct cue for separating the motion into different categories 
 in terms of the frequency/amplitude content. We do not have a working methodology yet however we would like to include our reasoning here
 for comparison. 
 

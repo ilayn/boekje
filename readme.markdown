@@ -26,5 +26,4 @@ accomplished. Do whatever you want, I will be happy to see the academic life rot
 -----
  
 Ilhan Polat
-
 April 2013
