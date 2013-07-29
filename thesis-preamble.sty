@@ -5,7 +5,7 @@
 % =========================FONTSPEC and FONTS ========================
 % ====================================================================
 \RequirePackage[sc,osf]{mathpazo}  % for math
-\RequirePackage{lmodern}            % for sensible sans and tt font
+%\RequirePackage{lmodern}            % for sensible sans and tt font
 %\RequirePackage{unicode-math}
 \RequirePackage{fontspec}
 \setmainfont[Ligatures=TeX,%
@@ -147,24 +147,20 @@
 
 
 \RequirePackage{
-    graphicx, %
-    amsmath,  %
+    fixltx2e,
+    mathtools,
     amssymb,  %
     amsthm,
-    tikz,     % Requires at least v2.10 !!
     bm,       %
-    pgfplots, % Requires at least v1.8 !!
     pgfplotstable,
-    mathtools,
     booktabs,
     colortbl,
     enumitem,
-    wrapfig,
+    %wrapfig,
     multirow,
     %kantlipsum % For dummy text generation
     rotating
 }
-
 
 \pgfplotsset{compat=1.8}
 
@@ -172,7 +168,7 @@
 %++++++++++++++++++++++++ siunitx +++++++++++++++++++++++++++++++++
 %==================================================================
 \RequirePackage{siunitx}
-\sisetup{mode = math,
+\sisetup{%mode = math,
          open-bracket={[},
          close-bracket={]},
          per-mode=symbol,
@@ -201,41 +197,32 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
 
 
 \usetikzlibrary{arrows,
-        calc,%
-		matrix,%
-		positioning,%
-		decorations.markings,%
-		patterns,
-		matrix,%
-        circuits.ee.IEC,
-		shapes.arrows,
-		shapes.geometric,
-		plotmarks,
-		decorations.pathmorphing,
-        spy
+                calc,%
+                matrix,%
+                positioning,%
+                decorations.markings,%
+                patterns,
+                matrix,%
+                circuits.ee.IEC,
+                shapes.arrows,
+                shapes.geometric,
+                plotmarks,
+                decorations.pathmorphing,
+                spy,
+                shadows
 		}
 \usepgfplotslibrary{
-        smithchart,
-        units,
-        groupplots
+                smithchart,
+                units,
+                groupplots
         }
 
 
 \RequirePackage{csquotes}
-%\MakeOuterQuote{''}
-
-
-
 \RequirePackage{caption}
 \captionsetup[table]{position=top}
 
 
-
-
-
-
-
-%
 %%% biblatex
 \RequirePackage[
     backend=biber,
@@ -252,7 +239,7 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
   ]{biblatex}
 
 
-\@ifpackageloaded{biblatex}{\addbibresource{phdthesis.bib}}{\bibliography{phdthesis}}
+\addbibresource{phdthesis.bib}
 
 \def\bibfont{\small}
 \AtEveryBibitem{%
@@ -303,57 +290,6 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
     
 %%% FIGURES
 \def\impath{images/}
-%\newcommand\grf[2][]{\includegraphics[#1]{\impath #2}}
-
-
-
-%%%%%%%%%%%%%
-%! FLOATS
-%\renewcommand{\topfraction}{.8}
-%\renewcommand{\bottomfraction}{.3}
-%\renewcommand{\textfraction}{.15}
-%\renewcommand{\floatpagefraction}{.66}
-%\renewcommand{\dbltopfraction}{.66}
-%\renewcommand{\dblfloatpagefraction}{.66}
-%\setcounter{topnumber}{9}
-%\setcounter{bottomnumber}{9}
-%\setcounter{totalnumber}{20}
-%\setcounter{dbltopnumber}{9}
-%
-%\renewenvironment{figure}[1][\fps@figure]
-                 %{\edef\@tempa{\noexpand\@float{figure}[#1]}
-                  %\@tempa\capstart\centering}
-                 %{\end@float}
-%\renewenvironment{table}[1][\fps@table]
-                 %{\edef\@tempa{\noexpand\@float{table}[#1]}
-                  %\@tempa\capstart\centering}
-                 %{\end@float}
-%
-
-%% Floats & captions
-%\captionnamefont{\scshape}
-%\setlength\captionwidth{0.9\linewidth}
-%\changecaptionwidth
-%
-%\newcommand\lofcaption[2]{\caption[#1]{#1#2}}
-%\DeclareRobustCommand\periodifnocomma{\@ifnextchar,{}{.}}
-
-%%%%%%%%%%%%
-% These are the varioref definitions:
-% \newcommand{\varioprefix}{See~}
-% \newcommand{\myvariohook}[1]{\marginpar{\small\centering \varioprefix #1}}
-% \def\reftextcurrent{}
-% \def\reftextfaceafter{}
-% \def\reftextfacebefore{}
-% \def\reftextafter{~on the \reftextvario{following}{next} page}
-% \def\reftextbefore{~on the \reftextvario{previous page}{preceding page}}
-% \def\reftextafter{}
-% \def\reftextbefore{}
-% \def\reftextfaraway#1{\myvariohook{p.\,\pageref{#1}}}
-% \def\reftextpagerange#1#2{\myvariohook{pp.\,\pageref{#1}--\pageref{#2}}}
-
-
-
 
 \RequirePackage{cleveref}
 \Crefname{secinapp}{Appendix}{Appendices}
@@ -364,17 +300,10 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
 \Crefname{coroll}{Corollary}{Corollaries}
 
 
-
-
-
 \renewcommand\cftchapterfont{\scshape}
 \renewcommand\cftsectionfont{\normalfont}
 \renewcommand\cftsubsectionfont{\itshape\small}
 \renewcommand\cftsubsectionpagefont{\upshape\small}
-
-
-
-
 
 
 %======== Thm style declaration
@@ -416,9 +345,9 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
 \renewcommand{\Re}[1]{\operatorname{Re}\left\{ #1 \right\}}
 \renewcommand{\Im}[1]{\operatorname{Im}\left\{ #1 \right\}}
     
-%==================================================
-% ==== A style definition used in some Tikz-picture
-%==================================================
+%===================================================
+% ==== Style definitions used in some Tikz-pictures
+%===================================================
 \tikzset{ssmatrix/.style={matrix of math nodes,
                         left delimiter={[},
                         right delimiter={]},

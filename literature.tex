@@ -73,7 +73,7 @@ and became a specialized area of research, specifically dealing with a particula
 a matter of unresolved debate, as we touch upon later in this chapter.
 
 We start to summarize the advances from this point as this thesis is precisely built on top these systematic 
-analysis and synthesis results gathered in the last two decades. However, the reader is refered to 
+analysis and synthesis results gathered in the last two decades. However, the reader is referred to 
 \cite{hokayemspong,burdea}, and \cite{sheridan89} for a more detailed overview including other practical 
 aspects of teleoperation analysis and the hardware developments with a more historical perspective which 
 will be omitted here. 
@@ -85,7 +85,7 @@ Hence, there is no shortage of techniques for which the bilateral teleoperation 
 test case. In this plethora of methods, for example, the variation of human and environment properties give 
 naturally rise to a robust or an adaptive control approach, the hard-contact problem can be analyzed by viewing it
 as switched control systems, jump control systems or constrained linear systems etc. Thanks to these advances, 
-as we elaborate, the main unsolved problem is not a methodolgical one but a motivational one. In
+as we elaborate, the main unsolved problem is not a methodological one but a motivational one. In
 other words we are lacking not the solution methods but rather a fundamental understanding of the problem in terms of 
 what the requirements are and what a good device is if compared to another. Let us sample a few important and 
 successful approaches reported so far together with their shortcomings if any. 
@@ -295,7 +295,8 @@ passive system:
 Thus, despite the fact that the
 limb is actively controlled by neuro-muscular feedback, its apparent stiffness is equivalent to that of a completely passive
 system. In the light of Colgate's recent proof [3]\footnote{Reference \cite{colgatehogan88} of this thesis. However exactness 
-of stability characterization for LTI intereconnections was already well-known even at the time of writing.} that an apparently 
+of stability characterization for LTI intereconnections was already well-known in SSV theory (e.g., \cite{packdoyle}) even at 
+the time of writing. Therefore it is a misattribution.} that an apparently 
 passive impedance is the necessary and sufficient condition for a stable actively-controlled system to remain stable on contact 
 with an arbitrary passive environment, this experimental result strongly suggests that neural feedback in the human arm is carefully 
 tuned to preserve stability under the widest possible set of conditions.
@@ -468,8 +469,7 @@ from the human arm with some particular pathological trajectory. Just in the cas
 operator does not imply stability, the conclusion is only valid for postural analysis at a fixed configuration of the human arm 
 but not for an arm trajectory. 
 
-\textbf{Therefore, it is our belief that the assumption of human arm being a passive system is not an experimentally validated one 
-for most teleoperation tasks.}
+\textbf{Therefore, it is our belief that the assumption of human arm being a passive system is incorrect for most teleoperation tasks.}
  
 
 
@@ -548,12 +548,24 @@ often found in the literature.
 In summary, the passivity of the human and the environment (or the virtual environment in haptics/virtual reality applications), is 
 only plausible in certain cases; then it should be verified regardless, in order to assume that the corresponding mathematical models 
 are passive. Still, analysis and synthesis methods that invoke this assumption lead to many real-world implementations 
-with varying degrees of realism. We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools
-and does not validate the passivity hypotheses on the respective models. Many frequency-domain methods, which assume LTI terminations
-at both ends of the teleoperation network, are reported to achieve stable bilateral interaction in real setups. While impressive,
-this shouldn't have been possible had the tests not been exceedingly conservative since the real setups involve hard-contacts and 
-time-varying systems. 
-
+with varying degrees of realism. An obvious follow-up question is \enquote{how can then the reported analysis and synthesis results
+based on this passivity assumption lead to successful implementations which would imply the validity of the assumption?}. We need to 
+focus on the \enquote{successful} part in order to answer this question. If we again scan through the literature these successful  
+implementations are only successful under strict assumptions about the user behavior together with any combination of the following
+device properties
+\begin{itemize}
+	\item The controller stabilizes the loop via excessive apparent damping hence either or both free air or hard contact realism is lost.
+    \item The bandwidth of the force and position tracking are exceedingly small.
+    \item The remote and local devices exhibit position drifts over time.
+    \item The performance of the device is time-varying and not uniform.
+\end{itemize}
+ 
+We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools and does not validate the 
+passivity hypotheses on the respective models. Many frequency-domain methods, which assume LTI terminations at both ends of the 
+teleoperation network, are reported to achieve stable bilateral interaction in real setups. While impressive, this shouldn't have 
+been possible had the tests not been exceedingly conservative since the real setups involve hard-contacts and time-varying systems. 
+Once again, we remind the reader that the proper metrics to gauge the success of teleoperations is not known and we use the typical
+error-norm based control design rationale. 
 
 A compact version of the argument above is given by Yokokohji and Yoshikawa in \cite{yokokohjiyoshikawa}: 
 \begin{quote}

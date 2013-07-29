@@ -1029,7 +1029,7 @@ define a few motion profiles.
                        contact to free air scenario is tested.
 \end{description}
 
-The experiments are performed with the same device at one shot with an arbitrary combination of motion profiles listed above. Due to the
+The experiments are performed with the same device with an arbitrary combination of motion profiles listed above. Due to the
 proximity switches, the workspace is limited to $\approx \SIrange{-35}{35}{\degree}$ where \SI{0}{\degree} denotes the horizontal 
 configuration of the device handle. Hence, the contact slide motion is done rather carefully as we needed to stop before the device trips
 the switch which in turn stops the data streaming. Moreover, there are also hard-coded rate limiters for safe operation such that if the 
@@ -1044,24 +1044,53 @@ the robustness against time-variations, the contact tapping profile is carried o
 It should be noted that none of the controllers have been designed to cope with completely rigid objects. In other words, we did not 
 incorporate the unilateral constraint case (rigid contact) into account. Not only we lack the proper framework with adequate flexibility to handle such 
 cases with performance specifications\footnote{Contrary to the claims that can be found elsewhere in the constrained non/linear system 
-literature}, it is also an unrealistic goal at the outset. As we will show the problem is not essentially a state-constraint problem but 
-rather the inherent stiffness modes of the devices that are excited in the rigid contact case. 
+literature. The immediate difficulty is detecting the contact/no contact cases. It is theoretically naive to argue that we can satisfactorily 
+utilize constraint detections on a real system.}, it is also an unrealistic goal at the outset. As we will show the problem is not essentially a state-constraint problem but 
+rather the inherent stiffness modes of the devices that are excited in the rigid contact case. Nevertheless the controllers exhibit satisfactory 
+robustness properties with surprisingly rigid contact rendering performance contingent upon operator behavior.  
 
-\subsection{Full Experiment Motion}
+\subsection{Description of the Experiments}
 
-In each controller test, a right-handed male operator tried out the different scenarios listed above in about $1$-$2$ minute. The resulting overall
-datastream is shown in \Cref{fig:app:design1overall,fig:app:design2overall,fig:app:design3overall}. One can 
+In each controller test, a right-handed male operator\footnote{More properly, the author himself though still using the third person narrative.} 
+tried out the different scenarios listed above in about \SIrange12\minute. The resulting overall datastream is shown in \Cref{fig:app:design1overall,fig:app:design2overall,%
+fig:app:design3overall}. Due to the lower stiffness coeeficient, the soft contact cases can be seen around \SI{20}{\degree} with more 
+compression stroke length and hard contact cases take place around \SI{5}{\degree}. The rigid contact is designed to meet with the obstacle 
+such that the device position reading is around \SI{0}{\degree}. Lastly, in the soft contact cases it is possible to fully compress the soft 
+spring and hit the rigid aliuminum spring holder visible in \Cref{fig:app:onedof}.
+
+
+
+\subsection{Comparison Of Controllers Based On Different Contact Profiles}
+
+\subsubsection{Free air}
+
+The free air performance of the controllers are given in \Cref{fig:app:design1freeair,fig:app:design2freeair,fig:app:design3freeair}. As seen from these
+plots we obtain good position tracking precision. The zoomed parts show that as the bandwidth increases (which is provided manually as fast as the operator
+is able to shake the handle) a slight loss of performance is recorded. The differences between three controllers are quite small, e.g., Design 2 achieves 
+\ang{0.15} better tracking in the high bandwidth area then Designs 1 and 3. Therefore we conclude that free-air performance is very good. This simply shows 
+that the nominal stability and nominal performance is not drastically affected by the robustness concerns in the design optimization. 
+
+Free-air performance of passivity based controllers and simple PD based Position-Force controllers often suffers from the phenomenon which we will denote 
+here with \enquote{dragging}. This happens when the same controller tries to follow both objectives at once; 
+
+\subsubsection{Soft Contact}
+
+The 
+
+\subsubsection{Hard contact}
+Hard contact is also good. Yay! And a long sentence to make a line break to avoid \LaTeX warnings. Always fun to generate this bullshit. 
+
+\newpage
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld2.dat};
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld2.dat};
+	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
     \end{axis}
-%\draw[-stealth] node[append after command={(a) -- (2,3.5)}] (a) at (-1,3) {Free Air};
 \end{tikzpicture}
-\caption{Design 1 with arbitrary fast varying stiffness parameters and fixed mass and damping coefficient.}%
+\caption{Design 1 experiment : real-time encoder reading}%
 \label{fig:app:design1overall}%
 \end{figure}
 
@@ -1069,130 +1098,430 @@ datastream is shown in \Cref{fig:app:design1overall,fig:app:design2overall,fig:a
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld1.dat};
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld1.dat};
+	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld1.dat};\addlegendentry{Local Device} 
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
     \end{axis}
-%\draw[-stealth] node[append after command={(a) -- (2,3.5)}] (a) at (-1,3) {Free Air};
 \end{tikzpicture}
-\caption{Design 2 with slowly varying human model stiffness parameter and fixed mass and damping coefficient.}%
+\caption{Design 2 experiment : real-time encoder reading}%
 \label{fig:app:design2overall}%
 \end{figure}
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld0.dat};
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld0.dat};
+	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld0.dat};\addlegendentry{Local Device} 
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
     \end{axis}
-%\draw[-stealth] node[append after command={(a) -- (2,3.5)}] (a) at (-1,3) {Free Air};
 \end{tikzpicture}
-\caption{Design 3 with slowly varying human model parameters.}%
+\caption{Design 3 experiment : real-time encoder reading}%
 \label{fig:app:design3overall}%
 \end{figure}
 
-due to the fact that a rigid contact with a relatively tighter grip clamps the device. 
+
+%%%%%%%%%%%%%%%%%%%%% FIND ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Too many unprocessed floats!!
+\clearpage
 
 
 
-
-\begin{sidewaysfigure}
+\begin{figure}%
 \centering
-\begin{tikzpicture}
-\begin{groupplot}[
-    enlarge y limits,
-    no markers,
-    group style={
-      {group size=4 by 2},
-      yticklabels at=edge left,
-      xticklabels at=edge bottom
-    },
-    height=4cm,
-    width=0.25\textheight,
-    %ymode=log,
-    xmode=log,
-    xmax=9500,
-    xmin=0.005,
-    ymin=0.5,
-    grid=major,
-    cycle list name=linestyles*
-    %legend entries={{$d=0$},{$d=1$},{$d=1$}}
-]
-    \pgfplotsforeachungrouped \xind in {1,2}{
-    \xdef\myx{\xind}
-        \pgfplotsforeachungrouped \yind in {1,...,4}{
-        \xdef\myxy{\myx\yind}
-            \nextgroupplot
-            \pgfplotsforeachungrouped\z in {0,...,2}{
-                \begingroup\xdef\temp{\endgroup\noexpand\addplot+[] table[x=f,y expr={20*log10(\noexpand\thisrow{k\myxy})}] {plotdata/krobd\z.dat};}\temp%
+\begin{tikzpicture}[spy using overlays/.style={
+    spy scope={#1,
+         every spy on node/.style={inner sep=0,
+            minimum height=5cm,minimum width=2cm,
+            fill, fill opacity=0.5, text opacity=1,gray!30
+             },
+         every spy in node/.style={
+                 minimum height=3cm,minimum width=1.5cm,,drop shadow,
+                 fill=white, draw, ultra thick
             }
         }
     }
-    \end{groupplot}
+,spy using overlays={magnification=5, size=1.5cm, connect spies}]
+\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird2.dat};\addlegendentry{Remote Device}
+        \coordinate (f) at (axis cs:22.8,9.3);
+        \coordinate (f2) at (axis cs:18.2,1);
+    \end{axis}
+    \spy [gray] on (f) in node[right] (a) at ([shift={(0.5cm,7mm)}]current axis.east);
+    \spy [gray] on (f2) in node[anchor=west] at ([shift={(5mm,-12mm)}]a.east);
 \end{tikzpicture}
-\caption{The frequency domain data of the controllers designed for fixed human mass parameter. Solid: $C_1$, dashed: $C_2$, dash-dotted: $C_3$}%
-\label{fig:app:contredmass}%
-\end{sidewaysfigure}
+\caption{Design 1 experiment detail: Free-air section}%
+\label{fig:app:design1freeair}%
+\end{figure}
 
 
-%
-\begin{sidewaysfigure}
+\begin{figure}%
 \centering
-\begin{tikzpicture}
-\begin{groupplot}[
-    no markers,
-    group style={
-      {group size=4 by 2},
-      yticklabels at=edge left,
-      xticklabels at=edge bottom
-    },
-    height=5cm,
-    width=0.25\textwidth,
-    ymode=log,
-    xmode=log,
-    xmax=1000,
-    grid=both,
-    cycle list name=linestyles*
-]
-    \pgfplotsforeachungrouped \xind in {1,2}{
-    \xdef\myx{\xind}
-        \pgfplotsforeachungrouped\yind in {1,...,4}{
-        \xdef\myxy{\myx\yind}
-        \nextgroupplot
-            \pgfplotsforeachungrouped\z in {1500,3600,6500,8100,10000}{
-            \begingroup\edef\temp{\endgroup\noexpand\addplot+[] table[x=f,y=k\myxy] {plotdata/krobd111g\z.dat};}\temp%
+\begin{tikzpicture}[spy using overlays/.style={
+    spy scope={#1,
+         every spy on node/.style={inner sep=0,
+            minimum height=5cm,minimum width=2cm,
+            fill, fill opacity=0.5, text opacity=1,gray!30
+             },
+         every spy in node/.style={
+                 minimum height=3cm,minimum width=1.5cm,,drop shadow,
+                 fill=white, draw, ultra thick
             }
         }
     }
-    \end{groupplot}
+,spy using overlays={magnification=5, size=1.5cm, connect spies}]
+\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird1.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird1.dat};\addlegendentry{Remote Device}
+        \coordinate (f) at (axis cs:16.5,5);
+        \coordinate (f2) at (axis cs:25.5,3);
+    \end{axis}
+    \spy [gray] on (f) in node[right] (a) at ([shift={(0.5cm,1cm)}]current axis.east);
+    \spy [gray] on (f2) in node[anchor=west] at ([shift={(5mm,-15mm)}]a.east);
 \end{tikzpicture}
-\caption{The designed controller $C_3$ frequency domain data as the uncertainty size $r$ increases. Solid: $r=0.80$, dashed: $r=0.815$, dash-dotted: $r=0.84$,dash-dot-dotted: $r=0.8425$}%
-\label{fig:app:incr}%
-\end{sidewaysfigure}
+\caption{Design 2 experiment detail: Free-air section}%
+\label{fig:app:design2freeair}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[spy using overlays/.style={
+    spy scope={#1,
+         every spy on node/.style={inner sep=0,
+            minimum height=5cm,minimum width=2cm,
+            fill, fill opacity=0.5, text opacity=1,gray!30
+             },
+         every spy in node/.style={
+                 minimum height=3cm,minimum width=1.5cm,,drop shadow,
+                 fill=white, draw, ultra thick
+            }
+        }
+    }
+,spy using overlays={magnification=5, size=1.5cm, connect spies}]
+\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird0.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird0.dat};\addlegendentry{Remote Device}
+        \coordinate (f) at (axis cs:37.5,-0.7);
+        \coordinate (f2) at (axis cs:30,-4);
+    \end{axis}
+    \spy [gray] on (f) in node[right] (a) at ([shift={(0.2cm,0.7cm)}]current axis.east);
+    \spy [gray] on (f2) in node[anchor=west] at ([shift={(2mm,-12mm)}]a.east);
+\end{tikzpicture}
+\caption{Design 3 experiment detail: Free-air section}%
+\label{fig:app:design3freeair}%
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%% FIND ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Too many unprocessed floats!!
+\clearpage
+
+
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-	\begin{loglogaxis}[
-	%enlargelimits=false,
-	grid=both,
-	width=0.6\textwidth,height=3cm,
-	xmin=0.01,xmax=4e4,
-	yticklabel={\pgfmathprintnumber[fixed]{\tick}},
-	xlabel= Frequency,
-	ylabel= Magnitude,
-	x unit=\si{\radian\per\second},
-	y unit=\si{\decibel},
-	log basis y=10,
-  yticklabel={\pgfmathparse{20*(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
-	]
-		\addplot[red,thick] table[x=freq,y=ks1] {plotdata/caseoneksigma.txt};
-		\addplot[blue,dashed] table[x=freq,y=ks2] {plotdata/caseoneksigma.txt};
-	\end{loglogaxis}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd2.dat};\addlegendentry{Remote Device}
+    \end{axis}
 \end{tikzpicture}
-\caption{The maximum and minimum singular values of the controller for the first design case with constant multipliers.}%
-\label{fig:app:ksigma1}%
+\caption{Design 1 experiment detail: Soft contact section}%
+\label{fig:app:design1soft}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd1.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd1.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 2 experiment detail: Soft contact section}%
+\label{fig:app:design2soft}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd0.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd0.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 3 experiment detail: Soft contact section}%
+\label{fig:app:design3soft}%
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%% FIND ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Too many unprocessed floats!!
+\clearpage
+
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd2.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 1 experiment detail: hard contact section}%
+\label{fig:app:design1hard}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd1.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd1.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 2 experiment detail: hard contact section}%
+\label{fig:app:design2hard}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd0.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd0.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 3 experiment detail: hard contact section}%
+\label{fig:app:design3hard}%
 \end{figure}
 
 
+%%%%%%%%%%%%%%%%%%%%% FIND ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Too many unprocessed floats!!
+\clearpage
+
+
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd2.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 1 experiment detail: rigid contact section}%
+\label{fig:app:design1rigid}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 2 experiment detail: rigid contact section}%
+\label{fig:app:design2rigid}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd0.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd0.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 3 experiment detail: rigid contact section}%
+\label{fig:app:design3rigid}%
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%% FIND ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Too many unprocessed floats!!
+\clearpage
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 1 experiment: Measured Human and Environment Forces}%
+\label{fig:app:design1forceoverall}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld1.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 2 experiment: Measured Human and Environment Forces}%
+\label{fig:app:design2forceoverall}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld0.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 3 experiment: Measured Human and Environment Forces}%
+\label{fig:app:design3forceoverall}%
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%% FIND ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Too many unprocessed floats!!
+\clearpage
+
+
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 1 experiment: Actuator Input}%
+\label{fig:app:design1actoverall}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld1.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 2 experiment: Actuator Input}%
+\label{fig:app:design2actoverall}%
+\end{figure}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+        \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld0.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 3 experiment: Actuator Input}%
+\label{fig:app:design3actoverall}%
+\end{figure}
+
+
+%\begin{sidewaysfigure}
+%\centering
+%\begin{tikzpicture}
+%\begin{groupplot}[
+    %enlarge y limits,
+    %no markers,
+    %group style={
+      %{group size=4 by 2},
+      %yticklabels at=edge left,
+      %xticklabels at=edge bottom
+    %},
+    %height=4cm,
+    %width=0.25\textheight,
+    %%ymode=log,
+    %xmode=log,
+    %xmax=9500,
+    %xmin=0.005,
+    %ymin=0.5,
+    %grid=major,
+    %cycle list name=linestyles*
+    %%legend entries={{$d=0$},{$d=1$},{$d=1$}}
+%]
+    %\pgfplotsforeachungrouped \xind in {1,2}{
+    %\xdef\myx{\xind}
+        %\pgfplotsforeachungrouped \yind in {1,...,4}{
+        %\xdef\myxy{\myx\yind}
+            %\nextgroupplot
+            %\pgfplotsforeachungrouped\z in {0,...,2}{
+                %\begingroup\xdef\temp{\endgroup\noexpand\addplot+[] table[x=f,y expr={20*log10(\noexpand\thisrow{k\myxy})}] {plotdata/krobd\z.dat};}\temp%
+            %}
+        %}
+    %}
+    %\end{groupplot}
+%\end{tikzpicture}
+%\caption{The frequency domain data of the controllers designed for fixed human mass parameter. Solid: $C_1$, dashed: $C_2$, dash-dotted: $C_3$}%
+%\label{fig:app:contredmass}%
+%\end{sidewaysfigure}
+%
+%
+%%
+%\begin{sidewaysfigure}
+%\centering
+%\begin{tikzpicture}
+%\begin{groupplot}[
+    %no markers,
+    %group style={
+      %{group size=4 by 2},
+      %yticklabels at=edge left,
+      %xticklabels at=edge bottom
+    %},
+    %height=5cm,
+    %width=0.25\textwidth,
+    %ymode=log,
+    %xmode=log,
+    %xmax=1000,
+    %grid=both,
+    %cycle list name=linestyles*
+%]
+    %\pgfplotsforeachungrouped \xind in {1,2}{
+    %\xdef\myx{\xind}
+        %\pgfplotsforeachungrouped\yind in {1,...,4}{
+        %\xdef\myxy{\myx\yind}
+        %\nextgroupplot
+            %\pgfplotsforeachungrouped\z in {1500,3600,6500,8100,10000}{
+            %\begingroup\edef\temp{\endgroup\noexpand\addplot+[] table[x=f,y=k\myxy] {plotdata/krobd111g\z.dat};}\temp%
+            %}
+        %}
+    %}
+    %\end{groupplot}
+%\end{tikzpicture}
+%\caption{The designed controller $C_3$ frequency domain data as the uncertainty size $r$ increases. Solid: $r=0.80$, dashed: $r=0.815$, dash-dotted: $r=0.84$,dash-dot-dotted: $r=0.8425$}%
+%\label{fig:app:incr}%
+%\end{sidewaysfigure}
+%
+%\begin{figure}%
+%\centering
+%\begin{tikzpicture}
+	%\begin{loglogaxis}[
+	%%enlargelimits=false,
+	%grid=both,
+	%width=0.6\textwidth,height=3cm,
+	%xmin=0.01,xmax=4e4,
+	%yticklabel={\pgfmathprintnumber[fixed]{\tick}},
+	%xlabel= Frequency,
+	%ylabel= Magnitude,
+	%x unit=\si{\radian\per\second},
+	%y unit=\si{\decibel},
+	%log basis y=10,
+  %yticklabel={\pgfmathparse{20*(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
+	%]
+		%\addplot[red,thick] table[x=freq,y=ks1] {plotdata/caseoneksigma.txt};
+		%\addplot[blue,dashed] table[x=freq,y=ks2] {plotdata/caseoneksigma.txt};
+	%\end{loglogaxis}
+%\end{tikzpicture}
+%\caption{The maximum and minimum singular values of the controller for the first design case with constant multipliers.}%
+%\label{fig:app:ksigma1}%
+%\end{figure}
+%
+%
