@@ -347,6 +347,16 @@ to the physiology literature e.g., \cite{spudich,millman,offer,horowits,yildiz,g
 treatment. Hence, we will only give a rough picture about the apparent behavior. Nevertheless the point that we want 
 to emphasize is, fortunately, not related to the inner workings of the human muscles.
 
+%
+%
+%\makeatletter
+%\pgfdeclareplotmark{o*}
+%{%
+%\pgfcoordinate{tpt-\the\pgf@plot@mark@count}{\pgfpointorigin}
+  %\pgfpathcircle{\pgfpointorigin}{\pgfplotmarksize}
+  %\pgfusepathqfillstroke
+%}
+%\makeatother
 
 \begin{figure}%
 \centering%
@@ -354,8 +364,8 @@ to emphasize is, fortunately, not related to the inner workings of the human mus
 \begin{scope}
 \begin{scope}
 \begin{scope}[rotate=90]
-\draw[domain=0.6*pi/3:6.5*pi/3,
-samples=50,draw=none,
+\path[domain=0.6*pi/3:6.5*pi/3,
+samples=50,
 mark=o*,
 mark size=2mm,
 mark options={fill=white},
@@ -428,6 +438,7 @@ mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] 
 \caption[Muscle activation mechanism]{Muscle activation mechanism (adapted from \cite{geeves})}%
 \label{fig:lit:muscle}%
 \end{figure}
+
 
 
 The skeletal muscle activation takes place via a process described by the \emph{sliding filaments model}. The muscles 

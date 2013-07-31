@@ -1043,9 +1043,7 @@ the robustness against time-variations, the contact tapping profile is carried o
 
 It should be noted that none of the controllers have been designed to cope with completely rigid objects. In other words, we did not 
 incorporate the unilateral constraint case (rigid contact) into account. Not only we lack the proper framework with adequate flexibility to handle such 
-cases with performance specifications\footnote{Contrary to the claims that can be found elsewhere in the constrained non/linear system 
-literature. The immediate difficulty is detecting the contact/no contact cases. It is theoretically naive to argue that we can satisfactorily 
-utilize constraint detections on a real system.}, it is also an unrealistic goal at the outset. As we will show the problem is not essentially a state-constraint problem but 
+cases with performance specifications, it is also an unrealistic goal at the outset. As we will show the problem is not essentially a state-constraint problem but 
 rather the inherent stiffness modes of the devices that are excited in the rigid contact case. Nevertheless the controllers exhibit satisfactory 
 robustness properties with surprisingly rigid contact rendering performance contingent upon operator behavior.  
 
@@ -1071,14 +1069,93 @@ is able to shake the handle) a slight loss of performance is recorded. The diffe
 that the nominal stability and nominal performance is not drastically affected by the robustness concerns in the design optimization. 
 
 Free-air performance of passivity based controllers and simple PD based Position-Force controllers often suffers from the phenomenon which we will denote 
-here with \enquote{dragging}. This happens when the same controller tries to follow both objectives at once; 
+here with \enquote{dragging}. This happens when the same controller tries to follow both objectives at once with the same controller only penalizing the 
+difference of the positions and forces separately or in the passivity case only allowing the motion when it is safe to move in terms of energy input. 
+To put the reason why a MIMO controller avoids this problem into context,  consider \Cref{fig:app:design1forceoverall,fig:app:design1freeair}. We can 
+see that the measured human force and environment forces are different since the remote device is in free-air and the human is actually applying force 
+on the local device. The environment force recording is relatively smaller but nonzero due to the inertia and the friction of the remote device. 
+
+It should be noted that even the human is applying a nonnegligible force profile, the controllers are in fact trying to close this force mismatch 
+via applying a torque along the human motion i.e. acting like a friction compensator thus reducing the difference $f_h-f_l$. Similarly in the remote 
+device the difference is increased via $f_e-f_l$ via tracking closely the local force vector. These combined leads to the very good position tracking
+and as a bonus we don't need a precise force tracking until the positions of the devices are constrained or distorted which is presented below.
+
+
 
 \subsubsection{Soft Contact}
 
-The 
+The soft contact measurements are given in \Cref{fig:app:design1soft,fig:app:design2soft,fig:app:design3soft}. In the $C_1$ and $C_2$ cases, 
+we can see that the handle is taken too far and after the full compression we hit 
+the rigid column which the spring is mounted on. Notice that the rigid contact is
+completely stable for both cases however this is due to the existence of the spring 
+as we will present the rigid contact performance later for $C_1$. For $C_2$ this 
+performance is consistent. Regarding the force feeling, the three designed controllers
+exhibit realistic replication of the remote spring stiffness. An informal survey among 
+a dozen experimenters also confirmed this subjective result. 
+
+One can see that the tracking property of $C_2$ superior to the other two though the
+difference is very small. Additionally, due to the increased robustness, $C_3$ starts
+exhibiting some loss of performance (see \Cref{fig:app:design3soft}, starting from 56 secs.)
 
 \subsubsection{Hard contact}
-Hard contact is also good. Yay! And a long sentence to make a line break to avoid \LaTeX warnings. Always fun to generate this bullshit. 
+
+The hard contact measurements are given in \Cref{fig:app:design1hard,fig:app:design2hard,fig:app:design3hard}. In this case
+the immediate difference compared to the previous cases is that $C_3$ starts to render the hard spring softer hence the increase in
+displacement around \ang{-6} in \Cref{fig:app:design3hard}. Moreover, to be able to show the reduced conservatism around 
+\SIrange{70}{74}{\second} we have performed some contact tapping and performance is visibly worsened. However, $C_1$ and $C_2$ 
+still gives a very good force response and position tracking at the same time. 
+
+\subsubsection{Rigid contact}
+
+The rigid contact measurements are given in \Cref{fig:app:design1rigid,fig:app:design2rigid,fig:app:design3rigid}. As none 
+of the controller has a guaranteed robustness properties for this type of interaction, we would like to see to what extent the
+controllers can push performance without driving the system to instability. 
+
+In fact, numerically, there is a mild and indirect robustness constraint imposed. Note that, when we model the uncertainty and 
+include the maximum values of the springs, the numbers are quite high compared to the state space entries of the system. For example
+if we design a controller in the face of a spring with maximum admissible stiffness coefficient \SI{10}{\kilo\newton\per\meter} the
+model is surely dominated with such numbers. Therefore, though it is not guaranteed, the numerical algorithm is somehow forced to 
+include some robustness around this comparatively huge number. Consequently, after a threshold value the uncertainty limit 
+$2\cdot 10^5$ is qualitatively not that different than $1\cdot 10^6$ in terms of robustness properties. Hence, it is not completely
+true that there is no robustness constraint imposed on the system. 
+
+This is shown by the rigid contact responses. Again, increased uncertainty set size, forces $C_3$ both be more robust with less
+performance and at the same time the robustness margin is comparatively smaller. By the loss of performance, the remote device 
+introduces oscillations during contact and they are not handled successfully if the user has a light grip on the local device handle.
+As seen around \SI{84}{\second} and at the end the device show temporarily an oscillatory behavior. In the end of the motion, $C_3$ 
+additionally trips the drive. Another evidence for such robustness increase/performance decrease can be found on the actuator output
+plots \Cref{fig:app:design1actoverall,fig:app:design2actoverall,fig:app:design3actoverall}. Clearly, $C_3$ is less aggressive than 
+the other controllers and thus has less stabilizing capabilities in the region where robustness is not guaranteed. 
+
+It is quite the contrary for $C_1$ and $C_2$, the rigid contact performance is quite satisfactory. We can distinguish the effect of 
+taking the time varying uncertainty variation bound into account as $C_1$ shows superior performance even with a few contact sliding
+motion after pressing down the rigid block. Moreover towards the end we can see the contact tapping responses.  
+
+
+Although not visible in the plots, $C_1$,$C_2$ suffers from an effect due to the assumptions we have made about the human mass coefficient.
+It is sometimes possible to find a very light touch pattern during rigid contact such that the controller overreacts and a pseudo-limit
+cycle is triggered though it is difficult to maintain without letting it decay. This is partially due to the fact that controller gains 
+are tuned for continous contact but the the human touches just enough to register a nonnegligable force on the sensor without actually
+engaging the hand dynamics with the local device handle. This produces a small kickback since the controller expects some inertial 
+resistance but absence of it causes a rapid overreaction/correction motion.
+
+We should emphasize that this is not an essential limitation of the algorithm and by adjusting the performance weights or using the 
+full model of the system it can be avoided. However, we are under the impression that even with this model the obtained results are 
+very promising. 
+
+It is much to our surprise that the contact rendering of $C_2$ is almost flawless especially, when the user comes down with relatively 
+higher velocity on to the contact\footnote{As the reader might notice, we have realized later that the immersion levels tend to fool 
+the users use phrases as if there is an actual hammering action taking place.} 
+
+
+ 
+
+
+
+
+
+
+
 
 \newpage
 
@@ -1348,36 +1425,36 @@ Hard contact is also good. Yay! And a long sentence to make a line break to avoi
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
         \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld2.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption{Design 1 experiment: Measured Human and Environment Forces}%
+\caption{Design 1 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft}%
 \label{fig:app:design1forceoverall}%
 \end{figure}
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
         \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld1.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption{Design 2 experiment: Measured Human and Environment Forces}%
+\caption{Design 2 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft}%
 \label{fig:app:design2forceoverall}%
 \end{figure}
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
         \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld0.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption{Design 3 experiment: Measured Human and Environment Forces}%
+\caption{Design 3 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft}%
 \label{fig:app:design3forceoverall}%
 \end{figure}
 
@@ -1392,36 +1469,36 @@ Hard contact is also good. Yay! And a long sentence to make a line break to avoi
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
         \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld2.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption{Design 1 experiment: Actuator Input}%
+\caption{Design 1 experiment: Actuator Input Torque}%
 \label{fig:app:design1actoverall}%
 \end{figure}
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
         \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld1.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption{Design 2 experiment: Actuator Input}%
+\caption{Design 2 experiment: Actuator Input Torque}%
 \label{fig:app:design2actoverall}%
 \end{figure}
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
         \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld0.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption{Design 3 experiment: Actuator Input}%
+\caption{Design 3 experiment: Actuator Input Torque}%
 \label{fig:app:design3actoverall}%
 \end{figure}
 

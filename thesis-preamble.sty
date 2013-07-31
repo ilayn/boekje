@@ -156,9 +156,7 @@
     booktabs,
     colortbl,
     enumitem,
-    %wrapfig,
     multirow,
-    %kantlipsum % For dummy text generation
     rotating
 }
 
@@ -197,19 +195,19 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
 
 
 \usetikzlibrary{arrows,
-                calc,%
-                matrix,%
-                positioning,%
-                decorations.markings,%
+                calc,
+                matrix,
+                positioning,
+                decorations.markings,
+                decorations.pathmorphing,
                 patterns,
-                matrix,%
+                matrix,
                 circuits.ee.IEC,
                 shapes.arrows,
                 shapes.geometric,
-                plotmarks,
-                decorations.pathmorphing,
                 spy,
-                shadows
+                shadows,
+                plotmarks,                
 		}
 \usepgfplotslibrary{
                 smithchart,
@@ -371,7 +369,7 @@ dup
 dup
 }
 
-
+\makeatletter
 \pgfdeclareplotmark{o*}
 {%
 \pgfcoordinate{tpt-\the\pgf@plot@mark@count}{\pgfpointorigin}
@@ -401,7 +399,3 @@ dup
   \pgfusepathqfillstroke
 }
 \pgfarrowsdeclarereversed{DIN reversed}{DIN reversed}{DIN}{DIN}
-
-
-
-
