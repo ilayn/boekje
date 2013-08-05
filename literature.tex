@@ -199,8 +199,8 @@ potentially unstable behavior. The motivation relies on the fact that in order t
 unstable one, the system should exhibit unstable behavior at its port(s) and to exhibit such behavior 
 additional energy is needed. Hence if all the components are incapable of contributing energy in the loop, 
 finite energy excitations will eventually decay and the system would reach its steady state after a transient 
-response\footnote{For the sake of brevity, marginal stability or limit cycle concepts are left out at this 
-point.}. As one can directly identify, this is simply the rough sketch of the celebrated passivity theorem. 
+response\footnote{For the sake of brevity, marginal stability or limit cycles also require extra energy for 
+the sustain.}. As one can directly identify, this is simply the rough sketch of the celebrated passivity theorem. 
 Based on this argument, there is a recurring theme in the literature that a teleoperation system should be 
 passive in order to have a stable interconnection. This is due to the hypothesis that end terminations are 
 also passive. However, in a few studies, this is mistakenly taken as a sufficient and necessary condition 
@@ -287,7 +287,8 @@ Additionally, as summarized in \Cref{chap:apdxnetwork} and in \Cref{chap:analysi
 network theory based conditions to assess the stability and performance conditions thanks to this hypothesis.
 
 This brings us to the discussion of the justification of the assumption as it is generally not given in full generality in the
-literature. If one scans through the literature about the passivity of human operators, it is the Hogan's paper \cite{hogan89}
+literature. Is it indeed calid to assume that the human can be modeled as a passive system? If one scans through the literature 
+about the passivity of human operators, it is the Hogan's paper \cite{hogan89}
 that is almost universally cited. The striking detail is, however, that Hogan never claims that the human hand/arm is a passive
 system. Instead he clearly shows that under very specific conditions, human behavior is indistinguishable from that of a 
 passive system: 
@@ -295,8 +296,8 @@ passive system:
 Thus, despite the fact that the
 limb is actively controlled by neuro-muscular feedback, its apparent stiffness is equivalent to that of a completely passive
 system. In the light of Colgate's recent proof [3]\footnote{Reference \cite{colgatehogan88} of this thesis. However exactness 
-of stability characterization for LTI intereconnections was already well-known in SSV theory (e.g., \cite{packdoyle}) even at 
-the time of writing. Therefore it is a misattribution.} that an apparently 
+of stability characterization for two LTI passive complex uncertainty blocks was already well-known in SSV theory (e.g., \cite{packdoyle}) 
+and also in the classical network theory works at the time of writing. Therefore it is a misattribution.} that an apparently 
 passive impedance is the necessary and sufficient condition for a stable actively-controlled system to remain stable on contact 
 with an arbitrary passive environment, this experimental result strongly suggests that neural feedback in the human arm is carefully 
 tuned to preserve stability under the widest possible set of conditions.
@@ -327,7 +328,8 @@ had returned to steady state following the perturbation but before
 the onset of voluntary intervention by the subjects.
 \end{quote}
 Therefore, it is emphasized that only the involuntary response is taken into account during the measurements in order to
-capture the natural properties of the human arm before the human correction intervenes. 
+capture the natural properties of the human arm before the human correction intervenes. In fact, due to this crucial distinction
+the results such as \cite{dyck2013} don't disprove Hogan's results since the voluntary input is included in the model. 
 %Note that, this does not imply that the
 %measurements treat the human arm as a bulk of flesh which might only be possible in case of an improbable amputation.
 %In fact, in this setting, it is evident from the human restoring force that the arm muscles are preloaded and the arm is 
@@ -341,7 +343,7 @@ capture the natural properties of the human arm before the human correction inte
 We believe that it is unaviodable to introduce some concepts from the muscle physiology in order to put Hogan's 
 argument into some mechanical engineering perspective. It is simply impossible for us to give a detailed analysis, 
 however, mentioning the involved process via some mechanical analogies in order to relate the results of 
-Hogan and Mussa-Ivaldi seems feasible. This would emphasize the reason why we think that the common inference 
+Hogan and Mussa-Ivaldi (\cite{mussa85}) seems feasible. This would emphasize the reason why we think that the common inference 
 from their experiments in the literature is not inline with the conclusions of these studies. We refer the reader 
 to the physiology literature e.g., \cite{spudich,millman,offer,horowits,yildiz,geeves} and references therein for a full 
 treatment. Hence, we will only give a rough picture about the apparent behavior. Nevertheless the point that we want 
@@ -488,7 +490,8 @@ Since it is customary in the literature to include the passivity hypothesis, let
 The question of how, then, a human can possibly move anything while remaining passive is one that makes the whole story even more 
 complicated. The voluntary input of the human is taken as an exogenous and state independent input to the system. Hence, the human 
 cognitive input is an additional but independent force source acting on the handle together with the passive human arm immitance 
-as depicted in \Cref{fig:lit:stateindep}.
+as depicted in \Cref{fig:lit:stateindep}. In other words, the contribution of the exogenous force and the arm dynamics are assumed 
+to remain mutually exclusive. 
 
 \begin{figure}%
 \centering
@@ -574,9 +577,10 @@ device properties
 We argue that the success of these methods is due to the conservatism of the analysis/synthesis tools and does not validate the 
 passivity hypotheses on the respective models. Many frequency-domain methods, which assume LTI terminations at both ends of the 
 teleoperation network, are reported to achieve stable bilateral interaction in real setups. While impressive, this shouldn't have 
-been possible had the tests not been exceedingly conservative since the real setups involve hard-contacts and time-varying systems. 
-Once again, we remind the reader that the proper metrics to gauge the success of teleoperations is not known and we use the typical
-error-norm based control design rationale. 
+been possible had the tests not been exceedingly conservative since the real setups involve sudden contacts i.e. they are essentially 
+time-varying systems. We recall the well-known fact that the behavior set of the time-varying systems are significantly richer than 
+LTI systems. Once again, we remind the reader that the proper metrics to gauge the success of teleoperation systems are not known and 
+we use the typical error-norm based control design rationale. 
 
 A compact version of the argument above is given by Yokokohji and Yoshikawa in \cite{yokokohjiyoshikawa}: 
 \begin{quote}
@@ -1243,6 +1247,17 @@ k&-k&0&k_{f2}
 respectively. Each $k_i$ represents some constant or dynamic controller. Obviously, one can 
 generate many more architectures by populating different entries and the zero blocks. 
 
+In \cite{hashzaad2002}, the perfect transparency conditions are given for the undelayed case as the following;
+If $C1,\cdots,C_6$ are not functions of $Z_h$ and $Z_e$, transparency is achieved if and only if the 
+transparency-optimized control law
+
+\begin{itemize}
+	\item $C_1=Z_{cs}$
+    \item $C_2 = 1 + C_6$
+    \item $C_3 = 1 + C_5$
+    \item $C_4 = -Z_{cm}$
+\end{itemize}
+where $Z_{cs} \coloneqq Z_e + C_m,Z_{cm} \coloneqq Z_h + C_s$ hold for nonzero $C_2,C_3$.
 
 \subsection{Wave Variable-Scattering Transformation Control for delays}
 

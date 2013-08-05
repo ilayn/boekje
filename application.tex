@@ -1,7 +1,7 @@
-\chapter{Controller Design for the TU/e \texorpdfstring{$1$}{1}-DoF System}
+\chapter{Controller Design for the TU/e 1-DoF System}
 \label{chap:application}
-In this chapter, the synthesis conditions of the previous chapter is applied to a $1$-DOF experimental setup. Different
-uncertainty structures are considered and compared. 
+In this chapter, the synthesis conditions of the previous chapter is applied to a control design problem for a 
+rotational 1-DoF experimental setup. Different uncertainty structures are considered and compared. 
 
 \begin{figure}%
 \centering
@@ -16,7 +16,7 @@ within the project of constructing a 5-DoF haptics local device for robotically 
 in \Cref{fig:app:onedof}. The actuation is provided to a capstan drive via a DC servo motor Maxon RE 35 which is connected to a statically 
 balanced circular strip plate. This piece is also connected to an inner segment via elastic elements and the relative motion of these 
 pieces make it possible to obtain a force measurement. An additional linear piece attached to the inner segment for handling the device. 
-Due to the capstan mechanism, there is a rotational reduction of $i=\frac{1}{10}$. The system consists of four major inertial components; 
+Due to the capstan mechanism, there is a nominal rotational reduction of $i=\frac{1}{10}$. The system consists of four major inertial components; 
 the motor and the encoder, outer strip segment, inner segment and the linear end-effector. The physical values are given in 
 \Cref{tab:app:values}. The system can be approximated by the block diagram depicted in \Cref{fig:app:blodia}.
 \begin{table}%
@@ -72,13 +72,12 @@ If we enumerate all the blocks from left to right, starting from one to four, th
 J_3 \ddot{x}_3           &= k_c(ix_2-x_3) - k_4(x_3-x_4)\\
 J_4 \ddot{x}_4           &= k_4(x_3-x_4)
 \end{align}
-where $k_c = \inv{(\frac{1}{k_{wire}}+\frac{1}{k_{mot,b}})}$ and $u$ is the motor input. The system response is shown in 
+where $k_c = \inv{(\frac{1}{k_{wire}}+\frac{1}{k_{mot,b}})}$ and $u$ is the motor input. The theoretical model response is shown in 
 \Cref{fig:app:modfrf}. The identification and the model verification is also provided in \cite{hendrix}. Based on the 
 frequency response data, we have also added damping to the model artificially both to improve the numerical properties 
 of the model and also match the physical setup. The damping coefficients to each spring element/group is given in \Cref{%
 tab:app:damp}. We will use the same model for the remote device in what follows below. 
 \begin{table}%
-\caption{The additional damping coefficients that are included in the model.}
 \centering
 \begin{tabular}{l S}
 \toprule
@@ -89,6 +88,7 @@ $b_{wire+mot,b}$  & 1.0e-5\\
 $b_{ts}$    & 1.0e-3\\
 \bottomrule
 \end{tabular}
+\caption{The additional damping coefficients that are included in the model.}
 \label{tab:app:damp}
 \end{table}
 
@@ -125,29 +125,33 @@ function
 \[
 \tilde{G}(s) = \frac{1}{0.0015s^2 + 0.00287s + 0.25}.
 \]
-This simplification is used in \cite{cesarACC,cesarSYROCO} and the resulting controllers which are based on this model are 
-experimentally implemented. Due to the low-frequency nature of the task, this simplification did not cause any problems 
+A similar simplification is used in \cite{cesarACC,cesarSYROCO} and the resulting controllers which are based on this model
+have been experimentally implemented. Due to the low-frequency nature of the task, this simplification did not cause any problems 
 during the experiments.
 
 We nevertheless present the full model LFT interconnection structure but in the controller design cases only the simplified 
 model is used. This is due to the fact that the system is altered significantly (e.g., the steel cables are replaced by plastic 
-and the housing of the shafts are not in the optimal condition etc.) from its original construction. Hence, we have
-used a simple model obtained from identification experiments.
+cables and the housing of the shafts are subjected to wear etc.) from its original construction. Hence, we have
+used a simple model obtained from identification experiments. This also serves as a perfect case where unmodeled dynamics 
+deviates from the theretical model and we have to rely on the approxiamte FRF measurements. Thus, we include the full LFT 
+model to demonstrate that the complexity of the model is not an essential obstacle and still can be used conveniently.
 
 
 
 \subsection{Incorporating the human dynamics}
 To be able to model both cases of \enquote{user holding/released the device} and \enquote{remote device is in free-air/contact} 
-cases we need to introduce a model of the possible human users and environment dynamics. However, those models are dependent on
+cases we need to introduce a set of models of the possible human users and environment dynamics. However, those models depend on
 grasp configuration, task-environment and other parameters. One can start with a predefined task case, say a MIS or a peg-in-hole 
 assembly and limit the relevant cases that can occur together with some engineering safety tolerance. That would reduce the 
 set of possible physically relevant operators significantly. In the absence of refined human and environment models, we would simply
 follow the ubiquitous mass-spring-damper modeling paradigm as shown in \Cref{fig:app:attachhuman}. Here, we adopt the usage of an
 external force model but this does not bring in any complications since we do not invoke any passivity assumptions. Moreover
-we will assume that the parameters of the human dynamics are time-varying operators together with the low-pass filtered $f_h$ to 
-emphasize the $\approx \SI{10}{\hertz}$ bandwidth. There is no structural distinction of applied force and human arm but we only 
-model the relevant arm/hand trajectories thus the resulting combined response is not modified. Note that by adding another 
-under-damped mass-spring-damper component to the human dynamics one can also model the hand tremor and motor noise if needed. 
+we will assume that the parameters of the human dynamics vary in time. Additionally the human force $f_h$ is low-pass filtered to 
+emphasize the $\approx \SI{10}{\hertz}$ bandwidth. 
+%There is no structural distinction of applied force and human arm but we only 
+%model the relevant arm/hand trajectories thus the resulting combined response is not modified. 
+Note that by adding another under-damped mass-spring-damper component to the human dynamics one can also model the hand tremor 
+and motor noise if needed with the possibility of selecting the frequency band where these effects become dominant. 
 
 
 \begin{figure}%
@@ -181,14 +185,13 @@ scale=0.8,transform shape]
 \end{figure}
 
 
-The human arm model is identified experimentally for different grasp configurations (see, e.g., \cite{cesarSYROCO}). Then,
-using these frequency response data, uncertainty intervals in which the parameters of the human arm varies through time are 
-selected. The updated parameter intervals are given in \Cref{tab:app:humparam}\footnote{We keep using $m_h$ notation for 
-convenience however it should be understood as $J_h$.}.
+The human arm model is identified experimentally by fitting a second order mass-spring-damper model for different grasp 
+configurations (see, e.g., \cite{cesarSYROCO}). Then, using these frequency response data, uncertainty intervals in which 
+the parameters of the human arm varies through time are selected. Similarly the environment is assumed to be a pure stiff 
+spring with time-varying stiffness coefficient. The parameter intervals are given in \Cref{tab:app:humparam}\footnote{We 
+keep using $m_h$ notation for convenience however it should be understood as $J_h$ due to the rotational nature of motion.}.
 
 \begin{table}%
-\caption[Identified Uncertain Human Parameters as Rotational Mechanical Components]{Identified Uncertain Human Parameters 
-as Rotational Mechanical Components}
 \centering
 \begin{tabular}{r l l}\toprule
 \multicolumn{3}{c}{Parameter Variation Intervals}\\\midrule
@@ -198,6 +201,7 @@ $k_h$ & $[0,994.2]$ &\si{\newton\meter\per\radian}\\
 $k_e$ & $[0,3000]$ &\si{\newton\meter\per\radian}\\
 \bottomrule
 \end{tabular}
+\caption[Identified Uncertain Human Parameters as Rotational Mechanical Components]{Identified Uncertain Human Parameters as Rotational Mechanical Components}
 \label{tab:app:humparam}
 \end{table}
 
@@ -335,32 +339,29 @@ G \coloneqq \left[
 \end{equation}
 with particular entries are defined as the following; let $e_\frac{i}{8}$ denote the 
 $i$\textsuperscript{th} column of the $8\times 8$ identity matrix,
-\[
-\begin{array}{rl}
-A      &= I_2\otimes\hat{A}  \\
-B_p    &= \pmatr{\hat{B}_p&0\\0&-e_{\frac{8}{8}}}\\
-B_w    &= I_2\otimes\hat{B}_w\\
-B_u    &= I_2\otimes\hat{B}_u\\
-C_y    &= I_2\otimes\hat{C}_y\\
-D_{py} &= 0\\%I_2\otimes\hat{D}_{py}\\
-D_{wy} &= 0\\%I_2\otimes\hat{D}_{wy}\\
-C_q    &=\pmatr{\hat{C}_q &0\\0&\displaystyle\frac{k_e}{2}e^T_\frac{4}{8}}\\
-D_{pq} &= \pmatr{\hat{D}_{pq} &0\\0&0}\\
-D_{wq} &= \pmatr{\hat{D}_{wq} &0\\0&0}\\
-D_{uq} &= 0\\%\pmatr{\hat{D}_{uq} &0\\0&0}
-\end{array}
-\]
+\begin{gather*}
+A      = I_2\otimes\hat{A}  \\
+B_p    = \pmatr{\hat{B}_p&0\\0&-e_{\frac{8}{8}}},
+B_w    = I_2\otimes\hat{B}_w,
+B_u    = I_2\otimes\hat{B}_u\\
+C_y    = I_2\otimes\hat{C}_y,
+D_{py} = 0\\%I_2\otimes\hat{D}_{py},
+D_{wy} = 0\\%I_2\otimes\hat{D}_{wy}\\
+C_q    =\pmatr{\hat{C}_q &0\\0&\displaystyle\frac{k_e}{2}e^T_\frac{4}{8}},
+D_{pq} = \pmatr{\hat{D}_{pq} &0\\0&0},
+D_{wq} = \pmatr{\hat{D}_{wq} &0\\0&0},
+D_{uq} = 0\\%\pmatr{\hat{D}_{uq} &0\\0&0}
+\end{gather*}
 Then, the performance channels are given by
 \[
 \begin{array}{rl}
 z = \pmatr{x_l-x_r\\f_l-f_r\\u_l\\u_r}
 \end{array}
 \]
+which can be expressed as
 \[
-C_z = \pmatr{e_\frac{1}{8}^T &-e_\frac{1}{8}^T\\k_3(e_\frac{3}{8} -e_\frac{4}{8})^T &-k_3(e_\frac{3}{8} -e_\frac{4}{8})^T\\ \multicolumn{2}{c}{0}\\ \multicolumn{2}{c}{0}}
-\]
-\[
-D_{py} = 0, D_{wy} = 0
+C_z = \pmatr{e_\frac{1}{8}^T &-e_\frac{1}{8}^T\\k_3(e_\frac{3}{8} -e_\frac{4}{8})^T &-k_3(e_\frac{3}{8} -e_\frac{4}{8})^T\\ \multicolumn{2}{c}{0}\\ \multicolumn{2}{c}{0}},
+D_{pz} = D_{wz} = 0,D_{uz} = \pmatr{0_2\\I_{2}}.
 \]
 Thus, we have obtained a plant-uncertainty interconnection $\Delta-G$ where 
 \begin{equation}
@@ -427,14 +428,14 @@ models and the human/environment dynamics are interconnected directly to the cor
 \centering
 \begin{tikzpicture}[>=latex,scale=0.85,transform shape]
 \node[draw,inner xsep=4mm,inner ysep=2mm] (op) at (0,1.5) {Environment\vphantom{p}};
-\node[draw] (mas) at (0,0) {$\displaystyle \frac{1}{m_ss^2+b_ss+k_s}$};
+\node[draw] (mas) at (0,0) {Slave Device};
 \node[circle,draw,inner sep=2pt] (sum) at ([xshift=6mm]mas.east) {};
 \draw[->] (op) -| (sum);
 \draw[<-] (mas) -- (sum);
 \draw[->] ([yshift=-5mm]sum.south) node[below](fm){$f_s$}-- (sum);
 \draw[->] (op-|sum) -- ++(0,5mm)node[left] {$f_e$};
-\draw[->] (mas.west) -| ++(-5mm,5mm) |- (op);
-\node (xm) at ([xshift=-5mm]mas.west|-fm) {$x_s$};
+\draw[->] (mas.west) -| ++(-10mm,5mm) |- (op);
+\node (xm) at ([xshift=-10mm]mas.west|-fm) {$x_s$};
 \draw[->] (mas) -|(xm);
 \node (min) at ([shift={(-1mm,1.2mm)}]sum.150) {$\scriptstyle -$};
 \end{tikzpicture}
@@ -445,11 +446,53 @@ models and the human/environment dynamics are interconnected directly to the cor
 \label{fig:app:simpdiag}
 \end{figure}
 
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+	\begin{loglogaxis}[name=plot1,
+	enlargelimits=false,
+	grid=both,
+	width=0.8\textwidth,height=5cm,
+	ymin=5e-6,
+	%yticklabel={\pgfmathprintnumber[fixed]{\tick}},
+	%xlabel= Frequency,
+	ylabel= Magnitude,
+	%x unit=\si{\hertz},
+	y unit=\si{\decibel},
+	log basis y=10,
+  yticklabel={\pgfmathparse{20*(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
+	]
+		\addplot[red,thick] table[x index=0,y index=1] {plotdata/teleopidfrd.dat};
+		\addplot[blue,dashed] table[x index=0,y index=3] {plotdata/teleopidfrd.dat};
+		\addlegendentry[font=\tiny,align=left,anchor=west]{Local Device}
+		\addlegendentry[font=\tiny,align=left,anchor=west]{Remote Device}
+	\end{loglogaxis}
+%
+    \begin{semilogxaxis}[at={(plot1.outer south)},anchor=outer north,
+	enlargelimits=false,
+	grid=both,
+	width=0.8\textwidth,height=5cm,
+	xlabel= Frequency,
+	ylabel= Phase,
+	x unit=\si{\hertz},
+	y unit=\si{\degree},
+    y filter/.code=\pgfmathparse{#1*360/(2*pi)}
+    %yticklabel={\pgfmathparse{deg(\tick)}\pgfmathprintnumber[fixed]{\pgfmathresult}},
+	]
+	    \addplot[red,thick] table[x index=0,y index=2] {plotdata/teleopidfrd.dat};
+	    \addplot[blue,dashed] table[x index=0,y index=4] {plotdata/teleopidfrd.dat};
+    \end{semilogxaxis}
+\end{tikzpicture}
+\caption{The frequency response data from the identification experiments.}%
+\label{fig:app:idfrd}%
+\end{figure}
+
 For the performance objectives, it has been selected to minimize the position error $x_m-x_s$ and 
 the force error $f_h-f_e$, as opposed to minimizing $f_h-f_s$ and $f_e-f_m$ independently. In other words
 it is the interaction forces we desire to match but not the individual force reference signals at each side. 
 However, this has an inherent well-posedness problem when the user releases the device. As can be seen in 
-\Cref{fig:app:design1}, when the user dynamics are absent there is no control authority left to influence 
+\Cref{fig:app:simpdiag}, when the user dynamics are absent there is no control authority left to influence 
 $f_h$ (and $f_e$ too due to the same reasoning). Therefore, the system (control design problem) is analytically 
 uncontrollable (infeasible) for the full uncertainty region. However this can be avoided by allowing for 
 slight tolerances to account for the modeling imperfections and to avoid this analytical pathology. 
@@ -464,114 +507,116 @@ can be reflected to the already uncertain human model. As a practical example, t
 be attributed to the damping uncertainty of the human model. Hence, one can always assume that a minimal 
 interaction with the human is always present even though this minimal interaction might be due to the angular 
 inertia, friction etc. 
-
-In the sequel, we will design three controllers with different uncertainty class assumptions. The first two 
-cases will be using fixed mass and damping coefficients depicted in \Cref{fig:app:design1}. 
+%
+%In the sequel, we will design three controllers with different uncertainty class assumptions. The first two 
+%cases will be using fixed mass and damping coefficients depicted in \Cref{fig:app:design1}. 
 
 \section{Three Controller Design Cases}
 
 
-
-\begin{figure}%
-\begin{subfigure}[b]{.45\linewidth}
-\centering
-\begin{tikzpicture}[>=latex,mygain/.style={isosceles triangle,draw,
-shape border rotate=180,
-isosceles triangle apex angle=60,
-inner sep=0,minimum height=7mm},myinteg/.style={draw,minimum height=9mm},
-sum/.style={circle,draw,inner sep=2pt},scale=0.87,transform shape,mygainrev/.style={mygain,mygain,shape border rotate=0},
-scale=0.75]
-\draw[dotted] (-0.5cm,-0.5cm) rectangle (7.5cm,2.6cm);
-\draw[dotted] (-0.5cm,5.5cm) rectangle (7.5cm,2.8cm);
-\node[myinteg] (integ1) at (1cm,2cm) {$\frac{1}{s}$};
-\node[myinteg,right= 1cm of integ1] (integ2) {$\frac{1}{s}$};
-\node[mygain,right= 1cm of integ2] (ms) {$\frac{1}{m_s}$};
-\draw[->] (ms) -- (integ2) node[near start,above]{$\ddot{x}_s$} coordinate[midway] (cs1);
-\draw[->] (integ2) -- (integ1) node[near start,above]{$\dot{x}_s$} coordinate[midway] (c12);
-\draw[->] (integ1) -- ++(-1.2cm,0) node[near start,above]{$x_s$}coordinate[midway] (c2);
-\node[mygainrev,above=13mm of ms.west,anchor=west] (me){$m_e$};
-\node[mygainrev,above=20mm of integ2.west,anchor=west] (be){$b_e$};
-\node[mygainrev,above=27mm of integ1.west,anchor=west,fill=blue!20] (ke){$k_e$};
-\node[mygainrev,below=10mm of integ2.west,anchor=west] (bs){$b_s$};
-\node[mygainrev,below=17mm of integ1.west,anchor=west] (ks){$k_s$};
-\node[sum] (mssum) at ([xshift=1cm]ms.east) {};
-\node[sum] (envsum) at (be-|mssum) {};
-\node[sum] (slasum) at (bs-|mssum) {};
-\node[sum,right= 1cm of envsum] (fesum) {};
-\node[sum,right= 1cm of mssum] (fssum)  {};
-\draw[->] (cs1) |- (me);\draw[->] (c12) |- (be);\draw[->] (c2)  |- (ke);
-\draw[->] (c12) |- (bs);\draw[->] (c2)  |- (ks);\draw[->] (me)  -| (envsum);
-\draw[->] (be) -- (envsum);\draw[->] (ke) -|(envsum);\draw[->] (envsum) -- (fesum);
-\draw[->] (bs) -- (slasum);\draw[->] (ks) -| (slasum);\draw[->](slasum) -- (mssum);
-\draw[->] (mssum)--(ms);\draw[->] (fssum)--(mssum);\draw[->](fesum)--(fssum);
-\draw[<-] (fesum) --++(5mm,0) node[above] {$f_e^*$};
-\draw[->] (fesum) |- ++(5mm,-10mm) node[above] {$f_e$};
-\draw[<-] (fssum) --++(0,-8mm) node[below] {$f_s$};
-\node at (6.3cm,-0.2cm) {Slave Device} node at (6.3cm,5.2cm){Environment};
-\node (min1) at ([shift={(-1mm,-1.2mm)}]mssum.200) {$\scriptstyle -$};
-\node (min2) at ([shift={(-1mm,1.2mm)}]fssum.150) {$\scriptstyle -$};
-\node[dashed,draw,minimum size=1.1cm,label={15:$\Delta_e$}] at (ke) {};
-\end{tikzpicture}
-\caption{Block diagram representation of the environment/slave device pair.}%
-\label{fig:app:design1a}%
-\end{subfigure}\hfill%
-\begin{subfigure}[b]{.5\linewidth}
-\centering
-\begin{tikzpicture}[>=latex,
-mygain/.style={isosceles triangle,draw,shape border rotate=180,isosceles triangle apex angle=60,inner sep=0,minimum height=7mm},
-myinteg/.style={draw,minimum height=9mm},
-sum/.style={circle,draw,inner sep=2pt},
-mygainrev/.style={mygain,mygain,shape border rotate=0},
-scale=0.6525,transform shape
-]
-\draw[dotted] (-0.5cm,-0.5cm) rectangle (9.1cm,2.6cm);
-\draw[dotted] (-0.5cm,5.5cm) rectangle (9.1cm,2.8cm);
-\node[myinteg] (integ1) at (1cm,2cm) {$\frac{1}{s}$};
-\node[myinteg,right= 1cm of integ1] (integ2) {$\frac{1}{s}$};
-\node[mygain,right= 1cm of integ2] (ms) {$\frac{1}{m_m}$};
-\draw[->] (ms) -- (integ2) node[near start,above]{$\ddot{x}_m$} coordinate[midway] (cs1);
-\draw[->] (integ2) -- (integ1) node[near start,above]{$\dot{x}_m$} coordinate[midway] (c12);
-\draw[->] (integ1) -- ++(-1.2cm,0) node[near start,above]{$x_m$}coordinate[midway] (c2);
-\node[mygainrev,above=13mm of ms.west,anchor=west] (me){$m_h$};
-\node[mygainrev,above=20mm of integ2.west,anchor=west] (be){$b_h$};
-\node[mygainrev,above=27mm of integ1.west,anchor=west,fill=blue!20] (ke){$k_h$};
-\node[mygainrev,below=10mm of integ2.west,anchor=west] (bs){$b_m$};
-\node[mygainrev,below=17mm of integ1.west,anchor=west] (ks){$k_m$};
-\node[sum] (mssum) at ([xshift=1cm]ms.east) {};
-\node[sum] (envsum) at ([xshift=-1cm]be-|mssum) {};
-\node[sum] (slasum) at (bs-|mssum) {};
-\node[sum,right= 3.5cm of envsum] (fesum) {};
-\node[sum,right= 2.5cm of mssum] (fssum)  {};
-\draw[->] (cs1) |- (me);\draw[->] (c12) |- (be);\draw[->] (c2)  |- (ke);
-\draw[->] (c12) |- (bs);\draw[->] (c2)  |- (ks);\draw[->] (me)  -| (envsum);
-\draw[->] (be) -- (envsum);\draw[->] (ke) -|(envsum);
-\draw[->] (bs) -- (slasum);\draw[->] (ks) -| (slasum);\draw[->](slasum) -- (mssum);
-\draw[->] (mssum)--(ms);\draw[->] (fssum)--(mssum);\draw[->](fesum)--(fssum);
-\draw[<-] (fesum) --++(5mm,0) node[above] {$f_h^*$};
-\draw[->] (fesum) |- ++(5mm,-10mm) node[above] {$f_h$};
-\draw[<-] (fssum) --++(0,-8mm) node[below] {$f_m$};
-\node at (7.8cm,-0.2cm) {Master Device} node at (7.8cm,5.2cm){Operator};
-\node (min1) at ([shift={(-1mm,-1.2mm)}]mssum.200) {$\scriptstyle -$};
-\node (min2) at ([shift={(-1mm,1.2mm)}]fssum.150) {$\scriptstyle -$};	
-\node[draw] (filter) at ($(envsum)!0.5!(fesum)$)
-%{$\frac{\frac{s}{\omega_{zh}}+1}{\frac{s^2}{\omega_{ph}^2}+2z_{ph}\frac{s}{\omega_{ph}}+1}$};
-{$Q_h(s)$};
-\draw[->] (filter) -- (fesum);\draw[->] (envsum) -- (filter);
-\node[dashed,draw,minimum size=1.1cm,label={15:$\Delta_h$}] at (ke) {};
-\end{tikzpicture}
-\caption{Block diagram representation of the operator/master device pair.}%
-\label{fig:app:design1b}%
-\end{subfigure}
-\caption{The robust control design for only having the human/environment stiffness coefficients as uncertainties.}
-\label{fig:app:design1}
-\end{figure}
+%
+%\begin{figure}%
+%\begin{subfigure}[b]{.45\linewidth}
+%\centering
+%\begin{tikzpicture}[>=latex,mygain/.style={isosceles triangle,draw,
+%shape border rotate=180,
+%isosceles triangle apex angle=60,
+%inner sep=0,minimum height=7mm},myinteg/.style={draw,minimum height=9mm},
+%sum/.style={circle,draw,inner sep=2pt},scale=0.87,transform shape,mygainrev/.style={mygain,mygain,shape border rotate=0},
+%scale=0.75]
+%\draw[dotted] (-0.5cm,-0.5cm) rectangle (7.5cm,2.6cm);
+%\draw[dotted] (-0.5cm,5.5cm) rectangle (7.5cm,2.8cm);
+%\node[myinteg] (integ1) at (1cm,2cm) {$\frac{1}{s}$};
+%\node[myinteg,right= 1cm of integ1] (integ2) {$\frac{1}{s}$};
+%\node[mygain,right= 1cm of integ2] (ms) {$\frac{1}{m_s}$};
+%\draw[->] (ms) -- (integ2) node[near start,above]{$\ddot{x}_s$} coordinate[midway] (cs1);
+%\draw[->] (integ2) -- (integ1) node[near start,above]{$\dot{x}_s$} coordinate[midway] (c12);
+%\draw[->] (integ1) -- ++(-1.2cm,0) node[near start,above]{$x_s$}coordinate[midway] (c2);
+%\node[mygainrev,above=13mm of ms.west,anchor=west] (me){$m_e$};
+%\node[mygainrev,above=20mm of integ2.west,anchor=west] (be){$b_e$};
+%\node[mygainrev,above=27mm of integ1.west,anchor=west,fill=blue!20] (ke){$k_e$};
+%\node[mygainrev,below=10mm of integ2.west,anchor=west] (bs){$b_s$};
+%\node[mygainrev,below=17mm of integ1.west,anchor=west] (ks){$k_s$};
+%\node[sum] (mssum) at ([xshift=1cm]ms.east) {};
+%\node[sum] (envsum) at (be-|mssum) {};
+%\node[sum] (slasum) at (bs-|mssum) {};
+%\node[sum,right= 1cm of envsum] (fesum) {};
+%\node[sum,right= 1cm of mssum] (fssum)  {};
+%\draw[->] (cs1) |- (me);\draw[->] (c12) |- (be);\draw[->] (c2)  |- (ke);
+%\draw[->] (c12) |- (bs);\draw[->] (c2)  |- (ks);\draw[->] (me)  -| (envsum);
+%\draw[->] (be) -- (envsum);\draw[->] (ke) -|(envsum);\draw[->] (envsum) -- (fesum);
+%\draw[->] (bs) -- (slasum);\draw[->] (ks) -| (slasum);\draw[->](slasum) -- (mssum);
+%\draw[->] (mssum)--(ms);\draw[->] (fssum)--(mssum);\draw[->](fesum)--(fssum);
+%\draw[<-] (fesum) --++(5mm,0) node[above] {$f_e^*$};
+%\draw[->] (fesum) |- ++(5mm,-10mm) node[above] {$f_e$};
+%\draw[<-] (fssum) --++(0,-8mm) node[below] {$f_s$};
+%\node at (6.3cm,-0.2cm) {Slave Device} node at (6.3cm,5.2cm){Environment};
+%\node (min1) at ([shift={(-1mm,-1.2mm)}]mssum.200) {$\scriptstyle -$};
+%\node (min2) at ([shift={(-1mm,1.2mm)}]fssum.150) {$\scriptstyle -$};
+%\node[dashed,draw,minimum size=1.1cm,label={15:$\Delta_e$}] at (ke) {};
+%\end{tikzpicture}
+%\caption{Block diagram representation of the environment/slave device pair.}%
+%\label{fig:app:design1a}%
+%\end{subfigure}\hfill%
+%\begin{subfigure}[b]{.5\linewidth}
+%\centering
+%\begin{tikzpicture}[>=latex,
+%mygain/.style={isosceles triangle,draw,shape border rotate=180,isosceles triangle apex angle=60,inner sep=0,minimum height=7mm},
+%myinteg/.style={draw,minimum height=9mm},
+%sum/.style={circle,draw,inner sep=2pt},
+%mygainrev/.style={mygain,mygain,shape border rotate=0},
+%scale=0.6525,transform shape
+%]
+%\draw[dotted] (-0.5cm,-0.5cm) rectangle (9.1cm,2.6cm);
+%\draw[dotted] (-0.5cm,5.5cm) rectangle (9.1cm,2.8cm);
+%\node[myinteg] (integ1) at (1cm,2cm) {$\frac{1}{s}$};
+%\node[myinteg,right= 1cm of integ1] (integ2) {$\frac{1}{s}$};
+%\node[mygain,right= 1cm of integ2] (ms) {$\frac{1}{m_m}$};
+%\draw[->] (ms) -- (integ2) node[near start,above]{$\ddot{x}_m$} coordinate[midway] (cs1);
+%\draw[->] (integ2) -- (integ1) node[near start,above]{$\dot{x}_m$} coordinate[midway] (c12);
+%\draw[->] (integ1) -- ++(-1.2cm,0) node[near start,above]{$x_m$}coordinate[midway] (c2);
+%\node[mygainrev,above=13mm of ms.west,anchor=west] (me){$m_h$};
+%\node[mygainrev,above=20mm of integ2.west,anchor=west] (be){$b_h$};
+%\node[mygainrev,above=27mm of integ1.west,anchor=west,fill=blue!20] (ke){$k_h$};
+%\node[mygainrev,below=10mm of integ2.west,anchor=west] (bs){$b_m$};
+%\node[mygainrev,below=17mm of integ1.west,anchor=west] (ks){$k_m$};
+%\node[sum] (mssum) at ([xshift=1cm]ms.east) {};
+%\node[sum] (envsum) at ([xshift=-1cm]be-|mssum) {};
+%\node[sum] (slasum) at (bs-|mssum) {};
+%\node[sum,right= 3.5cm of envsum] (fesum) {};
+%\node[sum,right= 2.5cm of mssum] (fssum)  {};
+%\draw[->] (cs1) |- (me);\draw[->] (c12) |- (be);\draw[->] (c2)  |- (ke);
+%\draw[->] (c12) |- (bs);\draw[->] (c2)  |- (ks);\draw[->] (me)  -| (envsum);
+%\draw[->] (be) -- (envsum);\draw[->] (ke) -|(envsum);
+%\draw[->] (bs) -- (slasum);\draw[->] (ks) -| (slasum);\draw[->](slasum) -- (mssum);
+%\draw[->] (mssum)--(ms);\draw[->] (fssum)--(mssum);\draw[->](fesum)--(fssum);
+%\draw[<-] (fesum) --++(5mm,0) node[above] {$f_h^*$};
+%\draw[->] (fesum) |- ++(5mm,-10mm) node[above] {$f_h$};
+%\draw[<-] (fssum) --++(0,-8mm) node[below] {$f_m$};
+%\node at (7.8cm,-0.2cm) {Master Device} node at (7.8cm,5.2cm){Operator};
+%\node (min1) at ([shift={(-1mm,-1.2mm)}]mssum.200) {$\scriptstyle -$};
+%\node (min2) at ([shift={(-1mm,1.2mm)}]fssum.150) {$\scriptstyle -$};	
+%\node[draw] (filter) at ($(envsum)!0.5!(fesum)$)
+%%{$\frac{\frac{s}{\omega_{zh}}+1}{\frac{s^2}{\omega_{ph}^2}+2z_{ph}\frac{s}{\omega_{ph}}+1}$};
+%{$Q_h(s)$};
+%\draw[->] (filter) -- (fesum);\draw[->] (envsum) -- (filter);
+%\node[dashed,draw,minimum size=1.1cm,label={15:$\Delta_h$}] at (ke) {};
+%\end{tikzpicture}
+%\caption{Block diagram representation of the operator/master device pair.}%
+%\label{fig:app:design1b}%
+%\end{subfigure}
+%\caption{The robust control design for only having the human/environment stiffness coefficients as uncertainties.}
+%\label{fig:app:design1}
+%\end{figure}
 
 
 \subsection{Uncertain Plant with Arbitrarily Fast Time-Varying Stiffness Coefficients}
 
 We start with designing a robust controller for an uncertain plant in which only the stiffness elements of the
-human and the environment models are taken as arbitrarily fast varying real parametric uncertainties. Thus, the
-involved multipliers with respect to these uncertainties are taken as full block multipliers i.e. 
+human and the environment models are taken as arbitrarily fast varying real parametric uncertainties. Hence, the environment 
+is assumed to be a single spring and the human damping and the mass values are assumed to be the halves of the maximum 
+values identified by the experiments while leaving the stiffness coefficient as uncertain. Thus, the involved multipliers with 
+respect to these uncertainties are taken as full block multipliers i.e. 
 \[
 \pmatr{\delta_h &\\ &\delta_e\\\hline 1 &0\\0&1}^T
 \left(
@@ -584,9 +629,7 @@ involved multipliers with respect to these uncertainties are taken as full block
 for all $\delta_h\in[0,\bar{\delta}_h]\si{\newton\per\meter}$ and $\delta_e\in[0,\bar{\delta}_e]\si{\newton\per\meter}$. 
 By enforcing the constraint $Q\prec 0$ (and since zero uncertainty enforces $R\succeq 0$) it is sufficient to guarantee the 
 constraint over the whole parameter box by just checking at the corners of the hyperrectangle set $[0,\bar{\delta}_h]\times
-[0,\bar{\delta}_e]$. The environment is assumed to be a single spring and the human damping and the mass values are assumed 
-to be the halves of the maximum values identified by the experiments.
-
+[0,\bar{\delta}_e]$. 
 \pgfplotstableread{
 ra ga rs gs
          0         0    0.5000    1.3275
@@ -704,19 +747,24 @@ where $\Phi^*(\iw)D_1\Phi(\iw)> 0$ for all $\omega\in\Realext$, $D_2\succ 0$, $Q
 \[
 \pmatr{k_e\\1}^T\pmatr{Q &S\\S&R}\pmatr{k_e\\1}>0.
 \] 
-for $k_e\in\{0,3000\}$. 
+for all $k_e(t)\in[0,3000],t\geq 0$. 
 
 
-We have obtained lower worst-case $\mathcal{L}_2$ gains as shown in the \Cref{fig:tab:design2d1} with the simplest basis functions
+We have obtained the lower worst-case $\mathcal{L}_2$ gains as shown in the \Cref{fig:tab:design2d1} with the simplest basis functions
 of order one. Further, to demonstrate the conservatism reduction via increasing the basis length in the IQC multiplier parametrization,
  we use the basis length $d=2$, i.e.,
 \[
 \Phi(s) = \pmatr{1\\\frac{1}{s+1}\\\frac{1}{(s+1)^2}}
 \]
 and we obtain better results which are given in \Cref{fig:tab:design2d2}. Increasing the length further does not contribute to 
-significant changes hence even with the relatively short basis lengths we arrive at improved results. We validate the improvement 
-through experiments given in the next section since the resulting worst-case $\mathcal{L}_2$ gains tell very little, if any, about 
-the real-time implementation performance. 
+significant changes hence even with the shortest basis lengths we arrive at significantly improved results. 
+
+We validate the improvement through experiments given in the next section since the resulting worst-case $\mathcal{L}_2$ gains 
+tell very little, if any, about the real-time implementation performance\footnote{In fact, contemporary control literature is obsessed 
+with $\mathcal{L}_2$ gain. We emphasize that even the DC gain of a performance weight affects the feasible $\gamma$ level and 
+moreover if one has three different designs with $\gamma=8,4,2$ respectively, it doesn't mean that each design is twice as better. 
+Practically, it's a boolean indicator that something has been improved (whether relevant or not).}. In what 
+follows, the controller denoted by $C_2$ refers to the design with $d=2$.
 
 
 \pgfplotstableread{
@@ -860,8 +908,8 @@ y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0
 \subsection{Uncertain Plant with a More Complicated Human Model}
 
 In this test case, we treat the mass-spring-damper parameters of the human model as slowly varying uncertainties 
-together with arbitrarily fast varying environment stiffness coefficient uncertainty. In this case, we use three
-dynamic multiplier blocks and a static multipliers for the overall design. Therefore the uncertainty set is 
+together with arbitrarily fast varying environment stiffness coefficient uncertainty. Therefore, we use three
+dynamic multiplier blocks and a static multipliers for the overall design. Consequently, the uncertainty set is 
 significantly larger than the previous cases. The motivation for such complication is to be able to compare 
 whether a reduced mass argument would hold and provide better performance than this more realistic but at 
 the same time significantly more conservative design. Thus the $P-\Delta$ interconnection is modeled as 
@@ -1004,18 +1052,67 @@ y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0
 
 \section{Controller Comparison}
 
-In this section we will refer to the designed controllers by $C_1,C_{2},C_3$. First, the frequency domian properties 
-are listed in \Cref{fig:app:contredmass,fig:app:incr}. In order to make the time domain responses more meaningful, we first 
-define a few motion profiles.
+In this section we will refer to the designed controllers by $C_1,C_{2},C_3$ following the introduction order and 
+the corresponding frequency domain properties are shown in \Cref{fig:app:contredmass}. Furthermore, to make the time domain responses more 
+meaningful, we first define a few motion profiles.
 
 
+
+\begin{sidewaysfigure}
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+    no markers,
+    group style={
+      group size=4 by 2,
+      y descriptions at=edge left,
+      x descriptions at=edge bottom,
+      horizontal sep=0.5cm,
+    },
+    height=4cm,
+    width=0.29\textheight,
+    ylabel={Magnitude [\si{\decibel}]},
+    xlabel={Frequency [\si\hertz]},
+    xtick={0.1,10,1000},
+    ytick={0,50,100},
+    xmode=log,
+    xmax=15000,
+    xmin=5e-3,
+    ymax=120,
+    ymin=-20,
+    grid=both,
+    cycle list name=linestyles,%y filter={\pgfmathparse{20*}
+]
+    \pgfplotsforeachungrouped \xind in {1,2}{
+    \xdef\myx{\xind}
+        \pgfplotsforeachungrouped \yind in {1,...,4}{
+        \xdef\myxy{\myx\yind}
+            \nextgroupplot
+            \pgfplotsforeachungrouped\z in {0,1,2}{
+                \begingroup\xdef\temp{%
+                \endgroup\noexpand\addplot+[thick] table[x=f,y expr={20*log10(\noexpand\thisrow{k\myxy})}] 
+                {plotdata/krobdd\z.dat};%
+                }\temp%
+                %\ifnum\myxy>11\else\label{pgfplots:line\z}\fi
+            }
+        }
+    }
+    \end{groupplot}
+\end{tikzpicture}
+\caption[The frequency domain properties of the controllers.]%
+{The frequency domain properties of the controllers. 
+$C_1$: \tikz[baseline]\draw[thick,dashed] (0,0)--++(5mm,0);, 
+$C_2$: \tikz[baseline]\draw[thick] (0,0)--++(5mm,0);, 
+$C_1$: \tikz[baseline]\draw[thick,dotted] (0,0)--++(5mm,0);.}%
+\label{fig:app:contredmass}%
+\end{sidewaysfigure}
 
 \begin{description}[leftmargin=!,labelwidth=3.5cm]
   \item[Free air] This describes the case where the operator holds the local device handle with arbitrary grip tension and moves the local 
                   device up and down such that the remote device tracks the motion. The remote device is not in contact with any obstacle
                   throughout the motion. 
   \item[Soft Spring Contact ] This describes the case where the operator holds the handle with a certain grip tension and moves the local 
-                              device down into the spring such that the remote device squeezes a soft spring ($\approx$.
+                              device down into the spring such that the remote device squeezes a soft spring.
   \item[Hard Spring Contact] This describes the case where the operator holds the handle with a certain grip tension and moves the local 
                               device down into the spring such that the remote device squeezes hard spring.
   \item[Rigid Contact] This describes the case where the operator tries to push the handle with a certain grip tension down 
@@ -1029,13 +1126,14 @@ define a few motion profiles.
                        contact to free air scenario is tested.
 \end{description}
 
-The experiments are performed with the same device with an arbitrary combination of motion profiles listed above. Due to the
-proximity switches, the workspace is limited to $\approx \SIrange{-35}{35}{\degree}$ where \SI{0}{\degree} denotes the horizontal 
+The resulting controllers are discretized via the \texttt{tustin} function with \SI{2000}{\hertz} sampling frequency and implemented using the xPC 
+Target toolbox of MATLAB. The experiments are performed with the same device with an arbitrary combination of motion profiles listed above. 
+Due to the proximity switches, the workspace is limited to $\approx \SIrange{-35}{35}{\degree}$ where \SI{0}{\degree} denotes the horizontal 
 configuration of the device handle. Hence, the contact slide motion is done rather carefully as we needed to stop before the device trips
 the switch which in turn stops the data streaming. Moreover, there are also hard-coded rate limiters for safe operation such that if the 
 device handle angular velocity exceeds a threshold the device turns off the drives and disconnects (similarly the data stream is stopped). 
-Hence, the rigid contact motion is carried out with caution. Though the responses are stable throughout the rigid contact, the controller is 
-aggressive enough to trip the rate-limiters hence causes abrupt data stream in the case of a particular contact tapping. In fact when tapping 
+Hence, the rigid contact motion is carried out with caution. Though the responses are stable throughout the rigid contact, the controllers are
+aggressive enough to trip the rate-limiters hence cause abrupt data stream in the case of a particular contact tapping. In fact when tapping 
 approaches \emph{striking with the finger} ($\approx \SI{1.5}{\meter\per\second}$ fingertip speed at around \SI{4.7}{\hertz}) the instantaneous
 rebound speed of the remote device on the obstacle trips the drive. Since our goal is to present the motion at one shot in order to demonstrate 
 the robustness against time-variations, the contact tapping profile is carried out with a predefined force limit in mind. 
@@ -1050,8 +1148,8 @@ robustness properties with surprisingly rigid contact rendering performance cont
 \subsection{Description of the Experiments}
 
 In each controller test, a right-handed male operator\footnote{More properly, the author himself though still using the third person narrative.} 
-tried out the different scenarios listed above in about \SIrange12\minute. The resulting overall datastream is shown in \Cref{fig:app:design1overall,fig:app:design2overall,%
-fig:app:design3overall}. Due to the lower stiffness coeeficient, the soft contact cases can be seen around \SI{20}{\degree} with more 
+tried out the different scenarios listed above in about \SIrange12\minute. The resulting overall data stream is shown in \Cref{fig:app:design1overall,fig:app:design2overall,%
+fig:app:design3overall}. Due to the lower stiffness coefficient, the soft contact cases can be seen around \SI{20}{\degree} with more 
 compression stroke length and hard contact cases take place around \SI{5}{\degree}. The rigid contact is designed to meet with the obstacle 
 such that the device position reading is around \SI{0}{\degree}. Lastly, in the soft contact cases it is possible to fully compress the soft 
 spring and hit the rigid aliuminum spring holder visible in \Cref{fig:app:onedof}.
@@ -1060,25 +1158,26 @@ spring and hit the rigid aliuminum spring holder visible in \Cref{fig:app:onedof
 
 \subsection{Comparison Of Controllers Based On Different Contact Profiles}
 
+%In this section, we present the results of our experiments by recording real-time data from the experimental setup to emphasize the robustness
+%of the controllers in the face of time-varying changes in the local and remote sides. 
+%For reader's convenience we recall the particular 
+%issues about the controller behavior in various motion profiles as it is typically a topic for discussion in the literature whether 
+%the controller performs adequately during, say, free-air, rigid contact etc. 
+
 \subsubsection{Free air}
 
 The free air performance of the controllers are given in \Cref{fig:app:design1freeair,fig:app:design2freeair,fig:app:design3freeair}. As seen from these
-plots we obtain good position tracking precision. The zoomed parts show that as the bandwidth increases (which is provided manually as fast as the operator
+plots we obtain good position tracking precision. The zoomed in parts show that as the bandwidth increases (which is provided manually as fast as the operator
 is able to shake the handle) a slight loss of performance is recorded. The differences between three controllers are quite small, e.g., Design 2 achieves 
 \ang{0.15} better tracking in the high bandwidth area then Designs 1 and 3. Therefore we conclude that free-air performance is very good. This simply shows 
 that the nominal stability and nominal performance is not drastically affected by the robustness concerns in the design optimization. 
 
-Free-air performance of passivity based controllers and simple PD based Position-Force controllers often suffers from the phenomenon which we will denote 
-here with \enquote{dragging}. This happens when the same controller tries to follow both objectives at once with the same controller only penalizing the 
-difference of the positions and forces separately or in the passivity case only allowing the motion when it is safe to move in terms of energy input. 
-To put the reason why a MIMO controller avoids this problem into context,  consider \Cref{fig:app:design1forceoverall,fig:app:design1freeair}. We can 
-see that the measured human force and environment forces are different since the remote device is in free-air and the human is actually applying force 
-on the local device. The environment force recording is relatively smaller but nonzero due to the inertia and the friction of the remote device. 
 
-It should be noted that even the human is applying a nonnegligible force profile, the controllers are in fact trying to close this force mismatch 
-via applying a torque along the human motion i.e. acting like a friction compensator thus reducing the difference $f_h-f_l$. Similarly in the remote 
-device the difference is increased via $f_e-f_l$ via tracking closely the local force vector. These combined leads to the very good position tracking
-and as a bonus we don't need a precise force tracking until the positions of the devices are constrained or distorted which is presented below.
+It should be noted that even when the human is applying a nonnegligible force, the controllers are trying to close this force mismatch 
+via applying a torque along the direction human motion at the local device i.e. acting like a friction compensator thus reducing the difference 
+$f_h-f_l$. Similarly in the remote device the difference is compansated  via $f_e-f_r$ via tracking closely the local force vector. These two actions 
+combined leads to the very good position tracking and as a bonus we do not need a precise force tracking unless the positions of the devices are 
+constrained or distorted by soft contact which is presented below.
 
 
 
@@ -1093,14 +1192,14 @@ performance is consistent. Regarding the force feeling, the three designed contr
 exhibit realistic replication of the remote spring stiffness. An informal survey among 
 a dozen experimenters also confirmed this subjective result. 
 
-One can see that the tracking property of $C_2$ superior to the other two though the
+One can see that the tracking property of $C_2$ is superior to the other two though the
 difference is very small. Additionally, due to the increased robustness, $C_3$ starts
 exhibiting some loss of performance (see \Cref{fig:app:design3soft}, starting from 56 secs.)
 
 \subsubsection{Hard contact}
 
-The hard contact measurements are given in \Cref{fig:app:design1hard,fig:app:design2hard,fig:app:design3hard}. In this case
-the immediate difference compared to the previous cases is that $C_3$ starts to render the hard spring softer hence the increase in
+The hard contact measurements are given in \Cref{fig:app:design1hard,fig:app:design2hard,fig:app:design3hard}. Unlike the 
+previous cases, the immediate difference is that $C_3$ starts to render the hard spring softer hence the increase in
 displacement around \ang{-6} in \Cref{fig:app:design3hard}. Moreover, to be able to show the reduced conservatism around 
 \SIrange{70}{74}{\second} we have performed some contact tapping and performance is visibly worsened. However, $C_1$ and $C_2$ 
 still gives a very good force response and position tracking at the same time. 
@@ -1114,28 +1213,31 @@ controllers can push performance without driving the system to instability.
 In fact, numerically, there is a mild and indirect robustness constraint imposed. Note that, when we model the uncertainty and 
 include the maximum values of the springs, the numbers are quite high compared to the state space entries of the system. For example
 if we design a controller in the face of a spring with maximum admissible stiffness coefficient \SI{10}{\kilo\newton\per\meter} the
-model is surely dominated with such numbers. Therefore, though it is not guaranteed, the numerical algorithm is somehow forced to 
-include some robustness around this comparatively huge number. Consequently, after a threshold value the uncertainty limit 
-$2\cdot 10^5$ is qualitatively not that different than $1\cdot 10^6$ in terms of robustness properties. Hence, it is not completely
-true that there is no robustness constraint imposed on the system. 
+model is surely dominated with such numbers. Therefore, though it is not guaranteed, the numerical algorithm is somewhat forced to 
+include some robustness around this comparatively huge number. Consequently, after a threshold value, the uncertainty limit 
+$2\cdot 10^5$ is qualitatively not that different than $1\cdot 10^6$ in terms of robustness properties since the LMI conditions
+are very unlikely to be substantially different. Hence, it is not completely true that there is no robustness constraint imposed 
+on the system. However, this does not entirely rule out the fact that there might exist some systems that has qualitatively 
+different properties after some huge value. In turn, it is unlikely that the current LMI solvers are able to detect and take into 
+account those numerical problems accurately. 
 
 This is shown by the rigid contact responses. Again, increased uncertainty set size, forces $C_3$ both be more robust with less
 performance and at the same time the robustness margin is comparatively smaller. By the loss of performance, the remote device 
 introduces oscillations during contact and they are not handled successfully if the user has a light grip on the local device handle.
-As seen around \SI{84}{\second} and at the end the device show temporarily an oscillatory behavior. In the end of the motion, $C_3$ 
-additionally trips the drive. Another evidence for such robustness increase/performance decrease can be found on the actuator output
+As seen around \SI{84}{\second} and at the end of the motion, the device shows temporarily an oscillatory behavior. At the end of the 
+motion, $C_3$ additionally trips the drive. Another evidence for such robustness increase/performance decrease can be found on the actuator output
 plots \Cref{fig:app:design1actoverall,fig:app:design2actoverall,fig:app:design3actoverall}. Clearly, $C_3$ is less aggressive than 
 the other controllers and thus has less stabilizing capabilities in the region where robustness is not guaranteed. 
 
-It is quite the contrary for $C_1$ and $C_2$, the rigid contact performance is quite satisfactory. We can distinguish the effect of 
-taking the time varying uncertainty variation bound into account as $C_1$ shows superior performance even with a few contact sliding
-motion after pressing down the rigid block. Moreover towards the end we can see the contact tapping responses.  
+It is quite the contrary for $C_1$ and $C_2$ since the rigid contact performance is quite satisfactory. We can distinguish the effect of 
+taking the rate-of-variation bound into account as $C_2$ shows superior performance even with a few contact sliding
+motion after pressing down the rigid block. Moreover towards the end we can see the contact tapping responses.
 
 
-Although not visible in the plots, $C_1$,$C_2$ suffers from an effect due to the assumptions we have made about the human mass coefficient.
+Although not visible in the plots, $C_1$,$C_2$ suffer from an effect due to the assumptions we have made about the human mass coefficient.
 It is sometimes possible to find a very light touch pattern during rigid contact such that the controller overreacts and a pseudo-limit
 cycle is triggered though it is difficult to maintain without letting it decay. This is partially due to the fact that controller gains 
-are tuned for continous contact but the the human touches just enough to register a nonnegligable force on the sensor without actually
+are tuned for continous contact but the operator touches just enough to register a nonnegligable force on the sensor without actually
 engaging the hand dynamics with the local device handle. This produces a small kickback since the controller expects some inertial 
 resistance but absence of it causes a rapid overreaction/correction motion.
 
@@ -1144,17 +1246,51 @@ full model of the system it can be avoided. However, we are under the impression
 very promising. 
 
 It is much to our surprise that the contact rendering of $C_2$ is almost flawless especially, when the user comes down with relatively 
-higher velocity on to the contact\footnote{As the reader might notice, we have realized later that the immersion levels tend to fool 
-the users use phrases as if there is an actual hammering action taking place.} 
+higher velocity on to the obstacle. This is yet another evidence that with adequate robustness
+properties of the system, there is no need to utilize sophisticated control design methods just for the sake of a framework to handle 
+unilateral constraints.
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth,
+             height=5cm,
+             xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},
+             x unit=\second, 
+             y unit=\degree,
+             legend cell align=left,
+             legend style={nodes={font=\tiny}},
+             grid=both,
+             ymax=5,ymin=-5,
+             restrict x to domain=72:76.5]
+        \addplot+[thick,no marks,draw=gray] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Local Device}
+        \addplot+[no marks,draw=black] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Remote Device}
+    \end{axis}
+\end{tikzpicture}
+\caption{Design 2 rigid contact close-up}%
+\label{fig:app:design2rigidcloseup}%
+\end{figure}
 
 
- 
 
+We conclude this section by pointing to a rigid contact phenomenon with firm grip case. Since superior to $C_1$,$C_3$ designs, we consider
+the controller $C_2$ responses. In the rigid contact case, we have experienced an interesting pattern; while the user drives the local 
+device down, the remote device comes into contact with the rigid object almost simultaneously hence we have a very satisfactory immersion level 
+about the rigidity of the contact. However notice that when the remote device comes into contact with the obstacle, the local device stops 
+with some residual rapid decaying oscillations as shown in \Cref{fig:app:design2rigidcloseup}. Same experiment is repeated by grabbing the 
+forearm firmly from a point closer to the elbow with left hand and applying a slight clock-wise twisting torque such that the muscles 
+at the forearm are constrained. Then, the oscillations mentioned above became more pronounced in terms of immersion\footnote{The reader can 
+verify this by raising the right hand with palm pointing left, making a fist and hitting a rigid surface with holding the forearm firmly with 
+left hand. The absence of the common vibration dissipation through the muscles and tendons makes the touch significantly different. Obviously, 
+the ideal case would be temporarily blocking the sensory mechanisms of the forearm to isolate the information provided by the hand. This issue
+should be obvious to the relevant medical fields however any relevant literature in those areas so far eluded us}. Therefore, just by changing 
+the arm configuration and clamping/relasing muscle groups touch sensation can be altered. 
 
-
-
-
-
+Additionally, by using a headphone playing loud music to cover the contact sound and looking away from the remote device we have repeated the same
+motion. This experimental technique is common in the literature and additionally in some cases the user is given the opportunity to view the remote 
+device from a computer display to render a distant operation condition. According to our subjective judgement, the resulting immersion difference was 
+insignificant. 
 
 
 \newpage
@@ -1464,8 +1600,6 @@ the users use phrases as if there is an actual hammering action taking place.}
 % Too many unprocessed floats!!
 \clearpage
 
-
-
 \begin{figure}%
 \centering
 \begin{tikzpicture}
@@ -1502,45 +1636,63 @@ the users use phrases as if there is an actual hammering action taking place.}
 \label{fig:app:design3actoverall}%
 \end{figure}
 
+\clearpage
 
-%\begin{sidewaysfigure}
-%\centering
-%\begin{tikzpicture}
-%\begin{groupplot}[
-    %enlarge y limits,
-    %no markers,
-    %group style={
-      %{group size=4 by 2},
-      %yticklabels at=edge left,
-      %xticklabels at=edge bottom
-    %},
-    %height=4cm,
-    %width=0.25\textheight,
-    %%ymode=log,
-    %xmode=log,
-    %xmax=9500,
-    %xmin=0.005,
-    %ymin=0.5,
-    %grid=major,
-    %cycle list name=linestyles*
-    %%legend entries={{$d=0$},{$d=1$},{$d=1$}}
-%]
-    %\pgfplotsforeachungrouped \xind in {1,2}{
-    %\xdef\myx{\xind}
-        %\pgfplotsforeachungrouped \yind in {1,...,4}{
-        %\xdef\myxy{\myx\yind}
-            %\nextgroupplot
-            %\pgfplotsforeachungrouped\z in {0,...,2}{
-                %\begingroup\xdef\temp{\endgroup\noexpand\addplot+[] table[x=f,y expr={20*log10(\noexpand\thisrow{k\myxy})}] {plotdata/krobd\z.dat};}\temp%
-            %}
-        %}
-    %}
-    %\end{groupplot}
-%\end{tikzpicture}
-%\caption{The frequency domain data of the controllers designed for fixed human mass parameter. Solid: $C_1$, dashed: $C_2$, dash-dotted: $C_3$}%
-%\label{fig:app:contredmass}%
-%\end{sidewaysfigure}
-%
+\section{Closing Remarks}
+
+In this chapter, we have shown that a systematic control design for bilateral teleoperation problem is feasible and results have been 
+verified through a basic implementation study. Based on these results we claim that a \emph{transparency}-like objective can be achieved with 
+robust and high-performance controller via a thorough modeling step of the involved systems. Thus, we believe that we have presented a 
+counter-example free from the drawbacks of classical stability-transparency trade-off. Moreover, the designed controllers do not show
+unexpected robustness or performance behaviors and the performance-stability properties worsen as we approach or go beyond the theoretical
+boundaries of parametric uncertainties. 
+
+Still, in accordance with our claims in the \Cref{chap:perf}, this design, regardless how impressive it is, cannot be accepted as a genuine 
+bilateral teleoperation method, since we use the questionable transparency-like objective as the performance index.
+
+
+We cannot help but include yet another rant about the control design in the literature for bilateral teleoperation. Instead of mentioning the typical 
+absence of arguments on describing how any PD controller in the loop is tuned or why we should bother to perform endless derivations to tune one 
+or, if we are lucky, a very few more parameters, we limit the discussion to the following. 
+
+In almost all network-based modeling papers, for some unknown reason and as if it is possible, the concept of local controllers are introduced 
+and the controllers that only communicate over the line between local and remote devices are emphasized for further analysis (see \Cref{lit:syn:ela}). 
+Quite often, it is assumed that the local controllers achieve \enquote{high-precision tracking} locally and derive the conditions to render 
+the interconnection passive. Then delays and other complications are introduced and tedious derivations are presented though the undelayed bilateral
+teleoperation problem is still open for a satisfying performance definition. The subsequent result is either deriving constraints on PD controller 
+gains without any comment on how we are supposed to tune the \enquote{local} controllers\footnote{which is far from trivial while respecting  
+passivity and simultaneously achieving precise tracking} or some controller entries in \Cref{lit:syn:ela} are assumed to be zero. In the 
+four-channel case, the methods are exclusively limited to compensated dynamics type, cross-coupling controllers where each entry is specifically 
+equals some part of the cancellation of dynamics to reach to the ideal transparent system. 
+
+We openly accept that we fail to understand the rationale behind these arguments.
+
+Thus, if we are to investigate our controllers in this \emph{local} and \emph{interdevice} controller distinction, we see that the position 
+controllers (from inputs $1$-$2$ to outputs $1$-$2$ in \Cref{fig:app:contredmass}) look like PI controllers though the roll-off is of the double
+integrator type. The force controllers are clearly not PID-like. Moreover, let us check whether transparency optimization rules in terms of the 
+controller entries (see \eqref{eq:lit:MIMOcont} and \Cref{lit:syn:ela})
+\begin{itemize}
+    \item  $K(2,1)= (\text{Dynamics of the environment}+K(2,2))$
+	\item  $K(1,4)= -1+K(2,4)$
+    \item  $K(1,3)= 1+K(2,3)$
+    \item  $K(1,2)= -(\text{Dynamics of the user}+K(1,1))$
+\end{itemize}
+hold or not. Even graphically, we can see that none of the conditions are valid. In some cases, there are \SI{20}{\decibel} differences for the second
+and third conditions and also the first and last conditions are not verifiable since they involve time-varying operators as opposed to LTI assumptions in the 
+Lawrence' analysis. Nevertheless, we obtain a a high level of transparency with controllers that do not even remotely resemble conditions of the 
+ideal transparency conditions. The apparent mismatch comes from the fact that we do not care whether the resulting closed loop \emph{2-port} hybrid
+matrix is $\begin{psmallmatrix}0&I\\I&0\end{psmallmatrix}$ or not. We simply optimize the controller to minimize the induced gain of the performance 
+channels.
+
+
+In the light of the discussion above, we strengthen our claim that how to arrive at complicated structures by manual tuning or cross-coupling 
+controllers is unknown and current literature does not answer this question contrary to the ubiquitous claims. Note that, the matter at hand 
+is a complexity problem but not a matter of engineering experience obtained from loop-shaping practices. It is important to iterate that there 
+is no holistic issue about the presented method. If there exists a better MIMO technique or a better structured controller design technique then 
+they immediately qualify as valid ones.
+
+
+
 %
 %%
 %\begin{sidewaysfigure}
