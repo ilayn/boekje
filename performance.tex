@@ -53,7 +53,8 @@ transparency is of three ideal response definitions in \cite{yokokohjiyoshikawa}
 \pmatr{v_{hum}\\f_{hum}}=\pmatr{0&I\\-I&0}\pmatr{f_{env}\\v_{env}}
 \]
 If we wish to translate this into a control theoretical performance objective, we have essentially two options. 
-First option is minimizing the differences between the measured quantities such as force errors, velocity errors etc. 
+First option is minimizing the differences between the measured quantities such as force errors, velocity errors etc.
+between the actual system as the hypthetical perfectly transparent system would match. 
 Second option is to make our system behave like an ideal transparent system as much as possible. 
 
 Let $N$ denote the overall controlled teleoperation system model with the controller $K$, i.e. $N(K)$. Then we can 
@@ -61,8 +62,8 @@ define a performance index
 \[
 \min_K \abs{\pmatr{f_{hum}-F_{r}\\f_{env}-F_{l}\\x_{loc}-x_{rem}\\\vdots}} 
 \]
-for the signals in some suitable space that we wish to consider. Alternatively, using a suitable system norm and 
-denoting the controlled $2$-port teleoperation system $N(K)$, the problem becomes
+for the signals of time in some suitable normed space that we wish to consider. Alternatively, using a suitable system norm 
+the problem becomes
 \[
 \min_K \abs{N(K) - \pmatr{0&I\\-I&0}}.
 \]
