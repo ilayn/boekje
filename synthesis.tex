@@ -124,7 +124,8 @@ of some decision variables denoted by $v$ such that
 \pmatr{A\\B(v)}^T\pmatr{Q(v) &S\\S^T &R(v)}\pmatr{A\\B(v)} \prec 0
 \label{eq:quadraticconst}
 \end{equation}
-should be verified. Also assume that there exists a decomposition such that $R(v) = T\inv{(U(v))}T^T$ where $U(v)\succ 0 $ is affine in $v$ then 
+should be verified. Also assume that there exists a decomposition such that 
+\[R(v) = T\inv{(U(v))}T^T\] where $U(v)\succ 0 $ is affine in $v$ then 
 \eqref{eq:quadraticconst} can be converted to the LMI problem
 \begin{equation}
 \pmatr{A^TQ(v)A + A^TSB(v) + B^T(v)S^TA &B^T(v)T\\T^TB(v) &-U(v)}\prec 0
@@ -303,9 +304,9 @@ C_y  & 0  & D_{py} & D_{wy}
 \label{eq:uncclinc}
 \end{equation}
 
-Suppose a block diagonal collection of uncertainty operators, $\bm{\Delta}$ characterized by a family of constant multipliers $\mathbf{P}$. Moreover,
-assume that the $\Delta\star(G\star K)$ is well-posed for all $\Delta\in\bm{\Delta}$.
-For notational convenience we also introduce the partitions 
+Suppose a block diagonal collection of uncertainty operator set $\bm{\Delta}$ characterized by a family of constant multipliers $\mathbf{P}$
+is known. Moreover, assume that the $\Delta\star(G\star K)$ is well-posed for all $\Delta\in\bm{\Delta}$. For notational convenience we also 
+introduce the partitions 
 \[
 P=\begin{pmatrix}Q&S\\ S^T&R\end{pmatrix},\quad P_p=\begin{pmatrix}Q_p&S_p\\ S^T_p&R_p\end{pmatrix}
 \]
@@ -358,16 +359,16 @@ stabilizing against the full uncertainty region that we originally modeled since
 %Therefore, we search for the maximum size of a scaled version of original uncertainty set.
 
 \begin{rem}Repeating what we have touched upon in \Cref{remiqc1},
-this is briefly the rationale behind the common assumption of star-shaped uncertainty region, i.e., $[0,1]\bm{\Delta}\in\bm{\Delta}$. However, it is 
-important to note that, the scaling needs not to be a simple scalar $r\in[0,1]$ such that the uncertainty is scaled with $r\Delta$. This point is often
-implicitly assumed and rarely mentioned. However the notation $r\Delta$ should be taken conceptually. As an example, 
-the delay uncertainty cannot be scaled with $re^{-s\tau}$ for any $r\in[0,1]$ since it would scale the unit-circle. In fact what we want to scale 
-is the $\tau$ variable as $e^{-sr\tau}$ such that when $r=0$ we have $e^0=1$ i.e. a non-delayed line and for $r=1$ we have $e^{-s\tau}$ i.e. full 
-duration of the maximum allowed delay. Similarly, saturation and dead-zone nonlinearities are examples of such nontrivial scaling cases. Hence, 
-the star-shapedness in this context becomes a parametrization of the size of the uncertainty from the nominal case to the full-sized uncertainty. 
-Nevertheless most uncertainty types are amenable to scaling with $r$-multiplication hence there is no need to invent yet another
-notation for an already complicated procedure. Therefore, every uncertainty needs to be scaled in a customized way but for notational convenience we will 
-still use $r\bm{\Delta}$ to denote the scaled uncertainty size. 
+this is briefly the rationale behind the common assumption of star-shaped uncertainty region, i.e., $[0,1]\bm{\Delta}\in\bm{\Delta}$. 
+However, it is important to note that, the scaling needs not to be a simple scalar $r\in[0,1]$ such that the uncertainty is scaled with 
+$r\Delta$. This point is often implicitly assumed and rarely mentioned. Thus, the notation $r\Delta$ should be taken conceptually. As an 
+example, the delay uncertainty cannot be scaled with $re^{-s\tau}$ for any $r\in[0,1]$ since it would scale the unit-circle. In fact what 
+we want to scale is the $\tau$ variable as $e^{-sr\tau}$ such that when $r=0$ we have $e^0=1$ i.e. a non-delayed line and for $r=1$ we 
+have $e^{-s\tau}$ i.e. full duration of the maximum allowed delay. Similarly, saturation and dead-zone nonlinearities are examples of such 
+nontrivial scaling cases. Hence, the star-shapedness in this context becomes a parametrization of the size of the uncertainty from the 
+nominal case to the full-sized uncertainty. Nevertheless most uncertainty types are amenable to scaling with $r$-multiplication hence there 
+is no need to invent yet another notation for an already complicated procedure. Therefore, every uncertainty needs to be scaled in a 
+customized way but for notational convenience we will still use $r\bm{\Delta}$ to denote the scaled uncertainty size. 
 \end{rem}
 
 
@@ -393,8 +394,8 @@ such that the nominal closed loop plant $G_{nom}\star K\in\mathcal{RH}_\infty^{m
 \[
 G_{nom}(s) = 0_{n_p\times m_q}\star G = \pmatr{0_{(m_z+m_y)\times m_q} &I_{m_z+m_y}}G(s)\pmatr{0_{n_p\times(n_w+n_u)}\\I_{n_w+n_u}}. 
 \]
-Additionally $\mathbf{P}$ denotes the set of all suitable multipliers that all $\Delta\in\bm{\Delta}$ satisfy the 
-quadratic constraint.
+%Additionally $\mathbf{P}$ denotes the set of all suitable multipliers that all $\Delta\in\bm{\Delta}$ satisfy the 
+%quadratic constraint.
 
 \begin{figure}%
 \centering
@@ -456,7 +457,7 @@ and $\mathbf{X}\succ 0$ hold.
 Proofs of both theorems are given in \cite{lmibook99} in detail. 
 
 
-Again, in this step we optimize over $P_p$ while performing a line search over $r$. Theoretically, since the analysis result
+Once again, in this step we optimize over $P_p$ while performing a line search over $r$. Theoretically, since the analysis result
 is feasible for some $r_a$, the controller step should at least give a feasible result for $r=r_a$ and possibly larger values
 should also return feasible results. However, numerically it is not the case. One might step down a little to actually obtain 
 feasible results. In our cases, we allowed the maximum retreat value to be the $0.99r$ of the previous step. We have also 
@@ -603,10 +604,12 @@ M_1&M_2&&\\M^T_2&M_3&&\\\hline &&Q_p&S_p\\&&S_p^T&R_p
 \prec 0
 \]
 Had it been the case that we have $\pmatr{I &0}$ in the top row of the outer factor, we could simply use our previous 
-synthesis technique and we would be done. However, we don't have any technique to cope with such a complication. In other 
-words, the obstacle is due to how we proceed with the synthesis step. Had we had another synthesis method this might
-not be an obstacle but currently we need to find a way to obtain the structure on that block such that we obtain an 
-augmented plant from which we can extract the controller and hence obtain an augmented open loop plant.
+synthesis technique and we would be done. However, we don't have any solution to cope with such a complication. In other 
+words, the obstacle here is due to how we proceed with the synthesis step. Thus, the problem is exclusive to this synthesis method.
+We remark this to avoid the confusion that might lead to the conclusion that the robust synthesis problem is difficult because of the 
+complications given above. The difficulty lies with the solution not with the problem. Thus, as it is, we need to find a way to obtain 
+the structure on that block such that we obtain an augmented plant from which we can extract the controller and hence obtain an 
+augmented open loop plant.
 
 
 Notice that if we had $\Psi_2(\iw)$ identically zero and $\Psi_1$ invertable with a stable inverse, we can multiply 
@@ -641,7 +644,7 @@ thus, the obstacle needs to be avoided via finding a way to obtain an equivalent
 \begin{align}
 P(\iw) &= \pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*\pmatr{M_1&M_2\\M^T_2&M_3}\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)} \\
 &= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}\\
-&\mathrel{\reflectbox{$\coloneqq$}} \hat{P}(\iw)
+%&\mathrel{\reflectbox{$\coloneqq$}} \hat{P}(\iw)
 \end{align}
 where $\hat{\Psi}_1$ needs to biproper and bistable. This has been proposed in \cite{goh96,goh962} (see also
 \cite{veenmanIFAC} for state-space derivation). Here the essential difficulty is that $\Psi_i$ are often 
@@ -653,7 +656,7 @@ eigenvalues is said to be the inertia of a hermitian matrix $A$ and denoted by $
 \[
 \inertia I_{2\times 2} = \{2,0,0\}\ \ , \inertia 0_{n\times n} = \{0,n,0\} \ \ ,\inertia \pmatr{1 &&\\&-1&\\&&-1} = \{1,0,2\}
 \]
-Specifically, $\nu(A) = n_-, \pi(A) = n_+, \zeta(A) = n_0$.
+Specifically, $\nu(A) = n_-, \pi(A) = n_+, \zeta(A) = n_0$ where we use the abbreviations $\nu$egative, $\pi$ositive, and $\zeta$ero.
 \end{define}
 
 Recall that we have the following two main inequalities that are of interest by the IQC theorem;
@@ -953,8 +956,8 @@ we make use of particular sign assumptions on the subblocks of the multiplier to
 then obtain an overall factorization in the suitable form with steps that have solutions guaranteed to exist. For 
 these steps, it suffices to use the standard spectral factorization results well-known from LQ-type problems.
 \begin{rem}
-We have to emphasize that it's the structure that matters and not 
-the method with which we arrive to the desired structure. For a particular custom multiplier, one can utilize other properties
+We have to reemphasize that it's the structure that matters and not 
+the method with which we arrive to the desired structure. For a particular custom multiplier, one can utilize different properties
 of the factorization. However, since many multipliers share the property of having $H_{22}\succ 0$ we use it as an assumption. 
 Therefore, there is nothing holistic about the methodolgy. As an example passivity multipliers that we have utilized before 
 can not be factorized using this argument. Hence, one can use the the results of \cite{goh962}.
@@ -977,7 +980,7 @@ starting the design iteration.
 	\item The performance weights are not too demanding i.e. high-performance nominal control design might have very little robustness
 	properties hence it's better to redesign the performance weights after looking at the robust controller obtained later. By doing
 	so one can see the effect of the weights by plotting the performance channel entries. 
-	\item The control channels are weighted, even slightly, to avoid the controller gains blow up when unconstrained by the LMI solvers.
+	\item The control channels are weighted, even slightly, to avoid the controller gains blowing up when unconstrained by the LMI solvers.
 	This might not be relevant for the synthesis case however due to the non-convex nature of the iteration it's more likely to get a 
 	infeasible analysis certificate even though the synthesis step returns a feasible controller.
 	\item After the interconnection of the weights it is crucial that the state-space data is minimal and balanced. It also helps to
@@ -1115,7 +1118,7 @@ Another important issue after the synthesis is that we have to treat carefully t
 numerical noise contaminating $U,V$ entries plays a big role in obtaining healthy controller matrix data due to the 
 inverses of $U$ and $V$. The essential difficulty is the eigenvalues of $XY$ approaching to unity hence rendering the 
 matrix $I-XY$ badly conditioned with respect to inversion. Some optimization-based remedies regarding the LMI problem setup 
-are given in \cite{lmibook99} such that the resulting matrix eigenvalues are forced away from unity. However, even this is 
+are given in \cite{lmibook99} such that the resulting matrix eigenvalues are forced away from unity. However, even when this is 
 established, it's not guaranteed that the resulting matrices $U,V$ would be free of problems. There are many possibilities 
 and in our opinion, a comprehensive code should check as many possibilities as possible. Although, this should be left 
 to numerical analysts, seemingly the easiest method is basing the matrices on $(I-XY)^{-1}= V^{-T}U^{-1}$ instead of 
@@ -1134,7 +1137,7 @@ should be implemented however it goes beyond the scope of this manuscript.
 worse numerical margins as one particular feasible result in one step tends to be infeasible in another step. We can speculate 
 that this type of modifications don't work (though theoretically should help) since the LMI solvers indeed push the 
 decision variables to such an extreme that slight changes in the constant part of the LMIs render the solutions 
-infeasible. Combined with the various factorizations etc. we have decided to not to modify the plant among the 
+infeasible. Combined with the various factorizations, we have decided to not to modify the plant among the 
 iteration steps. However the remark for the initial balancing step is not affected and should be performed regardless 
 of this. It's unfortunately up to the designer to watch for very high-frequency behavior of the plant-controller
 interaction as this can affect the feasibility of the iteration. 

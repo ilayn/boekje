@@ -427,15 +427,15 @@ models and the human/environment dynamics are interconnected directly to the cor
 \begin{subfigure}{0.4\linewidth}
 \centering
 \begin{tikzpicture}[>=latex,scale=0.85,transform shape]
-\node[draw,inner xsep=4mm,inner ysep=2mm] (op) at (0,1.5) {Environment\vphantom{p}};
+\node[draw,inner xsep=1mm,inner ysep=2mm] (op) at (0,1.5) {Environment};
 \node[draw] (mas) at (0,0) {Slave Device};
 \node[circle,draw,inner sep=2pt] (sum) at ([xshift=6mm]mas.east) {};
 \draw[->] (op) -| (sum);
 \draw[<-] (mas) -- (sum);
 \draw[->] ([yshift=-5mm]sum.south) node[below](fm){$f_s$}-- (sum);
 \draw[->] (op-|sum) -- ++(0,5mm)node[left] {$f_e$};
-\draw[->] (mas.west) -| ++(-10mm,5mm) |- (op);
-\node (xm) at ([xshift=-10mm]mas.west|-fm) {$x_s$};
+\draw[->] (mas.west) -| ++(-7mm,5mm) |- (op);
+\node (xm) at ([xshift=-7mm]mas.west|-fm) {$x_s$};
 \draw[->] (mas) -|(xm);
 \node (min) at ([shift={(-1mm,1.2mm)}]sum.150) {$\scriptstyle -$};
 \end{tikzpicture}
@@ -1643,27 +1643,28 @@ insignificant.
 In this chapter, we have shown that a systematic control design for bilateral teleoperation problem is feasible and results have been 
 verified through a basic implementation study. Based on these results we claim that a \emph{transparency}-like objective can be achieved with 
 robust and high-performance controller via a thorough modeling step of the involved systems. Thus, we believe that we have presented a 
-counter-example free from the drawbacks of classical stability-transparency trade-off. Moreover, the designed controllers do not show
-unexpected robustness or performance behaviors and the performance-stability properties worsen as we approach or go beyond the theoretical
-boundaries of parametric uncertainties. 
+counter-example free from the methodological drawbacks of classical stability-transparency tradeoff while still amenable to the essential
+stability/performance tradeoff. Moreover, the designed controllers do not show unexpected robustness or performance behaviors and the 
+performance-stability properties worsen as we approach or go beyond the theoretical guarantees. 
 
-Still, in accordance with our claims in the \Cref{chap:perf}, this design, regardless how impressive it is, cannot be accepted as a genuine 
-bilateral teleoperation method, since we use the questionable transparency-like objective as the performance index.
-
+Still, in accordance with our claims in the \Cref{chap:perf}, this design, regardless of the appeal or superiority, cannot be accepted as 
+a genuine bilateral teleoperation method, since we use the questionable transparency-like objective as the performance index.
 
 We cannot help but include yet another rant about the control design in the literature for bilateral teleoperation. Instead of mentioning the typical 
 absence of arguments on describing how any PD controller in the loop is tuned or why we should bother to perform endless derivations to tune one 
 or, if we are lucky, a very few more parameters, we limit the discussion to the following. 
 
-In almost all network-based modeling papers, for some unknown reason and as if it is possible, the concept of local controllers are introduced 
+In majority of the network-based modeling papers, for some unknown reason and as if it is possible, the concept of local controllers are introduced 
 and the controllers that only communicate over the line between local and remote devices are emphasized for further analysis (see \Cref{lit:syn:ela}). 
 Quite often, it is assumed that the local controllers achieve \enquote{high-precision tracking} locally and derive the conditions to render 
 the interconnection passive. Then delays and other complications are introduced and tedious derivations are presented though the undelayed bilateral
 teleoperation problem is still open for a satisfying performance definition. The subsequent result is either deriving constraints on PD controller 
 gains without any comment on how we are supposed to tune the \enquote{local} controllers\footnote{which is far from trivial while respecting  
-passivity and simultaneously achieving precise tracking} or some controller entries in \Cref{lit:syn:ela} are assumed to be zero. In the 
-four-channel case, the methods are exclusively limited to compensated dynamics type, cross-coupling controllers where each entry is specifically 
-equals some part of the cancellation of dynamics to reach to the ideal transparent system. 
+passivity and simultaneously achieving precise tracking}. We emphasize that the closed loop stability is guaranteed by all controllers and 
+the locality of the controller does not exclude it from the interconnection stability consideration. Alternatively, some controller entries 
+in \Cref{lit:syn:ela} are assumed to be zero and the number of variables is reduced. In the four-channel case, the methods are exclusively 
+limited to compensated dynamics type, cross-coupling controllers where each entry is specifically equals some part of the cancellation of 
+dynamics to reach to the ideal transparent system. 
 
 We openly accept that we fail to understand the rationale behind these arguments.
 
@@ -1677,12 +1678,15 @@ controller entries (see \eqref{eq:lit:MIMOcont} and \Cref{lit:syn:ela})
     \item  $K(1,3)= 1+K(2,3)$
     \item  $K(1,2)= -(\text{Dynamics of the user}+K(1,1))$
 \end{itemize}
-hold or not. Even graphically, we can see that none of the conditions are valid. In some cases, there are \SI{20}{\decibel} differences for the second
-and third conditions and also the first and last conditions are not verifiable since they involve time-varying operators as opposed to LTI assumptions in the 
-Lawrence' analysis. Nevertheless, we obtain a a high level of transparency with controllers that do not even remotely resemble conditions of the 
-ideal transparency conditions. The apparent mismatch comes from the fact that we do not care whether the resulting closed loop \emph{2-port} hybrid
-matrix is $\begin{psmallmatrix}0&I\\I&0\end{psmallmatrix}$ or not. We simply optimize the controller to minimize the induced gain of the performance 
-channels.
+hold or not. Obviously, since we use position signals for feedback we can't simply use the data given in \Cref{lit:syn:ela} without 
+multiplying the third and fourth columns with $\iw$. Even then, we can verify that none of the conditions are valid. In some cases, there are 
+more than \SI{20}{\decibel} differences for the second and third conditions and also the first and last conditions are not verifiable since 
+they involve time-varying operators as opposed to LTI assumptions in the Lawrence' analysis. Nevertheless, we obtain a a high level of 
+transparency\footnote{in the informal sense involving human perception if compared to the Lawrence' formal definition.} with controllers 
+that do not even remotely resemble conditions of the classical transparency conditions. The apparent mismatch comes from the fact that we 
+do not care whether the resulting closed loop \emph{2-port} hybrid matrix is $\begin{psmallmatrix}0&I\\I&0\end{psmallmatrix}$ or not. We 
+simply optimize the controller to minimize the induced gain of the performance channels. Moreover, this also shows that the well-known 
+transparency optimized control laws given above can only be taken into account in the passivity-based absolute stability framework.
 
 
 In the light of the discussion above, we strengthen our claim that how to arrive at complicated structures by manual tuning or cross-coupling 
@@ -1690,10 +1694,10 @@ controllers is unknown and current literature does not answer this question cont
 is a complexity problem but not a matter of engineering experience obtained from loop-shaping practices that implies our position completely 
 opposed to the claims of \cite{danielmcaree}. 
 
-It is important to iterate that there is no holistic issue about the presented method. If there exists a better MIMO technique or a better 
-structured controller design technique then they immediately qualify as valid ones. However, the essential argument remains unaltered that 
-modeling and defining proper performance objectives are crucial independent of the method to arrive at the controllers.
-
+Despite the risk of overemphasizing this remark, we need to reiterate that there is no holistic issue about the presented method. If there 
+exists a better MIMO technique or a better structured controller design technique then they immediately qualify as valid ones. However, the 
+essential argument remains unaltered that modeling and defining proper performance objectives are crucial independent of the method to 
+arrive at the controllers.
 
 
 %
