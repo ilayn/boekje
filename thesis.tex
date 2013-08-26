@@ -9,15 +9,11 @@
 
 
 \begin{document}
+\frontmatter
 \pagenumbering{roman}
 \hypersetup{pageanchor=false}
 \include{title}
 
-\frontmatter
-
-%\pagestyle{plain}
-%\chapterinclude{abstract}
-%\chapterinclude{acknowledgements}
 \cleardoublepage
 \pagenumbering{arabic}
 \mainmatter
@@ -44,6 +40,7 @@
 \include{conclude}
 
 \clearpage
+\thispagestyle{empty}
 %
 \appendix
 \include{apdxnetwork}
@@ -51,8 +48,8 @@
 
 \backmatter
 \include{references}
-
-
+\include{acknow}
+%\include{summary}
 \clearpage
 \thispagestyle{empty}
 \null

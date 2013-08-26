@@ -185,12 +185,14 @@
 \definecolor{darkblue}{rgb}{0,0,0.4}
 
 \hypersetup{
+unicode=true,
 linkcolor=darkred,%
 citecolor=darkblue,%
 filecolor=black,%
 urlcolor=black,%
 pdfauthor={İlhan Polat},%
-pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs}%
+pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs},%
+pdfsubject={Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs}
 }
 
 
@@ -365,13 +367,18 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
                         every right delimiter/.style={xshift=-0.1ex}}
 }
 
-\pgfdeclarefunctionalshading{eightball}{\pgfpointorigin}{\pgfpoint{100bp}{100bp}}{}{
-50 sub dup mul exch
-70 sub dup mul 0.5 mul add sqrt  
-dup mul neg 1.003 exch exp 1 exch sub
-dup
-dup
-}
+%\pgfdeclarefunctionalshading{eightball}{\pgfpointorigin}{\pgfpoint{100bp}{100bp}}{}{
+%50 sub dup mul exch
+%70 sub dup mul 0.5 mul add sqrt  
+%dup mul neg 1.003 exch exp 1 exch sub
+%dup
+%dup
+%}
+\pgfdeclareradialshading{mysphere}{\pgfpoint{1cm}{0cm}}%
+{rgb(0cm)=(0,0,0);
+rgb(0.7cm)=(0.8,0.8,0.8);
+rgb(0.9cm)=(0.95,0.95,0.95);
+rgb(1.0cm)=(1,1,1)}
 
 \makeatletter
 \pgfdeclareplotmark{o*}
