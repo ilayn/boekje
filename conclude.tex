@@ -97,24 +97,24 @@ Following this argument, we have the following conclusions elaborated in this th
     forces sensed in remote and local environments. The synthesis framework is already established however once again, the performance 
     objective is missing therefore we hit the same bottleneck. 
     }
-    \item The teleoperation literature (and partially the control theory literature in general) have the tendency to motivate engineering 
-    problems inside a seemingly rigorous mathematica.l framework. However, often there is an implicit transition from the actual problem to 
-    the watered down, oversimplified version of the same problem that disconnects the solution from the physical motivation. Alternatively, unrealistic 
-    reasons are used to justify certain assumptions. A typical example is the claim that force sensors are expensive to implement and 
-    force sensorless possibilities are explored. That statement is only true relatively if the remote and/or local device cost is significantly
-    low. If we can succeed providing the operator a realistic touch sensation, the sensors would compensate the
-    investment costs in a very short amount time\footnote{A surgical robotic system price is in the order of million USD with very high maintenance 
-    costs. The typical force sensor cost is negligible}. We certainly refrain from declaring what is worth of focus or not however motivating 
-    a mathematical problem with questionable engineering scenarios is false and unfortunately very common. Same problems can be investigated 
-    without any engineering motivation for the sake of the problem alone.
+    \item The teleoperation literature (and partially the general control theory literature) has the tendency to motivate engineering 
+    problems inside a seemingly rigorous mathematical framework. Often, however, there is an implicit transition from the actual problem to 
+    the watered down, oversimplified version of the same problem that disconnects the solution from the physical motivation. Alternatively, 
+    unrealistic reasons are used to justify certain assumptions. Take the claim that force sensors are expensive to implement and hence 
+    force-sensorless possibilities are explored. That statement is only true relatively if the remote and/or local device cost is 
+    significantly low. If we can succeed providing the operator a realistic touch sensation, the sensors would compensate the investment 
+    costs in a very short amount time\footnote{A surgical robotic system price is in the order of M\EUR{} with very high maintenance 
+    costs. The typical force sensor cost is not even high enough to be considered as negligible}. We certainly refrain from declaring what 
+    is worth of focus or not however motivating a mathematical problem with questionable engineering scenarios is false and unfortunately 
+    very common. Same problems can be investigated for the sake of the problem alone without any naive engineering motivation.
     
     {\bfseries There are more important open problems than the rather specialized delayed teleoperation problem or force-sensorless teleoperation.
     The delay robustness problem is studied in the last two decades extensively outside the teleoperation context. As a result of this 
     effort we already have a variety of methods IQCs, Lyapunov-Krasovskii functionals etc. The importance of the delay instability is due 
     to the unrealistic ambitious objective of physics equalization. Similarly force-sensorless teleoperation or multi-user teleoperation etc.
     are problems with invalid motivation from a technological point of view since the bilateral teleoperation system is an human oriented
-    technology not a network controlled system. The problem is finding the tool for designing the controller but not modifying the problem 
-    for the control design tool.
+    technology not a network controlled system. The problem is finding the right tool for designing the controller but not modifying the 
+    problem for the existing control design tool.
     }
     
 \end{enumerate}
