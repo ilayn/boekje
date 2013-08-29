@@ -1,0 +1,85 @@
+\chapter{Summary}
+
+The human body is equipped with one of the most complex network structure involving a huge number of components for the sense of touch. 
+The human brain, then, processes this massive amount of information to infer the nature of the interaction with its surroundings. At a 
+higher level, this can be understood better via the engineering concept \enquote{sensor fusion} which studies the ways of utilizing qualitatively 
+different information coming from distinct sources. Similar to 3D vision and audio system technologies, it is also possible to create an 
+artificial sense of touch using dedicated devices and predefined motion patterns. Motivated by these inference capabilities of the brain, 
+the haptic feedback technology aims to provide touch cues for the human user while operating a remote device via using a local device 
+where there is no actual physical interaction between the user and the remote medium. Hence, there has been an active line of research 
+since the 1960s to realize such devices and control algorithms that provide the functionality of providing artificial touch sense for the 
+human to immerse into a virtual reality. Still, the technology is far from being established and in fact even the potential benefit of 
+this technology is a subject of debate. This is partially due to the fact that the important technical problems mainly remain unsolved. 
+
+Current state-of-art methods attack the haptic feedback problem as the problem of directly copying and matching the interaction at the 
+local and the remote devices in terms of the involved forces and positions. Since the physics of each media can be significantly 
+different, there is an inherent stability problem i.e., the control algorithm in fact tries to achieve a physically impossible 
+configuration of device positions and applied forces simultaneously. The common remedy to remove this instability is the injection of 
+damping such that both the local and remote devices can only exhibit severely limited motion profiles in terms of the maximum force and 
+velocities.
+
+This thesis investigates the fundamental reasons why such stability problems arise. The approach for the investigation is to start from 
+the initial assumptions and hypotheses and work out the implications to see whether the inferences indeed match the literature. We argue 
+that the stability problems that we are often faced with, are not fundamentally essential. But in fact they are due to the overambitious 
+control objectives and questionable assumptions about the components involved in the interaction described above. Moreover, the 
+performance objectives that are assumed to be relevant turn out to be either impossible to obtain or irrelevant to the problem at hand. 
+
+In the second part of the thesis, using the so-called Integral Quadratic Constraints framework, developed by many contributors but 
+refined and popularized by Megretski and Rantzer in the end of 1990s, we show that many of the seemingly different stability methods in 
+the frequency domain are in fact equivalent. This also allows us to show that often the results in the literature are incorrectly 
+formulated and equivalent statements are compared with each other. 
+
+After this unification, we apply the general multiplier methods of IQCs to demonstrate the convenience of the stability analysis for 
+different types of uncertainties involved for which no classical test is available. Then, using the analysis framework we turn to the 
+controller design problem and derive an iterative control design method which can be seen as a generalized version of  the well-known D-K 
+iteration from the Structured Singular Value theory. It is shown that we can bypass the complications of the state-of-art control design 
+techniques by clearly defining a performance objective that is posed as a minimization problem. The validity of the method is shown by 
+the performing teleoperation over two 1-degree of freedom devices. 
+
+Although the results show superiority in terms of performance, we still insist on arguing that the haptic feedback problem is not well 
+understood by the control engineering community. Thus, we strongly encourage the experts of the relevant fields such as the neuro-
+sciences, cognitive psychophysiology and others that we are not yet aware of to join and guide the engineers in creating the performance 
+specifications for a successful and beneficial haptic technology.
+%
+%\chapter{Samenvatting}
+%
+%The human body is equipped with one of the most complex network structure involving a huge number of components for the sense of touch. 
+%The human brain, then, processes this massive amount of information to infer the nature of the interaction with its surroundings. At a 
+%higher level, this can be understood better via the engineering concept \enquote{sensor fusion} which studies the ways of utilizing qualitatively 
+%different information coming from distinct sources. Similar to 3D vision and audio system technologies, it is also possible to create an 
+%artificial sense of touch using dedicated devices and predefined motion patterns. Motivated by these inference capabilities of the brain, 
+%the haptic feedback technology aims to provide touch cues for the human user while operating a remote device via using a local device 
+%where there is no actual physical interaction between the user and the remote medium. Hence, there has been an active line of research 
+%since the 1960s to realize such devices and control algorithms that provide the functionality of providing artificial touch sense for the 
+%human to immerse into a virtual reality. Still, the technology is far from being established and in fact even the potential benefit of 
+%this technology is a subject of debate. This is partially due to the fact that the important technical problems mainly remain unsolved. 
+%
+%Current state-of-art methods attack the haptic feedback problem as the problem of directly copying and matching the interaction at the 
+%local and the remote devices in terms of the involved forces and positions. Since the physics of each media can be significantly 
+%different, there is an inherent stability problem i.e., the control algorithm in fact tries to achieve a physically impossible 
+%configuration of device positions and applied forces simultaneously. The common remedy to remove this instability is the injection of 
+%damping such that both the local and remote devices can only exhibit severely limited motion profiles in terms of the maximum force and 
+%velocities.
+%
+%This thesis investigates the fundamental reasons why such stability problems arise. The approach for the investigation is to start from 
+%the initial assumptions and hypotheses and work out the implications to see whether the inferences indeed match the literature. We argue 
+%that the stability problems that we are often faced with, are not fundamentally essential. But in fact they are due to the overambitious 
+%control objectives and questionable assumptions about the components involved in the interaction described above. Moreover, the 
+%performance objectives that are assumed to be relevant turn out to be either impossible to obtain or irrelevant to the problem at hand. 
+%
+%In the second part of the thesis, using the so-called Integral Quadratic Constraints framework, developed by many contributors but 
+%refined and popularized by Megretski and Rantzer in the end of 1990s, we show that many of the seemingly different stability methods in 
+%the frequency domain are in fact equivalent. This also allows us to show that often the results in the literature are incorrectly 
+%formulated and equivalent statements are compared with each other. 
+%
+%After this unification, we apply the general multiplier methods of IQCs to demonstrate the convenience of the stability analysis for 
+%different types of uncertainties involved for which no classical test is available. Then, using the analysis framework we turn to the 
+%controller design problem and derive an iterative control design method which can be seen as a generalized version of  the well-known D-K 
+%iteration from the Structured Singular Value theory. It is shown that we can bypass the complications of the state-of-art control design 
+%techniques by clearly defining a performance objective that is posed as a minimization problem. The validity of the method is shown by 
+%the performing teleoperation over two 1-degree of freedom devices. 
+%
+%Although the results show superiority in terms of performance, we still insist on arguing that the haptic feedback problem is not well 
+%understood by the control engineering community. Thus, we strongly encourage the experts of the relevant fields such as the neuro-
+%sciences, cognitive psychophysiology and others that we are not yet aware of to join and guide the engineers in creating the performance 
+%specifications for a successful and beneficial haptic technology.
