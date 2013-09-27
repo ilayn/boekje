@@ -4,7 +4,7 @@
 
 Bilateral teleoperation problem is probably one of the most difficult problems in the control field due to its 
 subjective nature involving the human comfort and liking. However, to put it bluntly, the experts are not helping 
-either. In other words, most of the \enquote{good performance} motivations come out of modeling first-principles 
+either. In other words, most of the \enquote{good performance} motivations stems from first-principles modeling 
 but not out of the user experience. 
 Some literature argue that since most of the tools we utilize are (almost-)lossless, say, a 
 screwdriver or even a simple stick, it's natural to seek for a passive bilateral teleoperation system (though if we
@@ -21,7 +21,7 @@ by rudimentary physics. For this reason, we call the limits of performance exami
 This statement summarizes perfectly what the contemporary bilateral teleoperation literature promotes. The reason why we strongly 
 disagree with this statement should be evident at the end of this chapter and later in \Cref{chap:application}. Still, to provide a contextual 
 introduction to the discussion, we first remind that the underlying physics does not only consist of two distant robots interacting with 
-their corresponding surroundings. The actual physiscs involve the human liking and that gives us freedom to display whatever is considered 
+their corresponding surroundings. The actual physiscs involve the human liking and that gives us the freedom to display whatever is considered 
 to be \enquote{cool, nice, crisp, real, helpful} by the human operator. It doesn't matter if we are off by \SI{10}{\newton} or some other reflected 
 quantity is not in accordance with the actual measurement; as long as the human operator is happy with the result in terms of immersion and 
 touch sensation, we are done. There is nothing fundamental in terms of technological limits of performance and there is nothing wrong with 
@@ -31,7 +31,7 @@ practice; obfuscation by purism.
 In order to justify such fundamental limitations, we have two missing ingredients in \cite{danielmcaree}; the required precise tools that
 do not bring in any lossy simplifications and the exact mechanism described completely by the actual physics. Unfortunately, their analysis 
 rely completely on LTI root loci tools and human preference is openly skipped. Therefore their results can at best be the fundamental 
-limitations of what the literature claims the bilateral teleoperation is to be.
+limitations of what the literature claims the bilateral teleoperation is.
 
 In general, there is no established consensus on what makes a teleoperation system \enquote{good}. Quite the contrary, 
 this question is openly and unambiguously avoided in some well-acknowledged articles. Instead some possibilities are 
@@ -39,7 +39,7 @@ proposed and rigorously pursued to the end without actually validating if these 
 Therefore, the conclusions that these studies arrive at are the implications of their initial hypotheses. However, 
 the studies that follow these publications do not take this crucial detail into account and proceed as if these 
 performance objectives are indeed the ultimate goals. We have to claim that the motivation of most of the studies 
-given in the literature erroneously put emphasis on performance objectives that are at best suggestions and often 
+given in the literature erroneously put emphasis on performance objectives that are at best suggestions and are often 
 questionable. 
 
 On the other hand, there is a different school that focuses only on stability of the teleoperation system in the 
@@ -61,7 +61,7 @@ system. Because we just don't know, yet.
 \section{Types of Performance}
 
 In terms of the quality of the force-feedback, there are a few leading choices of methodological performance 
-definitions. The widely accepted so-called \enquote{transparency} stems from the ideal case of lossless, undistorted
+definitions. The widely accepted \enquote{transparency} stems from the ideal case of lossless, undistorted
 exact replica of the remote side physics at the local site. Hence the ultimate goal is selected to be 
 faithfully representing the remote site motion and allowing the user intervene just as good as s/he is operating 
 directly at the remote site. Let us provide some background how transparency is often provided and/or motivated. We
@@ -191,7 +191,7 @@ scenarios. A particular subset of second-order mass-spring-damper models of envi
 with this claim if passivity theorem is used. However, when combined with other uncertain blocks in the loop we do not see
 how the argument follows. Note that it is well-known in the robust control literature that a destabilizing uncertainty need
 not to be living on the boundary of the uncertainty set. Therefore, either by gridding the uncertainty set and testing the 
-stability conditions on a large number of points or by a specific relaxation on the constraints conditions should be 
+stability conditions on a large number of points or by a specific relaxation on the constraints, the conditions should be 
 translated to finitely many (and computationally tractable) number of points stability is guaranteed over the whole 
 uncertainty set.
 
@@ -254,9 +254,9 @@ had the same motion performed directly by the surgeon, the better the nuances tr
 the fidelity. This performance objective, in a sense, emphasizes the high frequency content of the information (closer
 to tactile bandwidth). It has been noted that the Just Noticable Difference (JND) of \SIrange{14}{25}{\percent} for 
 distinguishing relative compliance of similar surfaces goes under \SI{1}{\percent} for rapid compliance variation detection 
-while, say, scanning a surface \cite{dhruvtendick}. Similar to the definitions given for transparency, the change of the 
-displayed impedance $Z_{disp}(Z_e)$ with respect to the change in the environment $Z_e$ can obtained via a straightforward 
-calculation. 
+while, say, scanning a surface (See \cite{dhruvtendick} or \cite{greenishhayward} for a haptics scissor analysis). Similar to the 
+definitions given for transparency, the change of the displayed impedance $Z_{disp}(Z_e)$ with respect to the change in the environment 
+$Z_e$ can obtained via a straightforward calculation. 
 
 Consider again the system interconnection as depicted in \Cref{fig:nom_net}. Given the scalar complex LTI uncertainty block 
 $\Delta$ and the LTI plant $G\in\mathcal{RH}_\infty^{2\times 2}$. The upper LFT interconnection of $\Delta_e-G$ is given by, 
@@ -276,7 +276,7 @@ and
 \[
 \pmatr{p_1\\p_2} = \pmatr{\Delta_e &0\\0 &\Delta_e}\pmatr{q_1\\q_2}.
 \]
-one can simply read off the interconnection from the block diagram below:
+This representation can simply be read from the interconnection depicted below:
 \[
 \begin{tikzpicture}[>=stealth,baseline]
 \node[draw] (g12) at (0,0) {$G_{21}$};
@@ -302,13 +302,7 @@ Note that the matrix case follows a similar but more involved step via computing
 recognize the familiar plant-uncertainty representation clearer without any complication. 
 
 Consequently, the authors define a transparency-like performance objective using a rather subtle choice of system $2$-norms. 
-
-\begin{define*}[System $2$-norm]Let $H$ be a stable strictly proper LTI system with transfer matrix $H(s)$. Then 
-\[
-\norm{H}_2^2 \coloneqq \infint{\trace(H^*(\iw)H(\iw))}d\omega
-\] 
-\end{define*}
-\noindent The measure of fidelity is defined as the norm
+The measure of fidelity is defined as the norm
 \[
 \norm{\left.W_s\frac{dP}{d\Delta_e}\right|_{\Delta_{enom}}}_2
 \]
@@ -320,12 +314,16 @@ the synthesis problem is to find the optimizer, controller $K$ to the problem
 \]
 where $\Delta_{ei}$ are the worst case environments that are of interest.
 
+\begin{define*}[System $2$-norm]Let $H$ be a stable strictly proper LTI system with transfer matrix $H(s)$. Then 
+\[
+\norm{H}_2^2 \coloneqq \infint{\trace(H^*(\iw)H(\iw))}d\omega
+\] 
+\end{define*}
 
 There are a few interpretations of this norm in the literature, mainly, the deterministic \enquote{area under the Bode
 Plot} interpretation i.e. energy of the impulse response for scalar case, and the stochastic \enquote{steady-state 
 white-noise-input response}. We are under the impression that the authors argue in the line of the former interpretation
 with a similar reasoning given in the $Z$-width discussion via an area computation. 
-
 
 Designing a robust controller while minimizing the $\mathcal{H}_2$ norm of an uncertain system in the face of a predefined 
 uncertainty set i.e. \enquote{Robust $\mathcal{H}_2$ Synthesis} problem has already recevied a lot of attention and 
@@ -335,12 +333,14 @@ the infimum needs to be computed in the face of a set of infinitely many points 
 This point is also not given though a gridding approach seems to be utilized in the numerical optimization procedure 
 described in the paper.
 
-It is also not clear in which case we should utilize this performance objective. The initial difficulty is that all the 
-involved operators are LTI hence there is no time variation involved. The test reads as; \emph{we select an arbitrary element 
-in the predefined uncertainty set, say $\Delta_e$, and evaluate the derivative at $\Delta_e$. Hence, in some $\epsilon$-
-neighborhood of $\Delta_e\in\bm{\Delta_e}$ we can see the change in $P$}. Thus, if the environment is slightly off from our 
-nominal guess, this tells us how much fidelity measure would change. But the environment is still assumed to be LTI.
-
+It is also not clear when we should utilize this performance objective. The initial difficulty is that all the 
+involved operators are LTI hence there is no time variation involved. The test reads as; \emph{we assume an arbitrary element 
+in the predefined uncertainty set, say $\Delta_e$, and evaluate the norm of the weighted derivative at $\Delta_e$ (assuming its 
+existence). Hence, in some $\epsilon$-neighborhood of $\Delta_e\in\bm{\Delta_e}$ we can see the change in $P$}. Thus, around this environment 
+candidate, this result tells us how much fidelity measure would change. Performing the same check for all elements in the uncertainty
+set we find the lowest fidelity value and by the taking supremum over all stabilizing controllers we try to increase this value globally. 
+But the environment is still assumed to be LTI hence cannot change. Therefore, for each fixed environment we obtain different structural 
+properties of the system. 
 
 Note that, this does not imply that time-variations are taken into account. Suppose a particular admissible trajectory
 $\hat{\Delta}_e(t)$ in time is given such that $\hat{\Delta}_e(t_1)=\Delta_e$ i.e. its time-frozen LTI copy coincides 
