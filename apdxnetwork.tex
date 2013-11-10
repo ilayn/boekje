@@ -9,13 +9,13 @@ interconnections and stability of these interconnections hence circuit theory pr
 \section{Terminology}
 We start with ideal circuits for which the external influences such as the magnetic interference, temperature gradient as well as 
 internal characteristics such the conductor element length and resistance etc. are negligible. Hence a signal traveling through a 
-conducting medium between location $A$ and $B$ distorted i.e., if an arbitrary property of the signal at any point between and 
-including $A$ and $B$ is measured, we obtain the same results. This allows us to use the simplifications in block diagrams and 
-calculations that point $A$ and $B$ have the same measurable characteristics through time. This is typically shown with a path 
-connecting $A$ and $B$. The interpretation is that $A$ and $B$ and also every other point on that path share the same variables 
-of interest on that line. Therefore, $A$ and $B$ are said to be interconnected terminals connected by a \enquote{wire}. Clearly 
-creating terminals are as simple as cutting the connection arbitrarily on this path. Often, we define hypothetical terminals as 
-if there were distinct points on the circuit and we have connected them artificially. 
+conducting medium between location $A$ and $B$ is assumed to be not distorted during its travel i.e., if a relevant property 
+of the signal at any point between and including $A$ and $B$ is measured, we obtain the same results. This allows us to use the 
+simplifications in block diagrams and calculations that point $A$ and $B$ have the same measurable characteristics through time. 
+This is typically shown with a path connecting $A$ and $B$. The interpretation is that $A$ and $B$ and also every other point on 
+that path share the same variables of interest. Therefore, $A$ and $B$ are said to be interconnected terminals connected by a 
+\enquote{wire}. Clearly creating terminals are as simple as cutting the connection arbitrarily on this path. Often, 
+we define hypothetical terminals as if there were distinct points on the circuit and we have connected them artificially. 
 
 Following Jan C. Willems' formulation for a systematic definition of terminals and ports in \cite{willemsCSM}; an electrical 
 circuit is a device, a black box, with wires so-called terminals through which the circuit can interact with its surroundings. 
@@ -52,7 +52,7 @@ compactly described as
 \end{align}
 where $\mathbb{1}$ denotes a vector with all entries are equal to $1$ whose size is clear from the context.
 
-Let, $P \subseteq \{1,\ldots,N\}$ denote an $m$-tuple selection of indices out of $N$ terminals of a circuit. Then, terminals
+Let $P \subseteq \{1,\ldots,N\}$ denote an $m$-tuple selection of indices out of $N$ terminals of a circuit. Then, terminals
 $P_i$ for all $i\in P$ are said to form a port if 
 \[
 (V,I)\in\mathcal{B} \implies p^TI=0 \tag{Port KCL}
@@ -229,7 +229,7 @@ and its extension $\mathcal{H}_e$ as
 \]
 and
 \[
-\mathcal{H}_e := \left\{ x\in F\mid \forall T\in\mathcal{T}, \norm{x_t}^2=\langle x_T,x_T \rangle<\infty \right\}
+\mathcal{H}_e := \left\{ x\in F\mid \forall T\in\mathcal{T}, \norm{x_T}^2=\langle x_T,x_T \rangle<\infty \right\}
 \]
 
 
@@ -332,7 +332,7 @@ and interconnected to passive LTI termination immitances as in \Cref{fig:portrep
 \begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:lit:llew2}\end{equation} and
 \begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:lit:llew3}\end{equation} 
 or
-\begin{equation}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\end{equation}%\label{eq:lit:llew3p}
+\begin{equation*}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\end{equation*}%\label{eq:lit:llew3p}
 for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
 \end{thm}
 

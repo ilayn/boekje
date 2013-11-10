@@ -120,13 +120,13 @@ The reasoning behind this choice should be more apparent after \Cref{chap:perf}.
 \end{scope}
 \begin{scope}[shift={(1.4cm,-0.2cm)}]
 \draw (0,0) -- (0.9cm,0) (0.45,0) circle (1.5mm);
-\path [fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);%postaction={pattern=north west lines},
+\path [fill=white,postaction={pattern=north west lines}] (0cm,0cm) rectangle (0.9cm,-0.16cm);%postaction={pattern=north west lines},
 \draw[line width=1.5mm,round cap-round cap] (0.475cm,0.05cm) -- ++(110:7mm);
 \draw[line width=1mm,round cap-round cap] (0.475cm,0.05cm) ++(110:6.3mm) --++ (220:5mm);
 \end{scope}
 \begin{scope}[shift={(5.4cm,-0.2cm)},cm={-1,0,0,1,(0,0)},transform shape]
 \draw (0,0) -- (0.9cm,0) (0.45cm,0) circle (1.5mm);
-\path [fill=white] (0cm,0cm) rectangle (0.9cm,-0.16cm);%postaction={pattern=north west lines},
+\path [fill=white,postaction={pattern=north west lines}] (0cm,0cm) rectangle (0.9cm,-0.16cm);%postaction={pattern=north west lines},
 \draw[line width=1.5mm,round cap-round cap] (0.475cm,0.05cm) -- ++(110:7mm);
 \draw[line width=1mm,round cap-round cap] (0.475cm,0.05cm) ++(110:6.3mm) --++ (220:5mm);
 \end{scope}
@@ -145,11 +145,11 @@ The reasoning behind this choice should be more apparent after \Cref{chap:perf}.
 };
 \node[circle,draw,inner sep=2pt,fill] (merkez) at (0,0) {};
 \end{scope}
-\begin{scope}[shift={(6.8cm,0.5cm)},scale=0.8]
-\draw[fill] (0.5mm,0.5cm) rectangle (0.49cm,0.6cm);
-\draw[fill,postaction={pattern=north west lines,pattern color=white}] (0.2cm,0.5cm) -- ++ (0,-0.4cm) -- ++ (-45:1mm) --++(45:1mm) --++ (0,
-0.4cm) --cycle;
-\end{scope}
+%\begin{scope}[shift={(6.8cm,0.5cm)},scale=0.8]
+%\draw[fill] (0.5mm,0.5cm) rectangle (0.49cm,0.6cm);
+%\draw[fill,postaction={pattern=north west lines,pattern color=white}] (0.2cm,0.5cm) -- ++ (0,-0.4cm) -- ++ (-45:1mm) --++(45:1mm) --++ (0,
+%0.4cm) --cycle;
+%\end{scope}
 \end{tikzpicture}
 \caption{General Teleoperation System}%
 \label{fig:teleop}%
@@ -431,7 +431,7 @@ mark indices={1,...,4,13,14,...,30,36,37,...,40,42,43,...,49}] plot[parametric] 
 \end{scope}
 \end{scope}
 \end{tikzpicture}
-\caption[Muscle activation mechanism]{Muscle activation mechanism (adapted from \cite{geeves})}%
+\caption[Muscle activation mechanism]{Muscle activation mechanism. The sequence is given in a clockwise (or anti-clockwise) fashion (adapted from \cite{geeves}).}%
 \label{fig:lit:muscle}%
 \end{figure}
 
@@ -739,8 +739,7 @@ system is asymptotically stable.
 \centering
 \includegraphics[width=0.6\columnwidth]{\impath/literature/train}%
 \caption[A transparent two-port network with passive terminations]{A transparent two-port network with passive 
-terminations. The actuation of the railcar is taken as a state-independent input to the system. (Source: Fred Dean Jr., 
-\href{http://www.flickr.com/photos/be216cd1/5971825854/}{[Flickr:Fred Dean Jnr]})}%
+terminations. The actuation of the railcar is taken as a state-independent input to the system. (Source: \cite{train})}%
 \label{fig:lit:train}%
 \end{figure}
 

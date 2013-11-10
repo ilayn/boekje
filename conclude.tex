@@ -16,7 +16,7 @@ open questions.
 
 Another important problem that we have not touched upon is the delayed bilateral teleoperation synthesis problem that somewhat dominated the
 literature as if the undelayed case is completely studied. To justify our deliberate choice we distinguish two cases; there is a strong 
-possibility backed by various studies that there exists an upper bound on the delay duration a human operator can cognitively compansate for 
+possibility backed by various studies that there exists an upper bound on the delay duration a human operator can cognitively compensate for 
 during a bilateral teleoperation task. Beyond this delay value the human cannot associate the remote motion with the local device motion. 
 Therefore let us denote this upper bound by $T$ whatever it might be other than being very likely to be around \SI{1}{\second}, then we 
 have the following obvious dichotomy,
@@ -31,7 +31,7 @@ objectives of how a human operator can be made to immerse into the task with an 
 significant time delay, one can use the multipliers given \Cref{chap:analysis} for delay uncertainties and utilize it in the synthesis 
 method given in \Cref{chap:synth} directly, with guaranteed improvements over the existing techniques. Additionally, if the communication 
 delay is of the time-varying nature, one can always buffer the input/output to regularize the delay and use the known upper bound of the 
-buffer period. The reason why this would always give a better performance is simply because the existing time-varying delay robustness analysis 
+buffer period. The reason why this would always give a better performance is because the existing time-varying delay robustness analysis 
 and synthesis tools are simply too conservative. Utilizing them surely would lead to stable interconnections but at the cost of unacceptable
 low performance levels which undermines the motivation the problem. Dealing with a known constant time-delay is, in turn, much easier and 
 sharper results can be obtained. Note that practically every packet-switched network video/audio stream protocol use such buffering schemes 
@@ -43,7 +43,7 @@ sophisticated than the choice between TCP or UDP protocols.
 Following this argument, we have the following conclusions elaborated in this thesis;
 \begin{enumerate}
 	\item The bilateral teleoperation is fundamentally an interdisciplinary problem. Current literature underestimates the broadness of the 
-    scope of this technology and claims to solve a stability problem that is not inline with the actual bilateral teleroperation. The majority
+    scope of this technology and claims to solve a stability problem that is not inline with the actual bilateral teleoperation. The majority
     of the proposed problem formulations are of \emph{What if we had sampling, two users, time-varying delay?} nature. Though, these scenarios 
     are certainly worth considering, the proposed solutions only handle the stability issues. Our first conclusion emphasizes this;
     
@@ -79,7 +79,7 @@ Following this argument, we have the following conclusions elaborated in this th
     the system and careful simplifications by the robust control design methodology. 
     
     {\bfseries The D-K iteration with dynamic multipliers leads to significantly less conservative results compared to static multiplier 
-    based designs which includes wave-variable- and passivity-based methods. The disadvantege of model based design is obtaining the accurate
+    based designs which includes wave-variable- and passivity-based methods. The disadvantage of model based design is obtaining the accurate
     models and the weight selection. The latter is a significant obstacle in judging the true optimality of the design. Even in the cases 
     where the problem solution is guaranteed to be optimal, the design itself due to the performance weights selection can be non-optimal. 
     However, this difficulty is not in par with the conservative methods. In other words, this difficulty can be overcome with educated 
@@ -90,7 +90,7 @@ Following this argument, we have the following conclusions elaborated in this th
     uncertain operators of different kind including delays, parameters, particular nonlinearities etc. However, as reassuring and positive 
     it might seem, more robust solutions lead necessarily to lower performance levels. Therefore, it is the highest priority to get a 
     model with reduced uncertainty as much as possible. Even if there does not exist a suitable method to handle the resulting obstacles, 
-    this will nevertheless make the problem visible and unambigious. 
+    this will nevertheless make the problem visible and unambiguous. 
     
     {\bfseries Due to the absence of a rigorous objective, we might pursue for the improvements over the method presented here. The 
     immediate improvement that can be relevant is the application of Linear Parameter Varying controller synthesis via scheduling over the 
@@ -108,11 +108,11 @@ Following this argument, we have the following conclusions elaborated in this th
     is worth of focus or not however motivating a mathematical problem with questionable engineering scenarios is false and unfortunately 
     very common. Same problems can be investigated for the sake of the problem alone without any naive engineering motivation.
     
-    {\bfseries There are more important open problems than the rather specialized delayed teleoperation problem or force-sensorless teleoperation.
-    The delay robustness problem is studied in the last two decades extensively outside the teleoperation context. As a result of this 
-    effort we already have a variety of methods IQCs, Lyapunov-Krasovskii functionals etc. The importance of the delay instability is due 
-    to the unrealistic ambitious objective of physics equalization. Similarly force-sensorless teleoperation or multi-user teleoperation etc.
-    are problems with invalid motivation from a technological point of view since the bilateral teleoperation system is an human oriented
+    {\bfseries There are more important open problems than, say, the rather specialized delayed teleoperation problem or force-sensorless 
+    teleoperation. The delay robustness problem is studied in the last two decades extensively outside the teleoperation context. As a result 
+    of this effort we already have a variety of methods IQCs, Lyapunov-Krasovskii functionals etc. The importance of the delay instability is 
+    due to the unrealistic ambitious objective of physics equalization. Similarly force-sensorless teleoperation or multi-user teleoperation 
+    etc. are problems with invalid motivation from a technological point of view since the bilateral teleoperation system is an human oriented
     technology not a network controlled system. The problem is finding the right tool for designing the controller but not modifying the 
     problem for the existing control design tool.
     }

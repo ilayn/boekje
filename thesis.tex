@@ -1,3 +1,6 @@
+\RequirePackage{silence}
+\WarningsOff[memoir]
+\WarningFilter{latex}{Marginpar on page}
 \documentclass[b5paper,showtrims]{memoir}
 \settrimmedsize{24cm}{17cm}{*}
 \settypeblocksize{185mm}{127mm}{*}
@@ -49,7 +52,7 @@
 \backmatter
 \include{references}
 \include{summary}
-%\include{acknow}
+\include{acknow}
 \clearpage
 \thispagestyle{empty}
 \null
