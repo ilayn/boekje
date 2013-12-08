@@ -16,14 +16,8 @@
 \pagenumbering{roman}
 \hypersetup{pageanchor=false}
 \include{title}
-
 \cleardoublepage
-\pagenumbering{arabic}
-\mainmatter
-\pagestyle{phdstayla}
 \hypersetup{pageanchor=true}
-\raggedbottom
-
 \tableofcontents
 \clearpage
 \listoftables
@@ -31,9 +25,10 @@
 \listoffigures
 
 \cleardoublepage
+\mainmatter
 \pagestyle{phdstayla}
-
-
+\pagenumbering{arabic}
+%
 \include{intro}
 \include{literature}
 \include{performance}

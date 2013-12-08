@@ -292,7 +292,7 @@ about the passivity of human operators, it is the Hogan's paper \cite{hogan89}
 that is almost universally cited. The striking detail is, however, that Hogan never claims that the human hand/arm is a passive
 system. Instead he clearly shows that under very specific conditions, human behavior is indistinguishable from that of a 
 passive system: 
-\begin{quote}
+\begin{displayquote}[{\cite{hogan89}}][.]
 Thus, despite the fact that the
 limb is actively controlled by neuro-muscular feedback, its apparent stiffness is equivalent to that of a completely passive
 system. In the light of Colgate's recent proof [3]\footnote{Reference \cite{colgatehogan88} of this thesis. However exactness 
@@ -300,8 +300,8 @@ of stability characterization for two LTI passive complex uncertainty blocks was
 and also in the classical network theory works at the time of writing. Therefore it is a misattribution.} that an apparently 
 passive impedance is the necessary and sufficient condition for a stable actively-controlled system to remain stable on contact 
 with an arbitrary passive environment, this experimental result strongly suggests that neural feedback in the human arm is carefully 
-tuned to preserve stability under the widest possible set of conditions.
-\end{quote}
+tuned to preserve stability under the widest possible set of conditions
+\end{displayquote}
 Moreover, the task reported in the paper that is given to human operators and analyzed afterwards, can be considered as a biased one because the success 
 of the test is related to the passive behavior of the human. The task is, roughly speaking, holding a handle which is perturbed by 
 random disturbances and trying to keep the handle still at a predefined position on the 2D plane. Hence, the task is simply to mimic 
@@ -320,13 +320,13 @@ to the requirements of the tasks.
 
 \begin{rem}\label{rem:filament}
 A particular detail should be clarified about the measurements taken in \cite{hogan89}. It is stated that: 
-\begin{quote}
+\begin{displayquote}[{\cite{hogan89}}][.]
 While normal human subjects held the handle of the manipulandum at a stable position
 in the workspace, small perturbations were applied. Measurements
 of the human's restoring force were made after the system
 had returned to steady state following the perturbation but before
 the onset of voluntary intervention by the subjects.
-\end{quote}
+\end{displayquote}
 Therefore, it is emphasized that only the involuntary response is taken into account during the measurements in order to
 capture the natural properties of the human arm before the human correction intervenes. In fact, due to this crucial distinction
 the results such as \cite{dyck2013} do not disprove Hogan's results since the voluntary input is included in the model hence the passive 
@@ -780,6 +780,10 @@ For linear networks, the following definitions seem to be used quite widely (mod
 \begin{define}[Potential Instability] A two-port network is said to be potentially unstable if there exist two passive one-port 
 immitances that, when terminated at the ports, produce a persisting natural frequency.
 \end{define}
+
+Notice that this definition is equivalent to the common \emph{robust stability} definition which states that if a two port 
+network is robustly stable there exists no pair of one-port immitances that makes the network exhibit a persisting natural 
+frequency. 
 
 \begin{define}[Absolute Stability at $\iw_0$] A two-port network is said to be absolutely stable if it is not potentially unstable.
 \end{define}

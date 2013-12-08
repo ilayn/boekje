@@ -522,7 +522,7 @@ ylabel=Magnitude {[abs]}]
 \end{tikzpicture}
 \phantomsubcaption\label{fig:delayvsW}%
 \end{subfigure}
-\caption[(a) Loop transformation for assuring $\tilde{\Delta}(0)=0$. (b) Frequency domain covering of the shifted delay 
+\caption[Loop transformation and frequency domain covering of the shifted delay 
 operator.]{(a) Rewriting the interconnection such that $\tau=0$ implies 
 $\tilde{\Delta}=0$. (b) Frequency domain covering of the shifted delay 
 operator.}
@@ -567,7 +567,9 @@ conic combination of \eqref{eq:onthecircle} and \eqref{eq:normbounded}:
 
 \section{Equivalent IQC Based Stability Tests for Common Stability Analysis Approaches}
 \subsection{Llewellyn's Stability Criteria}\label{sec:ana:llewellyn}
-%The well known conditions for stability of a two-port network, formulated in \cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency dependence is  {often} omitted for notational convenience.
+%The well known conditions for stability of a two-port network, formulated in 
+%\cite{llewellyn,bolinder,rollett}, are recalled in the following theorem. An explicit indication of the frequency 
+% dependence is  {often} omitted for notational convenience.
 %\begin{thm}[Unconditional Stability]\label{thm:llw}
 %A $2$-port network $N$,  described by its transfer matrix
 %\[
@@ -626,7 +628,10 @@ obtain
 \pmatr{\Delta_s &0\\0 &\Delta_l\\\hline 1 &0\\0 &1} \succeq 0.
 \label{eq:qcdeltall}
 \end{equation}
-In this fashion we have constructed a whole family of multipliers, parameterized by $\lambda(\omega)>0$, such that the quadratic constraint (\ref{eq:qcdeltall}) holds for all passive $\Delta_l,\Delta_s\in\mathcal{RH}_\infty$. Stability of the $N-\Delta$ interconnection is then guaranteed if one can find a positive $\lambda(\omega)$ for which the frequency domain inequality
+In this fashion we have constructed a whole family of multipliers, parameterized by $\lambda(\omega)>0$, such that 
+the quadratic constraint (\ref{eq:qcdeltall}) holds for all passive $\Delta_l,\Delta_s\in\mathcal{RH}_\infty$. 
+Stability of the $N-\Delta$ interconnection is then guaranteed if one can find a positive $\lambda(\omega)$ for 
+which the frequency domain inequality
 \begin{equation}
 \pmatr{1 &0\\0 &1\\\hline-N_{11} &-N_{12}\\-N_{21} &-N_{22}}^*
 \left(\begin{array}{cc|cc}
@@ -850,7 +855,7 @@ label={[minimum size=0mm,inner sep=0mm]175:$-$}] (j) at ($(del.east)!0.5!(plant.
 \draw[->] ($(plant.east)!0.5!(integ.west)$) |- (z0.east);
 \draw[->] (z0.west) -| (j.north);
 \end{tikzpicture}
-	\caption{The teleoperation setup from \cite{colgate1}}
+	\caption[Colgate's teleoperation setup]{The teleoperation setup from \cite{colgate1}}
 	\label{fig:colgate}
 \end{center}
 \end{figure}
@@ -1267,7 +1272,8 @@ M_s=0.61,B_m=0.64,B_s=11,K_v=87.8,K_p=4000$.
  \end{tikzpicture}
 \caption{Uncertain stiff environment}\label{fig:Case2blockdia}
 \end{subfigure}
-\caption{System interconnections for \Cref{sec:numcase1} and \Cref{sec:numcase2}.}\label{fig:6}
+\caption[System interconnections]{System interconnections for \Cref{sec:numcase1} and \Cref{sec:numcase2}.}
+\label{fig:6}
 \end{figure}
 
 
@@ -1434,7 +1440,9 @@ x unit = \si{\newton\per\metre},%
 \addplot[thick,red,dashed] coordinates {(0,0.137)(8000,0.137)};
 \end{axis}
 \end{tikzpicture}
-\caption{Performance loss for increasing environment stiffness uncertainty. 
+\caption[%
+Performance loss for increasing environment stiffness uncertainty.%
+]{Performance loss for increasing environment stiffness uncertainty. 
 The dashed line shows the value for unconditional stability from \Cref{sec:numcase1}.
 }%
 \label{fig:increasingKe}%
@@ -1718,8 +1726,10 @@ y tick label style={/pgf/number format/.cd,fixed,precision=2}]
 };
 \end{semilogxaxis}
 \end{tikzpicture}
-\caption{The performance loss with respect to the increase in ROV bound of 
-the time-varying uncertaint parameter $k(t)\in[0,1000]\si{\newton\per\metre}$.
+\caption[%
+The performance loss with respect to the increase in ROV bound
+]{The performance loss with respect to the increase in ROV bound of 
+the time-varying uncertainy parameter $k(t)\in[0,1000]\si{\newton\per\metre}$.
 }%
 \label{fig:increasingtvb}%
 \end{figure}

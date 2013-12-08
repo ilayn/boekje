@@ -1,55 +1,62 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\thetitle}{Robustness Analysis and Controller Synthesis for Bilateral\\[2mm]Teleoperation Systems via IQCs}
-\newcommand{\thesubtitle}{}  
-\renewcommand{\theauthor}{İlhan Polat}
-%\pagestyle{phdstayla} %% start page headers and footers
+\newcommand{\ilhant}{Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs}
+\newcommand{\ilhans}{}  
+\newcommand*{\ilhana}{İlhan Polat}
+%%\pagestyle{phdstayla} %% start page headers and footers
+%%\thispagestyle{empty}
+%\vspace*{30mm}
+{\sffamily
 %\thispagestyle{empty}
-\vspace*{30mm}
-
-\thispagestyle{empty}
-\begin{center}
-    \textbf{\huge \thetitle}\\[\baselineskip]\textbf{\LARGE \thesubtitle}
-\end{center}
-
-\vspace{20mm}
-\begin{center}
-    \Large\theauthor
-\end{center}
+%\begin{center}
+    %\textbf{\huge \thetitle}\\[\baselineskip]\textbf{\LARGE \thesubtitle}
+%\end{center}
+%
+%\vspace{20mm}
+%\begin{center}
+    %\Large\theauthor
+%\end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% the back (page 2)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
+%\newpage
+%
+%\thispagestyle{empty}
+%\vspace*{\fill}{\tiny .}
+%
+%\newpage
 \thispagestyle{empty}
-\vspace*{\fill}{\tiny .}
-
-\newpage
-\thispagestyle{empty}
-\vspace*{30mm}
+\vspace*{20mm}
 
 \begin{center}
-     \textbf{\huge \thetitle}
+     %\textbf{%
+    \huge\ilhant
+    %}
 \end{center}
 
-\vspace{30mm}
+\vspace{10mm}
 
-\begin{center}
-    \textbf{Proefschrift}
-\end{center}
+\begin{center}PROEFSCHRIFT\end{center}
 
-\smallskip{}
+\vspace{10mm}
 
 %\selectlanguage{dutch}
 
 \begin{center}
-ter verkrijging van de graad van doctor\\
-aan de Technische Universiteit Eindhoven,\\
-op gezag van de Rector Magnificus prof. dr. ir. C.J. van Duijn,\\
-voorzitter van het College voor Promoties,\\
-in het openbaar te verdedigen op donderdag 4 Februari 2014 om 16:00 uur\\
-door \theauthor,\\
-ingenieur werktuigbouwkunde,\\
-geboren te Gaziantep, TURKIJE.
+ter verkrijging van de graad van doctor aan de\\
+Technische Universiteit Eindhoven, op gezag van de\\
+rector magnificus prof.dr.ir. C.J. van Duijn, voor een\\
+commissie aangewezen door het College voor\\
+Promoties, in het openbaar te verdedigen op\\
+dinsdag 4 februari 2014 om 16:00 uur
+\vspace{15mm}
+
+door\\
+\vspace{15mm}
+\ilhana
+
+\vspace{15mm}
+
+geboren te Elazığ, Turkije.
 \end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,25 +64,36 @@ geboren te Gaziantep, TURKIJE.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage %
 \thispagestyle{empty}
-
-\noindent Dit proefschrift is goedgekeurd door de promotor:\\
-Prof.dr. ir. Maarten Steinbuch\\
+\noindent Dit proefschrift is goedgekeurd door de promotoren en de samenstelling van de 
+promotiecommissie is als volgt:
 \bigskip{}
-
-\noindent Samenstelling promotiecommissie:
-\smallskip{}
 \noindent
-\begin{flushleft}\begin{tabbing}
-\hspace*{50mm}\=\kill
-Rector Magnificus \> voorzitter\\
-Prof.dr.\ Maarten Steinbuch   \> Technische Universiteit Eindhoven\\
-Prof.dr.\ Siep Weiland        \> Technische Universiteit Eindhoven\\
-Prof.dr.\ Vincent Hayward     \> Universitè Pierre et Marie Curie\\
-Prof.dr.\ Claudio Melchiorri  \> Università di Bologna\\
-Prof.dr.\ Stefano Stramigioli \> Technische Universiteit Twente\\
-Prof.dr.\ Henk Nijmeijer       \> Technische Universiteit Eindhoven\\
-%Prof.dr.\ Maurice Heemels     \> Technische Universiteit Eindhoven\\
-\end{tabbing}\end{flushleft}
+\begin{flushleft}
+\begin{tabbing}
+% duty        semicolon     title          name           ext. institute      
+\hspace*{20mm}\=\hspace{1em}\=\hspace{15mm}\=\hspace{35mm}\=\kill
+voorzitter                     \> : \> prof.dr.   \> Philip de Goey                                           \\
+1\textsuperscript{e} promotor  \> : \> prof.dr.ir \> Maarten Steinbuch                                        \\
+2\textsuperscript{e} promotor  \> : \> prof.dr	  \>  Siep Weiland                                            \\
+leden                          \> : \> prof.dr    \> Vincent Hayward    \> (Université Pierre et Marie Curie) \\
+                               \> : \> prof.dr    \> Claudio Melchiorri \> (Università di Bologna)            \\
+                               \> : \> prof.dr.ir \> Stefano Stramigioli\> (Universiteit Twente)              \\
+                               \> : \> prof.dr    \> Henk Nijmeijer                                           \\
+\end{tabbing}
+\end{flushleft}
+}
+\newpage
+\thispagestyle{empty}
+\begin{center}
+    \textbf{\huge \ilhant}
+\end{center}
+
+\vspace{20mm}
+\begin{center}
+    \Large\ilhana
+\end{center}
+\newpage
+\thispagestyle{empty}
 \smallskip\noindent
 {
 \flushleft\includegraphics[width=7em]{\impath/title/MicroNed_Logo}\hspace*{0.75cm}
@@ -90,17 +108,16 @@ the requirements of the Dutch Institute for Systems and Control
 MicroNED, a consortium to nurture micro systems technology in
 The Netherlands.
 }
-\bigskip{}
+\vfill
 
-
-Published and distributed by: \theauthor \\
-E-mail: i.polat@tue.nl\\
+Published and distributed by: \ilhana\\
+%e-mail: i.polat@tue.nl\\
 %WWW: http://your website address/
 
 \bigskip{}
 ISBN 000-00-0000-000-0\\
 %\bigskip{}
-Copyright \copyright~2013 by \theauthor
+Copyright \copyright~2014 by \ilhana
 }
 
 
