@@ -159,6 +159,7 @@
     enumitem,
     multirow,
     rotating,
+    wrapfig,
     eurosym %For Euro symbol
 }
 
@@ -217,9 +218,11 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
 \usepgfplotslibrary{
                 smithchart,
                 units,
-                groupplots
+                groupplots,
+                colormaps
         }
 
+\pgfplotsset{/pgfplots/colormap/invgray/.style={/pgfplots/colormap={invgray}{rgb255=(255,255,255) rgb255=(50,50,50)}}}
 
 \RequirePackage{csquotes}
 \RequirePackage{caption}

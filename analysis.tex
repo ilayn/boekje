@@ -755,6 +755,21 @@ numerically.
 %===================================================================================
 %===================================================================================
 \subsection{Rollett's Stability Condition}\label{sec:rollett}
+As is the case for Llewellyn's stability conditions, it is straightforward to derive 
+unconditional stability {tests if} the network is represented by scattering parameters. 
+In what follows, we denote transformed passive LTI uncertainties with $\tilde{\Delta}_{s}, 
+\tilde{\Delta}_l$ which are unity gain bounded. The corresponding interconnection is 
+supposed to be given by the loop equations
+$q = S p$, $p=\tilde{\Delta} q$ i.e.
+\begin{equation}
+\underbracket[0.2pt]{\pmatr{q_1\\q_2}}_{q}=
+\underbracket[0.2pt]{\pmatr{S_{11} &S_{12}\\S_{21} &S_{22}}}_{S}
+\underbracket[0.2pt]{\pmatr{p_1\\p_2}}_{p} \ , \ \pmatr{p_1\\p_2}=
+\underbracket[0.2pt]{\pmatr{\tilde{\Delta}_s&0\\0&\tilde{\Delta}_l}}_{\tilde{\Delta}} \pmatr{q_1\\q_2}.
+\label{eq:rolic}
+\end{equation}
+
+
 With almost identical arguments as for Llewellyn's test, 
 one derives the following quadratic constraints {for positive $\lambda$} and for stable LTI systems 
 $\tilde{\Delta}_l$ and $\tilde{\Delta}_s$ whose gains are bounded by one:
