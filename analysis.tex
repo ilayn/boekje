@@ -101,7 +101,7 @@ if \eqref{eq:IQC} holds for all $v\in\mathcal{L}^m_2$. The following sufficient 
 in \Cref{fig:uncic}} forms the basis for the IQC framework. 
 
 
-\begin{thm}[\cite{megretski}]\label{IQCthm} Let $G\in\mathcal{RH}^{m\times n}_\infty$ be given and 
+\begin{thm}[IQC Theorem, \cite{megretski}]\label{IQCthm} Let $G\in\mathcal{RH}^{m\times n}_\infty$ be given and 
 let $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ be a bounded causal operator. Suppose that
 \begin{enumerate}
 	\item for every $\tau\in[0,1]$, the interconnection of $G$ and $\tau\Delta$ is well posed;
@@ -115,8 +115,8 @@ let $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ be a bounded causal operator. Sup
 \end{enumerate}
 Then the $G-\Delta$ interconnection {in \Cref{fig:uncic}}  is stable.
 \end{thm}
-
-We include a few remarks about this result: 
+Note that in Assumption 2, it is meant to replace $\Delta$ with $\tau\Delta$ in \Cref{eq:IQC}. We include a few 
+immediate remarks about this result: 
 \begin{rem}\label{remiqc1}
 Note that both properties 1 and 2 in \Cref{IQCthm} have to hold for $\tau\Delta$ 
 if $\tau$ moves from $\tau=0$ (for which stability is obvious) to the target value $\tau=1$ 
@@ -125,7 +125,8 @@ size, therefore it does not have to be a multiplication operation, e.g., in the 
 scaling the uncertainty $\tau e^{-sT}$ is incorrect for the application of IQC theorem. Instead, 
 the result can still be used if one considers $e^{-s\tau T}$ for $\tau\in[0,1]$, as we will derive
 a multiplier class later in this chapter. In summary, the homotopy 
-argument can be customized and  by no means limited to $\tau\Delta$. 
+argument can be customized and  by no means limited to $\tau\Delta$. However, the original result is not 
+altered in order to comply with the literature.
 
 Let the multiplier $\Pi(\iw)$ partitioned as
 \begin{equation}
@@ -133,12 +134,12 @@ Let the multiplier $\Pi(\iw)$ partitioned as
 \label{eq:Pipart}
 \end{equation}
 In our examples the left-upper $m\times m$ block is negative semi-definite for all $\omega\in\Realext$
-which guarantees concavity. In other words, convex combinations of two particular uncertainty element 
-$\Delta_1, \Delta_2$ that satisfies the IQC, also satisfy the IQC since
+which guarantees concavity. In other words, convex combinations of two particular uncertainty elements 
+$\Delta_1, \Delta_2$ that satisfy the IQC, also satisfy the IQC since
 \[
 \pmatr{\tau\Delta_1+(1-\tau)\Delta_2\\ I}^*\pmatr{-&\cdot\\\cdot &\cdot}\pmatr{\tau\Delta_1+(1-\tau)\Delta_2\\I}
 \]
-is a concave function. Furthermore, we assume that the right-lower $m\times m$ block of $\Pi(\iw)$ 
+is a concave function. Furthermore, we assume that the right-lower $m\times m$ block of $\Pi(\iw)$ is
 positive semidefinite for all $\omega\in\Realext$. Then
 \[
 \pmatr{0\\I}^*\pmatr{\cdot &\cdot\\\cdot &+}\pmatr{0\\ I} \succeq 0
@@ -294,7 +295,7 @@ One can see that, we might use a different $\lambda$ at each freqency and the in
 still holds true. 
 \[
 \pmatr{\Delta(\iw) \\ 1}\pmatr{-\lambda(\iw) &0\\0 &\lambda(\iw)}\pmatr{\Delta(\iw) \\ 1}\geq 0, \lambda(\iw)>0
-\quad \forall \omega\in\Realext 
+\quad \forall \omega\in\Realext. 
 \]
 Note again that this result relies on the commutativity property 
 \[\Delta(\iw)\lambda(\iw) = \lambda(\iw)\Delta(\iw).
@@ -367,7 +368,7 @@ the parameter lives in the interval $[a,b]$ with/out some physical units with $a
 	\item The first step is always to check whether zero is in the interval. If not, by dummy feedforward/feedback 
 in the loop one can always set the interval such that zero is included. In other words, the parameter interval $[a,b]$
 can be rewritten as $\frac{a+b}{2} + [\frac{a-b}{2},\frac{b-a}{2}]$. Then, including the constant feedthrough term as a 
-feedback loop in the plant we obtain $[-r,r]$ interval with $r=\frac{b-a}{/2}$.
+feedback loop in the plant we obtain $[-r,r]$ interval with $r=\frac{b-a}{2}$.
     \item Alternatively, we can modify the multiplier using \[\delta\in[a,b] \iff \abs{\delta- \frac{b+a}{2}}^2\leq 
     \left(\frac{b-a}{2}\right)^2\iff -\delta^2 + (b+a)\delta -ab\geq 0\] and hence,
     \[
@@ -932,7 +933,13 @@ allows to easily show the equivalence of the small gain and passivity theorems t
 \subsection{Regions in the Complex Plane}
 Using a similar mechanism to what is given above, one can also characterize other domains in the complex 
 plane different than the whole right half plane as long as it can be represented (or covered with) with a 
-quadratic constraint. Thus, once a multiplier family is set, it's a matter of evaluating the respective FDI for the system
+quadratic constraint i.e. 
+\[
+\left\{
+z\in\Complex\mid\pmatr{z\\1}^*P\pmatr{z\\1} \geq 0
+\right\}
+\]
+for some symmetric $P$. Thus, once a multiplier family is set, it's a matter of evaluating the respective FDI for the system
 at hand. For example, recently in \cite{jazayeri}, a vertical strip-like domain for one of the LTI uncertainties is 
 assumed i.e. $-a\leq \Delta_l + \Delta_l^* \leq b$ for all $\omega\in\Real_e$ with $a,b>0$ 
 and stability conditions are derived similar to those of Llewellyn's test along the lines of \cite{edsin}. In terms of quadratic 
@@ -1012,7 +1019,7 @@ in \eqref{eq:jazayeritest} as the following:
 \pmatr{N_{21} &N_{22}},
 \]
 where we impose $\lambda_3\coloneqq \lambda_1 - \lambda_2 > 0$ for all frequencies since for each positive $\lambda_3$ we can find
-a $\lambda_1$ such that the inequality is satisfied. One can show that the left hand side is precisely the authors condition. Also
+a $\lambda_1$ such that the inequality is satisfied. One can show that the left hand side is precisely the authors' condition. Also
 the right hand side is a negative semidefinite perturbation that pushes the left hand side more into negative definiteness. Notice 
 that this condition, as the authors also remark, shows that $b$ term can be arbitrarily large. It is a matter of choosing $\lambda_2$ 
 sufficiently small to render the inequalities feasible. In fact having $b\to\infty$ implies $\lambda_2\to 0$. Hence rendering the 
@@ -1148,8 +1155,9 @@ are satisfied. We include the classical result (\cite{rantzerkyp}) that allows u
 convert these frequency domain inequalities into LMIs:
 \begin{thm}[KYP Lemma]\label{KYP} Let $G=\tikz[baseline={([yshift=-3pt]current bounding box.center)},
 scale=0.8,transform shape]{\matrix (s1) [ssmatrix] {A \& B \\ C \& D \\};\draw (s1-1-1.north east) --
-(s1-2-1.south east) (s1-1-1.south west) -- (s1-1-2.south east);}$ and suppose that $A$ has no eigenvalues on 
-the imaginary axis. For a real matrix $P=P^T$, the following {two statements} are equivalent:
+(s1-2-1.south east) (s1-1-1.south west) -- (s1-1-2.south east);}$ be a minimal realization and suppose 
+that $A$ has no eigenvalues on the imaginary axis. For a real matrix $P=P^T$, the following two statements
+are equivalent:
 \begin{enumerate}
 	\item The following FDI holds:
 	\begin{equation}

@@ -410,7 +410,7 @@ models and the human/environment dynamics are interconnected directly to the cor
 \centering
 \begin{tikzpicture}[>=latex,scale=0.85,transform shape]
 \node[draw,inner xsep=4mm,inner ysep=2mm] (op) at (0,1.5) {Operator};
-\node[draw] (mas) at (0,0) {Master Device};
+\node[draw] (mas) at (0,0) {Local Device};
 \node[circle,draw,inner sep=2pt] (sum) at ([xshift=6mm]mas.east) {};
 \draw[->] (op) -| (sum);
 \draw[<-] (mas) -- (sum);
@@ -428,7 +428,7 @@ models and the human/environment dynamics are interconnected directly to the cor
 \centering
 \begin{tikzpicture}[>=latex,scale=0.85,transform shape]
 \node[draw,inner xsep=1mm,inner ysep=2mm] (op) at (0,1.5) {Environment};
-\node[draw] (mas) at (0,0) {Slave Device};
+\node[draw] (mas) at (0,0) {Remote Device};
 \node[circle,draw,inner sep=2pt] (sum) at ([xshift=6mm]mas.east) {};
 \draw[->] (op) -| (sum);
 \draw[<-] (mas) -- (sum);
@@ -442,7 +442,7 @@ models and the human/environment dynamics are interconnected directly to the cor
 \caption{}
 \label{fig:app:simpdiagb}
 \end{subfigure}
-\caption{Diagram of (a) operator/master device and (b) environment/slave device.}
+\caption{Diagram of (a) operator/local device and (b) environment/remote device.}
 \label{fig:app:simpdiag}
 \end{figure}
 
@@ -1656,15 +1656,15 @@ or, if we are lucky, a very few more parameters, we limit the discussion to the 
 
 In majority of the network-based modeling papers, for some unknown reason and as if it is possible, the concept of local controllers are introduced 
 and the controllers that only communicate over the line between local and remote devices are emphasized for further analysis (see \Cref{lit:syn:ela}). 
-Quite often, it is assumed that the local controllers achieve \enquote{high-precision tracking} locally and derive the conditions to render 
-the interconnection passive. Then delays and other complications are introduced and tedious derivations are presented though the undelayed bilateral
-teleoperation problem is still open for a satisfying performance definition. The subsequent result is either deriving constraints on PD controller 
-gains without any comment on how we are supposed to tune the \enquote{local} controllers\footnote{which is far from trivial while respecting  
-passivity and simultaneously achieving precise tracking}. We emphasize that the closed loop stability is guaranteed by all controllers and 
-the locality of the controller does not exclude it from the interconnection stability consideration. Alternatively, some controller entries 
-in \Cref{lit:syn:ela} are assumed to be zero and the number of variables is reduced. In the four-channel case, the methods are exclusively 
-limited to compensated dynamics type, cross-coupling controllers where each entry is specifically equals some part of the cancellation of 
-dynamics to reach to the ideal transparent system. 
+Quite often, it is assumed that the local controllers achieve \enquote{high-precision tracking} locally and the conditions to render 
+the interconnection passive are derived. Then delays and other complications are introduced and tedious derivations are presented though 
+the undelayed bilateral teleoperation problem is still open for a satisfying performance definition. The subsequent result is either 
+deriving constraints on PD controller gains without any comment on how we are supposed to tune the \enquote{local} controllers\footnote{%
+which is far from trivial while respecting passivity and simultaneously achieving precise tracking}. We emphasize that the closed loop 
+stability is guaranteed by all controllers and the locality of the controller does not exclude it from the interconnection stability 
+consideration. Alternatively, some controller entries in \Cref{lit:syn:ela} are assumed to be zero and the number of variables is reduced. 
+In the four-channel case, the methods are exclusively limited to compensated dynamics type, cross-coupling controllers where each entry is 
+specifically equals some part of the cancellation of dynamics to reach to the ideal transparent system. 
 
 We openly accept that we fail to understand the rationale behind these arguments.
 

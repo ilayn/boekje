@@ -1,6 +1,6 @@
 \chapter{Conclusions}
 \label{chap:conc}
-
+\section{A Pro-Epilogue}
 In the light of all the arguments presented so far, we believe that we have clarified the underlying discrepancy between the actual bilateral 
 teleoperation problem and how academic literature handles it. Moreover, we have provided a competitive alternative method that led to a high
 degree of realism experimentally. Therefore, we can safely claim that many technical problems reported in the literature are methodological and 
@@ -22,11 +22,11 @@ Therefore let us denote this upper bound by $T$ whatever it might be other than 
 have the following obvious dichotomy,
 
 \begin{itemize}
-	\item The actual transmission delay is higher than $T$,
-    \item The actual transmission delay is lower than or equal to $T$.
+	\item The actual transmission delay is greater than $T$,
+    \item The actual transmission delay is less than or equal to $T$.
 \end{itemize}
 
-In the first case, we believe that there is no need to even consider the problem since it is even harder to find the relevant performance 
+In the first case, we believe that there is no need to even consider the problem yet since it is even harder to find the relevant performance 
 objectives of how a human operator can be made to immerse into the task with an excessive time delay. In the second case, if there is 
 significant time delay, one can use the multipliers given \Cref{chap:analysis} for delay uncertainties and utilize it in the synthesis 
 method given in \Cref{chap:synth} directly, with guaranteed improvements over the existing techniques. Additionally, if the communication 
@@ -39,8 +39,8 @@ unlike the vast majority of the time-delay teleoperation literature. In fact, th
 to digital communication experts for the optimal methods which go well-beyond control design knowledge. Moreover, the problem is far more 
 sophisticated than the choice between TCP or UDP protocols. 
 
-
-Following this argument, we have the following conclusions elaborated in this thesis;
+\section{Final Remarks}
+Following this line of reasoning, we have the following conclusions elaborated in this thesis;
 \begin{enumerate}
 	\item The bilateral teleoperation is fundamentally an interdisciplinary problem. Current literature underestimates the broadness of the 
     scope of this technology and claims to solve a stability problem that is not inline with the actual bilateral teleoperation. The majority
@@ -111,8 +111,8 @@ Following this argument, we have the following conclusions elaborated in this th
     {\bfseries There are more important open problems than, say, the rather specialized delayed teleoperation problem or force-sensorless 
     teleoperation. The delay robustness problem is studied in the last two decades extensively outside the teleoperation context. As a result 
     of this effort we already have a variety of methods IQCs, Lyapunov-Krasovskii functionals etc. The importance of the delay instability is 
-    due to the unrealistic ambitious objective of physics equalization. Similarly force-sensorless teleoperation or multi-user teleoperation 
-    etc. are problems with invalid motivation from a technological point of view since the bilateral teleoperation system is an human oriented
+    due to the unrealistic ambitious objective of physics equalization. Similarly force-sensorless teleoperation, multi-user teleoperation 
+    etc. are problems with invalid motivation from a technological point of view since the bilateral teleoperation system is a human oriented
     technology not a network controlled system. The problem is finding the right tool for designing the controller but not modifying the 
     problem for the existing control design tool.
     }

@@ -19,8 +19,8 @@ Clearly, the situation is not much different for IQC synthesis which is closely 
 tools. As we have shown in \cref{chap:analysis}, the dynamic multipliers are of the most importance when it comes to 
 reducing the conservatism involved in the frequency-domain stability analysis techniques. However including dynamics 
 to the multipliers makes the problem harder for the robust control synthesis problem. Since there is no known convex 
-robust control design method known, we resort back to a nonconvex multiplier/controller iteration as is the case with 
-the classical $\mu$-tools with the so-called $DK$-iteration. However, it has been recently shown that, a large class
+robust control design method, we resort back to a nonconvex multiplier/controller iteration as is the case with 
+the classical $\mu$-tools with the so-called $D$-$K$ iteration. However, it has been recently shown that, a large class
 of robust control design problems are convex depending on the uncertainty contribution on certain entries of the plant 
 data, \cite{scherer2009}. 
 %\enlargethispage*{1.5\baselineskip}
@@ -39,7 +39,7 @@ We start with state-space descriptions of systems in the following form
 \label{eq:gennomplant}
 \end{equation}
 Here, $w$ denotes the generalized disturbance signals (perturbations, reference signals etc.), $z$ denotes the controlled
-output signals that is selected as the objectives of the control design (minimization of error norms, control actions etc.)
+output signals that is selected as the objectives of the control design (error signals, control actions etc.)
 $y$ signals are the measurements and $u$ are the controller inputs. Typically, the second row is called the \emph{performance 
 channel} and the last row is, similarly, the \emph{control channel}. The integers $n,n_u,n_w,m_z,m_y$ denote the number of 
 states, control inputs, disturbance inputs, control outputs, and measurements respectively. For the performance characterization, 
@@ -48,7 +48,7 @@ we also use a quadratic form
 \int_0^\infty{\pmatr{w(t) \\ z(t)}^TP_p \pmatr{w(t) \\ z(t)} dt} \leq -\epsilon\norm{w}^2.
 \label{eq:quadperf}
 \end{equation}
-As a typical example, the robust $\mathcal{L}_2$ gain from $w$ to $z$ can be rewritten as such by using 
+with $\epsilon>0$. As a typical example, the robust $\mathcal{L}_2$ gain from $w$ to $z$ can be rewritten as such by using 
 \[
 P_p = \pmatr{-\gamma^2I_{n_w} &0\\ 0&I_{m_z}}
 \]
@@ -63,8 +63,48 @@ We will also be referring to the state-space representation of a controller $K$ 
 \label{eq:contmats}
 \end{equation}
 with $n_K$ being the number of states of the controller. The common assumption of $D_{uy}=0$ is also adopted here. This causes no 
-loss of generality as long as the interconnection of $G$-$K$ interconnection is well-posed i.e. $(I-D_{uy}D_K)$ is nonsingular. Then, 
-the closed loop plant $(G\star K)(s)$ state-space matrices are obtained as
+loss of generality as long as the interconnection of $G$-$K$ interconnection is well-posed i.e. $(I-D_{uy}D_K)$ is nonsingular. One 
+can see the rationale behind this via computing $\tilde{K}$ in \Cref{fig:synth:d22zero}
+
+\begin{figure}%
+\centering
+\begin{tikzpicture}[>=stealth,scale=0.9,transform shape,baseline=-1.25cm]
+\draw[loosely dashed,fill=black!5] (-1.4,-0.7) rectangle (1.3,1.1);
+\draw[loosely dashed,fill=black!5] (-1.4,1.3) rectangle (1.3,3.2);
+\node[draw,inner sep=2mm] (delay) at (0,2.5) {$G$};
+\node[draw,inner sep=2mm] (plant) at (0,0) {$K$};
+\draw[<-] (delay.east) -| ++(0.5,-0.7) |- (plant.east);
+\draw[<-] (plant.west) -| ++(-0.5,0.7) 
+node[draw,
+     fill=white,
+    circle,
+    inner sep=2pt,
+    label={[inner sep=0mm]above right:\tiny$+$},
+    label={[inner sep=0mm]above left:\tiny$+$}] (junc1) {}; --%
+\draw[<-] (junc1) -- ++(0,1) 
+    node[draw,
+    fill=white,
+    circle,
+    inner sep=2pt,
+    label={[inner sep=0mm]above right:\tiny$+$},
+    label={[inner sep=0mm]below right:\tiny$-$}] (junc2) {};
+\draw[<-] (junc2) |- (delay.west);
+\node[draw] (d1) at (delay|-junc1) {$D_{uy}$};
+\node[draw] (d2) at (plant|-junc2) {$D_{uy}$};
+\draw[->] (d1) -- (junc1);
+\draw[->] (d2) -- (junc2);
+\draw (d2) -- (d2-| {$(delay.east)+(0.5cm,-0.7cm)$});
+\draw (d1) -- (d1-| {$(delay.east)+(0.5cm,-0.7cm)$});
+\node[above left=2mm and 3.0mm of delay.west] (tildelay) {$\tilde{G}$};
+\node[below left=2mm and 3mm of plant.west] (tilplant) {$\tilde{K}$};
+\end{tikzpicture}
+\caption[Zeroing out the $D_{uy}$ term.]{Zeroing out the $D_{uy}$ term. Feedforward path 
+zeroes the plant feedthrough term while it is absorbed by the controller provided that the 
+control loop is still well-posed.}%
+\label{fig:synth:d22zero}%
+\end{figure}
+
+Then, the closed loop plant $(G\star K)(s)$ state-space matrices are obtained as
 \begin{align}
 \left[\begin{array}{c|c}
 \mathcal{A}	&\mathcal{B} \\\hline
@@ -115,8 +155,8 @@ and $(A,C_y)$ is detectable.
 \subsection{Solving Analysis LMIs for Controller Matrices}
 Once we have the generalized plant description we can design a controller that achieves closed loop stability and a performance level 
 characterized by $P_p$. Before we state the nominal controller synthesis conditions, we provide a \enquote{trick}, the so-called 
-Linearization Lemma which can be found in \cite{lmibook99}. It is also important to follow the rationale behind the arguments given
-in \cite{scherermulti} for general quadratic performance synthesis. 
+Linearization Lemma which can be found in \cite{lmibook99} which we base our style on. It is also important to follow the rationale 
+behind the arguments given in \cite{scherermulti} for general quadratic performance synthesis.
 
 \begin{lem}\label{lem:linlemma} Assume we are given with a quadratic form in which $A,S$ are constant matrices and $B(v),Q(v)$ and $R(v)\succeq 0$ are matrix functions 
 of some decision variables denoted by $v$ such that
@@ -154,7 +194,7 @@ an immediate problem. If we assume the controller matrices in calligraphic close
 matrix $\mathcal{X}$ variables and hence destroying the affine dependence on the unknowns, rendering the constraint as a Bilinear Matrix 
 Inequality (BMI). Also in the analysis case the stability was assumed at the outset however here the positivity constraint,
 $\mathcal{X}\succ 0$ should be included to guarantee closed loop stability. Thus, the synthesis problem is more involved. The resolution of 
-this problem appeared mainly in \cite{scherermulti,izumi} (also in a strict $\mathcal{H}_\infty$ context, \cite{gahapk,gahinet96} with an
+this problem appeared mainly in \cite{scherermulti,izumi} (also in a strict $\mathcal{H}_\infty$ context, \cite{gahapk,gahinet96} with a
 two-step procedure of elimination of the controller parameters and obtaining some of the LMI variables and then resolving the LMIs for controller 
 parameters).
 
@@ -235,6 +275,12 @@ variables $v$ such that
 hold. Once a feasible solution is found by the aid of \Cref{lem:linlemma}, the controller can be obtained by first by finding arbitrary 
 invertible $U$ and $V$ matrices by solving $I-XY= UV^T$ and then back substituting the variables into \eqref{eq:contmatvartrafo}
 \end{thm}
+Once we obtain the feasible variables, via back substitution, a possible controller realization can be obtained via 
+\begin{equation}
+\pmatr{A_K  & B_K \\C_K  & D_K} = \pmatr{U&XB_u\\0&I}^{-1}\pmatr{K-XAY&L\\M&N} 
+\pmatr{V^T&0\\C_yY&I}^{-1}
+\label{eq:contmatvarbacktrafo}
+\end{equation}
 
 In summary, we have obtained a nominally stabilizing and $P_p$-performance level guaranteeing controller. Next, we include 
 uncertainty channels to our plant $G$ and add a robustness constraint in our design. Unfortunately, this breaks down our
@@ -358,8 +404,8 @@ limited, robustness properties against the uncertainty set we would like to cons
 stabilizing against the full uncertainty region that we originally modeled since we did not enforce it by any constraint. 
 %Therefore, we search for the maximum size of a scaled version of original uncertainty set.
 
-\begin{rem}Repeating what we have touched upon in \Cref{remiqc1},
-this is briefly the rationale behind the common assumption of star-shaped uncertainty region, i.e., $[0,1]\bm{\Delta}\in\bm{\Delta}$. 
+\begin{rem}Repeating what we have touched upon in \Cref{remiqc1}, this is briefly the rationale behind the common assumption of star-shaped 
+uncertainty region, i.e., any scaled uncertainty set is in the full sized uncertainty set e.g., $[0,1]\bm{\Delta}\in\bm{\Delta}$. 
 However, it is important to note that, the scaling needs not to be a simple scalar $r\in[0,1]$ such that the uncertainty is scaled with 
 $r\Delta$. This point is often implicitly assumed and rarely mentioned. Thus, the notation $r\Delta$ should be taken conceptually. As an 
 example, the delay uncertainty cannot be scaled with $re^{-s\tau}$ for any $r\in[0,1]$ since it would scale the unit-circle. In fact what 
@@ -390,10 +436,11 @@ is a generalized plant i.e. there exists an LTI controller
 \[
 K:\mathcal{L}_{2e}^{m_y}\to\mathcal{L}_{2e}^{n_u},
 \]
-such that the nominal closed loop plant $G_{nom}\star K\in\mathcal{RH}_\infty^{m_z\times n_w}$ where 
+such that the nominal closed loop plant $G_{nom}\star K$ where 
 \[
-G_{nom}(s) = 0_{n_p\times m_q}\star G = \pmatr{0_{(m_z+m_y)\times m_q} &I_{m_z+m_y}}G(s)\pmatr{0_{n_p\times(n_w+n_u)}\\I_{n_w+n_u}}. 
+G_{nom}(s) = 0_{n_p\times m_q}\star G = \pmatr{0_{(m_z+m_y)\times m_q} &I_{m_z+m_y}}G(s)\pmatr{0_{n_p\times(n_w+n_u)}\\I_{n_w+n_u}} 
 \]
+is stable i.e. $G_{nom}\star K\in\mathcal{RH}_\infty^{m_z\times n_w}$.
 %Additionally $\mathbf{P}$ denotes the set of all suitable multipliers that all $\Delta\in\bm{\Delta}$ satisfy the 
 %quadratic constraint.
 
@@ -416,8 +463,8 @@ G_{nom}(s) = 0_{n_p\times m_q}\star G = \pmatr{0_{(m_z+m_y)\times m_q} &I_{m_z+m
 
 \begin{thm}[Analysis Step] The interconnection of an LTI uncertain plant $G(s)$ given by \eqref{eq:uncclinc}
 with a nominally stabilizing controller $K$ given by \eqref{eq:contmats}, depicted in \Cref{fig:uncicsynth} 
-and admits the realization given in \eqref{eq:uncclinc} is robustly stable in the face of all 
-$\Delta\in r\bm{\Delta}$ and achieves the performance level characterized by $P_p$ if there exist a symmetric matrix 
+which admits the realization given in \eqref{eq:uncclinc} is robustly stable in the face of all 
+$\Delta\in r\bm{\Delta}$ and achieves the performance level characterized by $P_p$ if there exists a symmetric matrix 
 $\mathcal{X}$ and $P\in\mathbf{P}$ such that \eqref{eq:analysisLMI} hold.
 \end{thm}
 
@@ -426,7 +473,7 @@ verified and $P_p$ is optimized. Then the resulting multiplier $P$ is fixed and 
 
 \begin{thm}[Synthesis Step]\label{thm:synthesis} Assume an uncertain LTI plant $G(s)$ given by \eqref{eq:uncclinc}
 is given. There exist an LTI controller $K$ such that the closed loop is stable for all $\Delta\in r\bm{\Delta}$ and achieves 
-the performance level characterized by $P_p$ if there exist a set of variables $v=\{X,Y,K,L,M,N\}$ such that the linearized 
+the performance level characterized by $P_p$ if there exists a set of variables $v=\{X,Y,K,L,M,N\}$ such that the linearized 
 version of the constraint (omitted for brevity)
 \begin{equation}
 \pmatr{
@@ -501,7 +548,7 @@ is recommended to scale the plant instead of the multipliers.
 
 Hence, we have a theoretically increasing sequence of analysis and synthesis uncertainty sizes 
 \[
-r_{si} = 0< r_{a1} \leq r_{s1} \leq \ldots \leq r_{an} \simeq r_{sn}
+r_{s0} = 0< r_{a1} \leq r_{s1} \leq \ldots \leq r_{an} \simeq r_{sn}
 \]
 Similarly, the performance objective gets worse or at least stays constant at after each succesful iteration
 revealing an increasing sequence of real scalar such as the robust $\mathcal{L}_2$ gain or a similar 
@@ -523,7 +570,7 @@ inverses of $U$ and $V$, it is imperative that the factorization is well-conditi
 
 
 
-\subsection{The Multiplier-Controller Iteration with Dynamic Multipliers}
+\section{The Multiplier-Controller Iteration with Dynamic Multipliers}
 
 
 From our analysis results it can be seen that dynamic multipliers provide substantial conservatism reduction. However,
@@ -643,7 +690,7 @@ G_{py}\Psi_1^{-1}                  &G_{wy}       &0\\
 thus, the obstacle needs to be avoided via finding a way to obtain an equivalent multiplier of the form
 \begin{align}
 P(\iw) &= \pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*\pmatr{M_1&M_2\\M^T_2&M_3}\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)} \\
-&= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}\\
+&= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}
 %&\mathrel{\reflectbox{$\coloneqq$}} \hat{P}(\iw)
 \end{align}
 where $\hat{\Psi}_1$ needs to biproper and bistable. This has been proposed in \cite{goh96,goh962} (see also
@@ -652,12 +699,14 @@ tall basis transfer matrices and are not invertible. Hence we look for square fa
 linked to $J$-spectral factorizations of quadratic forms. We will first take a detour on the structural properties 
 of the multipliers in general before we state the actual multiplier replacement. The style is based on \cite{helmersson2}.
 \begin{define}[Inertia] The triple obtained by the enumeration of the number of the positive, zero and negative 
-eigenvalues is said to be the inertia of a hermitian matrix $A$ and denoted by $\inertia A = \{n_+,n_0,n_-\}$ e.g. 
-\[
-\inertia I_{2\times 2} = \{2,0,0\}\ \ , \inertia 0_{n\times n} = \{0,n,0\} \ \ ,\inertia \pmatr{1 &&\\&-1&\\&&-1} = \{1,0,2\}
-\]
+eigenvalues is said to be the inertia of a hermitian matrix $A$ and denoted by $\inertia A = \{n_+,n_0,n_-\}$. 
 Specifically, $\nu(A) = n_-, \pi(A) = n_+, \zeta(A) = n_0$ where we use the abbreviations $\nu$egative, $\pi$ositive, and $\zeta$ero.
 \end{define}
+A few basic examples to set the convention is given below;
+\[
+\inertia I_{2\times 2} = \{2,0,0\}\ \ , \inertia 0_{n\times n} = \{0,n,0\} \ \ ,\inertia \pmatr{1 &&\\&-1&\\&&-1} = \{1,0,2\}.
+\]
+
 
 Recall that we have the following two main inequalities that are of interest by the IQC theorem;
 \begin{align}\label{eq:interlude1}
@@ -950,7 +999,7 @@ is no simple implementable result that guarantees the solvability of such indefi
 Since we aim for an automated iteration 
 algorithm, we can not utilize these nice algebraic results. Additionally, there are also numerous generalizations, 
 nuances about the assumptions whether $(A,B)$ is just stabilizable or also controllable, whether $Q$ is indefinite 
-in general etc (see \cite{kucera}) in the previous theorem. However, these are not relevant here as they still do not provide 
+in general etc. (see \cite{kucera}). However, these are not relevant here as they still do not provide 
 conditions for which the Riccati equation always has a solution. Due to this missing technical step, 
 we make use of particular sign assumptions on the subblocks of the multiplier to perform partial factorizations and 
 then obtain an overall factorization in the suitable form with steps that have solutions guaranteed to exist. For 
@@ -966,7 +1015,7 @@ can not be factorized using this argument. Hence, one can use the results of \ci
 Now that we have given the basic idea behind the dynamic multiplier factorization, we have enough material to 
 describe the steps of the controller-multiplier iteration. 
 
-\subsubsection{The Pseudo-Code for Controller-Multiplier Iteration}
+\section{The Pseudo-Code for Controller-Multiplier Iteration}
 The actual technical problems are all addressed above and can be found in the literature also cited above. However, 
 for the practitioners who are not interested in the proofs and other derivation related issues we provide a standalone 
 rundown of the controller-iteration steps. 
