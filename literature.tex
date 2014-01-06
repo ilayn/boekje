@@ -484,9 +484,10 @@ from the human arm with some particular pathological trajectory. Just in the cas
 operator does not imply stability, the conclusion is only valid for postural analysis at a fixed configuration of the human arm 
 but not for an arm trajectory. 
 
-\textbf{Therefore, it is our belief that the assumption of human arm being a passive system is incorrect for most teleoperation tasks.}
+\begin{quote}
+Therefore, it is our belief that the assumption of human arm being a passive system is incorrect for most teleoperation tasks.
+\end{quote}
  
-
 
 Since it is customary in the literature to include the passivity hypothesis, let us invoke it here too for the sake of the argument. 
 The question of how, then, a human can possibly move anything while remaining passive is one that makes the whole story even more 
@@ -933,10 +934,10 @@ blocks is a matter of convention and provides symmetry in the block diagrams. Al
 which shows the effect of the $90^\circ$ clock-wise rotations of the Riemann sphere about the axis 
 parallel to the imaginary axis ($W$ is an element of M\"{o}bius group with $\circ$ operation). This 
 stereographic projection idea is also the main idea behind the derivation of the stability parameter 
-of Edwards and Sinsky (\cite{edsin}). Moreover, from \Cref{fig:lit:smith,fig:lit:smithmobius}, we can 
+of Edwards and Sinsky (\cite{edsin}). Moreover, from \Cref{fig:lit:smith}, we can 
 see a visual proof of Theorem 3.1 in \cite{andersonspong} which states that; 
 \[
-\Re{G(\iw)}\succeq 0 \iff \norm{W(G(s))}\leq 1
+\Re{G(\iw)}\succeq 0 \iff \norm{W(G(s))}_\infty\leq 1
 \]  
 
 
@@ -977,50 +978,50 @@ extra description/.code={
 {Mapping the closed right half plane onto the unit disc.}%
 \label{fig:lit:smith}%
 \end{figure}
-
-\begin{figure}[b]%
-\centering
-\begin{tikzpicture}
-\begin{axis}[unit vector ratio=1 1 1,view={65}{20},hide axis,colormap/invgray,ymax=4]
-\begin{scope}[/pgfplots/restrict z to domain=-1:0];
-\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\end{scope}
-\shade[right color=black!50,left color=white](axis cs:-2,0,0) -- (axis cs:2,0,0) -- (axis cs:2,2,0) -- (axis cs:-2,2,0)-- cycle;
-\draw (axis cs:0,-1.2,0) -- (axis cs:0,2,0);
-\draw[white,thick] (axis cs:-2,0.3,0) -- (axis cs:2,0.3,0);
-\draw[white,thick] (axis cs:-2,0.70,0) -- (axis cs:2,0.70,0);
-\begin{scope}[/pgfplots/restrict z to domain=-0.01:1]
-\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\draw (axis cs:-2,0,0) -- (axis cs:2,0,0);
-\end{scope}
-\addplot3+[domain=0:18,samples=100,no marks,white,samples y=0] ({cos(x)*sin(5*x)},{sin(x)*sin(5*x)},{cos(5*x)});
-\addplot3+[solid,domain=0:45,samples=100,no marks,white,samples y=0] ({cos(x)*sin(2*x)},{sin(x)*sin(2*x)},{cos(2*x)});
-\end{axis}
-\begin{scope}[xshift=4cm,yshift=4.1cm,rotate=-80]
-\begin{axis}[unit vector ratio=1 1 1,view={65}{-25},hide axis,colormap/invgray,ymax=4]
-\begin{scope}[/pgfplots/restrict z to domain=0:1]
-\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\end{scope}
-\begin{scope}[/pgfplots/restrict z to domain=-1:0];
-\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
-\end{scope}
-\addplot3+[solid,domain=0:18,samples=100,no marks,white,samples y=0] ({cos(x)*sin(5*x)},{sin(x)*sin(5*x)},{cos(5*x)});
-\addplot3+[solid,domain=0:45,samples=100,no marks,white,samples y=0] ({cos(x)*sin(2*x)},{sin(x)*sin(2*x)},{cos(2*x)});
-\draw (axis cs:0,0,-1.2) -- (axis cs:0,0,2);
-\draw (axis cs:-2,0,0) -- (axis cs:2,0,0);
-\end{axis}
-\end{scope}
-\end{tikzpicture}
-\caption[Mapping the closed right half plane onto the unit disc in 3D.]%
-{Same mapping shown in \Cref{fig:lit:smith} but in 3D coordinates. If we trace the horizontal lines with rays originating from the north 
-pole of the sphere. The intersection of the ray with the sphere uniquely maps the line onto the 
-eastern hemisphere. The rotation of the sphere gives the left figure of \Cref{fig:lit:smith}.}%
-\label{fig:lit:smithmobius}%
-\end{figure}
+%
+%\begin{figure}[b]%
+%\centering
+%\begin{tikzpicture}
+%\begin{axis}[unit vector ratio=1 1 1,view={65}{20},hide axis,colormap/invgray,ymax=4]
+%\begin{scope}[/pgfplots/restrict z to domain=-1:0];
+%\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\end{scope}
+%\shade[right color=black!50,left color=white](axis cs:-2,0,0) -- (axis cs:2,0,0) -- (axis cs:2,2,0) -- (axis cs:-2,2,0)-- cycle;
+%\draw (axis cs:0,-1.2,0) -- (axis cs:0,2,0);
+%\draw[white,thick] (axis cs:-2,0.3,0) -- (axis cs:2,0.3,0);
+%\draw[white,thick] (axis cs:-2,0.70,0) -- (axis cs:2,0.70,0);
+%\begin{scope}[/pgfplots/restrict z to domain=-0.01:1]
+%\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\draw (axis cs:-2,0,0) -- (axis cs:2,0,0);
+%\end{scope}
+%\addplot3+[domain=0:18,samples=100,no marks,white,samples y=0] ({cos(x)*sin(5*x)},{sin(x)*sin(5*x)},{cos(5*x)});
+%\addplot3+[solid,domain=0:45,samples=100,no marks,white,samples y=0] ({cos(x)*sin(2*x)},{sin(x)*sin(2*x)},{cos(2*x)});
+%\end{axis}
+%\begin{scope}[xshift=4cm,yshift=4.1cm,rotate=-80]
+%\begin{axis}[unit vector ratio=1 1 1,view={65}{-25},hide axis,colormap/invgray,ymax=4]
+%\begin{scope}[/pgfplots/restrict z to domain=0:1]
+%\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\end{scope}
+%\begin{scope}[/pgfplots/restrict z to domain=-1:0];
+%\addplot3[surf,shader=interp,z buffer=sort,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=0:180]({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\addplot3[opacity=0.5,mesh,draw=black,ultra thin,samples=19,variable=\u, variable y=\v,domain=0:180, y domain=180:360] ({cos(u)*sin(v)}, {sin(u)*sin(v)}, {cos(v)});
+%\end{scope}
+%\addplot3+[solid,domain=0:18,samples=100,no marks,white,samples y=0] ({cos(x)*sin(5*x)},{sin(x)*sin(5*x)},{cos(5*x)});
+%\addplot3+[solid,domain=0:45,samples=100,no marks,white,samples y=0] ({cos(x)*sin(2*x)},{sin(x)*sin(2*x)},{cos(2*x)});
+%\draw (axis cs:0,0,-1.2) -- (axis cs:0,0,2);
+%\draw (axis cs:-2,0,0) -- (axis cs:2,0,0);
+%\end{axis}
+%\end{scope}
+%\end{tikzpicture}
+%\caption[Mapping the closed right half plane onto the unit disc in 3D.]%
+%{Same mapping shown in \Cref{fig:lit:smith} but in 3D coordinates. If we trace the horizontal lines with rays originating from the north 
+%pole of the sphere. The intersection of the ray with the sphere uniquely maps the line onto the 
+%eastern hemisphere. The rotation of the sphere gives the left figure of \Cref{fig:lit:smith}.}%
+%\label{fig:lit:smithmobius}%
+%\end{figure}
 
 
 

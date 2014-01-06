@@ -41,45 +41,44 @@ understood by the control engineering community. Thus, we strongly encourage the
 cognitive psychophysiology and others that we are not yet aware of to join and guide the engineers in creating the performance 
 specifications for a successful and beneficial haptic technology.
 %
-%\chapter{Samenvatting}
-%
-%The human body is equipped with one of the most complex network structure involving a huge number of components for the sense of touch. 
-%The human brain, then, processes this massive amount of information to infer the nature of the interaction with its surroundings. At a 
-%higher level, this can be understood better via the engineering concept \enquote{sensor fusion} which studies the ways of utilizing qualitatively 
-%different information coming from distinct sources. Similar to 3D vision and audio system technologies, it is also possible to create an 
-%artificial sense of touch using dedicated devices and predefined motion patterns. Motivated by these inference capabilities of the brain, 
-%the haptic feedback technology aims to provide touch cues for the human user while operating a remote device via using a local device 
-%where there is no actual physical interaction between the user and the remote medium. Hence, there has been an active line of research 
-%since the 1960s to realize such devices and control algorithms that provide the functionality of providing artificial touch sense for the 
-%human to immerse into a virtual reality. Still, the technology is far from being established and in fact even the potential benefit of 
-%this technology is a subject of debate. This is partially due to the fact that the important technical problems mainly remain unsolved. 
-%
-%Current state-of-art methods attack the haptic feedback problem as the problem of directly copying and matching the interaction at the 
-%local and the remote devices in terms of the involved forces and positions. Since the physics of each media can be significantly 
-%different, there is an inherent stability problem i.e., the control algorithm in fact tries to achieve a physically impossible 
-%configuration of device positions and applied forces simultaneously. The common remedy to remove this instability is the injection of 
-%damping such that both the local and remote devices can only exhibit severely limited motion profiles in terms of the maximum force and 
-%velocities.
-%
-%This thesis investigates the fundamental reasons why such stability problems arise. The approach for the investigation is to start from 
-%the initial assumptions and hypotheses and work out the implications to see whether the inferences indeed match the literature. We argue 
-%that the stability problems that we are often faced with, are not fundamentally essential. But in fact they are due to the overambitious 
-%control objectives and questionable assumptions about the components involved in the interaction described above. Moreover, the 
-%performance objectives that are assumed to be relevant turn out to be either impossible to obtain or irrelevant to the problem at hand. 
-%
-%In the second part of the thesis, using the so-called Integral Quadratic Constraints framework, developed by many contributors but 
-%refined and popularized by Megretski and Rantzer in the end of 1990s, we show that many of the seemingly different stability methods in 
-%the frequency domain are in fact equivalent. This also allows us to show that often the results in the literature are incorrectly 
-%formulated and equivalent statements are compared with each other. 
-%
-%After this unification, we apply the general multiplier methods of IQCs to demonstrate the convenience of the stability analysis for 
-%different types of uncertainties involved for which no classical test is available. Then, using the analysis framework we turn to the 
-%controller design problem and derive an iterative control design method which can be seen as a generalized version of  the well-known D-K 
-%iteration from the Structured Singular Value theory. It is shown that we can bypass the complications of the state-of-art control design 
-%techniques by clearly defining a performance objective that is posed as a minimization problem. The validity of the method is shown by 
-%the performing teleoperation over two 1-degree of freedom devices. 
-%
-%Although the results show superiority in terms of performance, we still insist on arguing that the haptic feedback problem is not well 
-%understood by the control engineering community. Thus, we strongly encourage the experts of the relevant fields such as the neuro-
-%sciences, cognitive psychophysiology and others that we are not yet aware of to join and guide the engineers in creating the performance 
-%specifications for a successful and beneficial haptic technology.
+\chapter{Samenvatting}
+
+Het menselijk lichaam bevat een zeer complexe netwerk structuur bestaande uit een groot aantal componenten om de sensatie van het voelen 
+te bewerkstelligen. Het menselijk brein verwerkt deze enorme informatiestroom om de aard van de interactie met de omgeving te bepalen. Op 
+een hoger niveau, kan men dit proces beschouwen door het engineering concept van \enquote{sensor fusion}, welke de mogelijkheden bestudeert hoe men 
+om kan gaan met kwalitatieve, verschillende informatiebronnen. Men kan, vergelijkbaar met 3D visualisatie en audio systemen, met behulp van 
+speciale apparaten en voorbepaalde bewegingspatronen, een artificiële tast perceptie creëren. Deze capaciteiten van het menselijk brein 
+leiden tot de doelstelling van de \enquote{haptic feedback} technologie om voor een menselijke gebruiker het tastgevoel te creëren door middel van 
+lokale apparaten zonder dat er fysisch contact is tussen de gebruiken en een op afstand bevindend apparaat. Echter, de technologie is nog 
+niet rijp en bovenal is het voordeel van deze technieken nog onderwerp van gesprek. Dit word mede veroorzaakt door het feit dat de 
+belangrijkste problemen nog niet zijn opgelost.
+
+De huidige methoden benaderen het \enquote{haptic} feedback probleem door het direct kopiëren van de interactie tussen de locale en op afstand 
+bevindende apparatuur afgaande op de optredende krachten en posities. Daar de fysica van beide media significant verschillend kunnen zijn, 
+is er een stabiliteit probleem m.a.w. het regel algoritme probeert een physische onmogelijke configuratie van apparaat positie en toegepaste 
+krachten te bewerkstelligen. De voor de hand liggende oplossing voor dit probleem is om demping toe te voegen zodat de locale en op afstand 
+bevindende apparatuur alleen beperkte bewegingsprofielen in kracht en snelheden toe laat.
+
+Deze studie onderzoekt de fundamentele redenen waarom deze stabiliteitsproblemen optreden. De gekozen aanpak is om te beginnen met de 
+initiële aannames en hypotheses, deze uit te werken om de implicaties daarvan aanschouwelijk te maken en uiteindelijk te vergelijken met de 
+conclusies in de literatuur. Ons argument is dat de meeste stabiliteit problemen die optreden niet essentieel zijn. In feite worden dezen 
+veroorzaakt door te ambitieuze regeldoelstellingen en discusieerbare aannames voor de componenten die betrokken zijn bij de hierboven 
+beschreven interacties. Verder zijn de prestatie doelstellingen die aangenomen zijn onmogelijk te bewerkstelligen of irrelevant voor het 
+probleem.
+
+In het tweede deel van deze studie, gebruikmakend van de \enquote{Integral Quadratic Constraints} (IQC) theorie, laten we zien dat verschillende 
+stabiliteit resultaten in het frequency domein in feite equivalent zijn. Deze \enquote{Integral Quadratic Constraints} theorie is door vele 
+onderzoekers ontwikkeld maar uiteindelijk populair gemaakt door Megretski en Rantzer aan het eind van de 1990s. Door deze aanpak kunnen we 
+aantonen dat de resultaten in de literatuur vaak incorrect geformuleerd zijn en equivalente conclusies met elkaar vergeleken worden.
+
+Na deze unificatie, passen we de algemene multiplier methode van IQCs toe om hun effectiviteit voor stabiliteit analyse voor verschillende 
+onzekerheidstypes te demonstreren waarvoor geen klassieke testen beschikbaar zijn. Daarna gaan we, gebruikmakend van dit analyse raamwerk, 
+regelaars ontwikkelen en leiden we een iteratieve designmethode af, welke gezien kan worden als een generaliseerde versie van de bekende 
+$D$-$K$ iteraties van de Structured Singular Value theorie. We laten zien dat de moeilijkheden van \enquote{state-of-the-art} regelingen voorkomen 
+kunnen worden door de prestatie doelstelling te herformuleren als een minimalisatie probleem. De validatie van de methode is aangetoond 
+door deze toe te passen op een tele-operatie met twee 1 vrijheidsgraad-systemen.
+
+Alhoewel, de resultaten superieure prestaties laten zien, willen we beklemtonen dat het \enquote{haptic feedback probleem} nog niet goed 
+begrepen is door de control engineering gemeenschap. Vandaar, onze aanbeveling om experts van de verschillende benodigde vakgebieden zoals 
+neurosciences, cognitieve fysiologie en anderen, te laten samenwerken om duidelijke prestatie doelstellingen te formuleren zodat ingenieurs 
+in de toekomst succesvolle en bruikbare \enquote{haptic} kunnen ontwikkelen.
