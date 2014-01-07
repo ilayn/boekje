@@ -9,38 +9,11 @@
                 bmargin=0.8cm, %bottom margin = 0.8 cm
                 ]{geometry}
 
-%\usepackage[ a5paper,           %paper size
-%                hmargin=1.5cm, %horizontal margin = 1 cm on each side
-%                vmargin=1.0cm, %vertical margin = 1 cm top and bottom
-%                tmargin=2cm, %top margin = 1.2 cm
-%                bmargin=2cm, %bottom margin = 0.8 cm
-%%                tmargin=1.2cm, %top margin = 1.2 cm
-%%                bmargin=0.8cm, %bottom margin = 0.8 cm
-%                ]{geometry}
-
 \usepackage[a4,center,noinfo]{crop}
-%\usepackage{url}
-
-\newcommand{\myexp}[1]{%
-\textit{#1}%
-}%
-
-\renewcommand{\myexp}[1]{%
-}%
 
 \newcommand{\mystelling}[1]{%
 \item #1
 }%
-
-%\renewcommand{\mystelling}[1]{%
-%}%
-
-\newcommand{\mystellingo}[1]{%
-\item #1
-}%
-
-%\renewcommand{\mystellingo}[1]{%
-%}%
 
 \newcommand*\crosshairsulc{% % crosshairs
 \begin{picture}(0,0)
@@ -81,27 +54,25 @@
 \pagestyle{empty}
 \begin{document}
 \hyphenation{met-ro-nome}
-%r\newpage
-%\usefont{T1}{ppl}{m}{n}
 
 
-%\selectlanguage{dutch}
-%\vspace*{1.5cm}
-%\begin{center}
-%{\LARGE \bfseries Stellingen}\\[5mm]
-%{\Large behorende bij het proefschrift}\\[2cm]
-%
-%{\LARGE \bfseries Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs}\\[4mm]
-%\vspace{2cm}
-%
-%{\Large \.Ilhan POLAT \\[1cm]
-%4 februari 2014}
-%\end{center}
-%
-%\newpage
-%
-%
-%\selectlanguage{american}
+\selectlanguage{dutch}
+\vspace*{1.5cm}
+\begin{center}
+{\LARGE \bfseries Stellingen}\\[5mm]
+{\Large behorende bij het proefschrift}\\[2cm]
+
+{\LARGE \bfseries Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs}\\[4mm]
+\vspace{2cm}
+
+{\Large \.Ilhan POLAT \\[1cm]
+4 februari 2014}
+\end{center}
+
+\newpage
+
+
+\selectlanguage{american}
 \begin{enumerate}
 % 1
 \mystelling{Our sense and perception systems are quite imperfect and we are aware of it. Optical illusions, 
@@ -162,59 +133,61 @@ prof.dr.ir. Maarten Steinbuch en prof.dr. Siep Weiland.
 %----------------------------------------------------------------------------------------------------------------------
 %----------------------------------
 
-%\selectlanguage{dutch}
+\selectlanguage{dutch}
 %%\footnotesize \scriptsize
 %\hyphenation{tijds-in-ten-sief}
 %\hyphenation{in-grij-pen}
 %\begin{enumerate}
 %
 %% 1
-%\mystelling{ (Dit proefschrift).}
+\begin{enumerate}
+\mystelling{Onze zintuigen en perceptiesystemen zijn niet bepaald perfect, en daar zijn we ons bewust van. Optische illusies, 3D films, 
+surround audio systemen gebruiken het feit dat het ons brein niet altijd lukt. Dit gegeven is de sleutel tot succes in technologieën 
+omtrent aanraking (Dit proefschrift).}
 %
 %
 %% 2
-%\mystelling{(Dit proefschrift).}
+\mystelling{Decennia nadat de index geformuleerd werd, zijn we nog altijd niet in staat om enkele kwantitatieve eigenschappen van een 
+\enquote{performance index} van een bilateraal teleoperatie-systeem op te noemen (Dit proefschrift).}
 %
 %% 3
-%\mystelling{}
+\mystelling{Het is mogelijk om een acceptabel realisme-niveau te bereiken met een control design gebaseerd op een model (Dit proefschrift).}
 %
 %% 4
-%\mystelling{}
+\mystelling{Het brein is in staat om de menselijke arm te dwingen zich als een passief fysisch systeem te gedragen, maar alleen als het 
+dat wil. Passiviteit is niet een inherente eigenschap van de menselijke arm (Dit proefschrift)}
 %
 %% 5
-%\mystelling{}
+\mystelling{Toen Nietzsche schreeft dat \enquote{onverklaarde, obscure zaken worden gezien als belangrijker dan verklaarde, duidelijke}, 
+had hij toegelaten moeten worden tot de dichtstbijzijnde regeltechniek faculteit.}
 %
 %% 6
-%\mystelling{}
+\mystelling{In \enquote{The apprenticeship of a mathematician} beweert André Weil dat \enquote{het een weidverbreid geloof is dat je beter 
+een som geld fout kunt besteden dan het niet uitgeven}. Het is duidelijk dat hij nooit een aanvraag heeft ingediend voor een subsidie. 
+Anders had hij direct de zero-sum structuur gezien.}
 %
 %% 7
-%\mystelling{}
+\mystelling{Als een bepaalde wetenschap een nieuw perspectief nodig heeft waarmee het naar belangrijke vraagstukken kan kijken, is er 
+niets vervelender dan een stelletje discipels.}
 %
 %% 8
-%\mystelling{\enquote{Het Engels is de facto de wetenschappelijke lingua franca}...}
+\mystelling{Het gebruik van dure en vaak slecht werkende gepatenteerde of beschermde software is zowel een grote fout als een verspilling 
+van schaarse middelen. Dat het tijd kost om vanaf nul zelf iets te bouwen is geen valide excuus. Deze gewoonte dwingt de samenleving om 
+software te kopen om wetenschappelijke tools te gebruiken die reeds door diezelfde samenleving gefinancierd zijn.}
 %
 %% 9
-%\mystelling{}
+\mystelling{Over vijftig jaar zullen mensen zich nog steeds als modern zien.}
 %
 %% 10
-%\mystelling{}
+\mystelling{Als je de tik niet meer hoort, sla je perfect op de beat. Dat, of je metronoom is kapot.}
+
+\end{enumerate}
+
+\vfill
 %
-%
-%\end{enumerate}
-%%{http://www.telegraaf.nl/reiskrant/1701789/__Top_100_Typisch_Nederlands__.html}
-%
-%
-%% \vspace{0.5cm}
-%
-%%\begin{itemize}
-%%
-%%\end{itemize}
-%
-%\vfill
-%
-%\noindent Deze stellingen worden opponeerbaar en verdedigbaar geacht en zijn als zodanig goedgekeurd door de promotoren 
-%prof.dr.ir. Maarten Steinbuch en prof.dr. Siep Weiland.
-%%---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-%\newpage
+\noindent Deze stellingen worden opponeerbaar en verdedigbaar geacht en zijn als zodanig goedgekeurd door de promotoren 
+prof.dr.ir. Maarten Steinbuch en prof.dr. Siep Weiland.
+%%----------------------------------------------------------------------------------------------------------------------------------------
+
 \end{document}
-% LocalWords:
+
