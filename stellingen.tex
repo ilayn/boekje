@@ -13,8 +13,8 @@
 
 \newcommand{\mystelling}[1]{%
 \item #1
-}%
-
+}
+%
 \newcommand*\crosshairsulc{% % crosshairs
 \begin{picture}(0,0)
 \linethickness{0.2pt}
@@ -22,7 +22,7 @@
 \put(0,35){\line(0,-1){30}}
 \end{picture}%
 }
-
+%
 \newcommand*\crosshairsurc{% % crosshairs
 \linethickness{0.2pt}
 \begin{picture}(0,0)
@@ -30,6 +30,7 @@
 \put(0,35){\line(0,-1){30}}
 \end{picture}%
 }
+%
 \newcommand*\crosshairsllc{% % crosshairs
 \linethickness{0.2pt}
 \begin{picture}(0,0)
@@ -37,6 +38,7 @@
 \put(0,-35){\line(0,1){30}}
 \end{picture}%
 }
+%
 \newcommand*\crosshairslrc{% % crosshairs
 \linethickness{0.2pt}
 \begin{picture}(0,0)
@@ -44,102 +46,79 @@
 \put(0,-35){\line(0,1){30}}
 \end{picture}%
 }
-
+%
 \cropdef\crosshairsulc\crosshairsurc\crosshairsllc\crosshairslrc{crosshairs}
-
-
+%
+%
 \crop[crosshairs] %% uncomment for crosshairs
 %\crop[frame] %% uncomment for frame
-
+%
 \pagestyle{empty}
 \begin{document}
 \hyphenation{met-ro-nome}
-
-
 \selectlanguage{dutch}
 \vspace*{1.5cm}
 \begin{center}
 {\LARGE \bfseries Stellingen}\\[5mm]
 {\Large behorende bij het proefschrift}\\[2cm]
-
 {\LARGE \bfseries Robustness Analysis and Controller Synthesis for Bilateral Teleoperation Systems via IQCs}\\[4mm]
 \vspace{2cm}
-
 {\Large \.Ilhan POLAT \\[1cm]
 4 februari 2014}
 \end{center}
-
+%
 \newpage
-
-
+%
+%
 \selectlanguage{american}
 \begin{enumerate}
 % 1
 \mystelling{Our sense and perception systems are quite imperfect and we are aware of it. Optical illusions, 
 3D movies, surround audio systems all take advantage of this fact as our brain gracefully fails. The key to success 
 in touch related technologies lies in the same realm (This thesis).} 
-
 % 2
 \mystelling{Decades after its official formulation, we are still unable to at least enumerate quantitative 
 properties of a bilateral teleoperation system performance index. (This thesis).}
-
 % 3
 \mystelling{It is possible to obtain a satisfactory level of realism via a model-based control design (This thesis).}
-
 % 4
 \mystelling{The brain can control the human arm to behave as a passive physical system but only when it 
 wishes to. Passivity is not an essential property of the human arm (This thesis).}
-
 % 5
 \mystelling{When Nietzsche wrote \enquote{\emph{Unexplained, obscure matters are regarded 
 as more important than explained, clear ones}}, he should have been admitted to the 
 nearest control-theory department.}
-
 % 6
 \mystelling{In \emph{Apprenticeship of a Mathematician}, Andr\'{e} Weil states that 
 \enquote{\emph{It is all too widely believed that it is better to misspend a sum of 
 money than not to have use of it all}}. Clearly, he never applied to a project grant
 since otherwise he would have immediately noticed the unfortunate zero-sum structure.
 }
-
 % 7
 \mystelling{When a scientific field needs a different perspective to look at the questions 
 at hand, there's nothing more annoying than a bunch of disciples.}
-
 % 8
 \mystelling{Using expensive and often poorly performing proprietary software for research 
 is both a terrible mistake and a waste of scarce resources. It is not a valid excuse to 
 argue that it would cost time to build something from scratch. This practice forces the
 society to buy software to use the tools provided by the academia which is funded already by 
 the very same society.}
-
 % 9
 \mystelling{Fifty years from now people will still see themselves as modern.}
-
 % 10
 \mystelling{If you can't hear the click anymore, you are either perfectly on the beat or your metronome is broken.}
-
+%
 \end{enumerate}
 
-%\scriptsize
-%
-%
-%
-%\footnotesize
+\vfill%
 
-\vfill \noindent These propositions are considered opposable and defendable and as such have been approved by the supervisors 
+\noindent These propositions are considered opposable and defendable and as such have been approved by the supervisors 
 prof.dr.ir. Maarten Steinbuch en prof.dr. Siep Weiland.
 \newpage
 %----------------------------------------------------------------------------------------------------------------------
-%----------------------------------
-
-\selectlanguage{dutch}
-%%\footnotesize \scriptsize
-%\hyphenation{tijds-in-ten-sief}
-%\hyphenation{in-grij-pen}
-%\begin{enumerate}
 %
-%% 1
+\selectlanguage{dutch}
+%
 \begin{enumerate}
 \mystelling{Onze zintuigen en perceptiesystemen zijn niet bepaald perfect, en daar zijn we ons bewust van. Optische illusies, 3D films, 
 surround audio systemen gebruiken het feit dat het ons brein niet altijd lukt. Dit gegeven is de sleutel tot succes in technologieën 
@@ -180,14 +159,11 @@ software te kopen om wetenschappelijke tools te gebruiken die reeds door diezelf
 %
 %% 10
 \mystelling{Als je de tik niet meer hoort, sla je perfect op de beat. Dat, of je metronoom is kapot.}
-
 \end{enumerate}
-
 \vfill
 %
 \noindent Deze stellingen worden opponeerbaar en verdedigbaar geacht en zijn als zodanig goedgekeurd door de promotoren 
 prof.dr.ir. Maarten Steinbuch en prof.dr. Siep Weiland.
 %%----------------------------------------------------------------------------------------------------------------------------------------
-
 \end{document}
 

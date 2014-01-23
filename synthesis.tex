@@ -143,8 +143,8 @@ C_y & 0 & D_{wy}
 \right].
 \label{eq:nominalclinc}
 \end{align}
-Here two-letter subscripts, $\cdot_{ab}$ denote the term that represents the contribution from input $a$ to output $b$ which hopefully gives some
-relief to the reader since the manipulations quickly get ugly. 
+Here two-letter subscripts, $\cdot_{ab}$ denote the term that represents the contribution from input $a$ to output $b$ which hopefully 
+gives some relief to the reader since the manipulations quickly get ugly. 
 
 \begin{define}[Generalized Plant] The plant $G$ is said to be a generalized plant if there exists at least one controller 
 $K$ such that the interconnection of $G$ and $K$ is stable. Equivalently, $G$ is a generalized plant if $(A,B_u)$ is stabilizable
@@ -158,8 +158,8 @@ characterized by $P_p$. Before we state the nominal controller synthesis conditi
 Linearization Lemma which can be found in \cite{lmibook99} which we base our style on. It is also important to follow the rationale 
 behind the arguments given in \cite{scherermulti} for general quadratic performance synthesis.
 
-\begin{lem}\label{lem:linlemma} Assume we are given with a quadratic form in which $A,S$ are constant matrices and $B(v),Q(v)$ and $R(v)\succeq 0$ are matrix functions 
-of some decision variables denoted by $v$ such that
+\begin{lem}\label{lem:linlemma} Assume we are given with a quadratic form in which $A,S$ are constant matrices and $B(v),Q(v)$ 
+and $R(v)\succeq 0$ are matrix functions of some decision variables denoted by $v$ such that
 \begin{equation}
 \pmatr{A\\B(v)}^T\pmatr{Q(v) &S\\S^T &R(v)}\pmatr{A\\B(v)} \prec 0
 \label{eq:quadraticconst}
@@ -195,8 +195,8 @@ matrix $\mathcal{X}$ variables and hence destroying the affine dependence on the
 Inequality (BMI). Also in the analysis case the stability was assumed at the outset however here the positivity constraint,
 $\mathcal{X}\succ 0$ should be included to guarantee closed loop stability. Thus, the synthesis problem is more involved. The resolution of 
 this problem appeared mainly in \cite{scherermulti,izumi} (also in a strict $\mathcal{H}_\infty$ context, \cite{gahapk,gahinet96} with a
-two-step procedure of elimination of the controller parameters and obtaining some of the LMI variables and then resolving the LMIs for controller 
-parameters).
+two-step procedure of elimination of the controller parameters and obtaining some of the LMI variables and then resolving the LMIs for 
+controller parameters).
 
 The essential trick is to manifacture a new set of derived variables from the original variables such that the problem is not altered but 
 conditions become LMIs again. For this purpose, suppose we partition the matrices 
@@ -356,8 +356,8 @@ introduce the partitions
 \[
 P=\begin{pmatrix}Q&S\\ S^T&R\end{pmatrix},\quad P_p=\begin{pmatrix}Q_p&S_p\\ S^T_p&R_p\end{pmatrix}
 \]
-Again, as given in \Cref{chap:analysis}, the closed loop system is robustly stable for all $\Delta\in\bm{\Delta}$ and achieves performance characterized 
-by the multiplier $P_p$ if there exist a $P\in\mathbf{P}$ and a symmetric matrix $\mathcal{X}$ such that 
+Again, as given in \Cref{chap:analysis}, the closed loop system is robustly stable for all $\Delta\in\bm{\Delta}$ and achieves performance 
+characterized by the multiplier $P_p$ if there exist a $P\in\mathbf{P}$ and a symmetric matrix $\mathcal{X}$ such that 
 \begin{equation}
 \pmatr{
 I&0&0\\\mathcal{A}&\mathcal{B}_p&\mathcal{B}_w\\
@@ -387,22 +387,22 @@ I&0&0\\\mathcal{A}&\mathcal{B}_p&\mathcal{B}_w\\
 %
 %\end{thm}
 
-For the controller synthesis case, unfortunately previous transformation does not resolve the additional bilinear terms and in fact it is not even known 
-if such a transformation is possible or not. We can either try to solve BMIs directly with nonconvex optimization techniques or we can use another nonconvex 
-solution which is known as the multiplier-controller iteration. 
+For the controller synthesis case, unfortunately previous transformation does not resolve the additional bilinear terms and in fact it is 
+not even known if such a transformation is possible or not. We can either try to solve BMIs directly with nonconvex optimization techniques 
+or we can use another nonconvex solution which is known as the multiplier-controller iteration. 
 
-Notice that if we have the stabilizing controller then the outer factors are constant matrices and we have an LMI problem. Conversely, if we have a 
-feasible multiplier such that the inequality is satisfied then it's a matter of applying the aforementioned transformation and linearizing lemma to obtain
-a controller. Hence, we can perform an iteration by either fixing the multiplier or the controller. 
+Notice that if we have the stabilizing controller then the outer factors are constant matrices and we have an LMI problem. Conversely, if 
+we have a feasible multiplier such that the inequality is satisfied then it's a matter of applying the aforementioned transformation and 
+linearizing lemma to obtain a controller. Hence, we can perform an iteration by either fixing the multiplier or the controller. 
 
 \subsection{The Multiplier-Controller Iteration with Static Multipliers}
 
-If we start with a uncertain generalized plant representation, we have neither the controller nor the robustness multipliers. Moreover, we don't have a 
-method to search for both simultaneously. Thus, we first consider the nominal control design problem and obtain a nominally stabilizing controller as 
-given above. It can also be shown that, the closed loop, with the well-posedness assumption and a simple continuity argument, has some, possibly very 
-limited, robustness properties against the uncertainty set we would like to consider. In other words, there is no reason for the controller to be robustly 
-stabilizing against the full uncertainty region that we originally modeled since we did not enforce it by any constraint. 
-%Therefore, we search for the maximum size of a scaled version of original uncertainty set.
+If we start with a uncertain generalized plant representation, we have neither the controller nor the robustness multipliers. Moreover, 
+we don't have a method to search for both simultaneously. Thus, we first consider the nominal control design problem and obtain a nominally 
+stabilizing controller as given above. It can also be shown that, the closed loop, with the well-posedness assumption and a simple 
+continuity argument, has some, possibly very limited, robustness properties against the uncertainty set we would like to consider. In 
+other words, there is no reason for the controller to be robustly stabilizing against the full uncertainty region that we originally 
+modeled since we did not enforce it by any constraint. 
 
 \begin{rem}Repeating what we have touched upon in \Cref{remiqc1}, this is briefly the rationale behind the common assumption of star-shaped 
 uncertainty region, i.e., any scaled uncertainty set is in the full sized uncertainty set e.g., $[0,1]\bm{\Delta}\in\bm{\Delta}$. 
@@ -418,12 +418,9 @@ customized way but for notational convenience we will still use $r\bm{\Delta}$ t
 \end{rem}
 
 
-
-
-
-Summarizing our current situation, we have obtained a nominally stabilizing controller and we have parameterized a custom scaling method for each of our 
-uncertainty subblocks. Now we would like to search for the maximum achievable $r$ via analysis. Hence, we can search over the maximum $r$ such that the 
-scaled closed loop is robustly stable for all $\Delta\in r\bm{\Delta}$. 
+Summarizing our current situation, we have obtained a nominally stabilizing controller and we have parameterized a custom scaling method 
+for each of our uncertainty subblocks. Now we would like to search for the maximum achievable $r$ via analysis. Hence, we can search over 
+the maximum $r$ such that the scaled closed loop is robustly stable for all $\Delta\in r\bm{\Delta}$. 
 
 
 
@@ -515,20 +512,21 @@ observed that this might actually improve the conditioning of the LMI solution t
 Note that same theorem can be formulated for all $\Delta\in\bm{\Delta}$ and a closed loop plant $(G(r)\star K) (s)$,
 in other words we can also modify the plant information to scale the uncertainty by subsuming the $r$ parameter suitably into the 
 plant.
-To demonstrate the numerical problem, we assume that the uncertainties are of unstructured LTI type and for simplicity assume constant multipliers. 
-For parametric uncertainties, it suffices to scale down the respective uncertainty channels for the scaling as shown in \Cref{fig:uncscale}. 
+To demonstrate the numerical problem, we assume that the uncertainties are of unstructured LTI type and for simplicity assume 
+constant multipliers. For parametric uncertainties, it suffices to scale down the respective uncertainty channels for the scaling 
+as shown in \Cref{fig:uncscale}. 
 
 \[
 \pmatr{r\Delta\\I}^T\pmatr{Q&S\\S^T&R}\pmatr{r\Delta\\I} = \pmatr{\Delta\\I}^T\pmatr{r^2 Q&rS\\rS^T&R}\pmatr{\Delta\\I}\succeq 0.
 \]
-Out of our test experience, we have found out that reflecting the scaling to the plant is better for numerical stability. Seemingly the reason for 
-this is the numerical noise introduced when $r$ is small in the early iteration steps. Notice how the square of $r$ drives the $Q$ block to zero
-if $0<r\ll 1$. In case of a feasible multiplier is found, this multiplier should be stripped off from $r$ since it will be again used in the 
-controller step, but due to the numerical inaccuracies wild changes are possible and usually the resulting multiplier information is contaminated. 
-We have found out that we have more freedom in the scaled plant case since
-one can decrease the bad effect of small numbers via balanced realizations, cleaning up the state-space matrices etc. Moreover, as we show later,
-in the frequency dependent multiplier case, $r$ variable becomes garbled in the factorizations, minimal realizations etc. Hence, in this work, it 
-is recommended to scale the plant instead of the multipliers.
+Out of our test experience, we have found out that reflecting the scaling to the plant is better for numerical stability. Seemingly the 
+reason for this is the numerical noise introduced when $r$ is small in the early iteration steps. Notice how the square of $r$ drives the 
+$Q$ block to zero if $0<r\ll 1$. In case of a feasible multiplier is found, this multiplier should be stripped off from $r$ since it will 
+be again used in the controller step, but due to the numerical inaccuracies wild changes are possible and usually the resulting multiplier 
+information is contaminated. We have found out that we have more freedom in the scaled plant case since one can decrease the bad effect of 
+small numbers via balanced realizations, cleaning up the state-space matrices etc. Moreover, as we show later, in the frequency dependent 
+multiplier case, $r$ variable becomes garbled in the factorizations, minimal realizations etc. Hence, in this work, it is recommended to 
+scale the plant instead of the multipliers.
 \end{rem}
 
 \begin{figure}%
@@ -689,8 +687,14 @@ G_{py}\Psi_1^{-1}                  &G_{wy}       &0\\
 \end{equation}
 thus, the obstacle needs to be avoided via finding a way to obtain an equivalent multiplier of the form
 \begin{align}
-P(\iw) &= \pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*\pmatr{M_1&M_2\\M^T_2&M_3}\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)} \\
-&= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*\hat{M}\pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}
+P(\iw) &= 
+\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ \Psi_3(\iw)&\Psi_4(\iw)}^*
+\pmatr{M_1&M_2\\M^T_2&M_3}
+\pmatr{\Psi_1(\iw)&\Psi_2(\iw)\\ 
+       \Psi_3(\iw)&\Psi_4(\iw)}\\
+      &= \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}^*
+         \hat{M}
+         \pmatr{\hat{\Psi}_1(\iw)&0\\ \hat{\Psi}_3(\iw)&\hat{\Psi}_4(\iw)}
 %&\mathrel{\reflectbox{$\coloneqq$}} \hat{P}(\iw)
 \end{align}
 where $\hat{\Psi}_1$ needs to biproper and bistable. This has been proposed in \cite{goh96,goh962} (see also

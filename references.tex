@@ -1,12 +1,5 @@
-%!TEX root = thesis.tex
-
-% this allows the use of double upright quotes inside bib titles:
-%\DeleteQuotes
-%\MakeInnerQuote{``}
-
-
+% A Hack for breaking long URLs in the references
 \makeatletter
-
 %\AtBeginDocument{%
     \newlength{\temp@x}%
     \newlength{\temp@y}%
@@ -59,6 +52,5 @@
       \endgroup
     }%
 %}
-
 \makeatother
 \printbibliography[title=References]

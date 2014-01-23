@@ -1,4 +1,3 @@
-%!TEX root = thesis.tex
 \ProvidesPackage{thesis-preamble}
 \PassOptionsToPackage{x11names}{xcolor} % Why is this here? Fix it later!!
 % ====================================================================
@@ -24,9 +23,6 @@
 % ====================================================================
 % ====================================================================
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%
 %! MEMOIR CUSTOMISE
 %
@@ -51,7 +47,6 @@
   \renewcommand\printchaptername{\marginpar{\chapnamefont{\@chapapp}}}
   \renewcommand\chapternamenum{}
   \renewcommand\printchapternum{\marginpar{\chapnumfont\thechapter}}
-    %\makeoddfoot{plain}{}{\thesispage}{}
 }
 \chapterstyle{phdstayla}
 
@@ -72,15 +67,12 @@
 \setparaheadstyle{\normalfont\normalsize\scshape\addperiod}%
 
 
-\setsecnumformat{\unexpanded{%
-  %\protected@xdef\@tempa{{\upshape\S\csname the#1\endcsname}}}}
-  \protected@xdef\@tempa{{\upshape\csname the#1\endcsname}}}}
+\setsecnumformat{\unexpanded{\protected@xdef\@tempa{{\upshape\csname the#1\endcsname}}}}
 
 %%%%%
 
 \renewcommand\contentsname{Table Of Contents}
 \nouppercaseheads
-
 \def\printtoctitle#1{\section*{#1}}
 \def\printloftitle#1{\section*{#1}}
 \def\printlottitle#1{\section*{#1}}
@@ -98,10 +90,6 @@
 \makeevenfoot{phdstayla}{}{}{}
 \makeoddfoot{phdstayla}{}{}{}
 \makeheadrule{phdstayla}{\textwidth}{0.3pt}
-
-%\pagestyle{phdstayla}
-
-
 
 %% Symmetric ragged commands
 \newcommand\IfOddPage{\checkoddpage\ifoddpage\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
@@ -136,11 +124,6 @@
                 plainpages=false,%
                 pdfpagelabels,%
                 linktocpage]{hyperref}
-
-
-%\g@addto@macro{\UrlBreaks}{\UrlOrds}
-
-
 %==================================================================
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %==================================================================
@@ -164,7 +147,6 @@
 }
 
 \pgfplotsset{compat=1.8}
-
 %==================================================================
 %++++++++++++++++++++++++ siunitx +++++++++++++++++++++++++++++++++
 %==================================================================
@@ -181,12 +163,10 @@
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %==================================================================
 
-
-
+% Enter monster Again
 \definecolor{darkred}{rgb}{0.4,0,0}
 \definecolor{darkgreen}{rgb}{0,0.4,0}
 \definecolor{darkblue}{rgb}{0,0,0.4}
-
 \hypersetup{
 unicode=true,
 linkcolor=darkred,%
@@ -198,8 +178,7 @@ pdftitle={Robustness Analysis and Controller Synthesis for Bilateral Teleoperati
 pdfsubject={PhD Thesis},
 pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadratic Constraints}
 }
-
-
+% Exit monster and run!!
 \usetikzlibrary{arrows,
                 calc,
                 matrix,
@@ -221,7 +200,6 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
                 groupplots,
                 colormaps
         }
-
 \pgfplotsset{/pgfplots/colormap/invgray/.style={/pgfplots/colormap={invgray}{rgb255=(255,255,255) rgb255=(50,50,50)}}}
 
 \RequirePackage{csquotes}
@@ -244,17 +222,13 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
     citestyle=numeric-comp,%
 		%style=ieee
   ]{biblatex}
-
-
 \addbibresource{phdthesis.bib}
-
 \def\bibfont{\small}
 \AtEveryBibitem{%
   \clearfield{isbn}
   \clearfield{issn}
   \clearfield{month}
 }
-
 \newbibmacro*{bbx:parunit}{%
   \ifbibliography
     {\setunit{\bibpagerefpunct}\newblock
@@ -263,7 +237,6 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
      \setunit{\adddot\par}}
     {}
 }
-
 \renewbibmacro*{doi+eprint+url}{%
   \usebibmacro{bbx:parunit}% Added
   \iftoggle{bbx:doi}
@@ -275,13 +248,11 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
   \iftoggle{bbx:url}
     {\usebibmacro{url+urldate}}
     {}}
-
 \renewbibmacro*{eprint}{%
   \usebibmacro{bbx:parunit}% Added
   \iffieldundef{eprinttype}
     {\printfield{eprint}}
     {\printfield[eprint:\strfield{eprinttype}]{eprint}}}
-
 \renewbibmacro*{url+urldate}{%
   \usebibmacro{bbx:parunit}% Added
   \printfield{url}%
@@ -291,15 +262,12 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
      \printtext[urldate]{\printurldate}
     }
 }
-
 \setcounter{biburlnumpenalty}{9999}
 \setcounter{biburlucpenalty}{9999}
 \setcounter{biburllcpenalty}{9999}
 
-
 %%% FIGURES
 \def\impath{images/}
-
 \RequirePackage{cleveref}
 \Crefname{secinapp}{Appendix}{Appendices}
 \Crefname{thm}{Theorem}{Theorems}
@@ -307,13 +275,10 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
 \Crefname{rem}{Remark}{Remarks}
 \Crefname{define}{Definition}{Definitions}
 \Crefname{coroll}{Corollary}{Corollaries}
-
-
 \renewcommand\cftchapterfont{\scshape}
 \renewcommand\cftsectionfont{\normalfont}
 \renewcommand\cftsubsectionfont{\itshape\small}
 \renewcommand\cftsubsectionpagefont{\upshape\small}
-
 
 %======== Thm style declaration
 \newtheorem{thm}{Theorem}[chapter]
@@ -322,7 +287,6 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{rem}[thm]{Remark}
 \newtheorem*{define*}{Definition}
-%\renewcommand{\thetheorem}{\arabic{chapter}.\arabic{theorem}}
 
 %======== Shorthand notation
 \newcommand{\Real}{\mathbb{R}}
@@ -373,13 +337,6 @@ pdfkeywords={Bilateral Teleoperation, Haptics, Robust Control, Integral Quadrati
                         every right delimiter/.style={xshift=-0.1ex}}
 }
 
-%\pgfdeclarefunctionalshading{eightball}{\pgfpointorigin}{\pgfpoint{100bp}{100bp}}{}{
-%50 sub dup mul exch
-%70 sub dup mul 0.5 mul add sqrt  
-%dup mul neg 1.003 exch exp 1 exch sub
-%dup
-%dup
-%}
 \pgfdeclareradialshading{mysphere}{\pgfpoint{1cm}{0cm}}%
 {rgb(0cm)=(0,0,0);
 rgb(0.7cm)=(0.8,0.8,0.8);
@@ -387,7 +344,7 @@ rgb(0.9cm)=(0.95,0.95,0.95);
 rgb(1.0cm)=(1,1,1)}
 
 \makeatletter
-\pgfdeclareplotmark{o*}
+\pgfdeclareplotmark{o*}% For the muscle beads
 {%
 \pgfcoordinate{tpt-\the\pgf@plot@mark@count}{\pgfpointorigin}
   \pgfpathcircle{\pgfpointorigin}{\pgfplotmarksize}

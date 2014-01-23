@@ -8,7 +8,6 @@ conservatism . Via numerical case studies, we show that the results are precisel
 techniques available in the literature. Therefore, we prove that there is no fundamental reason to use a 
 specialized terminology and set of techniques out of the mainstream robust control theory.
 
-
 \section{Quadratic Forms for Stability Analysis}
 In the sequel, instead of 2-port networks, we rather consider system interconnections as 
 depicted in \Cref{fig:uncic}. In this setting, $G$ is the model of the nominal bilateral 
@@ -38,16 +37,21 @@ this direction by utilizing quadratic forms (see \cite{megretski} and \cite{safo
 \begin{tikzpicture}[>=stealth,scale=0.6]
 \node[draw,rectangle, minimum size=0.75cm] (plant) at (0,0) {$G_p$};
 \node[draw,rectangle, minimum size=0.75cm] (unc) at (0,1.5cm) {$\Delta$};
-\node[draw,circle,inner sep=0.5mm,label={[inner sep=0.1mm]180:$-$},label={[inner sep=0,yshift=1mm]135:$v$}] at ([shift={(-0.55cm,0.6cm)}]plant.west)(junc) {};
+\node[draw,circle,inner sep=0.5mm,
+      label={[inner sep=0.1mm]180:$-$},
+      label={[inner sep=0,yshift=1mm]135:$v$}
+     ] at ([shift={(-0.55cm,0.6cm)}]plant.west)(junc) {};
 \draw[->] (plant.west) -| (junc.south);
 \draw[->] (junc.north) |- (unc.west);
 \draw[->] (unc.east) -| ++(0.5cm,-0.5cm) node[right]{$u$}|- (plant.east);
 \end{tikzpicture}
 \caption{}\label{fig:uncicpas}
 \end{subfigure}
-\caption[The general system interconnections]{The general interconnection (a) and the assumed interconnection for passive systems 
-(b). In general, the power variables require a sign change relative to the ``from'' and ``to'' ports 
-in order to indicate the travel direction which translates to a negative sign in the block diagrams.}
+\caption[The general system interconnections]{The general interconnection (a) and the assumed 
+         interconnection for passive systems (b). In general, the power variables require a sign 
+         change relative to the ``from'' and ``to'' ports in order to indicate the travel direction 
+         which translates to a negative sign in the block diagrams.%
+        }
 \label{fig:2}
 \end{figure}
 
@@ -93,7 +97,10 @@ real power and flexibility of these multiplier methods come from {their} general
 operators via the IQC framework that appeared in \cite{megretski}.
 
 An IQC for the input and output signals of $\Delta$ is expressed as
-\begin{equation}{\infint{\pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}^*\Pi(\iw)\pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}d\omega}} \succeq 0.
+\begin{equation}
+\infint{%
+       \pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}^*\Pi(\iw)\pmatr{\widehat{\Delta(v)}(\iw)\\\hat{v}(\iw)}d\omega
+       } \succeq 0.
 \label{eq:IQC}
 \end{equation}
 A bounded operator $\Delta:\mathcal{L}^m_2\to\mathcal{L}^n_2$ is said to satisfy the constraint defined by $\Pi(\iw)$ 
@@ -257,7 +264,9 @@ that zero is in the uncertainty set with identical arguments.
 \foreach \x in {10,3,2,1}{ \draw (\x,0) circle (\x);}
 \draw[thick,->] (0.1,-2.5) -- (1.5,-1.5) node[right] {$p$};
 \end{tikzpicture}
-\caption[Parametrized strictly output passive uncertainty regions]{As $p$ increases, the admissible region for the Nyquist curves of $\Delta$ shrinks to smaller disks in the right half plane.}
+\caption[Parametrized strictly output passive uncertainty regions]{%
+    As $p$ increases, the admissible region for the Nyquist curves of $\Delta$ shrinks to smaller disks in the right half plane.%
+    }
 \label{fig:pregions}%
 \end{figure}
 
@@ -663,7 +672,10 @@ R_{11} > 0 \quad \text{or} \quad R_{22} > 0
 \]
 and
 \[
-\det H =  \left(-R_{12}^2 - X_{12}^2\right)\lambda^2 - R_{21}^2 - X_{21}^2 + \left(4R_{11}R_{22} - 2R_{12}R_{21} + 2X_{12}X_{21}\right)\lambda  > 0.
+\det H =  
+    \left(-R_{12}^2 - X_{12}^2\right)\lambda^2 
+    - R_{21}^2 - X_{21}^2 + 
+    \left(4R_{11}R_{22} - 2R_{12}R_{21} + 2X_{12}X_{21}\right)\lambda  > 0.
 \]
 Since the leading and constant coefficient of the involved polynomial are negative, 
 the apex of the corresponding parabola should stay above the $\lambda$-axis. Using 
@@ -850,12 +862,23 @@ recovered by using multipliers similar to the ones given in the next section.
 %===================================================================================
 \begin{figure}
 \begin{center}
-\begin{tikzpicture}[>=stealth,scale=0.75,transform shape,every node/.style={minimum height=1.1cm,minimum width=1.1cm},label distance=1mm]
+\begin{tikzpicture}[>=stealth,
+                    scale=0.75,
+                    transform shape,
+                    every node/.style={minimum height=1.1cm,minimum width=1.1cm},
+                    label distance=1mm]
 \node[draw] (del) at (-3,2) {$\frac{1-e^{-s\tau}}{s} $};
 \node[draw] (plant) at (0,2) {$\frac{1}{ms+b}$};
 \node[draw] (integ) at (3,2) {$\frac{1}{s}$};
 \node[draw] (z0) at (0,3.5) {$Z_0$};
-\node[draw,label={[text width=1.6cm,inner sep=0,scale=0.8,xshift=1mm,yshift=2mm]below:{\small Unilateral Constraint}}] (uniconst) at (1,0) {\tikz{
+\node[draw,
+      label={[text width=1.6cm,
+              inner sep=0,
+              scale=0.8,
+              xshift=1mm,
+              yshift=2mm]below:{\small Unilateral Constraint}
+            }
+     ] (uniconst) at (1,0) {\tikz{
 \draw[thick,->] (0.5,0)--(0.5,1);\draw (0.5,0.5) -- (1,1);\draw[thick,->] (0,0.5) -- (1,0.5);}
 };
 \node[draw] (h) at (-1.5,0) {$H(z)$};
@@ -863,7 +886,8 @@ recovered by using multipliers similar to the ones given in the next section.
 label={[minimum size=0mm,inner sep=0mm]100:$-$},
 label={[minimum size=0mm,inner sep=0mm]175:$-$}] (j) at ($(del.east)!0.5!(plant.west)$) {};
 \draw[->] (plant.east) -- (integ.west);
-\draw[->]  (integ.east) -| ++(0.5,-0.5) |- (3.5,0) -- ($(3.5,0)!1!-40:++(-0.5,0)$) node[anchor=north,inner sep=0] {$T$} (3,0) -- (uniconst.east);
+\draw[->]  (integ.east) -| ++(0.5,-0.5) |- (3.5,0) -- ($(3.5,0)!1!-40:++(-0.5,0)$) 
+    node[anchor=north,inner sep=0] {$T$} (3,0) -- (uniconst.east);
 \draw[->] (uniconst.west) -- (h.east);
 \draw[->] (h.west) -| ($(del.west)-(0.5,0)$) -- (del.west);
 \draw[->] (del.east) -- (j.west);
@@ -991,15 +1015,6 @@ holds. By carrying out the multiplication, we obtain
 %}^*.
 %\]
 
-%If we compare this with the derived conditions in \cite{jazayeri}, we can see that their results don't involve any $b$ terms. Hence, 
-%contrary to the claim, those results can be, at best, sufficient since their test only deals with the first part of the constraint, namely 
-%$-a\leq \operatorname{Re}({\Delta_l})$. Still we cannot see the actual problematic step as we cannot reproduce their conditions by leaving out 
-%the constraint involving $b$ term. Nevertheless, their first remark in \cite[Theorem 3]{jazayeri} is not correct. The upper bound 
-%on the real part of the uncertainty certainly plays a role and can not be omitted in the necessity direction in their proof which is omitted 
-%in their paper. In other words two uncertainty operators with $\operatorname{Re}{\Delta}\leq b (\geq b)$ for some frequencies respectively,
-%can not be distinguished and this possibility already contradicts with the necessity of the test since both will be evaluated on the 
-%basis of parameter $a$ and regardless of $b$. 
-
 If compared to the results of \cite{jazayeri}, terms involving the bound $b$ don't vanish. In fact, the authors prove the 
 test for a half-plane defined as $\left\{z\in\Complex|\Re{z}\geq a\right\}$ instead of a strip and the necessity direction 
 of the proof is omitted. Hence, the upper bound on the real part of the uncertainty is not taken into account. Thus, their 
@@ -1039,10 +1054,10 @@ In \cite{jazayeri}, the results above are presented as novel stability condition
 the general passivity theorem that can be found elsewhere. This formulation is also equivalent to \cite{haddadizaad} which also uses 
 the M\"{o}bius transformation arguments given by \cite{edsin}\footnote{In fact, \cite{edsin,lombardi} further include an argument and 
 a correction about often cited but erroneous version of absolute stability theorem as we have clarified in IQC version above. 
-For some reason, the nonstrict version given in \cite{haykin}, which is not accurate, is persistently being cited even when Llewelyn's original
-paper is cited.} up to scattering transformations which once again in turn equivalent to the formulation given above. Alternatively, 
-\cite{hirchebuss} gives another reformulation using $QSR$-dissipativity which is the case of having static multipliers in our examples, 
-which in turn another manifestation of \cite[Thm. 6.2]{khalil} for non-LTI end terminations. 
+For some reason, the nonstrict version given in \cite{haykin}, which is not accurate, is persistently being cited even when Llewelyn's 
+original paper is cited.} up to scattering transformations which once again in turn equivalent to the formulation given above. 
+Alternatively, \cite{hirchebuss} gives another reformulation using $QSR$-dissipativity which is the case of having static multipliers 
+in our examples, which in turn another manifestation of \cite[Thm. 6.2]{khalil} for non-LTI end terminations. 
 
 This is just another instance of our main argument; had the problem been formulated as a straightforward robustness test, 
 it would have been relatively easy to see the connection with the classical results. However, since the problem formulation is given 
@@ -1399,12 +1414,14 @@ of the LMIs in the next result.
 is stable for all passive LTI $\Delta_h$ and LTI real parametric uncertainty $\delta_e\in[0,1]$ 
 if there exist symmetric matrices $\mathcal{X},Z_2,D_2$ and a skew symmetric matrix $G_2$ such that
 \begin{equation*}
-\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}}^T\pmatr{0 &\mathcal{X} &0\\ \mathcal{X}&0 &0\\0 &0 &M}\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}} \prec 0,
-%\label{eq:Case2LMI1}
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}}^T
+\pmatr{0 &\mathcal{X} &0\\ \mathcal{X}&0 &0\\0 &0 &M}
+\pmatr{I &0\\\mathcal{A} &\mathcal{B}\\\mathcal{C}&\mathcal{D}} \prec 0,
 \end{equation*}
 \begin{equation*}
-\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}}^T\pmatr{0 &Z_2 &0\\Z_2 &0 &0\\0 &0 &D_2}\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}} \succ 0
-%\label{eq:outerpos2}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}}^T
+\pmatr{0 &Z_2 &0\\Z_2 &0 &0\\0 &0 &D_2}
+\pmatr{I &0\\A_{\Phi} &B_{\Phi}\\C_{\Phi}&D_{\Phi}} \succ 0
 \end{equation*} hold, where
 \[\arraycolsep0.3ex
 M=\left(\begin{array}{cc|cc}
@@ -1412,7 +1429,8 @@ M=\left(\begin{array}{cc|cc}
       0&-D_2  &0         &\frac{1}{2}D_2 + G_2\\ \hline
       1 &0 &0 &0\\
       0 &\frac{1}{2}D_2 - G_2&0 &0
-\end{array}\right), \Psi = \left (\begin{array}{cc|cc}1&0&0&0\\0&\Phi_2&0&0\\\hline 0&0&1&0\\0&0&0&\Phi_2\end{array}\right ).
+\end{array}\right), 
+\Psi = \left(\begin{array}{cc|cc}1&0&0&0\\0&\Phi_2&0&0\\\hline 0&0&1&0\\0&0&0&\Phi_2\end{array}\right).
 \]
 \end{coroll}
 For this example we have used the basis $\Phi_2$ with length $12$ and selected 
@@ -1787,7 +1805,8 @@ Then the following two statements are equivalent:
 \begin{enumerate}
 	\item[i)] The interconnection of $N$ with both arbitrary uncertainties $\Delta_1$ and $\Delta_2$ from their 
     respective classes is stable.
-	\item[ii)] The $M-\Delta_1$ interconnection is stable for all $\Delta_1$ and $\Delta_2$, if $M$ is strictly passive for all $\Delta_2$ in the respective class.
+	\item[ii)] The $M-\Delta_1$ interconnection is stable for all $\Delta_1$ and $\Delta_2$, if $M$ is strictly 
+    passive for all $\Delta_2$ in the respective class.
 \end{enumerate}
 \end{thm}
 In other words, passivity-based techniques focus on verifying condition ii) by implicitly fixing to one class of 

@@ -1,5 +1,6 @@
 \chapter{Controller Design for a 1-DoF System}
 \label{chap:application}
+
 In this chapter, the synthesis conditions of the previous chapter is applied to a control design problem for a 
 rotational 1-DoF experimental setup. Different uncertainty structures are considered and compared. 
 
@@ -16,8 +17,8 @@ within the project of constructing a 5-DoF haptics local device for robotically 
 in \Cref{fig:app:onedof}. The actuation is provided to a capstan drive via a DC servo motor Maxon RE 35 which is connected to a statically 
 balanced circular strip plate. This piece is also connected to an inner segment via elastic elements and the relative motion of these 
 pieces make it possible to obtain a force measurement. An additional linear piece attached to the inner segment for handling the device. 
-Due to the capstan mechanism, there is a nominal rotational reduction of $i=\frac{1}{10}$. The system consists of four major inertial components; 
-the motor and the encoder, outer strip segment, inner segment and the linear end-effector. The physical values are given in 
+Due to the capstan mechanism, there is a nominal rotational reduction of $i=\frac{1}{10}$. The system consists of four major inertial 
+components; the motor and the encoder, outer strip segment, inner segment and the linear end-effector. The physical values are given in 
 \Cref{tab:app:values}. The system can be approximated by the block diagram depicted in \Cref{fig:app:blodia}.
 \begin{table}%
 \caption{Physical Values of the Experimental Setup}
@@ -201,11 +202,14 @@ $k_h$ & $[0,994.2]$ &\si{\newton\meter\per\radian}\\
 $k_e$ & $[0,3000]$ &\si{\newton\meter\per\radian}\\
 \bottomrule
 \end{tabular}
-\caption[Identified Uncertain Human Parameters as Rotational Mechanical Components]{Identified Uncertain Human Parameters as Rotational Mechanical Components}
+\caption[Identified Uncertain Human Parameters as Rotational Mechanical Components]{%
+    Identified Uncertain Human Parameters as Rotational Mechanical Components.%
+    }
 \label{tab:app:humparam}
 \end{table}
 
-Next, we obtain the LFT interconnection of the uncertain model. We first write down the equations of motion of the combined inertial element $J_{inner+ee}$/$m_h$
+Next, we obtain the LFT interconnection of the uncertain model. We first write down the equations of motion of the combined 
+inertial element $J_{inner+ee}$/$m_h$
 \[
 (J_4+m_h)\ddot{x}_4 = k_3(x_3-x_4) + b_3(\dot{x}_3-\dot{x}_4) - k_hx_4 - b_h\dot{x}_4 -f_h
 \]
@@ -306,11 +310,12 @@ $J_{outer}$ since the elasticity of the coupling is known. This leads to the fol
 
 \subsection{Incorporating the environment dynamics}
 The remote device is simply another copy of the local device, hence shares the same structure given by
-\eqref{eq:prestateequations1},\eqref{eq:prestateequations2}. For the remote device, we only consider a spring with time-varying characteristics however it can also be assumed to admit 
-a more detailed structure similar to the human dynamics. It's relatively simpler to obtain the LFT interconnection since we 
-can simply remove the $\delta_{m_e},\delta_{b_e}$ uncertainty channels such that only the environment stiffness coefficient
-remains uncertain. We will assume that the environment stiffness can change arbitrarily fast in order to model hard contacts
-or sudden release from a constraint, say, sliding over an edge. The uncertainty matrices are modified such that
+\eqref{eq:prestateequations1},\eqref{eq:prestateequations2}. For the remote device, we only consider a spring with time-varying 
+characteristics however it can also be assumed to admit a more detailed structure similar to the human dynamics. It's relatively 
+simpler to obtain the LFT interconnection since we can simply remove the $\delta_{m_e},\delta_{b_e}$ uncertainty channels such 
+that only the environment stiffness coefficient remains uncertain. We will assume that the environment stiffness can change 
+arbitrarily fast in order to model hard contacts or sudden release from a constraint, say, sliding over an edge. The uncertainty 
+matrices are modified such that
 \[
 q = k_e x_4, p = \delta_{k_e} q.
 \]
@@ -360,7 +365,10 @@ z = \pmatr{x_l-x_r\\f_l-f_r\\u_l\\u_r}
 \]
 which can be expressed as
 \[
-C_z = \pmatr{e_\frac{1}{8}^T &-e_\frac{1}{8}^T\\k_3(e_\frac{3}{8} -e_\frac{4}{8})^T &-k_3(e_\frac{3}{8} -e_\frac{4}{8})^T\\ \multicolumn{2}{c}{0}\\ \multicolumn{2}{c}{0}},
+C_z = \pmatr{e_\frac{1}{8}^T &-e_\frac{1}{8}^T\\
+             k_3(e_\frac{3}{8} -e_\frac{4}{8})^T &-k_3(e_\frac{3}{8} -e_\frac{4}{8})^T\\
+             \multicolumn{2}{c}{0}\\
+             \multicolumn{2}{c}{0}},
 D_{pz} = D_{wz} = 0,D_{uz} = \pmatr{0_2\\I_{2}}.
 \]
 Thus, we have obtained a plant-uncertainty interconnection $\Delta-G$ where 
@@ -683,13 +691,30 @@ axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
 anchor=near ticklabel,rotate=90,text opacity=0.5},
 y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
 ]
-\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designonedata};\addlegendentry{$\gamma_a$}
-\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designonedata};\addlegendentry{$\gamma_s$}
+\addplot+[gray,
+          dotted,
+          thick,
+          mark=square*,
+          mark options={
+             solid,
+             thin,
+             opacity=0.2},
+          opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designonedata};\addlegendentry{$\gamma_a$}
+\addplot+[gray,
+          densely dashed,
+        thick,
+        mark=square*,
+        mark options={
+            solid,
+            thin,
+            fill opacity=0.2},
+        opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designonedata};\addlegendentry{$\gamma_s$}
 \end{axis}
 \end{tikzpicture}
 \end{minipage}
 \captionsetup{labelformat=andtable}
-\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty 
+set size and resulting worst case-$\mathcal{L}_2$ gain.}
 \label{fig:tab:design1}
 \end{figure}
 
@@ -834,13 +859,30 @@ axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
 anchor=near ticklabel,rotate=90,text opacity=0.5},
 y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
 ]
-\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designtwodataone};\addlegendentry{$\gamma_a$}
-\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designtwodataone};\addlegendentry{$\gamma_s$}
+\addplot+[gray,
+    dotted,
+    thick,
+    mark=square*,
+    mark options={
+        solid,
+        thin,
+        opacity=0.2},
+    opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designtwodataone};\addlegendentry{$\gamma_a$}
+\addplot+[gray,
+    densely dashed,
+    thick,
+    mark=square*,
+    mark options={
+        solid,
+        thin,
+        fill opacity=0.2},
+    opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designtwodataone};\addlegendentry{$\gamma_s$}
 \end{axis}
 \end{tikzpicture}
 \end{minipage}
 \captionsetup{labelformat=andtable}
-\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set 
+size and resulting worst case-$\mathcal{L}_2$ gain.}
 \label{fig:tab:design2d1}
 \end{figure}
 
@@ -884,13 +926,30 @@ axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
 anchor=near ticklabel,rotate=90,text opacity=0.5},
 y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
 ]
-\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designtwodatadtwo};\addlegendentry{$\gamma_a$}
-\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designtwodatadtwo};\addlegendentry{$\gamma_s$}
+\addplot+[gray,
+    dotted,
+    thick,
+    mark=square*,
+    mark options={
+        solid,
+        thin,
+        opacity=0.2},
+    opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designtwodatadtwo};\addlegendentry{$\gamma_a$}
+\addplot+[gray,
+    densely dashed,
+    thick,
+    mark=square*,
+    mark options={
+         solid,
+         thin,
+         fill opacity=0.2},
+    opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designtwodatadtwo};\addlegendentry{$\gamma_s$}
 \end{axis}
 \end{tikzpicture}
 \end{minipage}
 \captionsetup{labelformat=andtable}
-\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty 
+set size and resulting worst case-$\mathcal{L}_2$ gain.}
 \label{fig:tab:design2d2}
 \end{figure}
 
@@ -931,14 +990,17 @@ we define the scaled uncertainty operator
 \]
 where
 \[
-\Delta(t)=\pmatr{\delta_{\vphantom{b}m_h}(t)&&&\\&\delta_{b_h}(t)&&\\&&\delta_{k_h}(t)&\\&&&\delta_{k_e}(t)} = \Delta_s(t) T = T \Delta_s(t)
+\Delta(t)=
+\pmatr{\delta_{\vphantom{b}m_h}(t)&&&\\&\delta_{b_h}(t)&&\\&&\delta_{k_h}(t)&\\&&&\delta_{k_e}(t)} = \Delta_s(t) T = T \Delta_s(t)
 \]
-for all $t>0$ with $T=\diag{\frac{\overline{m_h}}{2},\frac{\overline{b_h}}{2},\frac{\overline{k_h}}{2},\frac{\overline{k_e}}{2}}$. Then, we simply rewrite
+for all $t>0$ with $T=\diag{\frac{\overline{m_h}}{2},\frac{\overline{b_h}}{2},\frac{\overline{k_h}}{2},\frac{\overline{k_e}}{2}}$.
+Then, we simply rewrite
 \[
 \Delta_s = \Delta_{ss} + I_4
 \]
-with $\Delta_{ss}:\Real_+ \to [-1,1]\times[-1,1]\times[-1,1]\times[-1,1]$. Then by absorbing the unity feedback path into the plant we obtain
-$P_{nom}$. Due to this centering operation, we obtain the robustness and performance certificates in the original parameter interval
+with $\Delta_{ss}:\Real_+ \to [-1,1]\times[-1,1]\times[-1,1]\times[-1,1]$. Then by absorbing the unity feedback path into the plant 
+we obtain $P_{nom}$. Due to this centering operation, we obtain the robustness and performance certificates in the original parameter 
+interval
 \[
 \delta_i = \left[\frac{1-r}{2},\frac{1+r}{2}\right]\, , \, i\in\{m_h,b_h,k_h,k_e\}
 \]
@@ -1031,13 +1093,29 @@ axis x line=none,every axis y label/.style={at={(ticklabel cs:0.5)},
 anchor=near ticklabel,rotate=90,text opacity=0.5},
 y tick label style={opacity=0.5},legend pos=south east,enlarge y limits={value=0.05,upper}
 ]
-\addplot+[gray,dotted,thick,mark=square*,mark options={solid,thin,opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designthree};\addlegendentry{$\gamma_a$}
-\addplot+[gray,densely dashed,thick,mark=square*,mark options={solid,thin,fill opacity=0.2},opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designthree};\addlegendentry{$\gamma_s$}
+\addplot+[gray,
+    dotted,
+    thick,
+    mark=square*,
+    mark options={
+        solid,
+        thin,
+        opacity=0.2},
+    opacity=0.4] table[x expr=\coordindex+1,y=ga] {\designthree};\addlegendentry{$\gamma_a$}
+\addplot+[gray,
+    densely dashed,
+    thick,
+    mark=square*,
+    mark options={solid,
+         thin,
+        fill opacity=0.2},
+    opacity=0.4] table[x expr=\coordindex+1,y=gs] {\designthree};\addlegendentry{$\gamma_s$}
 \end{axis}
 \end{tikzpicture}
 \end{minipage}
 \captionsetup{labelformat=andtable}
-\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set size and resulting worst case-$\mathcal{L}_2$ gain.}
+\caption{The progress report of the $D$-$K$ iteration of the with increasing uncertainty set 
+size and resulting worst case-$\mathcal{L}_2$ gain.}
 \label{fig:tab:design3}
 \end{figure}
 
@@ -1126,35 +1204,36 @@ $C_3$: \tikz[baseline]\draw[thick,dotted] (0,0)--++(5mm,0);.}%
                        contact to free air scenario is tested.
 \end{description}
 
-The resulting controllers are discretized via the \texttt{tustin} function with \SI{2000}{\hertz} sampling frequency and implemented using the xPC 
-Target toolbox of MATLAB. The experiments are performed with the same device with an arbitrary combination of motion profiles listed above. 
-Due to the proximity switches, the workspace is limited to $\approx \SIrange{-35}{35}{\degree}$ where \SI{0}{\degree} denotes the horizontal 
-configuration of the device handle. Hence, the contact slide motion is done rather carefully as we needed to stop before the device trips
-the switch which in turn stops the data streaming. Moreover, there are also hard-coded rate limiters for safe operation such that if the 
-device handle angular velocity exceeds a threshold the device turns off the drives and disconnects (similarly the data stream is stopped). 
-Hence, the rigid contact motion is carried out with caution. Though the responses are stable throughout the rigid contact, the controllers are
-aggressive enough to trip the rate-limiters hence cause abrupt data stream in the case of a particular contact tapping. In fact when tapping 
-approaches \emph{striking with the finger} ($\approx \SI{1.5}{\meter\per\second}$ fingertip speed at around \SI{4.7}{\hertz}) the instantaneous
-rebound speed of the remote device on the obstacle trips the drive. Since our goal is to present the motion at one shot in order to demonstrate 
-the robustness against time-variations, the contact tapping profile is carried out with a predefined force limit in mind. 
+The resulting controllers are discretized via the \texttt{tustin} function with \SI{2000}{\hertz} sampling frequency and implemented using 
+the xPC Target toolbox of MATLAB. The experiments are performed with the same device with an arbitrary combination of motion profiles 
+listed above. Due to the proximity switches, the workspace is limited to $\approx \SIrange{-35}{35}{\degree}$ where \SI{0}{\degree} denotes 
+the horizontal configuration of the device handle. Hence, the contact slide motion is done rather carefully as we needed to stop before the 
+device trips the switch which in turn stops the data streaming. Moreover, there are also hard-coded rate limiters for safe operation such 
+that if the device handle angular velocity exceeds a threshold the device turns off the drives and disconnects (similarly the data stream 
+is stopped). Hence, the rigid contact motion is carried out with caution. Though the responses are stable throughout the rigid contact, the 
+controllers are aggressive enough to trip the rate-limiters hence cause abrupt data stream in the case of a particular contact tapping. In 
+fact when tapping approaches \emph{striking with the finger} ($\approx \SI{1.5}{\meter\per\second}$ fingertip speed at around 
+\SI{4.7}{\hertz}) the instantaneous rebound speed of the remote device on the obstacle trips the drive. Since our goal is to present the 
+motion at one shot in order to demonstrate the robustness against time-variations, the contact tapping profile is carried out with a 
+predefined force limit in mind. 
 
 
 It should be noted that none of the controllers have been designed to cope with completely rigid objects. In other words, we did not 
-incorporate the unilateral constraint case (rigid contact) into account. Not only we lack the proper framework with adequate flexibility to handle such 
-cases with performance specifications, it is also an unrealistic goal at the outset. As we will show the problem is not essentially a state-constraint problem but 
-rather the inherent stiffness modes of the devices that are excited in the rigid contact case. Nevertheless the controllers exhibit satisfactory 
-robustness properties with surprisingly rigid contact rendering performance contingent upon operator behavior.  
+incorporate the unilateral constraint case (rigid contact) into account. Not only we lack the proper framework with adequate flexibility 
+to handle such cases with performance specifications, it is also an unrealistic goal at the outset. As we will show the problem is not 
+essentially a state-constraint problem but rather the inherent stiffness modes of the devices that are excited in the rigid contact case. 
+Nevertheless the controllers exhibit satisfactory robustness properties with surprisingly rigid contact rendering performance contingent 
+upon operator behavior.  
 
 \subsection{Description of the Experiments}
 
-In each controller test, a right-handed male operator\footnote{More properly, the author himself though still using the third person narrative.} 
-tried out the different scenarios listed above in about \SIrange12\minute. The resulting overall data stream is shown in \Cref{fig:app:design1overall,fig:app:design2overall,%
-fig:app:design3overall}. Due to the lower stiffness coefficient, the soft contact cases can be seen around \SI{20}{\degree} with more 
-compression stroke length and hard contact cases take place around \SI{5}{\degree}. The rigid contact is designed to meet with the obstacle 
-such that the device position reading is around \SI{0}{\degree}. Lastly, in the soft contact cases it is possible to fully compress the soft 
-spring and hit the rigid aliuminum spring holder visible in \Cref{fig:app:onedof}.
-
-
+In each controller test, a right-handed male operator\footnote{More properly, the author himself though still using the third person 
+narrative.} tried out the different scenarios listed above in about \SIrange12\minute. The resulting overall data stream is shown in 
+\Cref{fig:app:design1overall,fig:app:design2overall,fig:app:design3overall}. Due to the lower stiffness coefficient, the soft contact 
+cases can be seen around \SI{20}{\degree} with more compression stroke length and hard contact cases take place around \SI{5}{\degree}. 
+The rigid contact is designed to meet with the obstacle such that the device position reading is around \SI{0}{\degree}. Lastly, in 
+the soft contact cases it is possible to fully compress the soft spring and hit the rigid aliuminum spring holder visible in 
+\Cref{fig:app:onedof}.
 
 \subsection{Comparison Of Controllers Based On Different Contact Profiles}
 
@@ -1166,24 +1245,26 @@ spring and hit the rigid aliuminum spring holder visible in \Cref{fig:app:onedof
 
 \subsubsection{Free air}
 
-The free air performance of the controllers are given in \Cref{fig:app:design1freeair,fig:app:design2freeair,fig:app:design3freeair}. As seen from these
-plots we obtain good position tracking precision. The zoomed in parts show that as the bandwidth increases (which is provided manually as fast as the operator
-is able to shake the handle) a slight loss of performance is recorded. The differences between three controllers are quite small, e.g., Design 2 achieves 
-\ang{0.15} better tracking in the high bandwidth area then Designs 1 and 3. Therefore we conclude that free-air performance is very good. This simply shows 
-that the nominal stability and nominal performance is not drastically affected by the robustness concerns in the design optimization. 
+The free air performance of the controllers are given in \Cref{fig:app:design1freeair,fig:app:design2freeair,fig:app:design3freeair}. As 
+seen from these plots we obtain good position tracking precision. The zoomed in parts show that as the bandwidth increases (which is 
+provided manually as fast as the operator is able to shake the handle) a slight loss of performance is recorded. The differences between 
+three controllers are quite small, e.g., Design 2 achieves \ang{0.15} better tracking in the high bandwidth area then Designs 1 and 3. 
+Therefore we conclude that free-air performance is very good. This simply shows that the nominal stability and nominal performance is not 
+drastically affected by the robustness concerns in the design optimization. 
 
 
 It should be noted that even when the human is applying a nonnegligible force, the controllers are trying to close this force mismatch 
-via applying a torque along the direction human motion at the local device i.e. acting like a friction compensator thus reducing the difference 
-$f_h-f_l$. Similarly in the remote device the difference is compansated  via $f_e-f_r$ via tracking closely the local force vector. These two actions 
-combined leads to the very good position tracking and as a bonus we do not need a precise force tracking unless the positions of the devices are 
-constrained or distorted by soft contact which is presented below.
+via applying a torque along the direction human motion at the local device i.e. acting like a friction compensator thus reducing the 
+difference $f_h-f_l$. Similarly in the remote device the difference is compansated  via $f_e-f_r$ via tracking closely the local force 
+vector. These two actions combined leads to the very good position tracking and as a bonus we do not need a precise force tracking unless 
+the positions of the devices are constrained or distorted by soft contact which is presented below.
 
 
 
 \subsubsection{Soft Contact}
 
-The soft contact measurements are given in \Cref{fig:app:design1soft,fig:app:design2soft,fig:app:design3soft}. In the $C_1$ and $C_2$ cases, 
+The soft contact measurements are given in \Cref{fig:app:design1soft,fig:app:design2soft,fig:app:design3soft}. 
+In the $C_1$ and $C_2$ cases, 
 we can see that the handle is taken too far and after the full compression we hit 
 the rigid column which the spring is mounted on. Notice that the rigid contact is
 completely stable for both cases however this is due to the existence of the spring 
@@ -1221,13 +1302,13 @@ on the system. However, this does not entirely rule out the fact that there migh
 different properties after some huge value. In turn, it is unlikely that the current LMI solvers are able to detect and take into 
 account those numerical problems accurately. 
 
-This is shown by the rigid contact responses. Again, increased uncertainty set size, forces $C_3$ both be more robust with less
-performance and at the same time the robustness margin is comparatively smaller. By the loss of performance, the remote device 
-introduces oscillations during contact and they are not handled successfully if the user has a light grip on the local device handle.
-As seen around \SI{84}{\second} and at the end of the motion, the device shows temporarily an oscillatory behavior. At the end of the 
-motion, $C_3$ additionally trips the drive. Another evidence for such robustness increase/performance decrease can be found on the actuator output
-plots \Cref{fig:app:design1actoverall,fig:app:design2actoverall,fig:app:design3actoverall}. Clearly, $C_3$ is less aggressive than 
-the other controllers and thus has less stabilizing capabilities in the region where robustness is not guaranteed. 
+This is shown by the rigid contact responses. Again, increased uncertainty set size, forces $C_3$ both be more robust with less 
+performance and at the same time the robustness margin is comparatively smaller. By the loss of performance, the remote device introduces 
+oscillations during contact and they are not handled successfully if the user has a light grip on the local device handle. As seen around 
+\SI{84}{\second} and at the end of the motion, the device shows temporarily an oscillatory behavior. At the end of the motion, $C_3$ 
+additionally trips the drive. Another evidence for such robustness increase/performance decrease can be found on the actuator output 
+plots \Cref{fig:app:design1actoverall,fig:app:design2actoverall,fig:app:design3actoverall}. Clearly, $C_3$ is less aggressive than the 
+other controllers and thus has less stabilizing capabilities in the region where robustness is not guaranteed. 
 
 It is quite the contrary for $C_1$ and $C_2$ since the rigid contact performance is quite satisfactory. We can distinguish the effect of 
 taking the rate-of-variation bound into account as $C_2$ shows superior performance even with a few contact sliding
@@ -1264,8 +1345,13 @@ unilateral constraints.
              grid=both,
              ymax=5,ymin=-5,
              restrict x to domain=72:76.5]
-        \addplot+[thick,no marks,draw=gray] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Local Device}
-        \addplot+[no marks,draw=black] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Remote Device}
+        \addplot+[
+             thick,
+             no marks,
+             draw=gray] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Local Device}
+        \addplot+[
+            no marks,
+            draw=black] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 2 rigid contact close-up}%
@@ -1274,23 +1360,24 @@ unilateral constraints.
 
 
 
-We conclude this section by pointing to a rigid contact phenomenon with firm grip case. Since superior to $C_1$,$C_3$ designs, we consider
-the controller $C_2$ responses. In the rigid contact case, we have experienced an interesting pattern; while the user drives the local 
-device down, the remote device comes into contact with the rigid object almost simultaneously hence we have a very satisfactory immersion level 
-about the rigidity of the contact. However notice that when the remote device comes into contact with the obstacle, the local device stops 
-with some residual rapid decaying oscillations as shown in \Cref{fig:app:design2rigidcloseup}. Same experiment is repeated by grabbing the 
-forearm firmly from a point closer to the elbow with left hand and applying a slight clock-wise twisting torque such that the muscles 
-at the forearm are constrained. Then, the oscillations mentioned above became more pronounced in terms of immersion\footnote{The reader can 
-verify this by raising the right hand with palm pointing left, making a fist and hitting a rigid surface with holding the forearm firmly with 
-left hand. The absence of the common vibration dissipation through the muscles and tendons makes the touch significantly different. Obviously, 
-the ideal case would be temporarily blocking the sensory mechanisms of the forearm to isolate the information provided by the hand. This issue
-should be obvious to the relevant medical fields however any relevant literature in those areas so far eluded us}. Therefore, just by changing 
-the arm configuration and clamping/relasing muscle groups touch sensation can be altered. 
+We conclude this section by pointing to a rigid contact phenomenon with firm grip case. Since superior to $C_1$,$C_3$ designs, we 
+consider the controller $C_2$ responses. In the rigid contact case, we have experienced an interesting pattern; while the user drives the 
+local device down, the remote device comes into contact with the rigid object almost simultaneously hence we have a very satisfactory 
+immersion level about the rigidity of the contact. However notice that when the remote device comes into contact with the obstacle, the 
+local device stops with some residual rapid decaying oscillations as shown in \Cref{fig:app:design2rigidcloseup}. Same experiment is 
+repeated by grabbing the forearm firmly from a point closer to the elbow with left hand and applying a slight clock-wise twisting torque 
+such that the muscles at the forearm are constrained. Then, the oscillations mentioned above became more pronounced in terms of immersion
+\footnote{The reader can verify this by raising the right hand with palm pointing left, making a fist and hitting a rigid surface with 
+holding the forearm firmly with left hand. The absence of the common vibration dissipation through the muscles and tendons makes the 
+touch significantly different. Obviously, the ideal case would be temporarily blocking the sensory mechanisms of the forearm to isolate 
+the information provided by the hand. This issue should be obvious to the relevant medical fields however any relevant literature in 
+those areas so far eluded us}. Therefore, just by changing the arm configuration and clamping/relasing muscle groups touch sensation can 
+be altered. 
 
-Alternatively, by using a headphone playing loud music to cover the contact sound and looking away from the remote device we have repeated the same
-motion. This experimental technique is common in the literature and additionally in some cases the user is given the opportunity to view the remote 
-device from a computer display to render a distant operation condition. According to our subjective judgement, the resulting immersion difference was 
-insignificant. 
+Alternatively, by using a headphone playing loud music to cover the contact sound and looking away from the remote device we have 
+repeated the samemotion. This experimental technique is common in the literature and additionally in some cases the user is given the 
+opportunity to view the remote device from a computer display to render a distant operation condition. According to our subjective 
+judgement, the resulting immersion difference was insignificant. 
 
 
 \newpage
@@ -1298,9 +1385,19 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld2.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
+	\begin{axis}[
+        width=.75\textwidth,
+        height=5cm,
+        xlabel=Time,
+        ylabel={Position},
+        unit code/.code 2 args={\si{#1#2}},
+        x unit=\second, 
+        y unit=\degree,
+        legend cell align=left,
+        legend style={nodes={font=\tiny}},
+        grid=both]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 1 experiment : real-time encoder reading}%
@@ -1311,9 +1408,19 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld1.dat};\addlegendentry{Local Device} 
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
+	\begin{axis}[
+        width=.75\textwidth,
+        height=5cm,
+        xlabel=Time,
+        ylabel={Position},
+        unit code/.code 2 args={\si{#1#2}},
+        x unit=\second, 
+        y unit=\degree,
+        legend cell align=left,
+        legend style={nodes={font=\tiny}},
+        grid=both]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld1.dat};\addlegendentry{Local Device} 
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 2 experiment : real-time encoder reading}%
@@ -1323,9 +1430,19 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-	\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld0.dat};\addlegendentry{Local Device} 
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
+	\begin{axis}[
+        width=.75\textwidth,
+        height=5cm,
+        xlabel=Time,
+        ylabel={Position},
+        unit code/.code 2 args={\si{#1#2}},
+        x unit=\second, 
+        y unit=\degree,
+        legend cell align=left,
+        legend style={nodes={font=\tiny}},
+        grid=both]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/overalld0.dat};\addlegendentry{Local Device} 
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 3 experiment : real-time encoder reading}%
@@ -1354,9 +1471,13 @@ insignificant.
         }
     }
 ,spy using overlays={magnification=5, size=1.5cm, connect spies}]
-\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird2.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird2.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,
+             ylabel={Position},unit code/.code 2 args={\si{#1#2}},
+             x unit=\second, y unit=\degree,legend cell align=left,
+             legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird2.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird2.dat};\addlegendentry{Remote Device}
         \coordinate (f) at (axis cs:22.8,9.3);
         \coordinate (f2) at (axis cs:18.2,1);
     \end{axis}
@@ -1383,9 +1504,12 @@ insignificant.
         }
     }
 ,spy using overlays={magnification=5, size=1.5cm, connect spies}]
-\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird1.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird1.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird1.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird1.dat};\addlegendentry{Remote Device}
         \coordinate (f) at (axis cs:16.5,5);
         \coordinate (f2) at (axis cs:25.5,3);
     \end{axis}
@@ -1411,9 +1535,12 @@ insignificant.
         }
     }
 ,spy using overlays={magnification=5, size=1.5cm, connect spies}]
-\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird0.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird0.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=.75\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/freeaird0.dat};\addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/freeaird0.dat};\addlegendentry{Remote Device}
         \coordinate (f) at (axis cs:37.5,-0.7);
         \coordinate (f2) at (axis cs:30,-4);
     \end{axis}
@@ -1433,9 +1560,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd2.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd2.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5
+            ]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd2.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd2.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 1 experiment detail: Soft contact section}%
@@ -1445,9 +1577,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd1.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd1.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+            legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5
+            ]
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd1.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index=0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd1.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 2 experiment detail: Soft contact section}%
@@ -1457,9 +1594,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd0.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd0.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both,ymax=-5
+            ]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/softcontactd0.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/softcontactd0.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 3 experiment detail: Soft contact section}%
@@ -1475,9 +1617,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd2.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd2.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd2.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd2.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 1 experiment detail: hard contact section}%
@@ -1487,9 +1634,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd1.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd1.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd1.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd1.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 2 experiment detail: hard contact section}%
@@ -1499,9 +1651,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd0.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd0.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/hardcontactd0.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/hardcontactd0.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 3 experiment detail: hard contact section}%
@@ -1519,9 +1676,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd2.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd2.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd2.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd2.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 1 experiment detail: rigid contact section}%
@@ -1531,9 +1693,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd1.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd1.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd1.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 2 experiment detail: rigid contact section}%
@@ -1543,9 +1710,14 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd0.dat};\addlegendentry{Local Device}
-        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd0.dat};\addlegendentry{Remote Device}
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Position},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\degree,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{1})}] {plotdata/rigidcontactd0.dat};%
+        \addlegendentry{Local Device}
+        \addplot+[ultra thin,no marks] table[x index =0,y expr={-deg(\thisrowno{2})}] {plotdata/rigidcontactd0.dat};%
+        \addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
 \caption{Design 3 experiment detail: rigid contact section}%
@@ -1561,36 +1733,50 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
         \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld2.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption[Design 1 experiment: Measured Human and Environment Forces]{Design 1 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft}%
+\caption[Design 1 experiment: Measured Human and Environment Forces]{%
+Design 1 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft%
+}%
 \label{fig:app:design1forceoverall}%
 \end{figure}
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
         \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld1.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption[Design 2 experiment: Measured Human and Environment Forces]{Design 2 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft}%
+\caption[Design 2 experiment: Measured Human and Environment Forces]{%
+Design 2 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft%
+}%
 \label{fig:app:design2forceoverall}%
 \end{figure}
 
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
         \addplot+[ultra thin,no marks] table[x index =0,y index =3] {plotdata/overalld0.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index= 4] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
     \end{axis}
 \end{tikzpicture}
-\caption[Design 3 experiment: Measured Human and Environment Forces]{Design 3 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft}%
+\caption[Design 3 experiment: Measured Human and Environment Forces]{%
+Design 3 experiment: Measured Human and Environment Forces as Torques at the Actuator Shaft%
+}%
 \label{fig:app:design3forceoverall}%
 \end{figure}
 
@@ -1603,7 +1789,10 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
         \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld2.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld2.dat};\addlegendentry{Remote Device}
     \end{axis}
@@ -1615,7 +1804,10 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
         \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld1.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld1.dat};\addlegendentry{Remote Device}
     \end{axis}
@@ -1627,7 +1819,10 @@ insignificant.
 \begin{figure}%
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,legend cell align=left,legend style={nodes={font=\tiny}},grid=both]
+\begin{axis}[width=\textwidth,height=5cm,xlabel=Time,ylabel={Torque},
+             unit code/.code 2 args={\si{#1#2}},x unit=\second, y unit=\newton\meter,
+             legend cell align=left,legend style={nodes={font=\tiny}},grid=both
+            ]
         \addplot+[ultra thin,no marks] table[x index =0,y index =5] {plotdata/overalld0.dat};\addlegendentry{Local Device}
         \addplot+[ultra thin,no marks] table[x index =0,y index =6] {plotdata/overalld0.dat};\addlegendentry{Remote Device}
     \end{axis}
@@ -1641,37 +1836,39 @@ insignificant.
 \section{Closing Remarks}
 
 In this chapter, we have shown that a systematic control design for bilateral teleoperation problem is feasible and results have been 
-verified through a basic implementation study. Based on these results we claim that a \emph{transparency}-like objective can be achieved with 
-robust and high-performance controller via a thorough modeling step of the involved systems. Thus, we believe that we have presented a 
-counter-example free from the methodological drawbacks of classical stability-transparency tradeoff while still amenable to the essential
-stability/performance tradeoff. Moreover, the designed controllers do not show unexpected robustness or performance behaviors and the 
-performance-stability properties worsen as we approach or go beyond the theoretical guarantees. 
+verified through a basic implementation study. Based on these results we claim that a \emph{transparency}-like objective can be achieved 
+with robust and high-performance controller via a thorough modeling step of the involved systems. Thus, we believe that we have presented 
+a counter-example free from the methodological drawbacks of classical stability-transparency tradeoff while still amenable to the 
+essential stability/performance tradeoff. Moreover, the designed controllers do not show unexpected robustness or performance behaviors 
+and the performance-stability properties worsen as we approach or go beyond the theoretical guarantees. 
 
 Still, in accordance with our claims in the \Cref{chap:perf}, this design, regardless of the appeal or superiority, cannot be accepted as 
 a genuine bilateral teleoperation method, since we use the questionable transparency-like objective as the performance index.
 
-We cannot help but include yet another rant about the control design in the literature for bilateral teleoperation. Instead of mentioning the typical 
-absence of arguments on describing how any PD controller in the loop is tuned or why we should bother to perform endless derivations to tune one 
-or, if we are lucky, a very few more parameters, we limit the discussion to the following. 
+We cannot help but include yet another rant about the control design in the literature for bilateral teleoperation. Instead of mentioning 
+the typical absence of arguments on describing how any PD controller in the loop is tuned or why we should bother to perform endless 
+derivations to tune one or, if we are lucky, a very few more parameters, we limit the discussion to the following. 
 
-In majority of the network-based modeling papers, for some unknown reason and as if it is possible, the concept of local controllers are introduced 
-and the controllers that only communicate over the line between local and remote devices are emphasized for further analysis (see \Cref{lit:syn:ela}). 
-Quite often, it is assumed that the local controllers achieve \enquote{high-precision tracking} locally and the conditions to render 
-the interconnection passive are derived. Then delays and other complications are introduced and tedious derivations are presented though 
-the undelayed bilateral teleoperation problem is still open for a satisfying performance definition. The subsequent result is either 
-deriving constraints on PD controller gains without any comment on how we are supposed to tune the \enquote{local} controllers\footnote{%
-which is far from trivial while respecting passivity and simultaneously achieving precise tracking}. We emphasize that the closed loop 
-stability is guaranteed by all controllers and the locality of the controller does not exclude it from the interconnection stability 
-consideration. Alternatively, some controller entries in \Cref{lit:syn:ela} are assumed to be zero and the number of variables is reduced. 
-In the four-channel case, the methods are exclusively limited to compensated dynamics type, cross-coupling controllers where each entry is 
-specifically equals some part of the cancellation of dynamics to reach to the ideal transparent system. 
+In majority of the network-based modeling papers, for some unknown reason and as if it is possible, the concept of local controllers are 
+introduced and the controllers that only communicate over the line between local and remote devices are emphasized for further analysis (%
+see \Cref{lit:syn:ela}). Quite often, it is assumed that the local controllers achieve \enquote{high-precision tracking} locally and the 
+conditions to render the interconnection passive are derived. Then delays and other complications are introduced and tedious derivations 
+are presented though the undelayed bilateral teleoperation problem is still open for a satisfying performance definition. The subsequent 
+result is either deriving constraints on PD controller gains without any comment on how we are supposed to tune the \enquote{local} 
+controllers\footnote{which is far from trivial while respecting passivity and simultaneously achieving precise tracking}. We emphasize 
+that the closed loop stability is guaranteed by all controllers and the locality of the controller does not exclude it from the 
+interconnection stability consideration. Alternatively, some controller entries in \Cref{lit:syn:ela} are assumed to be zero and the 
+number of variables is reduced. In the four-channel case, the methods are exclusively limited to compensated dynamics type, cross-
+coupling controllers where each entry is specifically equals some part of the cancellation of dynamics to reach to the ideal transparent 
+system. 
 
 We openly accept that we fail to understand the rationale behind these arguments.
 
-Thus, if we are to investigate our controllers in this \emph{local} and \emph{interdevice} controller distinction, we see that the position 
-controllers (from inputs $1$-$2$ to outputs $1$-$2$ in \Cref{fig:app:contredmass}) look like PI controllers though the roll-off is of the double
-integrator type. The force controllers are clearly not PID-like. Moreover, let us check whether transparency optimization rules in terms of the 
-controller entries (see \eqref{eq:lit:MIMOcont} and \Cref{lit:syn:ela})
+Thus, if we are to investigate our controllers in this \emph{local} and \emph{interdevice} controller distinction, we see that the 
+position controllers (from inputs $1$-$2$ to outputs $1$-$2$ in \Cref{fig:app:contredmass}) look like PI controllers though the roll-off 
+is of the double integrator type. The force controllers are clearly not PID-like. Moreover, let us check whether transparency 
+optimization rules in terms of the controller entries (see \eqref{eq:lit:MIMOcont} and \Cref{lit:syn:ela})
+
 \begin{itemize}
     \item  $K(2,1)= (\text{Dynamics of the environment}+K(2,2))$
 	\item  $K(1,4)= -1+K(2,4)$
@@ -1679,26 +1876,26 @@ controller entries (see \eqref{eq:lit:MIMOcont} and \Cref{lit:syn:ela})
     \item  $K(1,2)= -(\text{Dynamics of the user}+K(1,1))$
 \end{itemize}
 hold or not. Obviously, since we use position signals for feedback we can't simply use the data given in \Cref{lit:syn:ela} without 
-multiplying the third and fourth columns with $\iw$. Even then, we can verify that none of the conditions are valid. In some cases, there are 
-more than \SI{20}{\decibel} differences for the second and third conditions and also the first and last conditions are not verifiable since 
-they involve time-varying operators as opposed to LTI assumptions in the Lawrence' analysis. Nevertheless, we obtain a a high level of 
-transparency\footnote{in the informal sense involving human perception if compared to the Lawrence' formal definition.} with controllers 
-that do not even remotely resemble conditions of the classical transparency conditions. The apparent mismatch comes from the fact that we 
-do not care whether the resulting closed loop \emph{2-port} hybrid matrix is $\begin{psmallmatrix}0&I\\I&0\end{psmallmatrix}$ or not. We 
-simply optimize the controller to minimize the induced gain of the performance channels. Moreover, this also shows that the well-known 
-transparency optimized control laws given above can only be taken into account solely in the passivity-based absolute stability framework. 
-Therefore any generalization based on such insights is invalid and should be strictly avoided.
+multiplying the third and fourth columns with $\iw$. Even then, we can verify that none of the conditions are valid. In some cases, there 
+are more than \SI{20}{\decibel} differences for the second and third conditions and also the first and last conditions are not verifiable 
+since they involve time-varying operators as opposed to LTI assumptions in the Lawrence' analysis. Nevertheless, we obtain a a high level 
+of transparency\footnote{in the informal sense involving human perception if compared to the Lawrence' formal definition.} with 
+controllers that do not even remotely resemble conditions of the classical transparency conditions. The apparent mismatch comes from the 
+fact that we do not care whether the resulting closed loop \emph{2-port} hybrid matrix is $\begin{psmallmatrix}0&I\\I&0\end{psmallmatrix}$
+ or not. We simply optimize the controller to minimize the induced gain of the performance channels. Moreover, this also shows that the 
+well-known transparency optimized control laws given above can only be taken into account solely in the passivity-based absolute 
+stability framework. Therefore any generalization based on such insights is invalid and should be strictly avoided.
 
 
-In the light of the discussion above, we strengthen our claim that how to arrive at complicated structures by manual tuning or cross-coupling 
-controllers is unknown and current literature does not answer this question contrary to the ubiquitous claims. Note that, the matter at hand 
-is a complexity problem but not a matter of engineering experience obtained from loop-shaping practices that implies our position completely 
-opposed to the claims of \cite{danielmcaree}. 
+In the light of the discussion above, we strengthen our claim that how to arrive at complicated structures by manual tuning or cross-
+coupling controllers is unknown and current literature does not answer this question contrary to the ubiquitous claims. Note that, the 
+matter at hand is a complexity problem but not a matter of engineering experience obtained from loop-shaping practices that implies our 
+position completely opposed to the claims of \cite{danielmcaree}. 
 
-Despite the risk of overemphasizing this remark, we need to reiterate that there is no holistic issue about the presented method. If there 
-exists a better MIMO technique or a better structured controller design technique then they immediately qualify as valid ones. However, the 
-essential argument remains unaltered that modeling and defining proper performance objectives are crucial independent of the method to 
-arrive at the controllers.
+Despite the risk of overemphasizing this remark, we need to reiterate that there is no holistic issue about the presented method. If 
+there exists a better MIMO technique or a better structured controller design technique then they immediately qualify as valid ones. 
+However, the essential argument remains unaltered that modeling and defining proper performance objectives are crucial independent of the 
+method to arrive at the controllers.
 
 
 %

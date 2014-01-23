@@ -1,7 +1,6 @@
 \chapter{Network Theory Primer}
 \label{chap:apdxnetwork}
 
-
 In this appendix, we provide a collection of basic network theory concepts for the convenience of the nonexperts of the field, 
 to be used as a quick reference while we discuss the tools used in the bilateral teleoperation studies. Our focus would be on 
 interconnections and stability of these interconnections hence circuit theory preliminaries and physics of the components are omitted.
@@ -158,9 +157,9 @@ the source is the human exploring the environment from a distance via the teleop
 We have to note that, in this formulation, a single mass can not be modeled as a $1$-port; mass does not satisfy the 
 port KCL unless it is thought to be applying an opposite force to a fixed inertial frame at a distance. This is why the electrical analog 
 of a mass (in the force-current context) is required to be a \emph{grounded} capacitor. The interested reader is referred to \cite{smith} 
-for the interesting story of the development of an exact mechanical analogue of a capacitor, \emph{the inerter} which is succesfully implemented by 
-McLaren Mercedes and Renault F1 teams and being used since 2005\footnote{According to the official statements.}. We also refer to 
-\cite{willemsCSM} for a comprehensive analysis together with the common pitfalls and nonintuitive power/energy results. Though, 
+for the interesting story of the development of an exact mechanical analogue of a capacitor, \emph{the inerter} which is succesfully 
+implemented by McLaren Mercedes and Renault F1 teams and being used since 2005\footnote{According to the official statements.}. We also 
+refer to \cite{willemsCSM} for a comprehensive analysis together with the common pitfalls and nonintuitive power/energy results. Though, 
 the inappropriateness of view of input/output formalism which is adopted also in this thesis is brought to attention in numerous 
 studies by Jan C. Willems and his colleagues, we are obliged to use the input/output formulation as we have no results regarding 
 the behavioral approach to bilateral teleoperation systems (yet). However, the potential of a behavioral modeling of teleoperation 
@@ -170,8 +169,8 @@ systems is unavoidable if the engineer insists on \enquote{physics matching} as 
 
 Since every two-terminal port can be characterized by two variables ( ``through'' and ``across'' quantities), it is possible to 
 characterize the interconnected $n$-port networks as if one quantity is due to the other. This is done by imposing an artificial 
-causality scheme; two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent variables 
-(\cite{behavbook}). This is the simplest kind of input/output view of physical systems via treating one port variable as the 
+causality scheme; two of these time-dependent trajectories can be selected as free variables and the remaining ones become dependent 
+variables (\cite{behavbook}). This is the simplest kind of input/output view of physical systems via treating one port variable as the 
 \emph{cause} and the other one as the \emph{effect} of this cause e.g. the current is due to the voltage drop across the terminals or 
 vice versa. 
 
@@ -283,7 +282,8 @@ is satisfied with $\delta > 0$, $\epsilon = 0$ (or $\delta = 0$, $\epsilon > 0$)
 
 
 
-Suppose we are given with two dynamical systems $H_1,H_2: \mathcal{H}_e\to\mathcal{H}_e$ for which the system structure is given in time-domain with 
+Suppose we are given with two dynamical systems $H_1,H_2: \mathcal{H}_e\to\mathcal{H}_e$ for which the system structure is given 
+in time-domain with 
 \begin{align}
 \dot{x} &= f(x,e)\\
 y &= h(x,e)
@@ -301,8 +301,8 @@ for all admissible $(x_1,x_2,u_1,u_2)$. In the LTI case, assume that the respect
 the interconnection is well posed if $\inv{(I-H_1H_2)}$ is a proper transfer matrix.
 \end{define}
 
-Note that, in our context $u_1,u_2$ model the voluntary part of the human/en\-vi\-ron\-ment force input as mentioned in \Cref{chap:litsurvey}. 
-
+Note that, in our context $u_1,u_2$ model the voluntary part of the human/en\-vi\-ron\-ment force input as mentioned 
+in \Cref{chap:litsurvey}. 
 
 
 \begin{thm}Consider the well-posed feedback interconnection shown in \Cref{fig:apdx:passint} and 
@@ -330,14 +330,17 @@ N(\iw) = \pmatr{N_{11}(\iw) &N_{12}(\iw)\\N_{21}(\iw) &N_{22}(\iw)}
 \]
 and interconnected to passive LTI termination immitances as in \Cref{fig:portrep}, is stable if and only if
 \begin{equation}R_{11} > 0\text{ or } R_{22} > 0,\label{eq:lit:llew2}\end{equation} and
-\begin{equation}4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0\label{eq:lit:llew3}\end{equation} 
+\begin{equation}
+4\left(R_{11}R_{22}+X_{12}X_{21}\right)\left(R_{11}R_{22}-R_{12}R_{21}\right)-\left(R_{12}X_{21}-R_{21}X_{12}\right)^2 > 0
+\label{eq:lit:llew3}
+\end{equation} 
 or
-\begin{equation*}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\end{equation*}%\label{eq:lit:llew3p}
+\begin{equation*}2R_{11}R_{22}-\abs{N_{12}N_{21}}-\Re{N_{12}N_{21}} > 0\tag{\ref{eq:lit:llew3}$'$}\end{equation*}
 for all $\omega\in\Realext$, where $R_{ij}$ and $X_{ij}$ denote the real and imaginary parts of $N_{ij}$ respectively.
 \end{thm}
 
-When the network realization is given in scattering parameters, Llewellyn's conditions are known as Rollett's conditions (\cite{stern,rollett,kurokawa}).
-Then the absolute stability conditions are formulated as follows: 
+When the network realization is given in scattering parameters, Llewellyn's conditions are known as Rollett's 
+conditions (\cite{stern,rollett,kurokawa}). Then the absolute stability conditions are formulated as follows: 
 
 \begin{thm} Consider the same network given in Llewellyn's criteria which is represented in scattering parameters.
 The interconnection is stable if and only if the inequality 

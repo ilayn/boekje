@@ -1,7 +1,7 @@
-\RequirePackage{silence}
+\RequirePackage{silence}%STFU
 \WarningsOff[memoir]
 \WarningFilter{latex}{Marginpar on page}
-\documentclass[b5paper,showtrims]{memoir}
+\documentclass[b5paper,final]{memoir}
 \settrimmedsize{24cm}{17cm}{*}
 \settypeblocksize{185mm}{127mm}{*}
 \setlrmargins{*}{*}{1.38888}
@@ -9,8 +9,7 @@
 \setheadfoot{\baselineskip}{5mm}
 \checkandfixthelayout
 \usepackage{thesis-preamble}
-
-
+%\usepackage{pdfpages}
 \begin{document}
 \frontmatter
 \pagenumbering{roman}
@@ -28,7 +27,7 @@
 \mainmatter
 \pagestyle{phdstayla}
 \pagenumbering{arabic}
-%%
+%
 \include{intro}
 \include{literature}
 \include{performance}
@@ -36,14 +35,14 @@
 \include{synthesis}
 \include{application}
 \include{conclude}
-
+%
 \clearpage
 \thispagestyle{empty}
 %
 \appendix
 \include{apdxnetwork}
 \include{apdxphysio}
-
+%
 \backmatter
 \include{references}
 \include{summary}
@@ -53,4 +52,19 @@
 \thispagestyle{empty}
 \null
 \clearpage
+%\newpage
+%\thispagestyle{empty}
+%\setstocksize{250mm}{362mm}
+%\settrimmedsize{250mm}{362mm}{*}
+%\setlrmargins{*}{*}{0}
+%\setulmargins{*}{*}{0}
+%\setheadfoot{\baselineskip}{0mm}
+%\checkandfixthelayout
+%\setlength{\vsize}{\textheight}
+%\setlength{\columnwidth}{\textwidth}
+%\setlength{\hsize}{\columnwidth}
+%\setlength{\linewidth}{\hsize}
+%\csname ch@ngetext\endcsname
+%\fixthelayout
+%\includepdf[fitpaper=false,noautoscale=true]{Polat_Cover_pdf_export_digital}
 \end{document}
