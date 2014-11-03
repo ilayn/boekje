@@ -3,12 +3,9 @@
 This is my thesis. It is an academic study. Actually a very opinionated study.
 In fact it is a very very very opinionated study. Because most of the opinions stated 
 here have been distilled from reading lots of junk papers, they are not just personal frustrations 
-but actual arguments which received only emotional so far. So don't send me rants of how I lack the respect for science etc. 
+but actual arguments. The tone is irrelevant.
 
-Since it is an academic research it has been made open. The actual numerical code 
-is not provided because it is being ported to Python as a complete toolbox. But I have 
-no idea whether I would finish it soon. Current focus is getting a primitive LMI parser-solver
-in Python.
+Since it is an academic research it has been made open (almost fully except a few data files for figures, let me know if you need them). The actual numerical code is not provided because it is being ported to Python as a complete toolbox. But I have no idea whether I would finish it soon. Current focus is getting a primitive LMI parser-solver in Python.
 
 ## Copyright
 
